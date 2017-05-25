@@ -1,0 +1,336 @@
+http://52.168.141.103:55537/api/
+http://52.168.141.103:8080/
+http://attpoc-websvr.cloudapp.net/ATTWorkFlowPOC/
+http://localhost:8080/engine-rest/task/95af1b22-3a7a-11e5-85b6-dafa20524153/complete
+{
+  "variables": {
+    "action": "promote"
+  },
+  "key": "896e7bba-3fbc-11e7-a958-000d3a178995",
+  "id": "896e7bba-3fbc-11e7-a958-000d3a178995"
+}
+
+{
+  "variables": {
+    	"action" :{
+    	"value": "promote",
+    	"type" : "String"
+    }
+  }
+}
+
+http://52.168.141.103:8080/engine-rest/task/896e7bba-3fbc-11e7-a958-000d3a178995/complete
+{"variables": {"action": "promote"}, "key": "896e7bba-3fbc-11e7-a958-000d3a178995"}
+----------------------
+Rest API method for start and complete
+ 
+1.       Start
+ 
+URL : http://localhost:55537/api/process-definition
+Json Input Param :
+ 
+{
+"variables": {       
+	
+      },
+      "key" : "identify-sarfs" 
+}
+ 
+success : data{
+	"{
+		"links":[
+				{"method":"GET","href":"http://52.168.141.103:8080/engine-rest/process-instance/cbcd9c65-3f9b-11e7-a958-000d3a178995","rel":"self"}
+			],
+		"id":"cbcd9c65-3f9b-11e7-a958-000d3a178995",
+		"definitionId":"identify-sarfs:1:2ec1e26b-3bbf-11e7-a46b-000d3a178995",
+		"businessKey":null,
+		"caseInstanceId":null,
+		"ended":false,
+		"suspended":false,
+		"tenantId":null
+	}"
+} 
+
+ 
+2.       Get the id of the Task
+URL : http://localhost:55537/api/task
+ 
+Response : List of Task will be returned and filter the task by name like “RF Pending Completion” and get the task , pass to below complete method
+ 
+·         id
+ 
+3.       Complete : for all actions
+URL : http://localhost:55537/api/taskcomplete
+Json Input Param :
+ 
+{
+"variables": {  
+      “action” : “promote” // based on context value needs to pass like “demote” ,”pullback”,”cancel”    
+      },
+      "key" : id //guid
+}
+
+
+
+Response for  Start
+{
+"links": [
+  
+{
+"method": "GET",
+"href": "http://localhost:8080/engine-rest/process-instance/3579ed8f-3bd7-11e7-9aa9-dacc20524153",
+"rel": "self"
+}
+],
+"id": "3579ed8f-3bd7-11e7-9aa9-dacc20524153",
+"definitionId": "identify-sarfs:1:4d0b932a-3bab-11e7-b138-dacc20524153",
+"businessKey": null,
+"caseInstanceId": null,
+"ended": false,
+"suspended": false,
+"tenantId": null
+}
+ 
+ 
+Reponse for Get
+ 
+[
+  
+{
+"id": "7c533cca-3bd2-11e7-9aa9-dacc20524153",
+"name": "RF Pending Completion",
+"assignee": null,
+"created": "2017-05-18T19:31:27",
+"due": null,
+"followUp": null,
+"delegationState": null,
+"description": null,
+"executionId": "7c52eea6-3bd2-11e7-9aa9-dacc20524153",
+"owner": null,
+"parentTaskId": null,
+"priority": 50,
+"processDefinitionId": "identify-sarfs:1:4d0b932a-3bab-11e7-b138-dacc20524153",
+"processInstanceId": "7c52a084-3bd2-11e7-9aa9-dacc20524153",
+"taskDefinitionKey": "UserTask_11fud4o",
+"caseExecutionId": null,
+"caseInstanceId": null,
+"caseDefinitionId": null,
+"suspended": false,
+"formKey": null,
+"tenantId": null
+}
+,
+  
+{
+"id": "82808fe0-36c5-11e7-9209-8e9020524153",
+"name": "Approve Invoice",
+"assignee": null,
+"created": "2017-05-12T09:15:58",
+"due": "2017-05-19T09:15:58",
+"followUp": null,
+"delegationState": null,
+"description": "Approve the invoice (or not).",
+"executionId": "8218a631-36c5-11e7-9209-8e9020524153",
+"owner": null,
+"parentTaskId": null,
+"priority": 50,
+"processDefinitionId": "invoice:1:80911b85-36c5-11e7-9209-8e9020524153",
+"processInstanceId": "8218a631-36c5-11e7-9209-8e9020524153",
+"taskDefinitionKey": "approveInvoice",
+"caseExecutionId": null,
+"caseInstanceId": null,
+"caseDefinitionId": null,
+"suspended": false,
+"formKey": "embedded:app:forms/approve-invoice.html",
+"tenantId": null
+}
+,
+  
+{
+"id": "84c3a15b-36c5-11e7-9209-8e9020524153",
+"name": "Prepare Bank Transfer",
+"assignee": null,
+"created": "2017-05-12T09:16:01",
+"due": "2017-05-19T09:16:01",
+"followUp": null,
+"delegationState": null,
+"description": "Prepare the bank transfer.",
+"executionId": "8462bd71-36c5-11e7-9209-8e9020524153",
+"owner": null,
+"parentTaskId": null,
+"priority": 50,
+"processDefinitionId": "invoice:1:80911b85-36c5-11e7-9209-8e9020524153",
+"processInstanceId": "8462bd71-36c5-11e7-9209-8e9020524153",
+"taskDefinitionKey": "prepareBankTransfer",
+"caseExecutionId": null,
+"caseInstanceId": null,
+"caseDefinitionId": null,
+"suspended": false,
+"formKey": "embedded:app:forms/prepare-bank-transfer.html",
+"tenantId": null
+}
+,
+  
+{
+"id": "8508e83f-36c5-11e7-9209-8e9020524153",
+"name": "Approve Invoice",
+"assignee": null,
+"created": "2017-05-12T09:16:02",
+"due": "2017-05-19T09:16:02",
+"followUp": null,
+"delegationState": null,
+"description": "Approve the invoice (or not).",
+"executionId": "8507afa0-36c5-11e7-9209-8e9020524153",
+"owner": null,
+"parentTaskId": null,
+"priority": 50,
+"processDefinitionId": "invoice:2:80fe0e2f-36c5-11e7-9209-8e9020524153",
+"processInstanceId": "8507afa0-36c5-11e7-9209-8e9020524153",
+"taskDefinitionKey": "approveInvoice",
+"caseExecutionId": null,
+"caseInstanceId": null,
+"caseDefinitionId": null,
+"suspended": false,
+"formKey": "embedded:app:forms/approve-invoice.html",
+"tenantId": null
+}
+,
+  
+{
+"id": "854f1949-36c5-11e7-9209-8e9020524153",
+"name": "Prepare Bank Transfer",
+"assignee": null,
+"created": "2017-05-12T09:16:02",
+"due": "2017-05-19T09:16:02",
+"followUp": null,
+"delegationState": null,
+"description": "Prepare the bank transfer.",
+"executionId": "850fed30-36c5-11e7-9209-8e9020524153",
+"owner": null,
+"parentTaskId": null,
+"priority": 50,
+"processDefinitionId": "invoice:2:80fe0e2f-36c5-11e7-9209-8e9020524153",
+"processInstanceId": "850fed30-36c5-11e7-9209-8e9020524153",
+"taskDefinitionKey": "prepareBankTransfer",
+"caseExecutionId": null,
+"caseInstanceId": null,
+"caseDefinitionId": null,
+"suspended": false,
+"formKey": "embedded:app:forms/prepare-bank-transfer.html",
+"tenantId": null
+}
+,
+  
+{
+"id": "8583e442-36c5-11e7-9209-8e9020524153",
+"name": "Assign Reviewer",
+"assignee": "John",
+"created": "2017-05-12T09:16:03",
+"due": null,
+"followUp": null,
+"delegationState": null,
+"description": null,
+"executionId": null,
+"owner": null,
+"parentTaskId": null,
+"priority": 50,
+"processDefinitionId": null,
+"processInstanceId": null,
+"taskDefinitionKey": "PlanItem_1",
+"caseExecutionId": "8583961f-36c5-11e7-9209-8e9020524153",
+"caseInstanceId": "8582f9d1-36c5-11e7-9209-8e9020524153",
+"caseDefinitionId": "ReviewInvoiceCase:2:81062481-36c5-11e7-9209-8e9020524153",
+"suspended": false,
+"formKey": "embedded:app:forms/assign-reviewer.html",
+"tenantId": null
+}
+,
+  
+{
+"id": "b7a6163f-37db-11e7-8d99-8e9020524153",
+"name": "Approve Invoice",
+"assignee": null,
+"created": "2017-05-13T18:27:27",
+"due": "2017-05-20T18:27:27",
+"followUp": null,
+"delegationState": null,
+"description": "Approve the invoice (or not).",
+"executionId": "84cc53f9-36c5-11e7-9209-8e9020524153",
+"owner": null,
+"parentTaskId": null,
+"priority": 50,
+"processDefinitionId": "invoice:1:80911b85-36c5-11e7-9209-8e9020524153",
+"processInstanceId": "84cc53f9-36c5-11e7-9209-8e9020524153",
+"taskDefinitionKey": "approveInvoice",
+"caseExecutionId": null,
+"caseInstanceId": null,
+"caseDefinitionId": null,
+"suspended": false,
+"formKey": "embedded:app:forms/approve-invoice.html",
+"tenantId": null
+}
+,
+  
+{
+"id": "e3a675a3-3bd1-11e7-9aa9-dacc20524153",
+"name": "RF Pending Completion",
+"assignee": null,
+"created": "2017-05-18T19:27:11",
+"due": null,
+"followUp": null,
+"delegationState": null,
+"description": null,
+"executionId": "e3a22fdf-3bd1-11e7-9aa9-dacc20524153",
+"owner": null,
+"parentTaskId": null,
+"priority": 50,
+"processDefinitionId": "identify-sarfs:1:4d0b932a-3bab-11e7-b138-dacc20524153",
+"processInstanceId": "e39d4ddd-3bd1-11e7-9aa9-dacc20524153",
+"taskDefinitionKey": "UserTask_11fud4o",
+"caseExecutionId": null,
+"caseInstanceId": null,
+"caseDefinitionId": null,
+"suspended": false,
+"formKey": null,
+"tenantId": null
+}
+],
+From: Annamalai Ponnusamy 
+Sent: 18 May 2017 07:55 PM
+To: Sridhar Thirumal
+Cc: Shiva Prathipati
+Subject: rest api call for camunda engine
+ 
+Hi Sridhar ,
+                         Rest API method for start and complete
+ 
+1.       Start
+ 
+URL : http://localhost:55537/api/process-definition
+Json Input Param :
+ 
+{
+"variables": {       
+      },
+      "key" : "identify-sarfs" 
+}
+ 
+2.       Get the id of the Task
+URL : http://localhost:55537/api/task
+ 
+Response : List of Task will be returned and filter the task by name like “RF Pending Completion” and get the task , pass to below complete method
+ 
+·         id
+ 
+3.       Complete :
+URL : http://localhost:55537/api/taskcomplete
+Json Input Param :
+ 
+{
+"variables": {  
+      “action” : “promote” // based on context value needs to pass like “demote” ,”pullback”,”cancel”    
+      },
+      "key" : id 
+}
+ 
+Note : Integrate the above API and there will  additional validation needs to be done.
