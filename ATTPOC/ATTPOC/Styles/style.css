@@ -44,7 +44,13 @@ label {
     position: relative;
     background-color: lightblue;
 }
-
+#search {
+         display: block;
+         position: absolute;
+         z-index: 2;
+         top: 100px;
+         left: 560px;
+      }
 .maximized-map #map {
     height: 100%;
 }

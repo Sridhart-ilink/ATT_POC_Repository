@@ -30,12 +30,7 @@
                         <h4 class="inline">ArcGIS - SARF</h4>
                     </div>
                 </div>
-                <div id="map" style ="width : 65%; height : 620px" class ="pull-left">
-                    <a id="btnExpandMap" class="btn btn-primary" title="Click to maximize/minimize map">
-                    <span class="glyphicon glyphicon-chevron-up"></span></a>
-                </div>
-                <div id="search"></div>
-                <div class="col-sm-4 pull-right">
+                <div class="col-sm-4">
                     <div>
                         <asp:DataGrid runat="server" ID="dtGrid" AutoGenerateColumns="false" class="table table-hover" PageSize="5" AllowPaging="true" OnPageIndexChanged="dtGrid_OnPageIndexChanging">
                         <Columns>
@@ -65,6 +60,11 @@
                         <textarea style="visibility: hidden;" id="vertices" runat="server" rows="3" class="form-control form-group"></textarea>
                         <asp:HiddenField runat="server" ID="hdnArea" />
                     </div>
+                </div>
+                <div id="search"></div>
+                <div id="map" style ="width : 65%; height : 620px" class ="pull-right">
+                    <a id="btnExpandMap" class="btn btn-primary" title="Click to maximize/minimize map">
+                    <span class="glyphicon glyphicon-chevron-up"></span></a>
                 </div>
             </div>
         </form>

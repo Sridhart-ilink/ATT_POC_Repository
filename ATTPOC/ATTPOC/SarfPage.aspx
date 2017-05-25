@@ -290,8 +290,8 @@
                 }
             });
         }
-        
-	    function getTaskStatusbyProcessInstanceID(processInstanceID) {
+
+        function getTaskStatusbyProcessInstanceID(processInstanceID) {
             var getStatusUrl = "task-by-process-instance";
             /*
             api call to get the  task id , activity name ie status to complete the task
@@ -320,7 +320,7 @@
             });
         }
         var processInstanceID = "";
-
+        var polygonlist = [];
         function initializeDetailsLabel(details) {
             if (details != null) {
                 $('#lblsarfname').text(details.SarfName);
@@ -352,8 +352,8 @@
                 $('#txtiplan').val(details.iPlan_Job);
             }
         }
-        
-        function resetWorkflowButtons(currentStatus){
+
+        function resetWorkflowButtons(currentStatus) {
             switch (currentStatus) {
                 case statusEnum.One:
                     $('#promoteBtn').show();
@@ -413,6 +413,28 @@
                     jsonDetails = data[0];
                     initializeDetailsLabel(jsonDetails);
                     console.log(data);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+
+            var getSarfPolygonUrl = "GetAllPolygon/Get";
+
+            $.ajax({
+                method: 'GET',
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                url: camundaBaseApiUrl + getSarfPolygonUrl,
+                data: JSON.stringify({}),
+                async: false,
+                cache: false,
+                success: function (data) {
+                    $.each(data, function (i, item) {
+                        console.log(item.Vertices);
+                        polygonlist.push(item.Vertices);
+                    });
+
                 },
                 error: function (err) {
                     console.log(err);
@@ -571,8 +593,8 @@
                     createGraphicsMenu();
                     if (localStorage["vertices"] != null || localStorage["vertices"] != "") {
                         var finalVal = JSON.parse(JSON.stringify(localStorage["vertices"]));
-                        var fillSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
-                             new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+                        var fillSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_CROSS,
+                             new SimpleLineSymbol(SimpleLineSymbol.STYLE_CROSS,
                              new Color([255, 0, 0]), 2), new Color([0, 0, 0, 0.25])
                           );
                         var polygon = new Polygon(new esri.SpatialReference({ wkid: 4326 }));
@@ -582,6 +604,37 @@
                         var gra = new esri.Graphic(polygon, fillSymbol);
                         map.graphics.add(gra);
                         map.setExtent(polygon.getExtent());
+                        if (polygonlist.length > 0) {
+
+                            $.each(polygonlist, function (i, val) {
+
+                                var vertices_arr = [];
+                                vertices_arr.push(val.split(';'))
+                                var finalVal = "";
+                                $.each(vertices_arr[0], function (i, val) {
+                                    if (vertices_arr[0][i].length > 0) {
+                                        finalVal = finalVal + '[' + vertices_arr[0][i] + ']' + ','
+                                    }
+
+                                });
+                                if (finalVal.length > 0) {
+                                    finalVal = finalVal.substring(0, finalVal.length - 1)
+                                    if (finalVal != localStorage["vertices"]) {
+                                        var finalVertices = JSON.parse(JSON.stringify(finalVal));
+                                        polygon = new Polygon(new esri.SpatialReference({ wkid: 4326 }));
+                                        finalVertices = JSON.parse("[" + finalVertices + "]");
+                                        polygon.addRing(finalVertices)
+                                        var fillSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+                                        new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+                                        new Color([255, 0, 0]), 2), new Color([0, 0, 0, 0.25])
+                                        );
+
+                                        var gra = new esri.Graphic(polygon, fillSymbol);
+                                        map.graphics.add(gra);
+                                    }
+                                }
+                            });
+                        }
                     }
                 }));
 

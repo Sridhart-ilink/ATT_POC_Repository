@@ -148,12 +148,18 @@ function getTaskStatusbyProcessInstanceID(processInstanceID) {
 function onLoadGis() {
     require([
       "esri/map",
+      "esri/layers/CSVLayer",
+      "esri/Color",
+       "esri/dijit/Search",
+      "esri/symbols/SimpleMarkerSymbol",
+      "esri/renderers/SimpleRenderer",
+      "esri/InfoTemplate",
+      "esri/urlUtils",     
       "esri/toolbars/draw",
       "esri/graphic",
       "esri/Color",
       "esri/toolbars/edit",
-
-      "esri/symbols/SimpleMarkerSymbol",
+     // "esri/symbols/SimpleMarkerSymbol",
       "esri/symbols/SimpleLineSymbol",
       "esri/symbols/SimpleFillSymbol",
       "esri/symbols/CartographicLineSymbol",
@@ -163,36 +169,97 @@ function onLoadGis() {
       "esri/geometry/Polyline",
       "esri/layers/GraphicsLayer",
       "esri/geometry/webMercatorUtils",
+      "dojo/parser",
       "dijit/Menu",
       "dijit/MenuItem",
-      "dojo/on"],
+       "dijit/Dialog",
+      "dijit/form/Form",
+      "dijit/form/TextBox",
+      "dijit/form/Button",
+      "dojo/on",
+      "dojo/dom",
+      "dojo/domReady!"],
     function (Map,
+              CSVLayer,
+              Color,
+              Search,
+              SimpleMarkerSymbol,
+              SimpleRenderer,
+              InfoTemplate,
+              urlUtils,
+              Draw,
+              Graphic,
+              Color,
+              Edit,
+              // MapView,
+              //SimpleMarkerSymbol,
+              SimpleLineSymbol,
+              SimpleFillSymbol,
+              CartographicLineSymbol,
+              Circle,
+              Point,
+              Polygon,
+              Polyline,
+              GraphicsLayer,
+              WebMercatorUtils,
+              Parser,
+              Menu,
+              MenuItem,
+              Dialog,
+              Form,
+              TextBox,
+              Button,
+              on,
+              dom) {
 
-        Draw, Graphic, Color, Edit,
-
-       SimpleMarkerSymbol,
-        SimpleLineSymbol, SimpleFillSymbol,
-      CartographicLineSymbol, Circle,
-      Point,
-      Polygon, Polyline, GraphicsLayer,
-      WebMercatorUtils, Menu, MenuItem, on) {
-
-        var editToolBar, drawToolBar, drawingLayer, ctxMenuForGraphics, selectedGraphic = null;
+        var editToolBar, drawToolBar, drawingLayer, ctxMenuForGraphics,ctxMenuForGraphics1 ,selectedGraphic = null;
         var drawing = false, editing = false;
+        Parser.parse();
 
         map = new Map("map", {
             basemap: "streets",
-            center: [-79, 38],
+            center: [-115.94158, 48.89913, -125.14812, 44.75269], // lon, lat
             zoom: 5,
             minZoom: 2
         });
 
+        var search = new Search({
+            map: map
+        }, "search");
+        search.startup();
 
         events.push(map.on("load", function () {
             initDrawing();
             initEditing();
+           initcsv();
             createGraphicsMenu();
+           createToolbarAndContextMenu();
         }));
+
+        function createToolbarAndContextMenu() {
+
+            map.on("click", function (evt) {
+                if (drawing !== true) {
+                    var symbol = new SimpleMarkerSymbol(
+                         SimpleMarkerSymbol.STYLE_CIRCLE,
+                         12,
+                         new SimpleLineSymbol(
+                           SimpleLineSymbol.STYLE_NULL,
+                           new Color([247, 34, 101, 0.9]),
+                           1
+                         ),
+                         new Color([207, 34, 171, 0.5])
+                       );
+
+                    var mp = WebMercatorUtils.webMercatorToGeographic(evt.mapPoint);
+                    //map.graphics.clear();
+                    map.graphics.add(new Graphic(evt.mapPoint, symbol));
+                    map.infoWindow.setContent("X: " + evt.mapPoint.x.toString() + ", <br>Y: " + evt.mapPoint.y.toString());
+                    map.infoWindow.show(evt.mapPoint)
+                    createGraphicsMenu1();
+                }
+            });
+        }
 
         //Unload all the events when the application closes to prevent memory leaks
         events.push(map.on("unload", function () {
@@ -214,6 +281,29 @@ function onLoadGis() {
           new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
           new Color([255, 0, 0]), 2), new Color([0, 0, 0, 0.25])
         );
+
+        function initcsv() {
+
+            var csv;
+
+            //urlUtils.addProxyRule({
+            //    proxyUrl: "",
+            //    urlPrefix: "earthquake.usgs.gov"
+            //});
+            //file:///C:/Users/Anusha/Downloads/ATT_Orchestration_BPM_POC-master/ATT_Orchestration_BPM_POC-master/ATTPOC/ATTPOC/2.5_week.csv
+            csv = new CSVLayer("../../2.5_week.csv", {
+                copyright: "USGS.gov"
+            });
+
+            var orangeRed = new Color([238, 69, 0, 0.5]); // hex is #ff4500
+            var marker = new SimpleMarkerSymbol("solid", 15, null, orangeRed);
+            var renderer = new SimpleRenderer(marker);
+            csv.setRenderer(renderer);
+            var template = new InfoTemplate("${type}", "${place}");
+            csv.setInfoTemplate(template);
+            map.addLayer(csv);
+
+        }
 
         function initDrawing() {
             drawToolBar = new Draw(map);
@@ -436,6 +526,41 @@ function onLoadGis() {
             return Math.round((num + 0.00001) * multiplier) / multiplier;
         }
 
+        //Creates right-click context menu for graphics on the point
+        function createGraphicsMenu1() {
+
+            ctxMenuForGraphics1 = new Menu({});
+
+            ctxMenuForGraphics1.addChild(new MenuItem({
+                label: "Add Node",
+                onClick: function () {
+                    if (selectedGraphic != null && selectedGraphic.geometry.type !== "polygon"
+                        && selectedGraphic.geometry.type !== "polyline") {
+                        editToolBar.activate(Edit.EDIT_VERTICES, selectedGraphic);
+                        editing = true;
+                    }
+                }
+            }));
+
+            ctxMenuForGraphics1.startup();
+
+            //Bind and unbind the context menu using the following two events
+            map.graphics.on("mouse-over", function (evt) {
+                // We'll use this "selected" graphic to enable editing tools
+                // on this graphic when the user click on one of the tools
+                // listed in the menu.
+                selected = evt.graphic;
+
+                // Let's bind to the graphic underneath the mouse cursor           
+                ctxMenuForGraphics1.bindDomNode(evt.graphic.getDojoShape().getNode());
+            });
+
+            map.graphics.on("mouse-out", function (evt) {
+                ctxMenuForGraphics1.unBindDomNode(evt.graphic.getDojoShape().getNode());
+            });
+
+        }
+
         //Creates right-click context menu for graphics on the drawingLayer
         function createGraphicsMenu() {
 
@@ -444,29 +569,71 @@ function onLoadGis() {
                 label: "Create Sarf",
                 onClick: function () {
                     if (selectedGraphic != null && selectedGraphic.geometry.type !== "point") {
-                        require([
-         "dijit/Dialog",
-         "dijit/form/Form",
-         "dijit/form/TextBox",
-         "dijit/form/Button",
-         "dojo/domReady!"
-                        ], function (Dialog, Form, TextBox, Button) {
+          //              require([
+        // "dijit/Dialog",
+        // "dijit/form/Form",
+        // "dijit/form/TextBox",
+        // "dijit/form/Button",
+        // "dojo/domReady!"
+        //                ], function (Dialog, Form, TextBox, Button) {
                             var form = new Form();
 
                             new TextBox({
                                 placeHolder: "Name"
                             }).placeAt(form.containerNode);
 
-                            var myDialog = new Dialog({
-                                //    title: "SARF is created",
-                                style: "width: 300px; top:425px;"
-                            });
+                            //var myDialog = new Dialog({
+                            //    //    title: "SARF is created",
+                            //    style: "width: 300px; top:425px;"
+                            //});
 
                             new Button({
                                 label: "Save",
                                 onClick: function () {
                                     //myDialog.set("content", "SARF is created");
                                     //myDialog.show();
+                                    var vertices = document.getElementById("vertices").value;
+                                    var sarfname = document.getElementById("textbox1").value;
+                                    var data = { vertices: vertices, sarfname: sarfname };
+                                    var getProcessUrl = "process-definition";
+                                    var jsonData = {
+                                        variables: {},
+                                        key: "identify-sarfs"
+                                    }
+
+                                    $.ajax({
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        contentType: 'application/json',
+                                        url: camundaBaseApiUrl + getProcessUrl,
+                                        data: JSON.stringify(jsonData),
+                                        async: false,
+                                        cache: false,
+                                        success: function (data) {
+                                            saveSARFData(JSON.parse(data).id);
+                                        },
+                                        error: function (err) {
+                                            console.log(err);
+                                        }
+                                    });
+
+                                    //$.ajax({
+                                    //    type: "POST",
+                                    //    url: camundaBaseApiUrl + getProcessUrl,
+                                    //    data: JSON.stringify(data),
+                                    //    contentType: 'application/json',
+                                    //    dataType: "json",
+                                    //    success: function (data) {
+
+                                    //        saveSARFData(JSON.parse(data).id);
+                                    //        window.location.href = window.location.href;
+                                    //        dia.destroy();
+                                    //    },
+                                    //    error: function (e) {
+                                    //        alert(e.error);
+                                    //        dia.destroy();
+                                    //    }
+                                    //});
                                 }
                             }).placeAt(form.containerNode);
 
@@ -477,7 +644,7 @@ function onLoadGis() {
                             });
                             form.startup();
                             dia.show();
-                        });//~require
+                       // });//~require
                     }
                 }
             }));

@@ -128,6 +128,20 @@ namespace ATTWebAppAPI.Controllers
         }
 
         [HttpGet]
+        [Route("api/GetAllPolygon/Get")]
+        public DataTable GetAllPolygons()
+        {
+            try
+            {
+                return sarfDao.GetAllPolygons();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error : " + ex.Message);
+            }
+        }
+
+        [HttpGet]
         [Route("api/Test/Get")]
         public HttpResponseMessage TestGet()
         {
