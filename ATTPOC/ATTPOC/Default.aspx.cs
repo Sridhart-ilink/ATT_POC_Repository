@@ -31,7 +31,7 @@ namespace JavascriptBasedApp
         {
             using (var client = new HttpClient())
             {
-                string serviceUrl = "http://localhost/ATTWebAppAPI/api/";
+                string serviceUrl = System.Configuration.ConfigurationManager.AppSettings.Get("ServiceUrl");
                 client.BaseAddress = new Uri(serviceUrl);
                 var response = client.GetAsync("SarfDetails/Get").Result;
                 var data = response.Content.ReadAsStringAsync();

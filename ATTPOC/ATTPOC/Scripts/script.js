@@ -1,13 +1,7 @@
 //global variable declarations
-var DECIMAL_PRECISION = 5;
-var events = [];
 var TaskID = 0;
 var InstanceID = 0;
 var TaskStatus = "";
-
-//url path declarations
-var appUrl = "http://localhost/ATTWorkFlowPOC/";
-var camundaBaseApiUrl = "http://localhost/ATTWebAppAPI/api/";
 
 function loadScript(src, callback) {
     'use strict';
@@ -137,12 +131,12 @@ function getTaskStatusbyProcessInstanceID(processInstanceID) {
         async: false,
         cache: false,
         success: function (data) {
-            var parsedData = JSON.parse(data)[0];            
-            TaskID = parsedData.id; 
-            TaskStatus = parsedData.name;
+            var parsedData = JSON.parse(data);
+            InstanceID = parsedData[0].processInstanceId;
+            TaskID = parsedData[0].id;
+            TaskStatus = parsedData[0].name;
             localStorage["taskID"] = TaskID;
-            localStorage["instanceID"] = processInstanceID;
-            InstanceID = processInstanceID;
+            localStorage["instanceID"] = InstanceID;
             localStorage["taskStatus"] = TaskStatus;
             console.log(parsedData);
         },

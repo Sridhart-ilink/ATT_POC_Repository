@@ -8,52 +8,111 @@
     <script type="text/javascript" src="Scripts/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="Scripts/angular-1.3.15.min.js"></script>
     <script type="text/javascript" src="Scripts/bootstrap-3.3.4.min.js"></script>
+    <script type="text/javascript" src="Scripts/globals.js"></script>
 
     <!--CSS imports-->
     <link rel="stylesheet" type="text/css" href="Styles/bootstrap-3.3.4.min.css" />
     <link rel="stylesheet" type="text/css" href="Styles/esri-3.14.css" />
     <link rel="stylesheet" type="text/css" href="Styles/claro-3.14.css" />
-    <link rel="stylesheet" type="text/css" href="Styles/style.css" />
     <link rel="stylesheet" href="bootstrap.vertical-tabs.css" />
+    <link rel="stylesheet" type="text/css" href="Styles/style.css" />
 </head>
-    <style type="text/css">
-        /* DivTable.com */
-.divTable{
-	display: table;
-	width: 100%;
-}
-.divTableRow {
-	display: table-row;
-}
-.divTableHeading {
-	background-color: #EEE;
-	display: table-header-group;
-}
-.divTableCell, .divTableHead {
-	border: 0px solid #999999;
-	display: table-cell;
-	padding: 3px 10px;
-}
-.divTableHeading {
-	background-color: #EEE;
-	display: table-header-group;
-	font-weight: bold;
-}
-.divTableFoot {
-	background-color: #EEE;
-	display: table-footer-group;
-	font-weight: bold;
-}
-.divTableBody {
-	display: table-row-group;
-}
-    </style>
+
 <body>
-    <form id="form1" runat="server">
-        <div class="container">
+    <form id="sarfForm" runat="server">
+        <div class="container-fluid">
             <div class="row" style="min-height: 600px;">
-                <div class="col-sm-12">
-                    <h3>Sarf Details</h3>
+                <div class="col-md-2 pad-lr-5">
+                    <div class="form-group" style="margin-top: 10px; margin-bottom: 5px;">
+                        <input class="form-control" runat="server" type="text" id="SearchTxt" placeholder="Search here" />
+                        <button type="button" id ="editBtn" class="btn btn-link pull-right linkcolor editLink">EDIT</button>
+                        <button type="button" id ="detailsupdatebtn" class="btn btn-link pull-right linkcolor editLink">SAVE</button>
+                        <button type="button" id ="detailscancelBtn" class="btn btn-link pull-right linkcolor editLink">CANCEL</button>
+                    </div>
+                    <hr class="divider" />
+                    <div class="sarfDetails">
+                        <div class="">
+                            <label for="txtsarfname">Sarf Name:</label>
+                            <p class="lblDetails"><span id="lblsarfname"></span></p>
+                            <input class="form-control txtDetails" runat="server" type="text" id="txtsarfname" />
+                        </div>
+                        <div class="">
+                            <label for="txtfacode">FA Code:</label>
+                            <p class="lblDetails"><span id="lblfacode"></span></p>
+                            <input class="form-control txtDetails" runat="server" type ="text" id="txtfacode" />
+                        </div>
+                        <div class="">
+                            <label for="txtsearchring">Search Ring ID:</label>
+                            <p class="lblDetails"><span id="lblsearchring"></span></p>
+                            <input class="form-control txtDetails" runat="server" type ="text" id="txtsearchring" />
+                        </div>
+                        <div class="">
+                            <label for="txtiplan">IPlan Job #:</label>
+                            <p class="lblDetails"><span id="lbliplan"></span></p>
+                            <input class="form-control txtDetails" runat="server" type ="text" id="txtiplan" />
+                        </div>
+                        <div class="">
+                            <label for="txtpace">Pace Number #:</label>
+                            <p class="lblDetails"><span id="lblpace"></span></p>
+                            <input class="form-control txtDetails" runat="server" type ="text" id="txtpace" />
+                        </div>
+                        <div class="">
+                            <label for="txtmarket">Market:</label>
+                            <p class="lblDetails"><span id="lblmarket"></span></p>
+                            <input class="form-control txtDetails" runat="server" type ="text" id="txtmarket" />
+                        </div>
+                        <div class="">
+                            <label for="txtcounty">County:</label>
+                            <p class="lblDetails"><span id="lblcounty"></span></p>
+                            <input class="form-control txtDetails" runat="server" type ="text" id="txtcounty" />
+                        </div>
+                        <div class="">
+                            <label for="txtfatype">FA Type:</label>
+                            <p class="lblDetails"><span id="lblfatype"></span></p>
+                            <input class="form-control txtDetails" runat="server" type ="text" id="txtfatype" />
+                        </div>
+                        <div class="">
+                            <label for="txtmarketcluster">Market Cluster:</label>
+                            <p class="lblDetails"><span id="lblmarketcluster"></span></p>
+                            <input class="form-control txtDetails" runat="server" type ="text" id="txtmarketcluster" />
+                        </div>
+                        <div class="">
+                            <label for="txtregion">Region:</label>
+                            <p class="lblDetails"><span id="lblregion"></span></p>
+                            <input class="form-control txtDetails" runat="server" type ="text" id="txtregion" />
+                        </div>
+                        <div class="">
+                            <label for="txtrfdesign">RF Design Engineer ATTUID:</label>
+                            <p class="lblDetails"><span id="lblrfdesign"></span></p>
+                            <input class="form-control txtDetails" runat="server" type ="text" id="txtrfdesign" />
+                        </div>
+                        <hr />
+                        <button type="button" id="promoteBtn" class="statusBtn btn btn-primary btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
+                            value="promote">
+                            Promote</button>
+                        <button type="button" id="demoteBtn" class="statusBtn btn btn-success btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
+                            value="demote">
+                            Demote</button>
+                        <button type="button" id="pullbackBtn" class="statusBtn btn btn-warning btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
+                            value="pullback">
+                            Pull Back</button>
+                        <button type="button" id="cancelBtn" class="statusBtn btn btn-danger btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
+                            value="cancel">
+                            Cancel</button>
+                        <div id="statusSection">
+                            <div class="form-group">
+                                <label for="txtSarfName">Current Status</label>
+                                <div class="col-xs-12">
+                                    <span id="statusLabel"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 pad-lr-5">
+                    <div style="margin-top: 10px; margin-bottom: 5px">
+                        <a href="Default.aspx" class="linkcolor">Home</a>/<a class="linkcolor">Sarf Details</a>
+                    </div>
                     <hr />
                     <div class="col-xs-12">
                         <!-- required for floating -->
@@ -61,124 +120,22 @@
                         <ul class="nav nav-tabs tabs-left">
                             <li class="active"><a href="#mapview" data-toggle="tab">Map View</a></li>
                             <li><a href="#workflow" data-toggle="tab">Workflow</a></li>
-                            <li><a href="#details" data-toggle="tab">Details</a></li>
-                            <li><a href="#actions" data-toggle="tab">Actions</a></li>
                         </ul>
                     </div>
                     <div class="col-xs-9">
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div class="tab-pane active" id="mapview">
-                                <div id="map" style="width: 1080px; height: 520px" class="pull-left">
+                                <div id="map" style="width: 138%; height: 520px" class="pull-left">
                                     <a id="btnExpandMap" class="btn btn-primary" title="Click to maximize/minimize map">
                                         <span class="glyphicon glyphicon-chevron-up"></span></a>
                                 </div>
                             </div>
                             <div class="tab-pane" id="workflow">
-                                <div style="width: 1080px; height: 520px" class="pull-left">
+                                <div style="width: 138%; height: 520px" class="pull-left">
                                     <iframe runat="server" id="workflowImg" style="width: 1080px; height: 400px;" src="#" frameborder="1" />
-                                    <button type="button" id="promoteBtn" class="statusBtn btn btn-primary btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
-                                        value="promote">
-                                        Promote</button>
-                                    <button type="button" id="demoteBtn" class="statusBtn btn btn-success btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
-                                        value="demote">
-                                        Demote</button>
-                                    <button type="button" id="pullbackBtn" class="statusBtn btn btn-warning btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
-                                        value="pullback">
-                                        Pull Back</button>
-                                    <button type="button" id="cancelBtn" class="statusBtn btn btn-danger btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
-                                        value="cancel">
-                                        Cancel</button>
-                                    <div id="statusSection">
-                                        <div class="form-group">
-                                            <label for="txtSarfName">Current Status</label>
-                                            <div class="col-xs-12">
-                                                <span id="statusLabel"></span>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="details">
-                                <div class="divTable" style="width: 100%;">
-                                    <div class="divTableBody">
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;SARF NAME :</div>
-                                            <div class="divTableCell">
-                                                <input runat="server" id="txtsarfname" />
-                                            </div>
-                                        </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;FA CODE :</div>
-                                            <div class="divTableCell">
-                                                <input runat="server" id="txtfacode" />
-                                            </div>
-                                        </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;SEARCH RING ID :</div>
-                                            <div class="divTableCell">
-                                                <input runat="server" id="txtsearchring" />
-                                            </div>
-                                        </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;IPLAN JOB# :</div>
-                                            <div class="divTableCell">
-                                                <input runat="server" id="txtiplan" />
-                                            </div>
-                                        </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;PACE NUMBER # :</div>
-                                            <div class="divTableCell">
-                                                <input runat="server" id="txtpace" />
-                                            </div>
-                                        </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;MARKET :</div>
-                                            <div class="divTableCell">
-                                                <input runat="server" id="txtmarket" />
-                                            </div>
-                                        </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;COUNTY :</div>
-                                            <div class="divTableCell">
-                                                <input runat="server" id="txtcountry" />
-                                            </div>
-                                        </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;FA TYPE :</div>
-                                            <div class="divTableCell">
-                                                <input runat="server" id="txtfatype" />
-                                            </div>
-                                        </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;MARKET CLUSTER :</div>
-                                            <div class="divTableCell">
-                                                <input runat="server" id="txtmarketcluster" />
-                                            </div>
-                                        </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;REGION :</div>
-                                            <div class="divTableCell">
-                                                <input runat="server" id="txtregion" />
-                                            </div>
-                                        </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;RF DESIGN ENGINEER ATTUID :</div>
-                                            <div class="divTableCell">
-                                                <input runat="server" id="txtrfdesign" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button type="button" id="detailsupdatebtn" class="btn btn-warning btn-form btn-draw disabled" title="Submit"
-                                    value="Submit">
-                                    Submit</button>
-                                <button type="button" id="detailscancelBtn" class="btn btn-danger btn-form btn-draw disabled" title="Cancel"
-                                    value="cancel">
-                                    Cancel</button>
-                                <!-- DivTable.com -->
-                            </div>
-                            <div class="tab-pane" id="actions">Actions.</div>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -190,22 +147,6 @@
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script>
-        var DECIMAL_PRECISION = 5;
-        //Save a collection of event handlers. It is best practive to remove 
-        //event handlers when the application closes (on map "unload")
-        var events = [];
-        var appUrl = "http://localhost/ATTWorkFlowPOC/";
-        var camundaBaseApiUrl = "http://localhost/ATTWebAppAPI/api/";
-        var statusEnum = {
-            One: "RF Pending Completion",
-            Two: "C&E Vendor Assignment",
-            Three: "TV Pending Approval",
-            Four: "RF Mod - C&E PM Vendor Assignment",
-            Five: "RF Mod - TV Pending Approval",
-            Six: "TV Complete",
-            Seven: "Cancel"
-        };
-
         function loadScript(src, callback) {
             'use strict';
 
@@ -302,7 +243,24 @@
             $('#pullbackBtn').hide();
         }
 
-        function updateStatus(wfStatus) {
+        function workflowUpdate(currentBtnText) {
+            switch (currentBtnText) {
+                case "Promote":
+                    updatePromoteStatus(currentStatus);
+                    break;
+                case "Demote":
+                    updateDemoteStatus(currentStatus);
+                    break;
+                case "Pull Back":
+                    updatePullbackStatus(currentStatus);
+                    break;
+                case "Cancel":
+                    updateCancelStatus(currentStatus);
+                    break;
+            }
+        }
+
+        function updateStatus(wfStatus, currentText) {
             var getStatusUrl = "taskcomplete";
             var jsonData = {
                 variables: {
@@ -323,15 +281,17 @@
                 cache: false,
                 success: function (data) {
                     getTaskStatusbyProcessInstanceID(processInstanceID);
+                    workflowUpdate(currentText);
                     console.log(data);
-                    $('#workflowImg').contentWindow.location.reload();
+                    $('#sarfForm').submit();
                 },
                 error: function (err) {
                     console.log(err);
                 }
             });
         }
-        function getTaskStatusbyProcessInstanceID(processInstanceID) {
+        
+	    function getTaskStatusbyProcessInstanceID(processInstanceID) {
             var getStatusUrl = "task-by-process-instance";
             /*
             api call to get the  task id , activity name ie status to complete the task
@@ -360,15 +320,122 @@
             });
         }
         var processInstanceID = "";
+
+        function initializeDetailsLabel(details) {
+            if (details != null) {
+                $('#lblsarfname').text(details.SarfName);
+                $('#lblcounty').text(details.County);
+                $('#lblfacode').text(details.FA_Code);
+                $('#lblfatype').text(details.FA_Type);
+                $('#lblmarket').text(details.Market);
+                $('#lblmarketcluster').text(details.Market_Cluster);
+                $('#lblpace').text(details.Pace);
+                $('#lblrfdesign').text(details.RF_Design_Engineer_ATTUID);
+                $('#lblregion').text(details.Region);
+                $('#lblsearchring').text(details.Search_Ring_ID);
+                $('#lbliplan').text(details.iPlan_Job);
+            }
+        }
+
+        function initializeDetailsText(details) {
+            if (details != null) {
+                $('#txtsarfname').val(details.SarfName);
+                $('#txtcounty').val(details.County);
+                $('#txtfacode').val(details.FA_Code);
+                $('#txtfatype').val(details.FA_Type);
+                $('#txtmarket').val(details.Market);
+                $('#txtmarketcluster').val(details.Market_Cluster);
+                $('#txtpace').val(details.Pace);
+                $('#txtrfdesign').val(details.RF_Design_Engineer_ATTUID);
+                $('#txtregion').val(details.Region);
+                $('#txtsearchring').val(details.Search_Ring_ID);
+                $('#txtiplan').val(details.iPlan_Job);
+            }
+        }
+        
+        function resetWorkflowButtons(currentStatus){
+            switch (currentStatus) {
+                case statusEnum.One:
+                    $('#promoteBtn').show();
+                    $('#cancelBtn').show();
+                    break;
+
+                case statusEnum.Two:
+                case statusEnum.Three:
+                    $('#promoteBtn').show();
+                    $('#demoteBtn').show();
+                    $('#pullbackBtn').show();
+                    $('#cancelBtn').show();
+                    break;
+
+                case statusEnum.Four:
+                case statusEnum.Five:
+                    $('#promoteBtn').show();
+                    $('#pullbackBtn').show();
+                    break;
+
+                case statusEnum.Six:
+                    $('#pullbackBtn').show();
+                    $('#cancelBtn').show();
+                    break;
+            }
+        }
+
         $(document).ready(function () {
-
             processInstanceID = GetParameterValues("processInstanceId");
-             
-
+            getTaskStatusbyProcessInstanceID(processInstanceID);
             $('#statusLabel').text(localStorage["taskStatus"]);
 
+            $('#promoteBtn').hide();
             $('#demoteBtn').hide();
             $('#pullbackBtn').hide();
+            $('#cancelBtn').hide();
+
+            resetWorkflowButtons(localStorage["taskStatus"]);
+            $('.txtDetails').hide();
+            $('.lblDetails').show();
+            $('#detailsupdatebtn').hide();
+            $('#detailscancelBtn').hide();
+            var jsonDetails = {};
+            /*
+            api call to update status
+            */
+            var getDetailsUrl = "AllSarfDetails/Get/" + processInstanceID;
+            $.ajax({
+                method: 'GET',
+                dataType: 'json',
+                contentType: 'application/json',
+                url: camundaBaseApiUrl + getDetailsUrl,
+                data: JSON.stringify({}),
+                async: false,
+                cache: false,
+                success: function (data) {
+                    jsonDetails = data[0];
+                    initializeDetailsLabel(jsonDetails);
+                    console.log(data);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+
+            $('#editBtn').click(function () {
+                $('#editBtn').hide();
+                $('#detailsupdatebtn').show();
+                $('#detailscancelBtn').show();
+                $('.lblDetails').hide();
+                $('.txtDetails').show();
+            });
+
+
+            $('#detailscancelBtn').click(function () {
+                initializeDetailsText(jsonDetails);
+                $('#editBtn').show();
+                $('#detailsupdatebtn').hide();
+                $('#detailscancelBtn').hide();
+                $('.lblDetails').show();
+                $('.txtDetails').hide();
+            });
 
             $("#btnExpandMap").click(function () {
                 $("#mainWrapper").toggleClass("maximized-map");
@@ -384,21 +451,7 @@
                 var currentBtnText = $(this).text();
                 var currentBtnVal = $(this).val();
                 var currentStatus = $('#statusLabel').text();
-                updateStatus(currentBtnVal);
-                switch (currentBtnText) {
-                    case "Promote":
-                        updatePromoteStatus(currentStatus);
-                        break;
-                    case "Demote":
-                        updateDemoteStatus(currentStatus);
-                        break;
-                    case "Pull Back":
-                        updatePullbackStatus(currentStatus);
-                        break;
-                    case "Cancel":
-                        updateCancelStatus(currentStatus);
-                        break;
-                }
+                updateStatus(currentBtnVal, currentBtnText);
             });
 
             function GetParameterValues(param) {
@@ -420,7 +473,7 @@
                 var iplanTxt = $('#txtiplan').val();
                 var paceTxt = $('#txtpace').val();
                 var marketTxt = $('#txtmarket').val();
-                var countyTxt = $('#txtcountry').val();
+                var countyTxt = $('#txtcounty').val();
                 var fatypeTxt = $('#txtfatype').val();
                 var marketcluterTxt = $('#txtmarketcluster').val();
                 var regionTxt = $('#txtregion').val();
@@ -428,17 +481,17 @@
 
                 var postSarfDataUrl = "UpdateSarf/Post";
                 var sarf = {
-                    id: sarfid, 
-                    sarfName: sarfNameTxt, 
-                    facode: facodeTxt, 
-                    searchringid: searchringTxt, 
-                    iplanjob: iplanTxt, 
-                    pacenumber: paceTxt, 
-                    market: marketTxt, 
-                    county: countyTxt, 
-                    fatype: fatypeTxt, 
-                    marketcluster: marketcluterTxt, 
-                    region: regionTxt, 
+                    id: sarfid,
+                    sarfName: sarfNameTxt,
+                    facode: facodeTxt,
+                    searchringid: searchringTxt,
+                    iplanjob: iplanTxt,
+                    pacenumber: paceTxt,
+                    market: marketTxt,
+                    county: countyTxt,
+                    fatype: fatypeTxt,
+                    marketcluster: marketcluterTxt,
+                    region: regionTxt,
                     rfdesignenggid: rfdesignTxt
                 };
                 /*
@@ -453,6 +506,11 @@
                     async: false,
                     cache: false,
                     success: function (data) {
+                        $('#editBtn').show();
+                        $('#detailsupdatebtn').hide();
+                        $('#detailscancelBtn').hide();
+                        $('.lblDetails').show();
+                        $('.txtDetails').hide();
                         console.log(data);
                     },
                     error: function (err) {

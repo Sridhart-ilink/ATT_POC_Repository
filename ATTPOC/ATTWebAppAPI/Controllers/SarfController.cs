@@ -85,11 +85,11 @@ namespace ATTWebAppAPI.Controllers
 
         [HttpGet]
         [Route("api/AllSarfDetails/Get/{sarfID}")]
-        public DataTable GetAllSarfDetails(int sarfID)
+        public DataTable GetAllSarfDetails(string sarfID)
         {
             try
             {
-                return sarfDao.GetAllSarfDetails(sarfID);
+                return sarfDao.SarfDetailsByTaskID(sarfID);
             }
             catch (Exception ex)
             {

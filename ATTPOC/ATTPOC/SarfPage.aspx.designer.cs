@@ -13,22 +13,22 @@ namespace JavascriptBasedApp {
     public partial class SarfPage {
         
         /// <summary>
-        /// form1 control.
+        /// sarfForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.HtmlControls.HtmlForm sarfForm;
         
         /// <summary>
-        /// workflowImg control.
+        /// SearchTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl workflowImg;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText SearchTxt;
         
         /// <summary>
         /// txtsarfname control.
@@ -85,13 +85,13 @@ namespace JavascriptBasedApp {
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtmarket;
         
         /// <summary>
-        /// txtcountry control.
+        /// txtcounty control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtcountry;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtcounty;
         
         /// <summary>
         /// txtfatype control.
@@ -128,5 +128,14 @@ namespace JavascriptBasedApp {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtrfdesign;
+        
+        /// <summary>
+        /// workflowImg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl workflowImg;
     }
 }
