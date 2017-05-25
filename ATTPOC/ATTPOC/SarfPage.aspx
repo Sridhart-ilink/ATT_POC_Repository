@@ -8,46 +8,16 @@
     <script type="text/javascript" src="Scripts/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="Scripts/angular-1.3.15.min.js"></script>
     <script type="text/javascript" src="Scripts/bootstrap-3.3.4.min.js"></script>
+    <script type="text/javascript" src="Scripts/globals.js"></script>
 
     <!--CSS imports-->
     <link rel="stylesheet" type="text/css" href="Styles/bootstrap-3.3.4.min.css" />
     <link rel="stylesheet" type="text/css" href="Styles/esri-3.14.css" />
     <link rel="stylesheet" type="text/css" href="Styles/claro-3.14.css" />
-    <link rel="stylesheet" type="text/css" href="Styles/style.css" />
     <link rel="stylesheet" href="bootstrap.vertical-tabs.css" />
+    <link rel="stylesheet" type="text/css" href="Styles/style.css" />
 </head>
-    <style type="text/css">
-        /* DivTable.com */
-.divTable{
-	display: table;
-	width: 100%;
-}
-.divTableRow {
-	display: table-row;
-}
-.divTableHeading {
-	background-color: #EEE;
-	display: table-header-group;
-}
-.divTableCell, .divTableHead {
-	border: 0px solid #999999;
-	display: table-cell;
-	padding: 3px 10px;
-}
-.divTableHeading {
-	background-color: #EEE;
-	display: table-header-group;
-	font-weight: bold;
-}
-.divTableFoot {
-	background-color: #EEE;
-	display: table-footer-group;
-	font-weight: bold;
-}
-.divTableBody {
-	display: table-row-group;
-}
-    </style>
+    
 <body>
     <form id="form1" runat="server">
         <div class="container">
@@ -100,82 +70,75 @@
                                 </div>
                             </div>
                             <div class="tab-pane" id="details">
-                                <div class="divTable" style="width: 100%;">
-                                    <div class="divTableBody">
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;SARF NAME :</div>
-                                            <div class="divTableCell">
-                                                <input runat="server" id="txtsarfname" />
-                                            </div>
-                                        </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;FA CODE :</div>
-                                            <div class="divTableCell">
-                                                <input runat="server" id="txtfacode" />
-                                            </div>
-                                        </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;SEARCH RING ID :</div>
-                                            <div class="divTableCell">
-                                                <input runat="server" id="txtsearchring" />
-                                            </div>
-                                        </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;IPLAN JOB# :</div>
-                                            <div class="divTableCell">
-                                                <input runat="server" id="txtiplan" />
-                                            </div>
-                                        </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;PACE NUMBER # :</div>
-                                            <div class="divTableCell">
-                                                <input runat="server" id="txtpace" />
-                                            </div>
-                                        </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;MARKET :</div>
-                                            <div class="divTableCell">
-                                                <input runat="server" id="txtmarket" />
-                                            </div>
-                                        </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;COUNTY :</div>
-                                            <div class="divTableCell">
-                                                <input runat="server" id="txtcountry" />
-                                            </div>
-                                        </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;FA TYPE :</div>
-                                            <div class="divTableCell">
-                                                <input runat="server" id="txtfatype" />
-                                            </div>
-                                        </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;MARKET CLUSTER :</div>
-                                            <div class="divTableCell">
-                                                <input runat="server" id="txtmarketcluster" />
-                                            </div>
-                                        </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;REGION :</div>
-                                            <div class="divTableCell">
-                                                <input runat="server" id="txtregion" />
-                                            </div>
-                                        </div>
-                                        <div class="divTableRow">
-                                            <div class="divTableCell">&nbsp;RF DESIGN ENGINEER ATTUID :</div>
-                                            <div class="divTableCell">
-                                                <input runat="server" id="txtrfdesign" />
-                                            </div>
-                                        </div>
+                                <div class="clearfix">
+                                </div>
+                                <div class="col-xs-5">
+                                    <div class="form-group">
+                                        <label for="txtsarfname">Sarf Name:</label>
+                                        <input class="form-control" runat="server" type ="text" id="txtsarfname" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="txtfacode">FA Code:</label>
+                                        <input class="form-control" runat="server" type ="text" id="txtfacode" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="txtsearchring">Search Ring ID:</label>
+                                        <input class="form-control" runat="server" type ="text" id="txtsearchring" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="txtiplan">IPlan Job #:</label>
+                                        <input class="form-control" runat="server" type ="text" id="txtiplan" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="txtpace">Pace Number #:</label>
+                                        <input class="form-control" runat="server" type ="text" id="txtpace" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="txtmarket">Market:</label>
+                                        <input class="form-control" runat="server" type ="text" id="txtmarket" />
                                     </div>
                                 </div>
-                                <button type="button" id="detailsupdatebtn" class="btn btn-warning btn-form btn-draw disabled" title="Submit"
-                                    value="Submit">
-                                    Submit</button>
-                                <button type="button" id="detailscancelBtn" class="btn btn-danger btn-form btn-draw disabled" title="Cancel"
-                                    value="cancel">
-                                    Cancel</button>
+                                <div class="col-xs-5 pull-right">
+                                    <div class="form-group">
+                                        <label for="txtcounty">County:</label>
+                                        <input class="form-control" runat="server" type ="text" id="txtcounty" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="txtfatype">FA Type:</label>
+                                        <input class="form-control" runat="server" type ="text" id="txtfatype" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="txtmarketcluster">Market Cluster:</label>
+                                        <input class="form-control" runat="server" type ="text" id="txtmarketcluster" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="txtregion">Region:</label>
+                                        <input class="form-control" runat="server" type ="text" id="txtregion" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="txtrfdesign">RF Design Engineer ATTUID:</label>
+                                        <input class="form-control" runat="server" type ="text" id="txtrfdesign" />
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="clearfix"></div>
+                                <div class="col-xs-5 pull-right">
+                                    <button type="button" id="detailsupdatebtn" class="btn btn-primary btn-form btn-draw disabled" title="Save"
+                                        value="Submit">
+                                        Save</button>
+                                    <button type="button" id="detailscancelBtn" class="btn btn-danger btn-form btn-draw disabled" title="Cancel"
+                                        value="cancel">
+                                        Cancel</button>
+                                </div>
                                 <!-- DivTable.com -->
                             </div>
                             <div class="tab-pane" id="actions">Actions.</div>
@@ -190,22 +153,6 @@
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script>
-        var DECIMAL_PRECISION = 5;
-        //Save a collection of event handlers. It is best practive to remove 
-        //event handlers when the application closes (on map "unload")
-        var events = [];
-        var appUrl = "http://localhost/ATTWorkFlowPOC/";
-        var camundaBaseApiUrl = "http://localhost/ATTWebAppAPI/api/";
-        var statusEnum = {
-            One: "RF Pending Completion",
-            Two: "C&E Vendor Assignment",
-            Three: "TV Pending Approval",
-            Four: "RF Mod - C&E PM Vendor Assignment",
-            Five: "RF Mod - TV Pending Approval",
-            Six: "TV Complete",
-            Seven: "Cancel"
-        };
-
         function loadScript(src, callback) {
             'use strict';
 
@@ -322,37 +269,7 @@
                 async: false,
                 cache: false,
                 success: function (data) {
-                    getTaskStatusbyProcessInstanceID(processInstanceID);
                     console.log(data);
-                    $('#workflowImg').contentWindow.location.reload();
-                },
-                error: function (err) {
-                    console.log(err);
-                }
-            });
-        }
-        function getTaskStatusbyProcessInstanceID(processInstanceID) {
-            var getStatusUrl = "task-by-process-instance";
-            /*
-            api call to get the  task id , activity name ie status to complete the task
-            */
-            $.ajax({
-                method: 'GET',
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                url: camundaBaseApiUrl + getStatusUrl + "/" + processInstanceID,
-                data: JSON.stringify({}),
-                async: false,
-                cache: false,
-                success: function (data) {
-                    var parsedData = JSON.parse(data)[0];
-                    TaskID = parsedData.id;
-                    TaskStatus = parsedData.name;
-                    localStorage["taskID"] = TaskID;
-                    localStorage["instanceID"] = processInstanceID;
-                    InstanceID = processInstanceID;
-                    localStorage["taskStatus"] = TaskStatus;
-                    console.log(parsedData);
                 },
                 error: function (err) {
                     console.log(err);
@@ -360,15 +277,37 @@
             });
         }
         var processInstanceID = "";
+        var polygonlist = [];
         $(document).ready(function () {
 
-            processInstanceID = GetParameterValues("processInstanceId");
-             
+            processInstanceID = GetParameterValues("processInstanceId");           
 
             $('#statusLabel').text(localStorage["taskStatus"]);
 
             $('#demoteBtn').hide();
             $('#pullbackBtn').hide();
+            // Load all the availble polygons.
+            var getSarfPolygonUrl = "GetAllPolygon/Get";
+           
+            $.ajax({
+                method: 'GET',
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                url: camundaBaseApiUrl + getSarfPolygonUrl,
+                data: JSON.stringify({}),
+                async: false,
+                cache: false,
+                success: function (data) {                  
+                    $.each(data, function (i, item) {
+                        console.log(item.Vertices);
+                        polygonlist.push(item.Vertices);
+                    });
+                   
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
 
             $("#btnExpandMap").click(function () {
                 $("#mainWrapper").toggleClass("maximized-map");
@@ -513,8 +452,8 @@
                     createGraphicsMenu();
                     if (localStorage["vertices"] != null || localStorage["vertices"] != "") {
                         var finalVal = JSON.parse(JSON.stringify(localStorage["vertices"]));
-                        var fillSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
-                             new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+                        var fillSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_CROSS,
+                             new SimpleLineSymbol(SimpleLineSymbol.STYLE_CROSS,
                              new Color([255, 0, 0]), 2), new Color([0, 0, 0, 0.25])
                           );
                         var polygon = new Polygon(new esri.SpatialReference({ wkid: 4326 }));
@@ -524,6 +463,41 @@
                         var gra = new esri.Graphic(polygon, fillSymbol);
                         map.graphics.add(gra);
                         map.setExtent(polygon.getExtent());
+
+                        
+
+                        if (polygonlist.length > 0) {
+
+                            $.each(polygonlist, function (i, val) {
+                          
+                            var vertices_arr = [];
+                            vertices_arr.push(val.split(';'))
+                            var finalVal = "";
+                            $.each(vertices_arr[0], function (i, val) {
+                                if (vertices_arr[0][i].length > 0) {
+                                    finalVal = finalVal + '[' + vertices_arr[0][i] + ']' + ','
+                                }
+
+                            });
+                            if (finalVal.length > 0) {
+                                finalVal = finalVal.substring(0, finalVal.length - 1)
+                                if (finalVal != localStorage["vertices"]){
+                                    var finalVertices = JSON.parse(JSON.stringify(finalVal));
+                                    polygon = new Polygon(new esri.SpatialReference({ wkid: 4326 }));
+                                    finalVertices = JSON.parse("[" + finalVertices + "]");
+                                    polygon.addRing(finalVertices)
+                                    var fillSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+                                    new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+                                    new Color([255, 0, 0]), 2), new Color([0, 0, 0, 0.25])
+                                    );
+
+                                    var gra = new esri.Graphic(polygon, fillSymbol);
+                                    map.graphics.add(gra);
+                                }
+                            }
+                          });
+                        }
+
                     }
                 }));
 

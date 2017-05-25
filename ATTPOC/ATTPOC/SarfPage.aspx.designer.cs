@@ -85,13 +85,13 @@ namespace JavascriptBasedApp {
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtmarket;
         
         /// <summary>
-        /// txtcountry control.
+        /// txtcounty control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtcountry;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtcounty;
         
         /// <summary>
         /// txtfatype control.

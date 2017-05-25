@@ -19,7 +19,7 @@ namespace JavascriptBasedApp
             using (var client = new HttpClient())
             {
                 sarfID = Request.QueryString["processInstanceId"].ToString();
-                string serviceUrl = "http://localhost/ATTWebAppAPI/api/";
+                string serviceUrl = System.Configuration.ConfigurationManager.AppSettings.Get("ServiceUrl");
                 client.BaseAddress = new Uri(serviceUrl);
                 var response = client.GetAsync("SarfDetailsByTaskID/Get/" + sarfID).Result;
                 var data = response.Content.ReadAsStringAsync();
@@ -32,14 +32,14 @@ namespace JavascriptBasedApp
                     txtiplan.Value = dt.Rows[0][3].ToString();
                     txtpace.Value = dt.Rows[0][4].ToString();
                     txtmarket.Value = dt.Rows[0][5].ToString();
-                    txtcountry.Value = dt.Rows[0][6].ToString();
+                    txtcounty.Value = dt.Rows[0][6].ToString();
                     txtfatype.Value = dt.Rows[0][7].ToString();
                     txtmarketcluster.Value = dt.Rows[0][8].ToString();
                     txtregion.Value = dt.Rows[0][9].ToString();
                     txtrfdesign.Value = dt.Rows[0][10].ToString();
                 }
             }
-            workflowImg.Attributes["src"] = "http://localhost:8080/bpmn-io-viewer/bpmn.html?processInstanceId="+sarfID;
+            workflowImg.Attributes["src"] = System.Configuration.ConfigurationManager.AppSettings.Get("WFImgUrl") + sarfID;
         }
     }
 }

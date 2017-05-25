@@ -208,5 +208,35 @@ namespace ATTWebAppAPI.DAL
                 }
             }
         }
+
+        public DataTable GetAllPolygons()
+        {
+            using (MySqlConnection cn = new MySqlConnection(connString))
+            {
+                try
+                {
+                    string query = "SELECT P.Vertices FROM SARF S JOIN Polygon P ON S.SarfId=P.SarfId ;";
+                    cn.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(query, cn))
+                    {
+                        MySqlDataAdapter returnVal = new MySqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        returnVal.Fill(dt);
+                        return dt;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Data Error : " + ex.Message);
+                }
+                finally
+                {
+                    if (cn.State == System.Data.ConnectionState.Open)
+                    {
+                        cn.Close();
+                    }
+                }
+            }
+        }
     }
 }
