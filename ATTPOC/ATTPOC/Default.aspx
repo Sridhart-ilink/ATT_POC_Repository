@@ -26,9 +26,9 @@
     <body>
         <form runat="server" id ="sarfForm">
             <div id="mainWrapper" class="container-fluid">
-                  <div class="row" style="min-height: 600px;">
+                  <div class="row">
               
-                  <div class="col-md-3 pad-lr-5">
+                  <div class="col-md-3 slidingDiv">
                     <div>
                          <a class="btn btn-default btn-form btn-draw disabled btnDraw" id="btnDraw" value="polygon">DRAW A NEW SARF</a>
                         <asp:DataGrid runat="server" ID="dtGrid" AutoGenerateColumns="false" class="table table-hover" PageSize="5" AllowPaging="true" OnPageIndexChanged="dtGrid_OnPageIndexChanging">
@@ -65,9 +65,12 @@
                         <asp:HiddenField runat="server" ID="hdnArea" />
                     </div>
                 </div>
-                <div class="col-md-9 pad-lr-5">
+                <div class="col-md-9 tabDiv">
+                    <div class="toggleArrow">
+                           <img src="Styles/images/double-arrow-right-red.png" title="Hide&Show SideBar" width="15" />
+                       </div>
                     <div id="search"></div>
-                    <div id="map" style="width: 138%; height: 520px" class="pull-left">
+                    <div id="map" class="pull-left">
                         <a id="btnExpandMap" class="btn btn-primary" title="Click to maximize/minimize map">
                         <span class="glyphicon glyphicon-chevron-up"></span></a>
                     </div>

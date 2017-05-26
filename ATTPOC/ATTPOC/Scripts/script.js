@@ -79,7 +79,22 @@ loadScript('https://js.arcgis.com/3.14/init.js', function () {
 });
 
 $(document).ready(function () {
+    $('.toggleArrow').click(function () {
 
+        if ($('.slidingDiv').is(":visible")) {
+            //console.log('side bar shown');
+            $(".slidingDiv").toggle();
+            $('.tabDiv').removeClass('col-md-9');
+            $('.tabDiv').addClass('col-md-12');
+        }
+        else {
+            console.log('side bar hidden');
+            $(".slidingDiv").toggle();
+            $('.tabDiv').removeClass('col-md-12');
+            $('.tabDiv').addClass('col-md-9');
+        }
+    });
+    $('#map').height($(window).height()-60);
     $("#btnExpandMap").click(function () {
         $("#mainWrapper").toggleClass("maximized-map");
 
