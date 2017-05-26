@@ -122,22 +122,18 @@
                         <div class="clearfix"></div>
                         <div class="row">
                             <div class="col-md-12">
-                                <button type="button" id="promoteBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
-                                value="promote">
-                                PROMOTE</button>
-                                <button type="button" id="demoteBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
-                                    value="demote">
-                                    DEMOTE</button>
+                                <button type="button" id="promoteBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled" 
+                                value="promote">PROMOTE</button>
+                                <button type="button" id="demoteBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled" 
+                                    value="demote">DEMOTE</button>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <button type="button" id="pullbackBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
-                                    value="pullback">
-                                    PULL BACK</button>
-                                <button type="button" id="cancelBtn" class="statusBtn redBtn btn btn-lg btn-danger btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
-                                    value="cancel">
-                                    CANCEL</button>
+                                <button type="button" id="pullbackBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled" 
+                                    value="pullback">PULL BACK</button>
+                                <button type="button" id="cancelBtn" class="statusBtn redBtn btn btn-lg btn-danger btn-form btn-draw disabled" 
+                                    value="cancel">CANCEL</button>
                             </div>
                         </div>
                         <div class="clearfix"></div>
@@ -162,13 +158,12 @@
                     <div class="col-xs-9">
                         <!-- Tab panes -->
                         <div class="toggleChat">
-                           <img src="Styles/images/ChatIcon.png" title="Hide&Show SideBar" width="15" />
+                           <img src="Styles/images/ChatIcon.png" title="Hide&Show Comment" width="15" />
                        </div>
                         <div class="tab-content">
                             <div class="tab-pane active" id="mapview">
                                 <div id="map" style="width: 138%; height: 520px" class="pull-left">
-                                    <a id="btnExpandMap" class="btn btn-primary" title="Click to maximize/minimize map">
-                                        <span class="glyphicon glyphicon-chevron-up"></span></a>
+                                    <%--<a id="btnExpandMap" class="btn btn-primary" title="Click to maximize/minimize map">--%>
                                 </div>
                             </div>
                             <div class="tab-pane" id="workflow">
