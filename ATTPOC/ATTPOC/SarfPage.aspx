@@ -21,17 +21,18 @@
 <body>
     <form id="sarfForm" runat="server">
         <div class="container-fluid">
-            <div class="row" style="min-height: 900px;">
-                <div class="col-md-3 pad-lr-5">
-                    <div class="form-group" style="margin-top: 10px; margin-bottom: 5px;">
+            <div class="row">
+                
+                <div class="col-md-3 pad-lr-5 slidingDiv">
+                    <div class="">
+                    <div class="col-md-12 borderBottom" style="margin-top: 10px; margin-bottom: 5px;">
                         <button type="button" id ="editBtn" class="btn btn-link pull-right linkcolor editLink">EDIT</button>
                         <button type="button" id ="detailsupdatebtn" class="btn btn-link pull-right linkcolor editLink">SAVE</button>
                         <button type="button" id ="detailscancelBtn" class="btn btn-link pull-right linkcolor editLink">CANCEL</button>
                         
                     </div>
-                    
                     <div class="sarfDetails">
-                        <hr class="divider" />
+                       
                         <div class="row">
                             <div class="col-md-6 pull-left">
                                 <label for="txtsarfname">Sarf Name:</label>
@@ -118,14 +119,14 @@
                                 <button type="button" id="promoteBtn" class="statusBtn btn btn-lg btn-primary btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
                                 value="promote">
                                 Promote</button>
-                                <button type="button" id="demoteBtn" class="statusBtn btn btn-lg btn-success btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
+                                <button type="button" id="demoteBtn" class="statusBtn btn btn-lg btn-primary btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
                                     value="demote">
                                     Demote</button>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-8 pull-left">
-                                <button type="button" id="pullbackBtn" class="statusBtn btn btn-lg btn-warning btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
+                                <button type="button" id="pullbackBtn" class="statusBtn btn btn-lg btn-primary btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
                                     value="pullback">
                                     Pull Back</button>
                                 <button type="button" id="cancelBtn" class="statusBtn btn btn-lg btn-danger btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
@@ -135,12 +136,15 @@
                         </div>
                         <div class="clearfix"></div>
                     </div>
+                        </div>
                 </div>
-                <div class="col-md-8 pad-lr-5">
-                    <div style="margin-top: 10px; margin-bottom: 5px">
-                        <a href="Default.aspx" class="linkcolor">Home</a>/<a class="linkcolor">Sarf Details</a>
+                <div class="col-md-9 tabDiv">
+                    <div class="toggleArrow">
+                           <img src="Styles/images/double-arrow-right-red.png" title="Hide&Show SideBar" width="15" />
+                       </div>
+                    <div class="col-md-12 borderBottom pageLink" style="margin-top: 7px; margin-bottom: 5px">
+                        <a href="Default.aspx" class="linkcolor" style="margin-left:30px;">Home</a> :: <a class="linkcolor">Sarf Details</a>
                     </div>
-                    <hr />
                     <div class="col-xs-12">
                         <!-- required for floating -->
                         <!-- Nav tabs -->
@@ -419,6 +423,26 @@
         }
 
         $(document).ready(function () {
+
+               // $(".slidingDiv").hide();
+                //$(".toggleArrow").show();
+
+                $('.toggleArrow').click(function () {
+                    
+                    if ($('.slidingDiv').is(":visible")) {
+                        //console.log('side bar shown');
+                        $(".slidingDiv").toggle();
+                        $('.tabDiv').removeClass('col-md-9');
+                        $('.tabDiv').addClass('col-md-12');
+                    }
+                    else {
+                        console.log('side bar hidden');
+                        $(".slidingDiv").toggle();
+                        $('.tabDiv').removeClass('col-md-12');
+                        $('.tabDiv').addClass('col-md-9');
+                    }
+                });
+
             processInstanceID = GetParameterValues("processInstanceId");
             getTaskStatusbyProcessInstanceID(processInstanceID);
             $('#statusLabel').text(localStorage["taskStatus"]);
