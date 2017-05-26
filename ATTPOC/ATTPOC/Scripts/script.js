@@ -658,17 +658,17 @@ function onLoadGis() {
                                     //var sarfname = document.getElementById("textbox1").value;
                                     //var data = { vertices: vertices, sarfname: sarfname };
                                     var getProcessUrl = "process-definition";
-                                //var jsonData = {
-                                //    variables: {},
-                                //    key: "identify-sarfs"
-                                //}
+                                    var jsonData = {
+                                        variables: {},
+                                        key: "identify-sarfs"
+                                    }
 
                                     $.ajax({
                                         method: 'POST',
                                         dataType: 'json',
                                         contentType: 'application/json',
                                         url: camundaBaseApiUrl + getProcessUrl,
-                                    data: JSON.stringify(data),
+                                        data: JSON.stringify(jsonData),
                                         async: false,
                                         cache: false,
                                         success: function (data) {
