@@ -24,7 +24,7 @@ function loadScript(src, callback) {
 
 function saveSARFData(workflowProcessInstanceID) {
     var postSarfDataUrl = "Sarf/Post";
-    var sarfNameTxt = $('#txtSarfName').val();
+    var sarfNameTxt = $('#dijit_form_TextBox_0').val();
     var jsonData = { sarfName: sarfNameTxt, processInstanceID: workflowProcessInstanceID };
     /*
    api call to post sarf data
@@ -579,7 +579,6 @@ function onLoadGis() {
                             var form = new Form();
 
                             new TextBox({
-                                placeHolder: "Name"
                             }).placeAt(form.containerNode);
 
                             //var myDialog = new Dialog({
@@ -592,9 +591,9 @@ function onLoadGis() {
                                 onClick: function () {
                                     //myDialog.set("content", "SARF is created");
                                     //myDialog.show();
-                                    var vertices = document.getElementById("vertices").value;
-                                    var sarfname = document.getElementById("textbox1").value;
-                                    var data = { vertices: vertices, sarfname: sarfname };
+                                    //var vertices = document.getElementById("vertices").value;
+                                    //var sarfname = document.getElementById("textbox1").value;
+                                    //var data = { vertices: vertices, sarfname: sarfname };
                                     var getProcessUrl = "process-definition";
                                     var jsonData = {
                                         variables: {},
@@ -639,11 +638,15 @@ function onLoadGis() {
 
                             var dia = new Dialog({
                                 content: form,
-                                title: "SARF Name",
-                                style: "width: 300px; height: 80px; background-color: white;"
+                                title: "SARF Name"
                             });
                             form.startup();
                             dia.show();
+                            $('.dijitDialog').addClass('dialogStyle');
+                            $('.dijitDialog').find('div[role="presentation"]').css('border-color', 'silver');
+                            $('.dijitInputInner').attr('placeholder', 'Create a new SARF');
+                            $('.dijitInputInner').addClass('form-control');
+                            $('.dijitDialog').find('input[type="button"]').addClass('btn btn-default dialogSaveBtn');
                        // });//~require
                     }
                 }

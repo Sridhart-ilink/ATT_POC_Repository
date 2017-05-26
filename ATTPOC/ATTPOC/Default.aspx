@@ -24,16 +24,15 @@
     </head>
     <body>
         <form runat="server" id ="sarfForm">
-            <div id="mainWrapper" class =" container">
-                <div class="view">
-                    <div class="header-block">
-                        <h4 class="inline">ArcGIS - SARF</h4>
-                    </div>
-                </div>
-                <div class="col-sm-4">
+            <div id="mainWrapper" class="container-fluid">
+                  <div class="row" style="min-height: 600px;">
+              
+                  <div class="col-md-3 pad-lr-5">
                     <div>
+                         <a class="btn btn-default btn-form btn-draw disabled btnDraw" id="btnDraw" value="polygon">DRAW A NEW SARF</a>
                         <asp:DataGrid runat="server" ID="dtGrid" AutoGenerateColumns="false" class="table table-hover" PageSize="5" AllowPaging="true" OnPageIndexChanged="dtGrid_OnPageIndexChanging">
                         <Columns>
+                           
                             <asp:BoundColumn DataField="SarfID"  HeaderStyle-Width="30px" HeaderStyle-BackColor="Gray" ItemStyle-Width="100px" HeaderStyle-ForeColor="White" HeaderText="SARF ID"></asp:BoundColumn>
                             <asp:TemplateColumn HeaderStyle-BackColor="Gray" ItemStyle-Width="100px" HeaderStyle-ForeColor="White" HeaderText="SARF Name">
                                 <ItemTemplate>
@@ -48,23 +47,25 @@
                     </asp:DataGrid>
                     </div>
 
-                    <a class="btn btn-default btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
-                            value="polygon">Draw</a>
+                    <%--<a class="btn btn-default btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
+                            value="polygon">Draw</a>--%>
 
                     <div id="drawOptions">
-                        <div class="form-group">
+                        <%--<div class="form-group">
                             <label for="txtSarfName">Sarf Name:</label>
                             <input class="form-control" type ="text" id="txtSarfName" placeholder="Sarf Name"/>
                         </div>
-                        <button class="btn btn-primary" id="btnSave">Save</button>
+                        <button class="btn btn-primary" id="btnSave">Save</button>--%>
                         <textarea style="visibility: hidden;" id="vertices" runat="server" rows="3" class="form-control form-group"></textarea>
                         <asp:HiddenField runat="server" ID="hdnArea" />
                     </div>
                 </div>
-                <div id="search"></div>
-                <div id="map" style ="width : 65%; height : 620px" class ="pull-right">
-                    <a id="btnExpandMap" class="btn btn-primary" title="Click to maximize/minimize map">
-                    <span class="glyphicon glyphicon-chevron-up"></span></a>
+                <div class="col-md-9 pad-lr-5">
+                    <div id="search"></div>
+                    <div id="map" style="width: 138%; height: 520px" class="pull-left">
+                        <a id="btnExpandMap" class="btn btn-primary" title="Click to maximize/minimize map">
+                        <span class="glyphicon glyphicon-chevron-up"></span></a>
+                    </div>
                 </div>
             </div>
         </form>
