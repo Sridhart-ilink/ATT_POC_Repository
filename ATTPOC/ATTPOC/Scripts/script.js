@@ -154,7 +154,7 @@ function onLoadGis() {
       "esri/symbols/SimpleMarkerSymbol",
       "esri/renderers/SimpleRenderer",
       "esri/InfoTemplate",
-      "esri/urlUtils",     
+      "esri/urlUtils",
       "esri/toolbars/draw",
       "esri/graphic",
       "esri/Color",
@@ -212,7 +212,7 @@ function onLoadGis() {
               on,
               dom) {
 
-        var editToolBar, drawToolBar, drawingLayer, ctxMenuForGraphics,ctxMenuForGraphics1 ,selectedGraphic = null;
+        var editToolBar, drawToolBar, drawingLayer, ctxMenuForGraphics, ctxMenuForGraphics1, selectedGraphic = null;
         var drawing = false, editing = false;
         Parser.parse();
 
@@ -231,9 +231,9 @@ function onLoadGis() {
         events.push(map.on("load", function () {
             initDrawing();
             initEditing();
-           initcsv();
-            createGraphicsMenu();
-           createToolbarAndContextMenu();
+            initcsv();
+            //createGraphicsMenu();
+            // createToolbarAndContextMenu();
         }));
 
         function createToolbarAndContextMenu() {
@@ -317,6 +317,46 @@ function onLoadGis() {
 
             map.addLayer(drawingLayer);
 
+            $("#dtGrid tr").click(function () {                
+                map.graphics.clear();
+                var cell = $(this);
+
+                $("#dtGrid tr:even").css("background-color", "white");
+                $("#dtGrid tr:odd").css("background-color", "lightgray");
+          
+               
+                if (cell[0].childNodes[2].childNodes['3'] != undefined) {
+                    cell[0].style.backgroundColor = "#005476";
+                    cell[0].style.Color = "white";
+                var verticesVal = cell[0].childNodes[2].childNodes['3'].defaultValue;
+                if (verticesVal != "") {
+                    var vertices_arr = [];
+                    vertices_arr.push(verticesVal.split(';'))
+                    var finalVal = "";
+                    $.each(vertices_arr[0], function (i, val) {
+                        if (vertices_arr[0][i].length > 0) {
+                            finalVal = finalVal + '[' + vertices_arr[0][i] + ']' + ','
+                        }
+
+                    });
+                    if (finalVal.length > 0) {
+                        finalVal = finalVal.substring(0, finalVal.length - 1)
+                        var finalVal = JSON.parse(JSON.stringify(finalVal));
+                        var drawFillSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+                         new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+                         new Color([255, 0, 0]), 2), new Color([0, 0, 0, 0.25])
+                       );
+                        var polygon = new Polygon(new esri.SpatialReference({ wkid: 4326 }));
+                        finalVal = JSON.parse("[" + finalVal + "]");
+                        polygon.addRing(finalVal)
+
+                        var gra = new esri.Graphic(polygon, drawFillSymbol);
+                        map.graphics.add(gra);
+                    }
+                }
+               }
+            });
+
             $(".sarfclick").click(function () {
                 map.graphics.clear();
 
@@ -341,7 +381,7 @@ function onLoadGis() {
                 }
                 getTaskStatusbyProcessInstanceID($(self).attr('data-processinstanceid'));
                 window.location = appUrl + "SarfPage.aspx?processInstanceId=" + InstanceID + "&sarfid=" + sarfId;
-                
+
             });
             //Set the click event for the draw buttons
             $(".btn-draw").click(function () {
@@ -396,6 +436,8 @@ function onLoadGis() {
             var graphic = new Graphic(evt.geometry, symbol);
 
             addGraphicToDrawingLayer(graphic);
+
+            createGraphicsMenu();
         }
 
         function addGraphicToDrawingLayer(graphic) {
@@ -406,8 +448,22 @@ function onLoadGis() {
             drawingLayer.add(graphic);
 
             //Automatically activate editing
-            editToolBar.activate(Edit.EDIT_VERTICES, graphic);
-            editing = true;
+            // editToolBar.activate(Edit.EDIT_VERTICES, graphic);
+            // editing = true;
+            //Activate Draw for the selected tool
+            ////////////////////////////////////////
+            $(".btn-draw.active").removeClass("active");
+            $(this).addClass("active");
+
+            var tool = $(this).attr('value');
+
+            //Disable panning
+            map.disableMapNavigation();
+
+            drawToolBar.activate(tool);
+            drawing = true;
+            ////////////////////////////////////
+            //Enable panning
 
             postGraphic(graphic.geometry);
         }
@@ -439,28 +495,28 @@ function onLoadGis() {
 
             //You can capture double clicks for the map itself or for a specific GraphicsLayer
             //ex. drawingLayer.on("dbl-click", function (e) {...})
-            events.push(map.on("dbl-click", function (e) {
-                //If editing a graphic toggle the edit mode when that graphic is double-clicked
-                if (editing) {
-                    var state = editToolBar.getCurrentState();
-                    var editingGraphic = state.graphic;
+            //  events.push(map.on("dbl-click", function (e) {
+            //If editing a graphic toggle the edit mode when that graphic is double-clicked
+            //if (editing) {
+            //    var state = editToolBar.getCurrentState();
+            //    var editingGraphic = state.graphic;
 
-                    if (editingGraphic != null) {
-                        //There exists a method to check if a point is "in" a polygon, but no such thing for polylines
-                        if ((editingGraphic.geometry.type === "polygon" && editingGraphic.geometry.contains(e.mapPoint))
-                            || (editingGraphic.geometry.type === "polyline" && e.graphic === editingGraphic)) {
+            //    if (editingGraphic != null) {
+            //        //There exists a method to check if a point is "in" a polygon, but no such thing for polylines
+            //        if ((editingGraphic.geometry.type === "polygon" && editingGraphic.geometry.contains(e.mapPoint))
+            //            || (editingGraphic.geometry.type === "polyline" && e.graphic === editingGraphic)) {
 
-                            if (state.tool == Edit.EDIT_VERTICES) {
-                                editToolBar.activate(Edit.MOVE, editingGraphic);
-                            } else if (state.tool == Edit.MOVE) {
-                                editToolBar.activate(Edit.EDIT_VERTICES, editingGraphic);
-                            }
+            //            if (state.tool == Edit.EDIT_VERTICES) {
+            //                editToolBar.activate(Edit.MOVE, editingGraphic);
+            //            } else if (state.tool == Edit.MOVE) {
+            //                editToolBar.activate(Edit.EDIT_VERTICES, editingGraphic);
+            //            }
 
-                            map.infoWindow.hide();
-                        }
-                    }
-                }
-            }));
+            //            map.infoWindow.hide();
+            //        }
+            //    }
+            //}
+            // }));
         }
 
         //Parse the vertices, convert them to a convenient format, then display
@@ -569,82 +625,90 @@ function onLoadGis() {
                 label: "Create Sarf",
                 onClick: function () {
                     if (selectedGraphic != null && selectedGraphic.geometry.type !== "point") {
-          //              require([
-        // "dijit/Dialog",
-        // "dijit/form/Form",
-        // "dijit/form/TextBox",
-        // "dijit/form/Button",
-        // "dojo/domReady!"
-        //                ], function (Dialog, Form, TextBox, Button) {
-                            var form = new Form();
+                        //              require([
+                        // "dijit/Dialog",
+                        // "dijit/form/Form",
+                        // "dijit/form/TextBox",
+                        // "dijit/form/Button",
+                        // "dojo/domReady!"
+                        //                ], function (Dialog, Form, TextBox, Button) {
+                        var form = new Form();
 
-                            new TextBox({
-                                placeHolder: "Name"
-                            }).placeAt(form.containerNode);
+                        new TextBox({
+                            placeHolder: "Sarf Name",
+                            name: "txtGraphicSarfName"
+                        }).placeAt(form.containerNode);
 
-                            //var myDialog = new Dialog({
-                            //    //    title: "SARF is created",
-                            //    style: "width: 300px; top:425px;"
-                            //});
+                        //var myDialog = new Dialog({
+                        //    //    title: "SARF is created",
+                        //    style: "width: 300px; top:425px;"
+                        //});
+                        new Button({
+                            label: "Delete",
+                            onClick: function () {
+                                dia.destroy();
+                                map.graphics.remove(selectedGraphic);
+                                $(".btn-draw").removeClass("disabled");
+                            }
+                        }).placeAt(form.containerNode);;
+                        new Button({
+                            label: "Save",
+                            onClick: function () {
+                                //myDialog.set("content", "SARF is created");
+                                //myDialog.show();
+                                var vertices = document.getElementById("vertices").value;
+                                var sarfname = document.getElementsByName("txtGraphicSarfName").txtGraphicSarfName.value;
+                                var data = { vertices: vertices, sarfname: sarfname };
+                                var getProcessUrl = "process-definition";
+                                //var jsonData = {
+                                //    variables: {},
+                                //    key: "identify-sarfs"
+                                //}
 
-                            new Button({
-                                label: "Save",
-                                onClick: function () {
-                                    //myDialog.set("content", "SARF is created");
-                                    //myDialog.show();
-                                    var vertices = document.getElementById("vertices").value;
-                                    var sarfname = document.getElementById("textbox1").value;
-                                    var data = { vertices: vertices, sarfname: sarfname };
-                                    var getProcessUrl = "process-definition";
-                                    var jsonData = {
-                                        variables: {},
-                                        key: "identify-sarfs"
+                                $.ajax({
+                                    method: 'POST',
+                                    dataType: 'json',
+                                    contentType: 'application/json',
+                                    url: camundaBaseApiUrl + getProcessUrl,
+                                    data: JSON.stringify(data),
+                                    async: false,
+                                    cache: false,
+                                    success: function (data) {
+                                        saveSARFData(JSON.parse(data).id);
+                                    },
+                                    error: function (err) {
+                                        console.log(err);
                                     }
+                                });
 
-                                    $.ajax({
-                                        method: 'POST',
-                                        dataType: 'json',
-                                        contentType: 'application/json',
-                                        url: camundaBaseApiUrl + getProcessUrl,
-                                        data: JSON.stringify(jsonData),
-                                        async: false,
-                                        cache: false,
-                                        success: function (data) {
-                                            saveSARFData(JSON.parse(data).id);
-                                        },
-                                        error: function (err) {
-                                            console.log(err);
-                                        }
-                                    });
+                                //$.ajax({
+                                //    type: "POST",
+                                //    url: camundaBaseApiUrl + getProcessUrl,
+                                //    data: JSON.stringify(data),
+                                //    contentType: 'application/json',
+                                //    dataType: "json",
+                                //    success: function (data) {
 
-                                    //$.ajax({
-                                    //    type: "POST",
-                                    //    url: camundaBaseApiUrl + getProcessUrl,
-                                    //    data: JSON.stringify(data),
-                                    //    contentType: 'application/json',
-                                    //    dataType: "json",
-                                    //    success: function (data) {
+                                //        saveSARFData(JSON.parse(data).id);
+                                //        window.location.href = window.location.href;
+                                //        dia.destroy();
+                                //    },
+                                //    error: function (e) {
+                                //        alert(e.error);
+                                //        dia.destroy();
+                                //    }
+                                //});
+                            }
+                        }).placeAt(form.containerNode);
 
-                                    //        saveSARFData(JSON.parse(data).id);
-                                    //        window.location.href = window.location.href;
-                                    //        dia.destroy();
-                                    //    },
-                                    //    error: function (e) {
-                                    //        alert(e.error);
-                                    //        dia.destroy();
-                                    //    }
-                                    //});
-                                }
-                            }).placeAt(form.containerNode);
-
-                            var dia = new Dialog({
-                                content: form,
-                                title: "SARF Name",
-                                style: "width: 300px; height: 80px; background-color: white;"
-                            });
-                            form.startup();
-                            dia.show();
-                       // });//~require
+                        var dia = new Dialog({
+                            content: form,
+                            title: "SARF Name",
+                            style: "width: 300px; height: 80px; background-color: white;"
+                        });
+                        form.startup();
+                        dia.show();
+                        // });//~require
                     }
                 }
             }));
@@ -679,3 +743,4 @@ function onLoadGis() {
         }));
     });
 }
+

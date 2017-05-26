@@ -22,6 +22,7 @@
         <link rel="stylesheet" type="text/css" href="Styles/style.css" />
   
     </head>
+    
     <body>
         <form runat="server" id ="sarfForm">
             <div id="mainWrapper" class =" container">
@@ -35,9 +36,11 @@
                         <asp:DataGrid runat="server" ID="dtGrid" AutoGenerateColumns="false" class="table table-hover" PageSize="5" AllowPaging="true" OnPageIndexChanged="dtGrid_OnPageIndexChanging">
                         <Columns>
                             <asp:BoundColumn DataField="SarfID"  HeaderStyle-Width="30px" HeaderStyle-BackColor="Gray" ItemStyle-Width="100px" HeaderStyle-ForeColor="White" HeaderText="SARF ID"></asp:BoundColumn>
+                            
                             <asp:TemplateColumn HeaderStyle-BackColor="Gray" ItemStyle-Width="100px" HeaderStyle-ForeColor="White" HeaderText="SARF Name">
                                 <ItemTemplate>
                                     <a class="sarfclick" style="color: black; cursor: pointer;" data-vertices='<%# Eval("Vertices") %>' data-sarfid ='<%# Eval("SarfID") %>' data-processinstanceid = '<%# Eval("ProcessInstanceID") %>' ><%# Eval("SarfName") %></a>
+                                     <asp:HiddenField ID="HiddenVertices" runat="server" Value='<%#Eval("Vertices") %>'/>
                                 </ItemTemplate>
                             </asp:TemplateColumn>
                             <asp:BoundColumn DataField="AreaInSqKm"  HeaderStyle-BackColor="Gray" ItemStyle-Width="100px" HeaderStyle-ForeColor="White" HeaderText="Area (sqkm)"></asp:BoundColumn>
@@ -46,6 +49,7 @@
                         <ItemStyle BackColor="LightGray" ForeColor="Black" Font-Names="Arial" />
                         <AlternatingItemStyle BackColor="White" ForeColor="Black" Font-Names="Arial" />
                     </asp:DataGrid>
+                        <asp:HiddenField runat="server" ID="hdnCellColor" />
                     </div>
 
                     <a class="btn btn-default btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
