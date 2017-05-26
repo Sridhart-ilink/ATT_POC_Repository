@@ -666,16 +666,11 @@ function onLoadGis() {
                                 dia.destroy();
                                 map.graphics.clear();                               
                             }
-                        }).placeAt(form.containerNode);;
+                            }).placeAt(form.containerNode);
                             new Button({
                                 label: "SAVE",
                                 style: "padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px #ff2000 solid !important; background: linear-gradient(0deg, #005991, #007ecd 80%) no-repeat;",
                                 onClick: function () {
-                                    //myDialog.set("content", "SARF is created");
-                                    //myDialog.show();
-                                    //var vertices = document.getElementById("vertices").value;
-                                    //var sarfname = document.getElementById("textbox1").value;
-                                    //var data = { vertices: vertices, sarfname: sarfname };
                                     var getProcessUrl = "process-definition";
                                     var jsonData = {
                                         variables: {},
@@ -697,35 +692,17 @@ function onLoadGis() {
                                             console.log(err);
                                         }
                                     });
-
-                                    //$.ajax({
-                                    //    type: "POST",
-                                    //    url: camundaBaseApiUrl + getProcessUrl,
-                                    //    data: JSON.stringify(data),
-                                    //    contentType: 'application/json',
-                                    //    dataType: "json",
-                                    //    success: function (data) {
-
-                                    //        saveSARFData(JSON.parse(data).id);
-                                    //        window.location.href = window.location.href;
-                                    //        dia.destroy();
-                                    //    },
-                                    //    error: function (e) {
-                                    //        alert(e.error);
-                                    //        dia.destroy();
-                                    //    }
-                                    //});
                                 }
                             }).placeAt(form.containerNode);
 
                             var dia = new Dialog({
-                                content: form,                                
+                                content: form
                             });
                             form.startup();
                             dia.show();
                             $('.dijitDialog').addClass('dialogStyle');
                             $('.dijitDialog').find('div[role="presentation"]').css('border-color', 'silver');
-                            $('.dijitInputInner').attr('placeholder', 'Create a new SARF');
+                            $('.dijitInputInner').attr('placeholder', 'Sarf Name');
                             $('.dijitInputInner').addClass('form-control');
                             $('.dijitDialog').find('input[type="button"]').addClass('btn btn-default dialogSaveBtn');
                        // });//~require

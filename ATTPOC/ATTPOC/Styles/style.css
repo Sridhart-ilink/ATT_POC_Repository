@@ -15,11 +15,11 @@ body {
 }
 
 label {
-  font-weight: 600;
+    font-weight: 600;
 }
 
 .help-block {
-  margin-bottom: 15px;
+    margin-bottom: 15px;
 }
 
 #mainWrapper {
@@ -33,10 +33,10 @@ label {
     height: 50px;
 }
 
-.view .content {
-    height: calc(100% - 50px);
-    overflow-x: hidden;
-}
+    .view .content {
+        height: calc(100% - 50px);
+        overflow-x: hidden;
+    }
 
 #map {
     width: auto;
@@ -46,12 +46,12 @@ label {
 }
 
 #search {
-         display: block;
-         position: absolute;
-         z-index: 2;
+    display: block;
+    position: absolute;
+    z-index: 2;
          top: 35px;
          left: 100px;
-      }
+}
 
 .maximized-map #map {
     height: 100%;
@@ -65,10 +65,10 @@ label {
     position: relative;
 }
 
-.header-block h4 {
-    margin-right: 10px;
-    color: darkcyan;
-}
+    .header-block h4 {
+        margin-right: 10px;
+        color: darkcyan;
+    }
 
 .btn-form {
     margin-bottom: 15px;
@@ -83,12 +83,12 @@ label {
     z-index: 1;
 }
 
-#btnExpandMap:hover {
-    opacity: 1;
-}
+    #btnExpandMap:hover {
+        opacity: 1;
+    }
 
 #vertices {
-  min-width: 450px;
+    min-width: 450px;
 }
 
 .dijitReset.dijitMenuItemIconCell {
@@ -101,60 +101,82 @@ label {
 
 .dijitMenuItem:hover,
 .dijitMenuItemSelected {
-  background-color: #444;
-  color: white;
+    background-color: #444;
+    color: white;
 }
 
 /* DivTable.com */
 .divTable {
-	display: table;
-	width: 100%;
+    display: table;
+    width: 100%;
 }
 
 .divTableRow {
-	display: table-row;
+    display: table-row;
 }
 
 .divTableHeading {
-	background-color: #EEE;
-	display: table-header-group;
+    background-color: #EEE;
+    display: table-header-group;
 }
 
 .divTableCell, .divTableHead {
-	border: 0px solid #999999;
-	display: table-cell;
-	padding: 3px 10px;
+    border: 0px solid #999999;
+    display: table-cell;
+    padding: 3px 10px;
 }
 
 .divTableHeading {
-	background-color: #EEE;
-	display: table-header-group;
-	font-weight: bold;
+    background-color: #EEE;
+    display: table-header-group;
+    font-weight: bold;
 }
 
 .divTableFoot {
-	background-color: #EEE;
-	display: table-footer-group;
-	font-weight: bold;
+    background-color: #EEE;
+    display: table-footer-group;
+    font-weight: bold;
 }
 
 .divTableBody {
-	display: table-row-group;
+    display: table-row-group;
 }
 
 .sarfDetails {
 }
+.sarfDetails label {
+        font-size: 12px;
+        font-family : "Roboto", Regular;
+        color:#454545;
+    }
 
-    .sarfDetails label, .sarfDetails p span, .sarfDetails input {
-        font-size: 10pt;
+.blueBtn{
+    background: #007ecd; /* Old browsers */
+background: -moz-linear-gradient(top, #007ecd 0%, #005991 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #007ecd 0%,#005991 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #007ecd 0%,#005991 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007ecd', endColorstr='#005991',GradientType=0 ); /* IE6-9 */
 }
+.redBtn{
+    background: #ff2000; /* Old browsers */
+background: -moz-linear-gradient(top, #ff2000 0%, #ba1a00 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #ff2000 0%,#ba1a00 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #ff2000 0%,#ba1a00 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff2000', endColorstr='#ba1a00',GradientType=0 ); /* IE6-9 */
+}
+    .sarfDetails p span, .sarfDetails input {
+        font-size: 12px;
+        font-family : "Roboto", Light;
+        color:#7f7f7f;
+    }
 
 .borderBottom {
     border-bottom: 1px solid #eee;
 }
 
 .btn {
-    min-width: 100px;
+    font-family : "Roboto", Regular;
+    min-width: 110px;
     border-radius: 0px;
     font-size: 14px;
     font-weight: 600;
@@ -180,10 +202,25 @@ position:relative;
     .toggleArrow img {
         display:inline-block;
     }
+
+    .toggleChat {
+    padding:3px 10px;
+    cursor:pointer;
+    text-align:center;
+    background-color:rgba(255,255,255,1);
+    box-shadow:0px 1px 2px 1px rgba(0,0,0,0.5);
+    position:absolute;
+    left:-13px;
+    top:50px;
+    z-index:99;
+}
+    .toggleArrow img {
+        display:inline-block;
+    }
 @media (max-width: 450px) {
-  .view .content {
-    height: calc(100% - 85px);
-  }
+    .view .content {
+        height: calc(100% - 85px);
+    }
 }
 
 /*Mockup Styles*/
@@ -200,26 +237,26 @@ position:relative;
     padding-top: 60px;
 }
 
-.sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
+    .sidenav a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+    }
 
         .sidenav a:hover, .offcanvas a:focus {
-    color: #f1f1f1;
-}
+            color: #f1f1f1;
+        }
 
-.sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-}
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
 
 #map {
     transition: margin-left .5s;
@@ -274,28 +311,28 @@ position:relative;
 /*default sarf draw button*/
 
 .btnDraw {
-  background: #b50909;
-  background-image: -webkit-linear-gradient(top, #b50909, #b50909);
-  background-image: -moz-linear-gradient(top, #b50909, #b50909);
-  background-image: -ms-linear-gradient(top, #b50909, #b50909);
-  background-image: -o-linear-gradient(top, #b50909, #b50909);
-  background-image: linear-gradient(to bottom, #b50909, #b50909);
-  -webkit-border-radius: 60;
-  -moz-border-radius: 60;
-  border-radius: 60px;
-  font-family: Arial;
-  color: #fff;
-  font-size: 10pt;
-  width: 211px;
-  padding: 7px 20px 7px 20px;
-  margin-bottom: 4px;
-  text-decoration: none;
+    background: #b50909;
+    background-image: -webkit-linear-gradient(top, #b50909, #b50909);
+    background-image: -moz-linear-gradient(top, #b50909, #b50909);
+    background-image: -ms-linear-gradient(top, #b50909, #b50909);
+    background-image: -o-linear-gradient(top, #b50909, #b50909);
+    background-image: linear-gradient(to bottom, #b50909, #b50909);
+    -webkit-border-radius: 60;
+    -moz-border-radius: 60;
+    border-radius: 60px;
+    font-family: Arial;
+    color: #fff;
+    font-size: 10pt;
+    width: 211px;
+    padding: 7px 20px 7px 20px;
+    margin-bottom: 4px;
+    text-decoration: none;
 }
 
 .dialogStyle {
     width: 280px; 
     height: 100px; 
-    background-color: white;   
+    background-color: white;
     color: #454545;
     border-radius: 5px;
     padding: 20px;

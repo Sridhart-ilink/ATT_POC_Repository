@@ -21,6 +21,7 @@ namespace ATTWebAppAPI.Models
         public string MarketCluster { set; get; }
         public string Region { set; get; }
         public string RFDesignEnggId { set; get; }
+        public decimal AreaSqKm { set; get; }
 
     }
 }

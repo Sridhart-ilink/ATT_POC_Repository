@@ -147,7 +147,7 @@ namespace ATTWebAppAPI.DAL
             {
                 try
                 {
-                    string query = "SELECT SarfName,FA_Code,Search_Ring_ID,iPlan_Job,Pace,Market,County,FA_Type,Market_Cluster,Region,RF_Design_Engineer_ATTUID FROM SARF WHERE ProcessInstanceID='" + taskID + "';";
+                    string query = "SELECT s.SarfName,s.FA_Code,s.Search_Ring_ID,s.iPlan_Job, s.Pace,s.Market,s.County,s.FA_Type,s.Market_Cluster,s.Region,s.RF_Design_Engineer_ATTUID, p.AreaInSqKm FROM SARF s INNER JOIN Polygon p ON s.SarfId = p.SarfId WHERE ProcessInstanceID='" + taskID + "';";
                     cn.Open();
                     using (MySqlCommand cmd = new MySqlCommand(query, cn))
                     {

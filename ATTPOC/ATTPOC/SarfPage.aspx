@@ -12,6 +12,7 @@
 
     <!--CSS imports-->
     <link rel="stylesheet" type="text/css" href="Styles/bootstrap-3.3.4.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="Styles/esri-3.14.css" />
     <link rel="stylesheet" type="text/css" href="Styles/claro-3.14.css" />
     <link rel="stylesheet" href="bootstrap.vertical-tabs.css" />
@@ -99,6 +100,11 @@
                                 <p class="lblDetails"><span id="lblrfdesign"></span></p>
                                 <input class="form-control txtDetails" runat="server" type ="text" id="txtrfdesign" />
                             </div>
+                            <div class="col-md-6 pull-left">
+                                <label for="txtarea">Area In SqKm:</label>
+                                <p class="lblDetails"><span id="lblarea"></span></p>
+                                <input class="form-control txtDetails" runat="server" type ="text" id="txtarea" />
+                            </div>
                         </div>
                         <hr />
                         <div class="row">
@@ -115,23 +121,23 @@
                         </div>
                         <div class="clearfix"></div>
                         <div class="row">
-                            <div class="col-md-8 pull-left">
-                                <button type="button" id="promoteBtn" class="statusBtn btn btn-lg btn-primary btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
+                            <div class="col-md-12">
+                                <button type="button" id="promoteBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
                                 value="promote">
-                                Promote</button>
-                                <button type="button" id="demoteBtn" class="statusBtn btn btn-lg btn-primary btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
+                                PROMOTE</button>
+                                <button type="button" id="demoteBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
                                     value="demote">
-                                    Demote</button>
+                                    DEMOTE</button>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-8 pull-left">
-                                <button type="button" id="pullbackBtn" class="statusBtn btn btn-lg btn-primary btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
+                            <div class="col-md-12">
+                                <button type="button" id="pullbackBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
                                     value="pullback">
-                                    Pull Back</button>
-                                <button type="button" id="cancelBtn" class="statusBtn btn btn-lg btn-danger btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
+                                    PULL BACK</button>
+                                <button type="button" id="cancelBtn" class="statusBtn redBtn btn btn-lg btn-danger btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
                                     value="cancel">
-                                    Cancel</button>
+                                    CANCEL</button>
                             </div>
                         </div>
                         <div class="clearfix"></div>
@@ -155,6 +161,9 @@
                     </div>
                     <div class="col-xs-9">
                         <!-- Tab panes -->
+                        <div class="toggleChat">
+                           <img src="Styles/images/ChatIcon.png" title="Hide&Show SideBar" width="15" />
+                       </div>
                         <div class="tab-content">
                             <div class="tab-pane active" id="mapview">
                                 <div id="map" style="width: 138%; height: 520px" class="pull-left">
@@ -365,6 +374,8 @@
                 $('#lblregion').text(details.Region);
                 $('#lblsearchring').text(details.Search_Ring_ID);
                 $('#lbliplan').text(details.iPlan_Job);
+                $('#lblarea').text(details.AreaInSqKm);
+                $('#txtarea').attr('disabled', true);
             }
         }
 
@@ -381,6 +392,8 @@
                 $('#txtregion').val(details.Region);
                 $('#txtsearchring').val(details.Search_Ring_ID);
                 $('#txtiplan').val(details.iPlan_Job);
+                $('#txtarea').text(details.AreaInSqKm);
+                
             }
         }
 
@@ -407,6 +420,9 @@
                 case statusEnum.Six:
                     $('#pullbackBtn').show();
                     $('#cancelBtn').show();
+                    break;
+
+                case statusEnum.Seven:
                     break;
 
                 default:
