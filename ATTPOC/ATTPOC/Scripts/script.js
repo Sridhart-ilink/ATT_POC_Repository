@@ -656,34 +656,29 @@ function onLoadGis() {
                             //    //    title: "SARF is created",
                             //    style: "width: 300px; top:425px;"
                             //});
-                        new Button({
-                            label: "Delete",
-                            onClick: function () {
-                                dia.destroy();
-                                map.graphics.remove(selectedGraphic);
-                                $(".btn-draw").removeClass("disabled");
-                            }
-                        }).placeAt(form.containerNode);;
+                            new Button({
+                                label: "Delete",
+                                onClick: function () {
+                                    dia.destroy();
+                                    map.graphics.remove(selectedGraphic);
+                                    $(".btn-draw").removeClass("disabled");
+                                }
+                            }).placeAt(form.containerNode);
                             new Button({
                                 label: "Save",
                                 onClick: function () {
-                                    //myDialog.set("content", "SARF is created");
-                                    //myDialog.show();
-                                    //var vertices = document.getElementById("vertices").value;
-                                    //var sarfname = document.getElementById("textbox1").value;
-                                    //var data = { vertices: vertices, sarfname: sarfname };
                                     var getProcessUrl = "process-definition";
-                                //var jsonData = {
-                                //    variables: {},
-                                //    key: "identify-sarfs"
-                                //}
+                                    var jsonData = {
+                                        variables: {},
+                                        key: "identify-sarfs"
+                                    }
 
                                     $.ajax({
                                         method: 'POST',
                                         dataType: 'json',
                                         contentType: 'application/json',
                                         url: camundaBaseApiUrl + getProcessUrl,
-                                    data: JSON.stringify(data),
+                                        data: JSON.stringify(jsonData),
                                         async: false,
                                         cache: false,
                                         success: function (data) {
@@ -693,36 +688,17 @@ function onLoadGis() {
                                             console.log(err);
                                         }
                                     });
-
-                                    //$.ajax({
-                                    //    type: "POST",
-                                    //    url: camundaBaseApiUrl + getProcessUrl,
-                                    //    data: JSON.stringify(data),
-                                    //    contentType: 'application/json',
-                                    //    dataType: "json",
-                                    //    success: function (data) {
-
-                                    //        saveSARFData(JSON.parse(data).id);
-                                    //        window.location.href = window.location.href;
-                                    //        dia.destroy();
-                                    //    },
-                                    //    error: function (e) {
-                                    //        alert(e.error);
-                                    //        dia.destroy();
-                                    //    }
-                                    //});
                                 }
                             }).placeAt(form.containerNode);
 
                             var dia = new Dialog({
-                                content: form,
-                                title: "SARF Name"
+                                content: form
                             });
                             form.startup();
                             dia.show();
                             $('.dijitDialog').addClass('dialogStyle');
                             $('.dijitDialog').find('div[role="presentation"]').css('border-color', 'silver');
-                            $('.dijitInputInner').attr('placeholder', 'Create a new SARF');
+                            $('.dijitInputInner').attr('placeholder', 'Sarf Name');
                             $('.dijitInputInner').addClass('form-control');
                             $('.dijitDialog').find('input[type="button"]').addClass('btn btn-default dialogSaveBtn');
                        // });//~require

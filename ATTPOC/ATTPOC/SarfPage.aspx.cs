@@ -37,6 +37,7 @@ namespace JavascriptBasedApp
                     txtmarketcluster.Value = dt.Rows[0][8].ToString();
                     txtregion.Value = dt.Rows[0][9].ToString();
                     txtrfdesign.Value = dt.Rows[0][10].ToString();
+                    txtarea.Value = dt.Rows[0][11].ToString();
                 }
             }
             workflowImg.Attributes["src"] = System.Configuration.ConfigurationManager.AppSettings.Get("WFImgUrl") + sarfID;

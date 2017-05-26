@@ -17,6 +17,7 @@
   
         <!--CSS imports-->
         <link rel="stylesheet" type="text/css" href="Styles/bootstrap-3.3.4.min.css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="Styles/esri-3.14.css" />
         <link rel="stylesheet" type="text/css" href="Styles/claro-3.14.css" />
         <link rel="stylesheet" type="text/css" href="Styles/style.css" />
