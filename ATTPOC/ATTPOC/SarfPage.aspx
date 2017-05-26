@@ -951,9 +951,8 @@
                                     }).placeAt(form.containerNode);
 
                                     var dia = new Dialog({
-                                        content: form,
-                                        title: "SARF Name",
-                                        style: "width: 300px; height: 80px; background-color: white;"
+                                        content: form,                                       
+                                        style: "width: 300px; height: 150px; background-color: white !important;"
                                     });
                                     form.startup();
                                     dia.show();

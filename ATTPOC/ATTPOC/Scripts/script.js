@@ -652,6 +652,7 @@ function onLoadGis() {
                             var form = new Form();
 
                             new TextBox({
+                                width:"150px",
                             }).placeAt(form.containerNode);
 
                             //var myDialog = new Dialog({
@@ -659,7 +660,7 @@ function onLoadGis() {
                             //    style: "width: 300px; top:425px;"
                             //});
                         new Button({
-                            label: "Delete",
+                            label: "DELETE POLYGON ",
                             onClick: function () {
                                 dia.destroy();
                                 map.graphics.remove(selectedGraphic);
@@ -667,7 +668,7 @@ function onLoadGis() {
                             }
                         }).placeAt(form.containerNode);;
                             new Button({
-                                label: "Save",
+                                label: "SAVE",
                                 onClick: function () {
                                     //myDialog.set("content", "SARF is created");
                                     //myDialog.show();
@@ -717,8 +718,7 @@ function onLoadGis() {
                             }).placeAt(form.containerNode);
 
                             var dia = new Dialog({
-                                content: form,
-                                title: "SARF Name"
+                                content: form,                                
                             });
                             form.startup();
                             dia.show();

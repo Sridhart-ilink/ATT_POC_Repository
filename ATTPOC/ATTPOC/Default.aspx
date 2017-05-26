@@ -31,7 +31,7 @@
                   <div class="col-md-3 slidingDiv">
                     <div>
                          <a class="btn btn-default btn-form btn-draw disabled btnDraw" id="btnDraw" value="polygon">DRAW A NEW SARF</a>
-                        <asp:DataGrid runat="server" ID="dtGrid" AutoGenerateColumns="false" class="table table-hover" PageSize="5" AllowPaging="true" OnPageIndexChanged="dtGrid_OnPageIndexChanging">
+                        <asp:DataGrid runat="server" ID="dtGrid" AutoGenerateColumns="false" class="table table-hover" PageSize="10" AllowPaging="true" OnPageIndexChanged="dtGrid_OnPageIndexChanging">
                         <Columns>
                            
                             <asp:BoundColumn DataField="SarfID"  HeaderStyle-Width="30px" HeaderStyle-BackColor="Gray" ItemStyle-Width="100px" HeaderStyle-ForeColor="White" HeaderText="SARF ID"></asp:BoundColumn>
