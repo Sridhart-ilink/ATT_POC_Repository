@@ -659,14 +659,14 @@ function onLoadGis() {
                             //    //    title: "SARF is created",
                             //    style: "width: 300px; top:425px;"
                             //});
-                        new Button({
-                            label: "DELETE POLYGON ",
-                            style: "padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px #ff2000 solid; background: linear-gradient(0deg, #ba1a00, #ff2000 80%) no-repeat;",
-                            onClick: function () {
-                                dia.destroy();
-                                map.graphics.clear();                               
-                            }
-                            }).placeAt(form.containerNode);
+                        //new Button({
+                        //    label: "DELETE POLYGON ",
+                        //    style: "padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px #ff2000 solid; background: linear-gradient(0deg, #ba1a00, #ff2000 80%) no-repeat;",
+                        //    onClick: function () {
+                        //        dia.destroy();
+                        //        map.graphics.clear();                               
+                        //    }
+                        //    }).placeAt(form.containerNode);
                             new Button({
                                 label: "SAVE",
                                 style: "padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px #ff2000 solid !important; background: linear-gradient(0deg, #005991, #007ecd 80%) no-repeat;",

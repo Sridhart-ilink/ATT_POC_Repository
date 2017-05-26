@@ -8,7 +8,7 @@
     <head>
          <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Polygon</title>
+        <title>Autoforms</title>
         <script type="text/javascript" src="Scripts/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="Scripts/angular-1.3.15.min.js"></script>
         <script type="text/javascript" src="Scripts/bootstrap-3.3.4.min.js"></script>
@@ -22,7 +22,12 @@
         <link rel="stylesheet" type="text/css" href="Styles/esri-3.14.css" />
         <link rel="stylesheet" type="text/css" href="Styles/claro-3.14.css" />
         <link rel="stylesheet" type="text/css" href="Styles/style.css" />
-  
+        <style>
+            .line tr th
+            {
+                text-transform: none;
+            }
+        </style>
     </head>
     
     <body>
@@ -32,11 +37,11 @@
               
                   <div class="col-md-3 slidingDiv">
                     <div>
-                         <a class="btn btn-default btn-form btn-draw disabled btnDraw" id="btnDraw" value="polygon">DRAW A NEW SARF</a>
+                         <a class="btn btn-default btn-form btn-draw disabled btnDraw" id="btnDraw" value="polygon">Create Search Ring</a>
                         <asp:DataGrid runat="server" ID="dtGrid" AutoGenerateColumns="false" class="table table-hover" PageSize="10" AllowPaging="true" OnPageIndexChanged="dtGrid_OnPageIndexChanging">
                         <Columns>
                            
-                            <asp:BoundColumn DataField="SarfID"  HeaderStyle-Width="30px" HeaderStyle-BackColor="Gray" ItemStyle-Width="100px" HeaderStyle-ForeColor="White" HeaderText="SARF ID"></asp:BoundColumn>
+                            <asp:BoundColumn DataField="SarfID" HeaderStyle-Width="30px" HeaderStyle-BackColor="Gray" ItemStyle-Width="100px" HeaderStyle-ForeColor="White" HeaderText="SARF ID"></asp:BoundColumn>
                             
                             <asp:TemplateColumn HeaderStyle-BackColor="Gray" ItemStyle-Width="100px" HeaderStyle-ForeColor="White" HeaderText="SARF NAME">
                                 <ItemTemplate>
@@ -73,8 +78,8 @@
                        </div>
                     <div id="search"></div>
                     <div id="map" class="pull-left">
-                        <a id="btnExpandMap" class="btn btn-primary" title="Click to maximize/minimize map">
-                        <span class="glyphicon glyphicon-chevron-up"></span></a>
+                        <%--<a id="btnExpandMap" class="btn btn-primary" title="Click to maximize/minimize map">
+                        <span class="glyphicon glyphicon-chevron-up"></span></a>--%>
                     </div>
                 </div>
             </div>
