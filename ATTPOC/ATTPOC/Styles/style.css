@@ -49,8 +49,8 @@ label {
     display: block;
     position: absolute;
     z-index: 2;
-    top: 100px;
-    left: 560px;
+         top: 35px;
+         left: 100px;
 }
 
 .maximized-map #map {
@@ -330,13 +330,12 @@ position:relative;
 }
 
 .dialogStyle {
-    width: 300px;
-    height: 80px;
+    width: 280px; 
+    height: 100px; 
     background-color: white;
-    background-color: #0070E0;
-    color: white;
+    color: #454545;
     border-radius: 5px;
-    padding: 5px;
+    padding: 20px;
 }
 
 .dijitTextBox input {
@@ -346,9 +345,10 @@ position:relative;
 }
 
 .dialogSaveBtn {
-    margin-top: 0px;
+    margin-top: 10px;
     width: 55px;
     color: black;
+    background-color:red;
 }
 
 #statusDiv {
