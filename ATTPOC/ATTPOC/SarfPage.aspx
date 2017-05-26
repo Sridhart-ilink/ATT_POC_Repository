@@ -173,7 +173,7 @@
                             </div>
                             <div class="tab-pane" id="workflow">
                                 <div style="width: 138%; height: 520px" class="pull-left">
-                                    <iframe runat="server" id="workflowImg" style="width: 1080px; height: 400px;" src="#" frameborder="1" />
+                                    <iframe runat="server" id="workflowImg" style="width: 1080px; height: 650px;" src="#" frameborder="1" />
                                 </div>
                             </div>
                         </div>
