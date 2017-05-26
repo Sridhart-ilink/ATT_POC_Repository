@@ -21,95 +21,122 @@
 <body>
     <form id="sarfForm" runat="server">
         <div class="container-fluid">
-            <div class="row" style="min-height: 600px;">
-                <div class="col-md-2 pad-lr-5">
+            <div class="row" style="min-height: 900px;">
+                <div class="col-md-3 pad-lr-5">
                     <div class="form-group" style="margin-top: 10px; margin-bottom: 5px;">
-                        <input class="form-control" runat="server" type="text" id="SearchTxt" placeholder="Search here" />
                         <button type="button" id ="editBtn" class="btn btn-link pull-right linkcolor editLink">EDIT</button>
                         <button type="button" id ="detailsupdatebtn" class="btn btn-link pull-right linkcolor editLink">SAVE</button>
                         <button type="button" id ="detailscancelBtn" class="btn btn-link pull-right linkcolor editLink">CANCEL</button>
+                        
                     </div>
-                    <hr class="divider" />
+                    
                     <div class="sarfDetails">
-                        <div class="">
-                            <label for="txtsarfname">Sarf Name:</label>
-                            <p class="lblDetails"><span id="lblsarfname"></span></p>
-                            <input class="form-control txtDetails" runat="server" type="text" id="txtsarfname" />
+                        <hr class="divider" />
+                        <div class="row">
+                            <div class="col-md-6 pull-left">
+                                <label for="txtsarfname">Sarf Name:</label>
+                                <p class="lblDetails"><span id="lblsarfname"></span></p>
+                                <input class="form-control txtDetails" runat="server" type="text" id="txtsarfname" />
+                            </div>
+                            <div class="col-md-6 pull-left">
+                                <label for="txtfacode">FA Code:</label>
+                                <p class="lblDetails"><span id="lblfacode"></span></p>
+                                <input class="form-control txtDetails" runat="server" type ="text" id="txtfacode" />
+                            </div>
                         </div>
-                        <div class="">
-                            <label for="txtfacode">FA Code:</label>
-                            <p class="lblDetails"><span id="lblfacode"></span></p>
-                            <input class="form-control txtDetails" runat="server" type ="text" id="txtfacode" />
+                        <div class="row">
+                            <div class="col-md-6 pull-left">
+                                <label for="txtsearchring">Search Ring ID:</label>
+                                <p class="lblDetails"><span id="lblsearchring"></span></p>
+                                <input class="form-control txtDetails" runat="server" type ="text" id="txtsearchring" />
+                            </div>
+                            <div class="col-md-6 pull-left">
+                                <label for="txtiplan">IPlan Job #:</label>
+                                <p class="lblDetails"><span id="lbliplan"></span></p>
+                                <input class="form-control txtDetails" runat="server" type ="text" id="txtiplan" />
+                            </div>
                         </div>
-                        <div class="">
-                            <label for="txtsearchring">Search Ring ID:</label>
-                            <p class="lblDetails"><span id="lblsearchring"></span></p>
-                            <input class="form-control txtDetails" runat="server" type ="text" id="txtsearchring" />
+                        <div class="row">
+                            <div class="col-md-6 pull-left">
+                                <label for="txtpace">Pace Number #:</label>
+                                <p class="lblDetails"><span id="lblpace"></span></p>
+                                <input class="form-control txtDetails" runat="server" type ="text" id="txtpace" />
+                            </div>
+                             <div class="col-md-6 pull-left">
+                                <label for="txtmarket">Market:</label>
+                                <p class="lblDetails"><span id="lblmarket"></span></p>
+                                <input class="form-control txtDetails" runat="server" type ="text" id="txtmarket" />
+                            </div>
                         </div>
-                        <div class="">
-                            <label for="txtiplan">IPlan Job #:</label>
-                            <p class="lblDetails"><span id="lbliplan"></span></p>
-                            <input class="form-control txtDetails" runat="server" type ="text" id="txtiplan" />
+                        <div class="row">
+                            <div class="col-md-6 pull-left">
+                                <label for="txtcounty">County:</label>
+                                <p class="lblDetails"><span id="lblcounty"></span></p>
+                                <input class="form-control txtDetails" runat="server" type ="text" id="txtcounty" />
+                            </div>
+                            <div class="col-md-6 pull-left">
+                                <label for="txtfatype">FA Type:</label>
+                                <p class="lblDetails"><span id="lblfatype"></span></p>
+                                <input class="form-control txtDetails" runat="server" type ="text" id="txtfatype" />
+                            </div>
                         </div>
-                        <div class="">
-                            <label for="txtpace">Pace Number #:</label>
-                            <p class="lblDetails"><span id="lblpace"></span></p>
-                            <input class="form-control txtDetails" runat="server" type ="text" id="txtpace" />
+                        <div class="row">
+                            <div class="col-md-6 pull-left">
+                                <label for="txtmarketcluster">Market Cluster:</label>
+                                <p class="lblDetails"><span id="lblmarketcluster"></span></p>
+                                <input class="form-control txtDetails" runat="server" type ="text" id="txtmarketcluster" />
+                            </div>
+                            <div class="col-md-6 pull-left">
+                                <label for="txtregion">Region:</label>
+                                <p class="lblDetails"><span id="lblregion"></span></p>
+                                <input class="form-control txtDetails" runat="server" type ="text" id="txtregion" />
+                            </div>
                         </div>
-                        <div class="">
-                            <label for="txtmarket">Market:</label>
-                            <p class="lblDetails"><span id="lblmarket"></span></p>
-                            <input class="form-control txtDetails" runat="server" type ="text" id="txtmarket" />
-                        </div>
-                        <div class="">
-                            <label for="txtcounty">County:</label>
-                            <p class="lblDetails"><span id="lblcounty"></span></p>
-                            <input class="form-control txtDetails" runat="server" type ="text" id="txtcounty" />
-                        </div>
-                        <div class="">
-                            <label for="txtfatype">FA Type:</label>
-                            <p class="lblDetails"><span id="lblfatype"></span></p>
-                            <input class="form-control txtDetails" runat="server" type ="text" id="txtfatype" />
-                        </div>
-                        <div class="">
-                            <label for="txtmarketcluster">Market Cluster:</label>
-                            <p class="lblDetails"><span id="lblmarketcluster"></span></p>
-                            <input class="form-control txtDetails" runat="server" type ="text" id="txtmarketcluster" />
-                        </div>
-                        <div class="">
-                            <label for="txtregion">Region:</label>
-                            <p class="lblDetails"><span id="lblregion"></span></p>
-                            <input class="form-control txtDetails" runat="server" type ="text" id="txtregion" />
-                        </div>
-                        <div class="">
-                            <label for="txtrfdesign">RF Design Engineer ATTUID:</label>
-                            <p class="lblDetails"><span id="lblrfdesign"></span></p>
-                            <input class="form-control txtDetails" runat="server" type ="text" id="txtrfdesign" />
+                        <div class="row">
+                            <div class="col-md-6 pull-left">
+                                <label for="txtrfdesign">RF Design Engineer ATTUID:</label>
+                                <p class="lblDetails"><span id="lblrfdesign"></span></p>
+                                <input class="form-control txtDetails" runat="server" type ="text" id="txtrfdesign" />
+                            </div>
                         </div>
                         <hr />
-                        <button type="button" id="promoteBtn" class="statusBtn btn btn-primary btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
-                            value="promote">
-                            Promote</button>
-                        <button type="button" id="demoteBtn" class="statusBtn btn btn-success btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
-                            value="demote">
-                            Demote</button>
-                        <button type="button" id="pullbackBtn" class="statusBtn btn btn-warning btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
-                            value="pullback">
-                            Pull Back</button>
-                        <button type="button" id="cancelBtn" class="statusBtn btn btn-danger btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
-                            value="cancel">
-                            Cancel</button>
-                        <div id="statusSection">
-                            <div class="form-group">
-                                <label for="txtSarfName">Current Status</label>
-                                <div class="col-xs-12">
-                                    <span id="statusLabel"></span>
+                        <div class="row">
+                            <div class="col-md-8 pull-left">
+                                <div>
+                                    <div class="form-group">
+                                        <label for="txtSarfName">Current Status</label>
+                                        <div class="col-xs-12" id="statusDiv">
+                                            <span id="statusLabel"></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="clearfix"></div>
+                        <div class="row">
+                            <div class="col-md-8 pull-left">
+                                <button type="button" id="promoteBtn" class="statusBtn btn btn-lg btn-primary btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
+                                value="promote">
+                                Promote</button>
+                                <button type="button" id="demoteBtn" class="statusBtn btn btn-lg btn-success btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
+                                    value="demote">
+                                    Demote</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 pull-left">
+                                <button type="button" id="pullbackBtn" class="statusBtn btn btn-lg btn-warning btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
+                                    value="pullback">
+                                    Pull Back</button>
+                                <button type="button" id="cancelBtn" class="statusBtn btn btn-lg btn-danger btn-form btn-draw disabled" title="Click and release to draw a polygon side. Double-click to finish the shape"
+                                    value="cancel">
+                                    Cancel</button>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
                     </div>
                 </div>
-                <div class="col-md-10 pad-lr-5">
+                <div class="col-md-8 pad-lr-5">
                     <div style="margin-top: 10px; margin-bottom: 5px">
                         <a href="Default.aspx" class="linkcolor">Home</a>/<a class="linkcolor">Sarf Details</a>
                     </div>
@@ -359,7 +386,6 @@
                     $('#promoteBtn').show();
                     $('#cancelBtn').show();
                     break;
-
                 case statusEnum.Two:
                 case statusEnum.Three:
                     $('#promoteBtn').show();
@@ -377,6 +403,17 @@
                 case statusEnum.Six:
                     $('#pullbackBtn').show();
                     $('#cancelBtn').show();
+                    break;
+
+                default:
+                    if (currentStatus.startsWith('RF Mod')) {
+                        $('#promoteBtn').show();
+                        $('#pullbackBtn').show();
+                    }
+                    else {
+                        $('#promoteBtn').show();
+                        $('#cancelBtn').show();
+                    }
                     break;
             }
         }
