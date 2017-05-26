@@ -36,17 +36,18 @@
                            
                             <asp:BoundColumn DataField="SarfID"  HeaderStyle-Width="30px" HeaderStyle-BackColor="Gray" ItemStyle-Width="100px" HeaderStyle-ForeColor="White" HeaderText="SARF ID"></asp:BoundColumn>
                             
-                            <asp:TemplateColumn HeaderStyle-BackColor="Gray" ItemStyle-Width="100px" HeaderStyle-ForeColor="White" HeaderText="SARF Name">
+                            <asp:TemplateColumn HeaderStyle-BackColor="Gray" ItemStyle-Width="100px" HeaderStyle-ForeColor="White" HeaderText="SARF NAME">
                                 <ItemTemplate>
-                                    <a class="sarfclick" style="color: black; cursor: pointer;" data-vertices='<%# Eval("Vertices") %>' data-sarfid ='<%# Eval("SarfID") %>' data-processinstanceid = '<%# Eval("ProcessInstanceID") %>' ><%# Eval("SarfName") %></a>
+                                    <a class="sarfclick" style="color: black;font-size:13px;font-family:Roboto Regular; cursor: pointer;" data-vertices='<%# Eval("Vertices") %>' data-sarfid ='<%# Eval("SarfID") %>' data-processinstanceid = '<%# Eval("ProcessInstanceID") %>' ><%# Eval("SarfName") %></a>
                                      <asp:HiddenField ID="HiddenVertices" runat="server" Value='<%#Eval("Vertices") %>'/>
                                 </ItemTemplate>
                             </asp:TemplateColumn>
-                            <asp:BoundColumn DataField="AreaInSqKm"  HeaderStyle-BackColor="Gray" ItemStyle-Width="100px" HeaderStyle-ForeColor="White" HeaderText="Area (sqkm)"></asp:BoundColumn>
+                            <asp:BoundColumn DataField="AreaInSqKm"  HeaderStyle-BackColor="Gray" ItemStyle-Width="100px" HeaderStyle-ForeColor="White" HeaderText="AREA (sqkm)"></asp:BoundColumn>
                         </Columns>
                         <PagerStyle Mode="NumericPages" />
-                        <ItemStyle BackColor="LightGray" ForeColor="Black" Font-Names="Arial" />
-                        <AlternatingItemStyle BackColor="White" ForeColor="Black" Font-Names="Arial" />
+                        <ItemStyle BackColor="LightGray" ForeColor="black" Font-Names="Roboto Regular" Font-Size="13px"  />
+                        <AlternatingItemStyle BackColor="White" ForeColor="black" Font-Names="Roboto Regular" Font-Size="13px"/>
+                        <HeaderStyle  Font-Names="Roboto Regular" Font-Size="14px" />
                     </asp:DataGrid>
                         <asp:HiddenField runat="server" ID="hdnCellColor" />
                     </div>

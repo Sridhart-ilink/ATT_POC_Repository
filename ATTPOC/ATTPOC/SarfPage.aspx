@@ -630,9 +630,9 @@
                     createGraphicsMenu();
                     if (localStorage["vertices"] != null || localStorage["vertices"] != "") {
                         var finalVal = JSON.parse(JSON.stringify(localStorage["vertices"]));
-                        var fillSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_CROSS,
-                             new SimpleLineSymbol(SimpleLineSymbol.STYLE_CROSS,
-                             new Color([255, 0, 0]), 2), new Color([0, 0, 0, 0.25])
+                        var fillSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+                             new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+                             new Color([0, 0, 225]), 2), new Color([0, 0, 0, 0.25])
                           );
                         var polygon = new Polygon(new esri.SpatialReference({ wkid: 4326 }));
                         finalVal = JSON.parse("[" + finalVal + "]");
@@ -640,7 +640,8 @@
 
                         var gra = new esri.Graphic(polygon, fillSymbol);
                         map.graphics.add(gra);
-                        map.setExtent(polygon.getExtent());
+                        map.setExtent(gra.geometry.getExtent().expand(2));
+
                         if (polygonlist.length > 0) {
 
                             $.each(polygonlist, function (i, val) {

@@ -48,8 +48,8 @@ label {
          display: block;
          position: absolute;
          z-index: 2;
-         top: 100px;
-         left: 560px;
+         top: 35px;
+         left: 100px;
       }
 .maximized-map #map {
     height: 100%;
