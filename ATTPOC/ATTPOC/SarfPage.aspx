@@ -359,7 +359,6 @@
                     $('#promoteBtn').show();
                     $('#cancelBtn').show();
                     break;
-
                 case statusEnum.Two:
                 case statusEnum.Three:
                     $('#promoteBtn').show();
@@ -377,6 +376,17 @@
                 case statusEnum.Six:
                     $('#pullbackBtn').show();
                     $('#cancelBtn').show();
+                    break;
+
+                default:
+                    if (currentStatus.startsWith('RF Mod')) {
+                        $('#promoteBtn').show();
+                        $('#pullbackBtn').show();
+                    }
+                    else {
+                        $('#promoteBtn').show();
+                        $('#cancelBtn').show();
+                    }
                     break;
             }
         }
