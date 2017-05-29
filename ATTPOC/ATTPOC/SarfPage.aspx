@@ -927,65 +927,27 @@
                     return Math.round((num + 0.00001) * multiplier) / multiplier;
                 }
 
-                //Creates right-click context menu for graphics on the drawingLayer
-                function createGraphicsMenu() {
+                function createToolbarAndContextMenu() {
 
-                    ctxMenuForGraphics = new Menu({});
-                    ctxMenuForGraphics.addChild(new MenuItem({
-                        label: "Create Sarf",
-                        onClick: function () {
-                            if (selectedGraphic != null && selectedGraphic.geometry.type !== "point") {
-                                require([
-                 "dijit/Dialog",
-                 "dijit/form/Form",
-                 "dijit/form/TextBox",
-                 "dijit/form/Button",
-                 "dojo/domReady!"
-                                ], function (Dialog, Form, TextBox, Button) {
-                                    var form = new Form();
+                    map.on("click", function (evt) {
+                        if (drawing !== true) {
+                            var symbol = new SimpleMarkerSymbol(
+                                 SimpleMarkerSymbol.STYLE_CIRCLE,
+                                 12,
+                                 new SimpleLineSymbol(
+                                   SimpleLineSymbol.STYLE_NULL,
+                                   new Color([247, 34, 101, 0.9]),
+                                   1
+                                 ),
+                                 new Color([207, 34, 171, 0.5])
+                               );
 
-                                    new TextBox({
-                                        placeHolder: "Name"
-                                    }).placeAt(form.containerNode);
-
-                                    var myDialog = new Dialog({
-                                        //    title: "SARF is created",
-                                        style: "width: 300px; top:425px;"
-                                    });
-
-                                    new Button({
-                                        label: "Save",
-                                        onClick: function () {
-                                            //myDialog.set("content", "SARF is created");
-                                            //myDialog.show();
-                                        }
-                                    }).placeAt(form.containerNode);
-
-                                    var dia = new Dialog({
-                                        content: form,                                       
-                                        style: "width: 300px; height: 150px; background-color: white !important;"
-                                    });
-                                    form.startup();
-                                    dia.show();
-                                });//~require
-                            }
+                          
+                            createGraphicsMenu1();
                         }
-                    }));
-
-                    ctxMenuForGraphics.startup();
-
-                    //Bind and unbind the context menu using the following two events
-                    events.push(drawingLayer.on("mouse-over", function (e) {
-                        selectedGraphic = e.graphic;
-
-                        ctxMenuForGraphics.bindDomNode(e.graphic.getDojoShape().getNode());
-                    }));
-
-                    events.push(drawingLayer.on("mouse-out", function (e) {
-                        ctxMenuForGraphics.unBindDomNode(e.graphic.getDojoShape().getNode());
-                    }));
+                    });
                 }
-
+            
                 //Disable double-click zoom if a graphic is being clicked while editing
                 events.push(map.on("mouse-down", function (e) {
                     if (e.graphic !== undefined && editing) {

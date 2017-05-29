@@ -330,7 +330,7 @@ position:relative;
 }
 
 .dialogStyle {
-    width: 280px; 
+    width: 250px; 
     height: 100px; 
     background-color: white;
     color: #454545;
@@ -354,3 +354,5 @@ position:relative;
 #statusDiv {
     padding-bottom: 10px;
 }
+
+.dijitButtonNode {border:0px solid gray;margin:0;line-height:normal;vertical-align: middle; #vertical-align: autotext-align:centerwhite-space: nowrap;}

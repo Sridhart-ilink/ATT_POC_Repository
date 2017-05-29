@@ -169,7 +169,7 @@ function onLoadGis() {
       "esri/symbols/SimpleMarkerSymbol",
       "esri/renderers/SimpleRenderer",
       "esri/InfoTemplate",
-      "esri/urlUtils",     
+     // "esri/urlUtils",     
       "esri/toolbars/draw",
       "esri/graphic",
       "esri/Color",
@@ -201,7 +201,7 @@ function onLoadGis() {
               SimpleMarkerSymbol,
               SimpleRenderer,
               InfoTemplate,
-              urlUtils,
+             // urlUtils,
               Draw,
               Graphic,
               Color,
@@ -246,35 +246,11 @@ function onLoadGis() {
         events.push(map.on("load", function () {
             initDrawing();
             initEditing();
-           initcsv();
+          // initcsv();
             //createGraphicsMenu();
             // createToolbarAndContextMenu();
         }));
-
-        function createToolbarAndContextMenu() {
-
-            map.on("click", function (evt) {
-                if (drawing !== true) {
-                    var symbol = new SimpleMarkerSymbol(
-                         SimpleMarkerSymbol.STYLE_CIRCLE,
-                         12,
-                         new SimpleLineSymbol(
-                           SimpleLineSymbol.STYLE_NULL,
-                           new Color([247, 34, 101, 0.9]),
-                           1
-                         ),
-                         new Color([207, 34, 171, 0.5])
-                       );
-
-                    var mp = WebMercatorUtils.webMercatorToGeographic(evt.mapPoint);
-                    //map.graphics.clear();
-                    map.graphics.add(new Graphic(evt.mapPoint, symbol));
-                    map.infoWindow.setContent("X: " + evt.mapPoint.x.toString() + ", <br>Y: " + evt.mapPoint.y.toString());
-                    map.infoWindow.show(evt.mapPoint)
-                    createGraphicsMenu1();
-                }
-            });
-        }
+       
 
         //Unload all the events when the application closes to prevent memory leaks
         events.push(map.on("unload", function () {
@@ -455,6 +431,8 @@ function onLoadGis() {
             addGraphicToDrawingLayer(graphic);
 
             createGraphicsMenu();
+            // triggered the click event to enable the context for create sarf
+            $(".btn-draw").click();
         }
 
         function addGraphicToDrawingLayer(graphic) {
@@ -634,6 +612,21 @@ function onLoadGis() {
 
         }
 
+        function clearGraphics() {
+            //first remove all graphics added directly to map
+            map.graphics.clear();
+
+            //now go into each graphic layer and clear it
+            var graphicLayerIds = map.graphicsLayerIds;
+            var len = graphicLayerIds.length;
+            for (var i = 0; i < len; i++) {
+                var gLayer = map.getLayer(graphicLayerIds[i]);
+                //clear this Layer
+                gLayer.clear();
+            }
+
+        }
+
         //Creates right-click context menu for graphics on the drawingLayer
         function createGraphicsMenu() {
 
@@ -641,35 +634,24 @@ function onLoadGis() {
             ctxMenuForGraphics.addChild(new MenuItem({
                 label: "Create Sarf",
                 onClick: function () {
-                    if (selectedGraphic != null && selectedGraphic.geometry.type !== "point") {
-          //              require([
-        // "dijit/Dialog",
-        // "dijit/form/Form",
-        // "dijit/form/TextBox",
-        // "dijit/form/Button",
-        // "dojo/domReady!"
-        //                ], function (Dialog, Form, TextBox, Button) {
+                    if (selectedGraphic != null && selectedGraphic.geometry.type !== "point") {      
                             var form = new Form();
 
                             new TextBox({
                                 width:"150px",
                             }).placeAt(form.containerNode);
-
-                            //var myDialog = new Dialog({
-                            //    //    title: "SARF is created",
-                            //    style: "width: 300px; top:425px;"
-                            //});
-                        //new Button({
-                        //    label: "DELETE POLYGON ",
-                        //    style: "padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px #ff2000 solid; background: linear-gradient(0deg, #ba1a00, #ff2000 80%) no-repeat;",
-                        //    onClick: function () {
-                        //        dia.destroy();
-                        //        map.graphics.clear();                               
-                        //    }
-                        //    }).placeAt(form.containerNode);
+                         
+                        new Button({
+                            label: "REMOVE POLYGON ",
+                            style: "padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #ba1a00, #ff2000 80%) no-repeat;",
+                            onClick: function () {
+                                dia.destroy();
+                                clearGraphics();
+                            }
+                            }).placeAt(form.containerNode);
                             new Button({
                                 label: "SAVE",
-                                style: "padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px #ff2000 solid !important; background: linear-gradient(0deg, #005991, #007ecd 80%) no-repeat;",
+                                style: "padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #005991, #007ecd 80%) no-repeat;",
                                 onClick: function () {
                                     var getProcessUrl = "process-definition";
                                     var jsonData = {
@@ -704,8 +686,7 @@ function onLoadGis() {
                             $('.dijitDialog').find('div[role="presentation"]').css('border-color', 'silver');
                             $('.dijitInputInner').attr('placeholder', 'Sarf Name');
                             $('.dijitInputInner').addClass('form-control');
-                            $('.dijitDialog').find('input[type="button"]').addClass('btn btn-default dialogSaveBtn');
-                       // });//~require
+                            $('.dijitDialog').find('input[type="button"]').addClass('btn btn-default dialogSaveBtn');                     
                     }
                 }
             }));
