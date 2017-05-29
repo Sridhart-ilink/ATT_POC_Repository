@@ -13,6 +13,7 @@
     <!--CSS imports-->
     <link rel="stylesheet" type="text/css" href="Styles/bootstrap-3.3.4.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="Styles/esri-3.14.css" />
     <link rel="stylesheet" type="text/css" href="Styles/claro-3.14.css" />
     <link rel="stylesheet" href="bootstrap.vertical-tabs.css" />
@@ -23,129 +24,133 @@
     <form id="sarfForm" runat="server">
         <div class="container-fluid">
             <div class="row">
-                
+
                 <div class="col-md-3 pad-lr-5 slidingDiv">
                     <div class="">
-                    <div class="col-md-12 borderBottom" style="margin-top: 10px; margin-bottom: 5px;">
-                        <button type="button" id ="editBtn" class="btn btn-link pull-right linkcolor editLink">EDIT</button>
-                        <button type="button" id ="detailsupdatebtn" class="btn btn-link pull-right linkcolor editLink">SAVE</button>
-                        <button type="button" id ="detailscancelBtn" class="btn btn-link pull-right linkcolor editLink">CANCEL</button>
-                        
-                    </div>
-                    <div class="sarfDetails">
-                       
-                        <div class="row">
-                            <div class="col-md-6 pull-left">
-                                <label for="txtsarfname">Sarf Name:</label>
-                                <p class="lblDetails"><span id="lblsarfname"></span></p>
-                                <input class="form-control txtDetails" runat="server" type="text" id="txtsarfname" />
-                            </div>
-                            <div class="col-md-6 pull-left">
-                                <label for="txtfacode">FA Code:</label>
-                                <p class="lblDetails"><span id="lblfacode"></span></p>
-                                <input class="form-control txtDetails" runat="server" type ="text" id="txtfacode" />
-                            </div>
+                        <div class="col-md-12 borderBottom" style="margin-top: 10px; margin-bottom: 5px;">
+                            <button type="button" id="editBtn" class="btn btn-link pull-right linkcolor editLink">EDIT</button>
+                            <button type="button" id="detailsupdatebtn" class="btn btn-link pull-right linkcolor editLink">SAVE</button>
+                            <button type="button" id="detailscancelBtn" class="btn btn-link pull-right linkcolor editLink">CANCEL</button>
+
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 pull-left">
-                                <label for="txtsearchring">Search Ring ID:</label>
-                                <p class="lblDetails"><span id="lblsearchring"></span></p>
-                                <input class="form-control txtDetails" runat="server" type ="text" id="txtsearchring" />
+                        <div class="sarfDetails">
+
+                            <div class="row">
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtsarfname">Sarf Name:</label>
+                                    <p class="lblDetails"><span id="lblsarfname"></span></p>
+                                    <input class="form-control txtDetails" runat="server" type="text" id="txtsarfname" />
+                                </div>
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtfacode">FA Code:</label>
+                                    <p class="lblDetails"><span id="lblfacode"></span></p>
+                                    <input class="form-control txtDetails" runat="server" type="text" id="txtfacode" />
+                                </div>
                             </div>
-                            <div class="col-md-6 pull-left">
-                                <label for="txtiplan">IPlan Job #:</label>
-                                <p class="lblDetails"><span id="lbliplan"></span></p>
-                                <input class="form-control txtDetails" runat="server" type ="text" id="txtiplan" />
+                            <div class="row">
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtsearchring">Search Ring ID:</label>
+                                    <p class="lblDetails"><span id="lblsearchring"></span></p>
+                                    <input class="form-control txtDetails" runat="server" type="text" id="txtsearchring" />
+                                </div>
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtiplan">IPlan Job #:</label>
+                                    <p class="lblDetails"><span id="lbliplan"></span></p>
+                                    <input class="form-control txtDetails" runat="server" type="text" id="txtiplan" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 pull-left">
-                                <label for="txtpace">Pace Number #:</label>
-                                <p class="lblDetails"><span id="lblpace"></span></p>
-                                <input class="form-control txtDetails" runat="server" type ="text" id="txtpace" />
+                            <div class="row">
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtpace">Pace Number #:</label>
+                                    <p class="lblDetails"><span id="lblpace"></span></p>
+                                    <input class="form-control txtDetails" runat="server" type="text" id="txtpace" />
+                                </div>
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtmarket">Market:</label>
+                                    <p class="lblDetails"><span id="lblmarket"></span></p>
+                                    <input class="form-control txtDetails" runat="server" type="text" id="txtmarket" />
+                                </div>
                             </div>
-                             <div class="col-md-6 pull-left">
-                                <label for="txtmarket">Market:</label>
-                                <p class="lblDetails"><span id="lblmarket"></span></p>
-                                <input class="form-control txtDetails" runat="server" type ="text" id="txtmarket" />
+                            <div class="row">
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtcounty">County:</label>
+                                    <p class="lblDetails"><span id="lblcounty"></span></p>
+                                    <input class="form-control txtDetails" runat="server" type="text" id="txtcounty" />
+                                </div>
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtfatype">FA Type:</label>
+                                    <p class="lblDetails"><span id="lblfatype"></span></p>
+                                    <input class="form-control txtDetails" runat="server" type="text" id="txtfatype" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 pull-left">
-                                <label for="txtcounty">County:</label>
-                                <p class="lblDetails"><span id="lblcounty"></span></p>
-                                <input class="form-control txtDetails" runat="server" type ="text" id="txtcounty" />
+                            <div class="row">
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtmarketcluster">Market Cluster:</label>
+                                    <p class="lblDetails"><span id="lblmarketcluster"></span></p>
+                                    <input class="form-control txtDetails" runat="server" type="text" id="txtmarketcluster" />
+                                </div>
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtregion">Region:</label>
+                                    <p class="lblDetails"><span id="lblregion"></span></p>
+                                    <input class="form-control txtDetails" runat="server" type="text" id="txtregion" />
+                                </div>
                             </div>
-                            <div class="col-md-6 pull-left">
-                                <label for="txtfatype">FA Type:</label>
-                                <p class="lblDetails"><span id="lblfatype"></span></p>
-                                <input class="form-control txtDetails" runat="server" type ="text" id="txtfatype" />
+                            <div class="row">
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtrfdesign">RF Design Engineer ATTUID:</label>
+                                    <p class="lblDetails"><span id="lblrfdesign"></span></p>
+                                    <input class="form-control txtDetails" runat="server" type="text" id="txtrfdesign" />
+                                </div>
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtarea">Area In SqKm:</label>
+                                    <p class="lblDetails"><span id="lblarea"></span></p>
+                                    <input class="form-control txtDetails" runat="server" type="text" id="txtarea" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 pull-left">
-                                <label for="txtmarketcluster">Market Cluster:</label>
-                                <p class="lblDetails"><span id="lblmarketcluster"></span></p>
-                                <input class="form-control txtDetails" runat="server" type ="text" id="txtmarketcluster" />
-                            </div>
-                            <div class="col-md-6 pull-left">
-                                <label for="txtregion">Region:</label>
-                                <p class="lblDetails"><span id="lblregion"></span></p>
-                                <input class="form-control txtDetails" runat="server" type ="text" id="txtregion" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 pull-left">
-                                <label for="txtrfdesign">RF Design Engineer ATTUID:</label>
-                                <p class="lblDetails"><span id="lblrfdesign"></span></p>
-                                <input class="form-control txtDetails" runat="server" type ="text" id="txtrfdesign" />
-                            </div>
-                            <div class="col-md-6 pull-left">
-                                <label for="txtarea">Area In SqKm:</label>
-                                <p class="lblDetails"><span id="lblarea"></span></p>
-                                <input class="form-control txtDetails" runat="server" type ="text" id="txtarea" />
-                            </div>
-                        </div>
-                        <hr />
-                        <div class="row">
-                            <div class="col-md-8 pull-left">
-                                <div>
-                                    <div class="form-group">
-                                        <label for="txtSarfName">Current Status</label>
-                                        <div class="col-xs-12" id="statusDiv">
-                                            <span id="statusLabel"></span>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-8 pull-left">
+                                    <div>
+                                        <div class="form-group">
+                                            <label for="txtSarfName">Current Status</label>
+                                            <div class="col-xs-12" id="statusDiv">
+                                                <span id="statusLabel"></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <button type="button" id="promoteBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled" 
-                                value="promote">PROMOTE</button>
-                                <button type="button" id="demoteBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled" 
-                                    value="demote">DEMOTE</button>
+                            <div class="clearfix"></div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="button" id="promoteBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled"
+                                        value="promote">
+                                        PROMOTE</button>
+                                    <button type="button" id="demoteBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled"
+                                        value="demote">
+                                        DEMOTE</button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <button type="button" id="pullbackBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled" 
-                                    value="pullback">PULL BACK</button>
-                                <button type="button" id="cancelBtn" class="statusBtn redBtn btn btn-lg btn-danger btn-form btn-draw disabled" 
-                                    value="cancel">CANCEL</button>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="button" id="pullbackBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled"
+                                        value="pullback">
+                                        PULL BACK</button>
+                                    <button type="button" id="cancelBtn" class="statusBtn redBtn btn btn-lg btn-danger btn-form btn-draw disabled"
+                                        value="cancel">
+                                        CANCEL</button>
+                                </div>
                             </div>
+                            <div class="clearfix"></div>
                         </div>
-                        <div class="clearfix"></div>
                     </div>
-                        </div>
                 </div>
                 <div class="col-md-9 tabDiv">
-                    <div class="toggleArrow">
-                           <img src="Styles/images/double-arrow-right-red.png" title="Hide&Show SideBar" width="15" />
-                       </div>
+                    <div class="toggleArrow rotateArrow">
+                        <img src="Styles/images/double-arrow-right-red.png" title="Hide&Show SideBar" width="15" />
+                    </div>
                     <div class="col-md-12 borderBottom pageLink" style="margin-top: 7px; margin-bottom: 5px">
-                        <a href="Default.aspx" class="linkcolor" style="margin-left:30px;">Home</a> :: <a class="linkcolor">Sarf Details</a>
+                        <a href="Default.aspx" class="linkcolor" style="margin-left: 30px;">Home</a> :: <a class="linkcolor">Sarf Details</a>
                     </div>
                     <div class="col-xs-12">
                         <!-- required for floating -->
@@ -157,9 +162,9 @@
                     </div>
                     <div class="col-xs-9">
                         <!-- Tab panes -->
-                        <div class="toggleChat">
-                           <img src="Styles/images/ChatIcon.png" title="Hide&Show Comment" width="15" />
-                       </div>
+                        <div class="toggleComment">
+                            <img src="Styles/images/ChatIcon.png" title="Hide&Show Comment" width="15" />
+                        </div>
                         <div class="tab-content">
                             <div class="tab-pane active" id="mapview">
                                 <div id="map" style="width: 138%; height: 520px" class="pull-left">
@@ -167,8 +172,112 @@
                                 </div>
                             </div>
                             <div class="tab-pane" id="workflow">
-                                <div style="width: 138%; height: 520px" class="pull-left">
-                                    <iframe runat="server" id="workflowImg" style="width: 1080px; height: 650px;" src="#" frameborder="1" />
+                                <div style="width: 138%; height: 520px;" class="pull-left">
+                                    <iframe runat="server" id="workflowImg" style="width: 994px; height: 545px; padding-right: 5px;" src="#" frameborder="1" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 pad-lr-5 commentingDiv" id="style-2">
+                        <button type="button" class="close commentCloseBtn" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <div class="clearfix"></div>
+                        <div>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                </span>
+                                <input type="text" class="form-control" placeholder="Add your comment" aria-describedby="basic-addon1" />
+                            </div>
+                        </div>
+                        <div>
+                            <div class="clearfix"></div>
+                            <button type="button" id="postBtn" class="blueBtn btn btn-sm btn-primary btn-form btn-draw disabled pull-right"
+                                value="post">
+                                POST</button>
+                        </div>
+                        <div>
+                            <button type="button" id="seeMoreBtn" class="btn btn-link pull-left linkcolor editLink">See more comments</button>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div>
+                            <div class="commentInfo">
+                                <%--<div class="input-group">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                    </span>
+                                    <span>ASWED</span>
+                                </div>--%>
+                                <div class="chatHead clearfix">
+                                       <div class="pull-left">
+                                           <i class="glyphicon glyphicon-user"></i>
+                                       </div>
+                                        <div class="pull-right chatLabel">
+                                            <h3>ebenezer marchus</h3>
+                                            <p>April 27, 2017 11:40 am</p>
+                                        </div>
+                                </div>
+                                <div class="chatBody">
+                                    <p>
+                                        Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum 
+                                        Lorem Ipsum Lorem Ipsum Lorem Ipsum  
+                                    </p>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="leave a reply"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="commentInfo">
+                                <%--<div class="input-group">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                    </span>
+                                    <span>ASWED</span>
+                                </div>--%>
+                                <div class="chatHead clearfix">
+                                       <div class="pull-left">
+                                           <i class="glyphicon glyphicon-user"></i>
+                                       </div>
+                                        <div class="pull-right chatLabel">
+                                            <h3>ebenezer marchus</h3>
+                                            <p>April 27, 2017 11:40 am</p>
+                                        </div>
+                                </div>
+                                <div class="chatBody">
+                                    <p>
+                                        Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum 
+                                        Lorem Ipsum Lorem Ipsum Lorem Ipsum  
+                                    </p>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="leave a reply"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="commentInfo">
+                                <%--<div class="input-group">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                    </span>
+                                    <span>ASWED</span>
+                                </div>--%>
+                                <div class="chatHead clearfix">
+                                       <div class="pull-left">
+                                           <i class="glyphicon glyphicon-user"></i>
+                                       </div>
+                                        <div class="pull-right chatLabel">
+                                            <h3>ebenezer marchus</h3>
+                                            <p>April 27, 2017 11:40 am</p>
+                                        </div>
+                                </div>
+                                <div class="chatBody">
+                                    <p>
+                                        Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum 
+                                        Lorem Ipsum Lorem Ipsum Lorem Ipsum  
+                                    </p>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="leave a reply"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -388,7 +497,7 @@
                 $('#txtsearchring').val(details.Search_Ring_ID);
                 $('#txtiplan').val(details.iPlan_Job);
                 $('#txtarea').text(details.AreaInSqKm);
-                
+
             }
         }
 
@@ -433,26 +542,34 @@
             }
         }
 
+        //Jquery - document load script method
         $(document).ready(function () {
+            $('.commentingDiv').hide();
+            $('.toggleArrow').click(function () {
+                $('.toggleArrow').toggleClass('rotateArrow');
+                if ($('.slidingDiv').is(":visible")) {
+                    //console.log('side bar shown');
+                    $(".slidingDiv").toggle();
+                    $('.tabDiv').removeClass('col-md-9');
+                    $('.tabDiv').addClass('col-md-12');
+                }
+                else {
+                    console.log('side bar hidden');
+                    $(".slidingDiv").toggle();
+                    $('.tabDiv').removeClass('col-md-12');
+                    $('.tabDiv').addClass('col-md-9');
+                }
+            });
 
-               // $(".slidingDiv").hide();
-                //$(".toggleArrow").show();
+            $('.toggleComment').click(function () {
+                $('.toggleComment').hide();
+                $(".commentingDiv").toggle();
+            });
 
-                $('.toggleArrow').click(function () {
-                    
-                    if ($('.slidingDiv').is(":visible")) {
-                        //console.log('side bar shown');
-                        $(".slidingDiv").toggle();
-                        $('.tabDiv').removeClass('col-md-9');
-                        $('.tabDiv').addClass('col-md-12');
-                    }
-                    else {
-                        console.log('side bar hidden');
-                        $(".slidingDiv").toggle();
-                        $('.tabDiv').removeClass('col-md-12');
-                        $('.tabDiv').addClass('col-md-9');
-                    }
-                });
+            $('.commentCloseBtn').click(function () {
+                $('.toggleComment').show();
+                $(".commentingDiv").toggle();
+            });
 
             processInstanceID = GetParameterValues("processInstanceId");
             getTaskStatusbyProcessInstanceID(processInstanceID);
@@ -962,7 +1079,7 @@
                                     }).placeAt(form.containerNode);
 
                                     var dia = new Dialog({
-                                        content: form,                                       
+                                        content: form,
                                         style: "width: 300px; height: 150px; background-color: white !important;"
                                     });
                                     form.startup();
