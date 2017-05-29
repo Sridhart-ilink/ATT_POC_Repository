@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 <div class="col-md-9 tabDiv">
-                    <div class="toggleArrow">
+                    <div class="toggleArrow rotateArrow">
                            <img src="Styles/images/double-arrow-right-red.png" title="Hide&Show SideBar" width="15" />
                        </div>
                     <div id="search"></div>
@@ -82,6 +82,7 @@
                         <span class="glyphicon glyphicon-chevron-up"></span></a>--%>
                     </div>
                 </div>
+            </div>
             </div>
         </form>
     </body>
