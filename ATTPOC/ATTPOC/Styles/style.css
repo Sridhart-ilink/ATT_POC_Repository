@@ -422,6 +422,7 @@ position:relative;
     margin:0px;
     font-size:14px;
     font-weight:600;
+    font-family:"Roboto", Bold;
     text-transform:uppercase;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -429,10 +430,15 @@ position:relative;
     color : #454545;
 }
 .chatLabel p{
-    color :#337ab7;
+    color :#005991;
+
 }
 .chatBody p {
     font-size:14px;
+    color:#454545;
+}
+.chatBody input::placeholder {
+    font-style:italic;
 }
 .form-control{
     border-radius : 0px;

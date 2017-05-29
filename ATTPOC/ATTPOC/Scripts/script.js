@@ -80,7 +80,7 @@ loadScript('https://js.arcgis.com/3.14/init.js', function () {
 
 $(document).ready(function () {
     $('.toggleArrow').click(function () {
-
+        $('.toggleArrow').toggleClass('rotateArrow');
         if ($('.slidingDiv').is(":visible")) {
             //console.log('side bar shown');
             $(".slidingDiv").toggle();

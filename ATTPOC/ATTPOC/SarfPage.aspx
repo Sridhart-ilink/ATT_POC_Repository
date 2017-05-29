@@ -223,7 +223,7 @@
                                         Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum 
                                         Lorem Ipsum Lorem Ipsum Lorem Ipsum  
                                     </p>
-                                    <div class="form-group">
+                                    <div>
                                         <input type="text" class="form-control" placeholder="leave a reply"/>
                                     </div>
                                 </div>
@@ -249,7 +249,7 @@
                                         Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum 
                                         Lorem Ipsum Lorem Ipsum Lorem Ipsum  
                                     </p>
-                                    <div class="form-group">
+                                    <div>
                                         <input type="text" class="form-control" placeholder="leave a reply"/>
                                     </div>
                                 </div>
@@ -275,7 +275,7 @@
                                         Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum 
                                         Lorem Ipsum Lorem Ipsum Lorem Ipsum  
                                     </p>
-                                    <div class="form-group">
+                                    <div>
                                         <input type="text" class="form-control" placeholder="leave a reply"/>
                                     </div>
                                 </div>
