@@ -2,7 +2,7 @@
 var TaskID = 0;
 var InstanceID = 0;
 var TaskStatus = "";
-
+var sarfList = [];
 function loadScript(src, callback) {
     'use strict';
 
@@ -78,7 +78,28 @@ loadScript('https://js.arcgis.com/3.14/init.js', function () {
     onLoadGis(); //Initialize GIS components on ArcGIS load
 });
 
+function initGrid() {
+    var getDetailsAction = "SarfDetails/Get";
+    $.ajax({
+        method: 'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        url: camundaBaseApiUrl + getDetailsAction,
+        data: JSON.stringify({}),
+        async: false,
+        cache: false,
+        success: function (data) {
+            sarfList = data;
+            console.log(sarfList);
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    });
+}
+
 $(document).ready(function () {
+    initGrid();
     $('.toggleArrow').click(function () {
         $('.toggleArrow').toggleClass('rotateArrow');
         if ($('.slidingDiv').is(":visible")) {
@@ -104,7 +125,6 @@ $(document).ready(function () {
         chevron.toggleClass("glyphicon-chevron-down");
         chevron.toggleClass("glyphicon-chevron-up");
     });
-
     $('#btnSave').click(function (e) {
         var getProcessUrl = "process-definition";
         var jsonData = {
@@ -130,6 +150,7 @@ $(document).ready(function () {
             }
         });
     });
+
 });
 
 function getTaskStatusbyProcessInstanceID(processInstanceID) {
