@@ -3,6 +3,9 @@ var TaskID = 0;
 var InstanceID = 0;
 var TaskStatus = "";
 var sarfList = [];
+var noOfPages = 0;
+var currentPage = 1;
+var pageIndex = 0;
 function loadScript(src, callback) {
     'use strict';
 
@@ -80,8 +83,11 @@ loadScript('https://js.arcgis.com/3.14/init.js', function () {
 
 function cardViewDataBind() {
     if (sarfList != null && sarfList.length > 0) {
+        $('.cardView').empty();
+        var countReset = 0;
         var cardView = $('.cardView');
-        for (var count = 0; count < 10; count++) {
+        for (var count = pageIndex; count < sarfList.length; count++) {
+            countReset++;
             var content = '';
             content += '<div class="cardInfo" style="cursor:pointer;">' +
                  '<span class="sarfclick" data-vertices="' + sarfList[count].Vertices + '"><button id="sarfclick" type="button" class="btn btn-link linkcolor">' + sarfList[count].SARFID + '</button></span>' +
@@ -94,7 +100,13 @@ function cardViewDataBind() {
                              '</div>' +
                         '</div>';
             cardView.append(content);
+            if (countReset == 10) {
+                pageIndex = count + 1;
+                countReset = 0;
+                break;
+            }
         }
+        $('.pageTxt').val(currentPage);
     }
 }
 
@@ -111,7 +123,8 @@ function initGrid() {
         success: function (data) {
             sarfList = data;
             sarfList.length > 10 ? $('.pager').show() : $('.pager').hide();
-            $('.pageLength').text(' of ' + sarfList.length);
+            noOfPages = (sarfList.length % 10 == 0) ? (sarfList.length / 10) : Math.ceil(sarfList.length / 10);
+            $('.pageLength').text(' of ' + noOfPages);
             cardViewDataBind();
             console.log(sarfList);
         },
@@ -147,6 +160,22 @@ $(document).ready(function () {
         var chevron = $(this).find("span");
         chevron.toggleClass("glyphicon-chevron-down");
         chevron.toggleClass("glyphicon-chevron-up");
+    });
+
+    /*Pagination for card view*/
+    //paging forward
+    $('#frontIcon').click(function () {
+        currentPage += 1;
+        currentPage = currentPage >= noOfPages ? noOfPages : currentPage;
+        cardViewDataBind();
+    });
+
+    //paging backward
+    $('#backIcon').click(function () {
+        currentPage -= 1;
+        currentPage = currentPage < 1 ? 1 : currentPage;
+        pageIndex = pageIndex < 0 ? 0 : (pageIndex - 10);
+        cardViewDataBind();
     });
 });
 
