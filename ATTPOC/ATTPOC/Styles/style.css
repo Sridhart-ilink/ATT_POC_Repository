@@ -346,6 +346,14 @@ position:relative;
     border-radius: 5px;
     padding: 20px;
 }
+.dialogNodeStyle {
+    width: 250px; 
+    height: 200px; 
+    background-color: white;
+    color: #454545;
+    border-radius: 5px;
+    padding: 20px;
+}
 
 .dijitTextBox input {
     border: solid silver 2px;

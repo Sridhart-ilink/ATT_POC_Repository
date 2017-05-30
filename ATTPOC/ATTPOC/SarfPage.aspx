@@ -24,131 +24,131 @@
     <form id="sarfForm" runat="server">
         <div class="container-fluid">
             <div class="row">
-                
+
                 <div class="col-md-3 pad-lr-5 slidingDiv">
                     <div class="">
-                    <div class="col-md-12 borderBottom" style="margin-top: 10px; margin-bottom: 5px;">
+                        <div class="col-md-12 borderBottom" style="margin-top: 10px; margin-bottom: 5px;">
                             <button type="button" id="editBtn" class="btn btn-link pull-right linkcolor editLink">EDIT</button>
                             <button type="button" id="detailsupdatebtn" class="btn btn-link pull-right linkcolor editLink">SAVE</button>
                             <button type="button" id="detailscancelBtn" class="btn btn-link pull-right linkcolor editLink">CANCEL</button>
-                        
-                    </div>
-                    <div class="sarfDetails">
-                       
-                        <div class="row">
-                            <div class="col-md-6 pull-left">
-                                <label for="txtsarfname">Sarf Name:</label>
-                                <p class="lblDetails"><span id="lblsarfname"></span></p>
-                                <input class="form-control txtDetails" runat="server" type="text" id="txtsarfname" />
-                            </div>
-                            <div class="col-md-6 pull-left">
-                                <label for="txtfacode">FA Code:</label>
-                                <p class="lblDetails"><span id="lblfacode"></span></p>
+
+                        </div>
+                        <div class="sarfDetails">
+
+                            <div class="row">
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtsarfname">Sarf Name:</label>
+                                    <p class="lblDetails"><span id="lblsarfname"></span></p>
+                                    <input class="form-control txtDetails" runat="server" type="text" id="txtsarfname" />
+                                </div>
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtfacode">FA Code:</label>
+                                    <p class="lblDetails"><span id="lblfacode"></span></p>
                                     <input class="form-control txtDetails" runat="server" type="text" id="txtfacode" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 pull-left">
-                                <label for="txtsearchring">Search Ring ID:</label>
-                                <p class="lblDetails"><span id="lblsearchring"></span></p>
+                            <div class="row">
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtsearchring">Search Ring ID:</label>
+                                    <p class="lblDetails"><span id="lblsearchring"></span></p>
                                     <input class="form-control txtDetails" runat="server" type="text" id="txtsearchring" />
-                            </div>
-                            <div class="col-md-6 pull-left">
-                                <label for="txtiplan">IPlan Job #:</label>
-                                <p class="lblDetails"><span id="lbliplan"></span></p>
+                                </div>
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtiplan">IPlan Job #:</label>
+                                    <p class="lblDetails"><span id="lbliplan"></span></p>
                                     <input class="form-control txtDetails" runat="server" type="text" id="txtiplan" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 pull-left">
-                                <label for="txtpace">Pace Number #:</label>
-                                <p class="lblDetails"><span id="lblpace"></span></p>
+                            <div class="row">
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtpace">Pace Number #:</label>
+                                    <p class="lblDetails"><span id="lblpace"></span></p>
                                     <input class="form-control txtDetails" runat="server" type="text" id="txtpace" />
-                            </div>
-                             <div class="col-md-6 pull-left">
-                                <label for="txtmarket">Market:</label>
-                                <p class="lblDetails"><span id="lblmarket"></span></p>
+                                </div>
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtmarket">Market:</label>
+                                    <p class="lblDetails"><span id="lblmarket"></span></p>
                                     <input class="form-control txtDetails" runat="server" type="text" id="txtmarket" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 pull-left">
-                                <label for="txtcounty">County:</label>
-                                <p class="lblDetails"><span id="lblcounty"></span></p>
+                            <div class="row">
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtcounty">County:</label>
+                                    <p class="lblDetails"><span id="lblcounty"></span></p>
                                     <input class="form-control txtDetails" runat="server" type="text" id="txtcounty" />
-                            </div>
-                            <div class="col-md-6 pull-left">
-                                <label for="txtfatype">FA Type:</label>
-                                <p class="lblDetails"><span id="lblfatype"></span></p>
+                                </div>
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtfatype">FA Type:</label>
+                                    <p class="lblDetails"><span id="lblfatype"></span></p>
                                     <input class="form-control txtDetails" runat="server" type="text" id="txtfatype" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 pull-left">
-                                <label for="txtmarketcluster">Market Cluster:</label>
-                                <p class="lblDetails"><span id="lblmarketcluster"></span></p>
+                            <div class="row">
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtmarketcluster">Market Cluster:</label>
+                                    <p class="lblDetails"><span id="lblmarketcluster"></span></p>
                                     <input class="form-control txtDetails" runat="server" type="text" id="txtmarketcluster" />
-                            </div>
-                            <div class="col-md-6 pull-left">
-                                <label for="txtregion">Region:</label>
-                                <p class="lblDetails"><span id="lblregion"></span></p>
+                                </div>
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtregion">Region:</label>
+                                    <p class="lblDetails"><span id="lblregion"></span></p>
                                     <input class="form-control txtDetails" runat="server" type="text" id="txtregion" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 pull-left">
-                                <label for="txtrfdesign">RF Design Engineer ATTUID:</label>
-                                <p class="lblDetails"><span id="lblrfdesign"></span></p>
+                            <div class="row">
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtrfdesign">RF Design Engineer ATTUID:</label>
+                                    <p class="lblDetails"><span id="lblrfdesign"></span></p>
                                     <input class="form-control txtDetails" runat="server" type="text" id="txtrfdesign" />
-                            </div>
-                            <div class="col-md-6 pull-left">
-                                <label for="txtarea">Area In SqKm:</label>
-                                <p class="lblDetails"><span id="lblarea"></span></p>
+                                </div>
+                                <div class="col-md-6 pull-left">
+                                    <label for="txtarea">Area In SqKm:</label>
+                                    <p class="lblDetails"><span id="lblarea"></span></p>
                                     <input class="form-control txtDetails" runat="server" type="text" id="txtarea" />
+                                </div>
                             </div>
-                        </div>
-                        <hr />
-                        <div class="row">
-                            <div class="col-md-8 pull-left">
-                                <div>
-                                    <div class="form-group">
-                                        <label for="txtSarfName">Current Status</label>
-                                        <div class="col-xs-12" id="statusDiv">
-                                            <span id="statusLabel"></span>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-8 pull-left">
+                                    <div>
+                                        <div class="form-group">
+                                            <label for="txtSarfName">Current Status</label>
+                                            <div class="col-xs-12" id="statusDiv">
+                                                <span id="statusLabel"></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <button type="button" id="promoteBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled" 
+                            <div class="clearfix"></div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="button" id="promoteBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled"
                                         value="promote">
                                         PROMOTE</button>
-                                <button type="button" id="demoteBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled" 
+                                    <button type="button" id="demoteBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled"
                                         value="demote">
                                         DEMOTE</button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <button type="button" id="pullbackBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled" 
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="button" id="pullbackBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled"
                                         value="pullback">
                                         PULL BACK</button>
-                                <button type="button" id="cancelBtn" class="statusBtn redBtn btn btn-lg btn-danger btn-form btn-draw disabled" 
+                                    <button type="button" id="cancelBtn" class="statusBtn redBtn btn btn-lg btn-danger btn-form btn-draw disabled"
                                         value="cancel">
                                         CANCEL</button>
+                                </div>
                             </div>
+                            <div class="clearfix"></div>
                         </div>
-                        <div class="clearfix"></div>
                     </div>
-                        </div>
                 </div>
                 <div class="col-md-9 tabDiv">
                     <div class="toggleArrow rotateArrow">
-                           <img src="Styles/images/double-arrow-right-red.png" title="Hide&Show SideBar" width="15" />
-                       </div>
+                        <img src="Styles/images/double-arrow-right-red.png" title="Hide&Show SideBar" width="15" />
+                    </div>
                     <div class="col-md-12 borderBottom pageLink" style="margin-top: 7px; margin-bottom: 5px">
                         <a href="Default.aspx" class="linkcolor" style="margin-left: 30px;">Home</a> :: <a class="linkcolor">Sarf Details</a>
                     </div>
@@ -163,8 +163,8 @@
                     <div class="col-xs-9">
                         <!-- Tab panes -->
                         <div class="toggleComment">
-                           <img src="Styles/images/ChatIcon.png" title="Hide&Show Comment" width="15" />
-                       </div>
+                            <img src="Styles/images/ChatIcon.png" title="Hide&Show Comment" width="15" />
+                        </div>
                         <div class="tab-content">
                             <div class="tab-pane active" id="mapview">
                                 <div id="map" style="width: 138%; height: 520px" class="pull-left">
@@ -210,13 +210,13 @@
                                     <span>ASWED</span>
                                 </div>--%>
                                 <div class="chatHead clearfix">
-                                       <div class="pull-left">
-                                           <i class="glyphicon glyphicon-user"></i>
-                                       </div>
-                                        <div class="pull-right chatLabel">
-                                            <h3>ebenezer marchus</h3>
-                                            <p>April 27, 2017 11:40 am</p>
-                                        </div>
+                                    <div class="pull-left">
+                                        <i class="glyphicon glyphicon-user"></i>
+                                    </div>
+                                    <div class="pull-right chatLabel">
+                                        <h3>ebenezer marchus</h3>
+                                        <p>April 27, 2017 11:40 am</p>
+                                    </div>
                                 </div>
                                 <div class="chatBody">
                                     <p>
@@ -224,7 +224,7 @@
                                         Lorem Ipsum Lorem Ipsum Lorem Ipsum  
                                     </p>
                                     <div>
-                                        <input type="text" class="form-control" placeholder="leave a reply"/>
+                                        <input type="text" class="form-control" placeholder="leave a reply" />
                                     </div>
                                 </div>
                             </div>
@@ -236,13 +236,13 @@
                                     <span>ASWED</span>
                                 </div>--%>
                                 <div class="chatHead clearfix">
-                                       <div class="pull-left">
-                                           <i class="glyphicon glyphicon-user"></i>
-                                       </div>
-                                        <div class="pull-right chatLabel">
-                                            <h3>ebenezer marchus</h3>
-                                            <p>April 27, 2017 11:40 am</p>
-                                        </div>
+                                    <div class="pull-left">
+                                        <i class="glyphicon glyphicon-user"></i>
+                                    </div>
+                                    <div class="pull-right chatLabel">
+                                        <h3>ebenezer marchus</h3>
+                                        <p>April 27, 2017 11:40 am</p>
+                                    </div>
                                 </div>
                                 <div class="chatBody">
                                     <p>
@@ -250,7 +250,7 @@
                                         Lorem Ipsum Lorem Ipsum Lorem Ipsum  
                                     </p>
                                     <div>
-                                        <input type="text" class="form-control" placeholder="leave a reply"/>
+                                        <input type="text" class="form-control" placeholder="leave a reply" />
                                     </div>
                                 </div>
                             </div>
@@ -262,13 +262,13 @@
                                     <span>ASWED</span>
                                 </div>--%>
                                 <div class="chatHead clearfix">
-                                       <div class="pull-left">
-                                           <i class="glyphicon glyphicon-user"></i>
-                                       </div>
-                                        <div class="pull-right chatLabel">
-                                            <h3>ebenezer marchus</h3>
-                                            <p>April 27, 2017 11:40 am</p>
-                                        </div>
+                                    <div class="pull-left">
+                                        <i class="glyphicon glyphicon-user"></i>
+                                    </div>
+                                    <div class="pull-right chatLabel">
+                                        <h3>ebenezer marchus</h3>
+                                        <p>April 27, 2017 11:40 am</p>
+                                    </div>
                                 </div>
                                 <div class="chatBody">
                                     <p>
@@ -276,7 +276,7 @@
                                         Lorem Ipsum Lorem Ipsum Lorem Ipsum  
                                     </p>
                                     <div>
-                                        <input type="text" class="form-control" placeholder="leave a reply"/>
+                                        <input type="text" class="form-control" placeholder="leave a reply" />
                                     </div>
                                 </div>
                             </div>
@@ -735,12 +735,18 @@
         function onLoadGis() {
             require([
               "esri/map",
+              "esri/layers/CSVLayer",
+              "esri/Color",
+               "esri/dijit/Search",
+              "esri/symbols/SimpleMarkerSymbol",
+              "esri/renderers/SimpleRenderer",
+              "esri/InfoTemplate",
+             // "esri/urlUtils",     
               "esri/toolbars/draw",
               "esri/graphic",
               "esri/Color",
               "esri/toolbars/edit",
-
-              "esri/symbols/SimpleMarkerSymbol",
+             // "esri/symbols/SimpleMarkerSymbol",
               "esri/symbols/SimpleLineSymbol",
               "esri/symbols/SimpleFillSymbol",
               "esri/symbols/CartographicLineSymbol",
@@ -750,23 +756,52 @@
               "esri/geometry/Polyline",
               "esri/layers/GraphicsLayer",
               "esri/geometry/webMercatorUtils",
+              "dojo/parser",
               "dijit/Menu",
               "dijit/MenuItem",
-              "dojo/on"],
+               "dijit/Dialog",
+              "dijit/form/Form",
+              "dijit/form/TextBox",
+              "dijit/form/Button",
+              "dojo/on",
+              "dojo/dom",
+              "dojo/domReady!"],
             function (Map,
-
-                Draw, Graphic, Color, Edit,
-
-               SimpleMarkerSymbol,
-                SimpleLineSymbol, SimpleFillSymbol,
-              CartographicLineSymbol, Circle,
+              CSVLayer,
+              Color,
+              Search,
+              SimpleMarkerSymbol,
+              SimpleRenderer,
+              InfoTemplate,
+             // urlUtils,
+              Draw,
+              Graphic,
+              Color,
+              Edit,
+              // MapView,
+              //SimpleMarkerSymbol,
+              SimpleLineSymbol,
+              SimpleFillSymbol,
+              CartographicLineSymbol,
+              Circle,
               Point,
-              Polygon, Polyline, GraphicsLayer,
-              WebMercatorUtils, Menu, MenuItem, on) {
+              Polygon,
+              Polyline,
+              GraphicsLayer,
+              WebMercatorUtils,
+              Parser,
+              Menu,
+              MenuItem,
+              Dialog,
+              Form,
+              TextBox,
+              Button,
+              on,
+              dom) {
 
                 var editToolBar, drawToolBar, drawingLayer, ctxMenuForGraphics, selectedGraphic = null;
                 var drawing = false, editing = false;
-
+                Parser.parse();
                 map = new Map("map", {
                     basemap: "streets",
                     center: [-120.435, 46.159], // lon, lat
@@ -778,8 +813,9 @@
                 events.push(map.on("load", function () {
                     map.graphics.clear();
                     initDrawing();
-                    initEditing();
-                    createGraphicsMenu();
+                    initEditing();                 
+                   // createToolbarAndContextMenu();
+                   
                     if (localStorage["vertices"] != null || localStorage["vertices"] != "") {
                         var finalVal = JSON.parse(JSON.stringify(localStorage["vertices"]));
                         var fillSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
@@ -792,7 +828,7 @@
 
                         var gra = new esri.Graphic(polygon, fillSymbol);
                         map.graphics.add(gra);
-                        map.setExtent(gra.geometry.getExtent().expand(2));
+                        map.setExtent(gra.geometry.getExtent().expand(2));                      
 
                         if (polygonlist.length > 0) {
 
@@ -828,6 +864,99 @@
                     }
                 }));
 
+        //Creates right-click context menu for graphics on the point
+        function createGraphicsMenu() {
+                ctxMenuForGraphics = new Menu({});
+                ctxMenuForGraphics.addChild(new MenuItem({
+                    label: "Add Node",
+                    onClick: function () {
+                        if (selected != null && selected.geometry.type == "point") {
+                            var form = new Form();
+
+                            new TextBox({
+                                width: "150px",
+                            }).placeAt(form.containerNode);
+                            new TextBox({
+                                width: "150px",
+                            }).placeAt(form.containerNode);
+                            new TextBox({
+                                width: "150px",
+                            }).placeAt(form.containerNode);
+                            new TextBox({
+                                width: "150px",
+                            }).placeAt(form.containerNode);
+                            new Button({
+                                label: "CANCEL",
+                                style: "align:right;padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #ba1a00, #ff2000 80%) no-repeat;",
+                                onClick: function () {
+                                    dia.destroy();
+                                    clearGraphics();
+                                }
+                            }).placeAt(form.containerNode);
+                            new Button({
+                                label: "SAVE",
+                                style: "align:right;padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #005991, #007ecd 80%) no-repeat;",
+                                onClick: function () {
+                                    var getProcessUrl = "process-definition";
+                                    var jsonData = {
+                                        variables: {},
+                                        key: "identify-sarfs"
+                                    }
+
+                                    $.ajax({
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        contentType: 'application/json',
+                                        url: camundaBaseApiUrl + getProcessUrl,
+                                        data: JSON.stringify(jsonData),
+                                        async: false,
+                                        cache: false,
+                                        success: function (data) {
+                                            saveSARFData(JSON.parse(data).id);
+                                        },
+                                        error: function (err) {
+                                            console.log(err);
+                                        }
+                                    });
+                                }
+                            }).placeAt(form.containerNode);
+
+                            var dia = new Dialog({
+                                content: form
+                            });
+                            form.startup();
+                            dia.show();
+                            $('.dijitDialog').addClass('dialogNodeStyle');
+                            $('.dijitDialog').find('div[role="presentation"]').css('border-color', 'silver');
+                            $('.dijitInputInner').attr('placeholder', 'Atoll Site Name');
+                            $('.dijitInputInner').addClass('form-control');
+                            $('.dijitDialog').find('input[type="button"]').addClass('btn btn-default dialogSaveBtn');
+                        }
+                    }
+                }));
+
+                ctxMenuForGraphics.startup();            
+          
+
+            //Bind and unbind the context menu using the following two events
+            map.graphics.on("mouse-over", function (evt) {
+                // We'll use this "selected" graphic to enable editing tools
+                // on this graphic when the user click on one of the tools
+                // listed in the menu.             
+                    selected = evt.graphic;
+                // Let's bind to the graphic underneath the mouse cursor   
+                    if(evt.graphic.geometry.type == "point"){
+                        ctxMenuForGraphics.bindDomNode(evt.graphic.getDojoShape().getNode());
+                    }
+            });
+
+            map.graphics.on("mouse-out", function (evt) {              
+                if(evt.graphic.geometry.type == "point"){
+                    ctxMenuForGraphics.unBindDomNode(evt.graphic.getDojoShape().getNode());  
+                }
+            });
+
+        }
                 //Unload all the events when the application closes to prevent memory leaks
                 events.push(map.on("unload", function () {
                     for (var i = 0; i < events.length; i++) {
@@ -890,6 +1019,29 @@
 
                     //Enable the draw buttons
                     $(".btn-draw").removeClass("disabled");
+
+                    map.graphics.on("click", function (evt) {
+                        if (drawing !== true) {
+                            if (evt.graphic.geometry.type !== "point") {
+                                var symbol = new SimpleMarkerSymbol(
+                                                              SimpleMarkerSymbol.STYLE_CIRCLE,
+                                                              12,
+                                                              new SimpleLineSymbol(
+                                                                SimpleLineSymbol.STYLE_NULL,
+                                                                new Color([247, 34, 101, 0.9]),
+                                                                1
+                                                              ),
+                                                              new Color([207, 34, 171, 0.5])
+                                                            );
+
+                                map.graphics.add(new esri.Graphic(evt.mapPoint, symbol));
+                            }
+                           
+                            createGraphicsMenu();
+                            
+                            
+                        }
+                    });
                 }
 
                 function onDrawEnd(evt) {
@@ -1044,26 +1196,27 @@
                     return Math.round((num + 0.00001) * multiplier) / multiplier;
                 }
 
-                function createToolbarAndContextMenu() {
 
-                    map.on("click", function (evt) {
-                        if (drawing !== true) {
-                            var symbol = new SimpleMarkerSymbol(
-                                 SimpleMarkerSymbol.STYLE_CIRCLE,
-                                 12,
-                                 new SimpleLineSymbol(
-                                   SimpleLineSymbol.STYLE_NULL,
-                                   new Color([247, 34, 101, 0.9]),
-                                   1
-                                 ),
-                                 new Color([207, 34, 171, 0.5])
-                               );
+             //   function createToolbarAndContextMenu() {
 
+             //       map.graphics.on("click", function (evt) {
+             //          if (drawing !== true) {
+             //          var symbol = new SimpleMarkerSymbol(
+             //                                        SimpleMarkerSymbol.STYLE_CIRCLE,
+             //                                        12,
+             //                                        new SimpleLineSymbol(
+             //                                          SimpleLineSymbol.STYLE_NULL,
+             //                                          new Color([247, 34, 101, 0.9]),
+             //                                          1
+             //                                        ),
+             //                                        new Color([207, 34, 171, 0.5])
+             //                                      );
 
-                            createGraphicsMenu1();
-                                        }
-                                    });
-                }
+             //       // map.graphics.add(new esri.Graphic(evt.mapPoint,symbol));
+             //        //createGraphicsMenu();
+             //     }
+             //   });
+             //}
 
                 //Disable double-click zoom if a graphic is being clicked while editing
                 events.push(map.on("mouse-down", function (e) {

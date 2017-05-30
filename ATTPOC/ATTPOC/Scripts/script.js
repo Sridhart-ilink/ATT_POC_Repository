@@ -577,40 +577,7 @@ function onLoadGis() {
             return Math.round((num + 0.00001) * multiplier) / multiplier;
         }
 
-        //Creates right-click context menu for graphics on the point
-        function createGraphicsMenu1() {
-
-            ctxMenuForGraphics1 = new Menu({});
-
-            ctxMenuForGraphics1.addChild(new MenuItem({
-                label: "Add Node",
-                onClick: function () {
-                    if (selectedGraphic != null && selectedGraphic.geometry.type !== "polygon"
-                        && selectedGraphic.geometry.type !== "polyline") {
-                        editToolBar.activate(Edit.EDIT_VERTICES, selectedGraphic);
-                        editing = true;
-                    }
-                }
-            }));
-
-            ctxMenuForGraphics1.startup();
-
-            //Bind and unbind the context menu using the following two events
-            map.graphics.on("mouse-over", function (evt) {
-                // We'll use this "selected" graphic to enable editing tools
-                // on this graphic when the user click on one of the tools
-                // listed in the menu.
-                selected = evt.graphic;
-
-                // Let's bind to the graphic underneath the mouse cursor           
-                ctxMenuForGraphics1.bindDomNode(evt.graphic.getDojoShape().getNode());
-            });
-
-            map.graphics.on("mouse-out", function (evt) {
-                ctxMenuForGraphics1.unBindDomNode(evt.graphic.getDojoShape().getNode());
-            });
-
-        }
+        
 
         function clearGraphics() {
             //first remove all graphics added directly to map
