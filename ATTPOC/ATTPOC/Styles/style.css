@@ -333,7 +333,7 @@ position:relative;
     color: #fff;
     font-size: 10pt;
     width: 211px;
-    padding: 7px 20px 7px 20px;
+    padding: 7px 20px 7px 10px;
     margin-bottom: 4px;
     text-decoration: none;
 }
@@ -450,3 +450,102 @@ position:relative;
 }
 
 .dijitButtonNode {border:0px solid gray;margin:0;line-height:normal;vertical-align: middle; #vertical-align: autotext-align:centerwhite-space: nowrap;}
+.cardHead div.pull-left{
+    width: 215px;
+    padding: 5px;
+    border-radius: 4px;
+}
+.cardLabel h3 {
+    margin:0px;
+    font-size:14px;
+    font-weight:600;
+    font-family:"Roboto", Bold;
+    text-transform:uppercase;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color : #454545;
+}
+.cardLabel p{
+    color :#005991;
+
+}
+.cardBody{
+    margin-left : 5px;
+}
+.cardBody h3 {
+    margin:0px;
+    font-size:15px;
+    font-weight:600;
+    font-family:"Roboto", Bold;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color :#005991;
+    padding-bottom : 5px;
+}
+.cardBody button{
+    margin-left : -50px;
+    padding-bottom: 0px;
+    font-size:15px;
+}
+.cardSpan{
+    margin-left : 0;
+    margin-top: 5px;
+    font-size: 15px;
+    font-family : "Roboto", Light;
+    color:#7f7f7f;
+}
+.cardInfo{
+    border-bottom : 1px dotted #ccc;
+    /*padding:15px 0px;*/
+    padding:0px 0px 8px;
+}
+.slidingDiv{
+    height: 602px;
+    overflow-y: auto;
+    overflow-x : hidden;
+    /*width : auto;*/
+}
+.cardView{
+    width: 100%;
+}
+.pager{
+    margin-top: 10px;
+    height: 25px;
+}
+#backIcon{
+    border: 2px solid #ccc;
+    padding: 8px;
+    border-radius: 90px;
+    text-align: center;
+    text-indent: -3px;
+    width: 35px;
+    /* line-height: 20px; */
+    font-size: 15px;
+    margin-left : 0px;
+    color: #ccc;
+    height: 36px;
+}
+#frontIcon{
+    border: 2px solid #ccc;
+    padding: 8px;
+    border-radius: 90px;
+    text-align: center;
+    text-indent: 2px;
+    width: 35px;
+    /* line-height: 20px; */
+    font-size: 15px;
+    margin-left : -3px;
+    color: #ccc;
+    height: 36px;
+}
+#backIcon:hover, #frontIcon:hover{
+    color: maroon;
+}
+.pageTxt{
+    width: 40px;
+}
+.pageLength{
+    padding-left: 3px;
+}

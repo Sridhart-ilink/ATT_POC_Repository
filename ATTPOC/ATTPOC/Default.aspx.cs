@@ -15,40 +15,8 @@ namespace JavascriptBasedApp
 {
     public partial class _Default : System.Web.UI.Page
     {
-         
         protected void Page_Load(object sender, EventArgs e)
         {
-            bindGrid();
-        }
-
-        protected void dtGrid_OnPageIndexChanging(object sender, DataGridPageChangedEventArgs e)
-        {
-            dtGrid.CurrentPageIndex = e.NewPageIndex;
-            bindGrid();
-        }
-
-        protected void dtGrid_ItemDataBound(object sender, DataGridItemEventArgs e)
-        {
-            if (e.Item.ItemType == ListItemType.Item ||   e.Item.ItemType == ListItemType.AlternatingItem)
-            {
-                e.Item.Attributes.Add("onclick", "javascript:alert(" + e.Item.Cells[1].Attributes["data-vertices"] + ");");
-            }
-        }
-        private void bindGrid()
-        {
-            using (var client = new HttpClient())
-            {
-                string serviceUrl = System.Configuration.ConfigurationManager.AppSettings.Get("ServiceUrl");
-                client.BaseAddress = new Uri(serviceUrl);
-                var response = client.GetAsync("SarfDetails/Get").Result;
-                var data = response.Content.ReadAsStringAsync();
-                var dt = JsonConvert.DeserializeObject<DataTable>(data.Result);
-                if (response.IsSuccessStatusCode)
-                {
-                    dtGrid.DataSource = dt;
-                    dtGrid.DataBind();
-                }
-            }
         }
     }
 }
