@@ -83,12 +83,14 @@ function cardViewDataBind() {
         var cardView = $('.cardView');
         for (var count = 0; count < 10; count++) {
             var content = '';
-            content += '<div class="cardInfo">' +
+            content += '<div class="cardInfo" style="cursor:pointer;">' +
+                 '<span class="sarfclick" data-vertices="' + sarfList[count].Vertices + '"><button id="sarfclick" type="button" class="btn btn-link linkcolor">' + sarfList[count].SARFID + '</button></span>' +
                             '<div class="cardBody">' +
-                                    '<button type="button" class="btn btn-link linkcolor">' + sarfList[count].SARFID + '</button>' +
+                                   
                                     '<h3>' + sarfList[count].SARFNAME + '</h3>' +
                                     '<span class="cardSpan clearfix">' + sarfList[count].AreaInSqKm + ' SqKm</span>' +
                                     '<span class="cardSpan clearfix">RF Pending Complete</span>' +
+                                     '<span style="display:none;" class="cardSpan clearfix">' + sarfList[count].Vertices + '</span>' +
                              '</div>' +
                         '</div>';
             cardView.append(content);
@@ -324,18 +326,21 @@ function onLoadGis() {
 
             map.addLayer(drawingLayer);
 
-            $("#dtGrid tr").click(function () {                
+            $(".cardBody").click(function () {
                 map.graphics.clear();
                 var cell = $(this);
-
-                $("#dtGrid tr:even").css("background-color", "white");
-                $("#dtGrid tr:odd").css("background-color", "lightgray");
-          
                
-                if (cell[0].childNodes[2].childNodes['3'] != undefined) {
-                    cell[0].style.backgroundColor = "#005476";
-                    cell[0].style.Color = "white";
-                var verticesVal = cell[0].childNodes[2].childNodes['3'].defaultValue;
+                $(".cardBody").css("background-color", "white");
+                $.each($(".cardBody"), function (i, val) {
+                    val.children['1'].style.color = "Gray";
+                    val.children['2'].style.color = "Gray";
+                });
+
+                if (cell[0].children['3'] != undefined) {
+                    cell[0].style.backgroundColor = "Gray";
+                    cell[0].children['1'].style.color = "White";
+                    cell[0].children['2'].style.color = "White";
+                    var verticesVal = cell[0].children['3'].innerText;
                 if (verticesVal != "") {
                     var vertices_arr = [];
                     vertices_arr.push(verticesVal.split(';'))
@@ -370,8 +375,8 @@ function onLoadGis() {
                 map.graphics.clear();
 
                 var self = $(this);
-                var sarfName = self.text();
-                var sarfId = $(self).attr('data-sarfid');
+               // var sarfName = self.text();
+                var sarfId = self.text();
                 var verticesVal = $(self).attr('data-vertices');
                 if (verticesVal != "") {
                     var vertices_arr = [];
