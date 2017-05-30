@@ -2,7 +2,7 @@
 var TaskID = 0;
 var InstanceID = 0;
 var TaskStatus = "";
-
+var sarfList = [];
 function loadScript(src, callback) {
     'use strict';
 
@@ -78,20 +78,62 @@ loadScript('https://js.arcgis.com/3.14/init.js', function () {
     onLoadGis(); //Initialize GIS components on ArcGIS load
 });
 
+function cardViewDataBind() {
+    if (sarfList != null && sarfList.length > 0) {
+        var cardView = $('.cardView');
+        for (var count = 0; count < 10; count++) {
+            var content = '';
+            content += '<div class="cardInfo">' +
+                            '<div class="cardBody">' +
+                                    '<button type="button" class="btn btn-link linkcolor">' + sarfList[count].SARFID + '</button>' +
+                                    '<h3>' + sarfList[count].SARFNAME + '</h3>' +
+                                    '<span class="cardSpan clearfix">' + sarfList[count].AreaInSqKm + ' SqKm</span>' +
+                                    '<span class="cardSpan clearfix">RF Pending Complete</span>' +
+                             '</div>' +
+                        '</div>';
+            cardView.append(content);
+        }
+    }
+}
+
+function initGrid() {
+    var getDetailsAction = "SarfDetails/Get";
+    $.ajax({
+        method: 'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        url: camundaBaseApiUrl + getDetailsAction,
+        data: JSON.stringify({}),
+        async: false,
+        cache: false,
+        success: function (data) {
+            sarfList = data;
+            sarfList.length > 10 ? $('.pager').show() : $('.pager').hide();
+            $('.pageLength').text(' of ' + sarfList.length);
+            cardViewDataBind();
+            console.log(sarfList);
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    });
+}
+
 $(document).ready(function () {
+    initGrid();
     $('.toggleArrow').click(function () {
         $('.toggleArrow').toggleClass('rotateArrow');
         if ($('.slidingDiv').is(":visible")) {
             //console.log('side bar shown');
             $(".slidingDiv").toggle();
-            $('.tabDiv').removeClass('col-md-9');
-            $('.tabDiv').addClass('col-md-12');
+            $('.tabDiv').removeClass('col-md-10');
+            $('.tabDiv').addClass('col-md-13');
         }
         else {
             console.log('side bar hidden');
             $(".slidingDiv").toggle();
-            $('.tabDiv').removeClass('col-md-12');
-            $('.tabDiv').addClass('col-md-9');
+            $('.tabDiv').removeClass('col-md-13');
+            $('.tabDiv').addClass('col-md-10');
         }
     });
     $('#map').height($(window).height()-60);
@@ -103,32 +145,6 @@ $(document).ready(function () {
         var chevron = $(this).find("span");
         chevron.toggleClass("glyphicon-chevron-down");
         chevron.toggleClass("glyphicon-chevron-up");
-    });
-
-    $('#btnSave').click(function (e) {
-        var getProcessUrl = "process-definition";
-        var jsonData = {
-            variables: {},
-            key: "identify-sarfs"
-        }
-        /*
-        api call to start process-definition data
-        */
-        $.ajax({
-            method: 'POST',
-            dataType: 'json',
-            contentType: 'application/json',
-            url: camundaBaseApiUrl + getProcessUrl,
-            data: JSON.stringify(jsonData),
-            async: false,
-            cache: false,
-            success: function (data) {
-                saveSARFData(JSON.parse(data).id);
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        });
     });
 });
 
@@ -638,6 +654,7 @@ function onLoadGis() {
                                             saveSARFData(JSON.parse(data).id);
                                         },
                                         error: function (err) {
+                                            saveSARFData(0);
                                             console.log(err);
                                         }
                                     });
