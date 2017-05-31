@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATTPOCWebApp", "ATTPOC\ATTP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATTWebAppAPI", "ATTWebAppAPI\ATTWebAppAPI.csproj", "{A8B6705F-F461-420C-A057-94C2F95461B2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4B152A35-31DB-4D5F-A7B8-E0F06BEDE7C5}"
+	ProjectSection(SolutionItems) = preProject
+		MySQL_DBQueries.sql = MySQL_DBQueries.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -57,5 +57,54 @@ ALTER TABLE SARF ADD Region nvarchar(200)NULL;
 ALTER TABLE SARF ADD RF_Design_Engineer_ATTUID nvarchar (500) NULL;
 /************************************************************************/
 
+/* delete from sarf where sarfname is null;
+delete from polygon where sarfid not in (select sarfid from sarf); */
+
+/************************************************************************/
+CREATE TABLE Node(
+	NodeId int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	SarfId int NULL,
+    Latitude decimal(12,7) NULL,
+    Longitude decimal(12,7) NULL,
+    AtollSiteName varchar(200) NULL,
+    iPlanJobNumber varchar(200) NULL,
+    PaceNumber varchar(100) NULL,    
+	DateCreated datetime NULL,
+	DateModified datetime NULL 	 
+);
+
+INSERT INTO Node (SarfId, Latitude, Longitude, AtollSiteName, iPlanJobNumber, PaceNumber, DateCreated) 
+VALUES (1, '47.6101497', '-122.2015159', 'TestAtoll1', 'WR_-RUTH-11-00318', 'MRUTH000105', now());
+INSERT INTO Node (SarfId, Latitude, Longitude, AtollSiteName, iPlanJobNumber, PaceNumber, DateCreated) 
+VALUES (1, '47.6101000', '-122.2015000', 'TestAtoll2', 'WR_-RUTH-11-00318', 'MRUTH000105', now());
+INSERT INTO Node (SarfId, Latitude, Longitude, AtollSiteName, iPlanJobNumber, PaceNumber, DateCreated) 
+VALUES (2, '47.6062095', '-122.3320708', 'TestAtoll3', 'WR_-RUTH-11-00318', 'MRUTH000105', now());
+INSERT INTO Node (SarfId, Latitude, Longitude, AtollSiteName, iPlanJobNumber, PaceNumber, DateCreated) 
+VALUES (2, '47.6063155', '-122.3327984', 'TestAtoll4', 'WR_-RUTH-11-00318', 'MRUTH000105', now());
+
+/************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

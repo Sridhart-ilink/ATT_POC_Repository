@@ -492,8 +492,8 @@ position:relative;
     color :#005991;
     padding-bottom : 5px;
 }
-.cardBody button{
-    margin-left : -50px;
+.cardInfo button{
+    margin-left : -45px;
     padding-bottom: 0px;
     font-size:15px;
 }
