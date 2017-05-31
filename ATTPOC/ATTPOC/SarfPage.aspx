@@ -156,8 +156,8 @@
                         <!-- required for floating -->
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs tabs-left">
-                            <li class="active"><a href="#mapview" data-toggle="tab">Map View</a></li>
-                            <li><a href="#workflow" data-toggle="tab">Workflow</a></li>
+                            <li class="" data-index ="0"><a href="#mapview" data-toggle="tab">Map View</a></li>
+                            <li class="" data-index="1"><a href="#workflow" data-toggle="tab">Workflow</a></li>
                         </ul>
                     </div>
                     <div class="col-xs-9">
@@ -166,7 +166,7 @@
                             <img src="Styles/images/ChatIcon.png" title="Hide&Show Comment" width="15" />
                         </div>
                         <div class="tab-content">
-                            <div class="tab-pane active" id="mapview">
+                            <div class="tab-pane" id="mapview">
                                 <div id="map" style="width: 138%; height: 520px" class="pull-left">
                                     <%--<a id="btnExpandMap" class="btn btn-primary" title="Click to maximize/minimize map">--%>
                                 </div>
@@ -427,10 +427,13 @@
                     getTaskStatusbyProcessInstanceID(processInstanceID);
                     workflowUpdate(currentText);
                     console.log(data);
+                    localStorage["tabIndex"] = $('.tabs-left').find('li.active').attr('data-index');
                     $('#sarfForm').submit();
                 },
                 error: function (err) {
+                    localStorage["tabIndex"] = $('.tabs-left').find('li.active').attr('data-index');
                     console.log(err);
+                    $('#sarfForm').submit();
                 }
             });
         }
@@ -539,6 +542,35 @@
                         $('#cancelBtn').show();
                     }
                     break;
+            }
+        }
+
+        function restoreCurrentTab() {
+            var lastViewedTabIndex = localStorage["tabIndex"];
+            if (lastViewedTabIndex != null && lastViewedTabIndex != '') {
+                lastViewedTabIndex = parseInt(lastViewedTabIndex);
+                switch (lastViewedTabIndex) {
+                    case 0:
+                        $($('.tabs-left').find('li')[lastViewedTabIndex]).addClass('active');
+                        $($('.tabs-left').find('li')[lastViewedTabIndex + 1]).removeClass('active');
+                        $($('.tab-content').find('.tab-pane')[lastViewedTabIndex]).addClass('active');
+                        $($('.tab-content').find('.tab-pane')[lastViewedTabIndex + 1]).removeClass('active');
+                        break;
+                    case 1:
+                        $($('.tabs-left').find('li')[lastViewedTabIndex]).addClass('active');
+                        $($('.tabs-left').find('li')[lastViewedTabIndex - 1]).removeClass('active');
+                        $($('.tab-content').find('.tab-pane')[lastViewedTabIndex]).addClass('active');
+                        $($('.tab-content').find('.tab-pane')[lastViewedTabIndex - 1]).removeClass('active');
+                        break;
+                    default:
+                        $($('.tabs-left').find('li')[0]).addClass('active');
+                        $($('.tab-content').find('.tab-pane')[0]).addClass('active');
+                        break;
+                }
+            }
+            else {
+                $($('.tabs-left').find('li')[0]).addClass('active');
+                $($('.tab-content').find('.tab-pane')[0]).addClass('active');
             }
         }
 
@@ -730,6 +762,8 @@
                 });
                 $('#sarfForm').submit();
             });
+
+            restoreCurrentTab();
         });
 
         function onLoadGis() {

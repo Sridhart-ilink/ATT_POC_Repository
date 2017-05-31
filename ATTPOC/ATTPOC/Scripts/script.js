@@ -90,7 +90,7 @@ function cardViewDataBind() {
             countReset++;
             var content = '';
             content += '<div class="cardInfo" style="cursor:pointer;">' +
-                            '<button id="sarfclick" type="button" class="btn btn-link linkcolor" data-vertices="' + sarfList[count].Vertices + '">' + sarfList[count].SARFID + '</button>' +
+                            '<button id="sarfclick" type="button" class="btn btn-link linkcolor sarfclick" data-vertices="' + sarfList[count].Vertices + '">' + sarfList[count].SARFID + '</button>' +
                             '<div class="cardBody">' +
                                     '<h3>' + sarfList[count].SARFNAME + '</h3>' +
                                     '<span class="cardSpan clearfix">' + sarfList[count].AreaInSqKm + ' SqKm</span>' +
@@ -399,7 +399,7 @@ function onLoadGis() {
                }
             });
 
-            $("#sarfclick").click(function () {
+            $(".sarfclick").click(function () {
                 map.graphics.clear();
 
                 var self = $(this);
