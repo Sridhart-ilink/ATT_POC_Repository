@@ -28,7 +28,11 @@ function loadScript(src, callback) {
 function saveSARFData(workflowProcessInstanceID) {
     var postSarfDataUrl = "Sarf/Post";
     var sarfNameTxt = $('#dijit_form_TextBox_0').val();
-    var jsonData = { sarfName: sarfNameTxt, processInstanceID: workflowProcessInstanceID };
+    var jsonData = {
+        sarfName: sarfNameTxt,
+        processInstanceID: workflowProcessInstanceID,
+        sarfStatus : "RF Pending Completion"
+    };
     /*
    api call to post sarf data
    */
@@ -41,6 +45,8 @@ function saveSARFData(workflowProcessInstanceID) {
         async: false,
         cache: false,
         success: function (data) {
+            console.log(data);
+            localStorage["sarfID"] = data;
             savePolygonData();
         },
         error: function (err) {
@@ -94,8 +100,8 @@ function cardViewDataBind() {
                             '<div class="cardBody">' +
                                     '<h3>' + sarfList[count].SARFNAME + '</h3>' +
                                     '<span class="cardSpan clearfix">' + sarfList[count].AreaInSqKm + ' SqKm</span>' +
-                                    '<span class="cardSpan clearfix">RF Pending Complete</span>' +
-                                     '<span style="display:none;" class="cardSpan clearfix">' + sarfList[count].Vertices + '</span>' +
+                                    '<span class="cardSpan clearfix">' + (sarfList[count].SarfStatus == null ?
+                                        "" : sarfList[count].SarfStatus) + '</span>' +
                              '</div>' +
                         '</div>';
             cardView.append(content);
@@ -178,7 +184,34 @@ $(document).ready(function () {
     });
 });
 
-function getTaskStatusbyProcessInstanceID(processInstanceID) {
+function getTaskStatusbySarfID(id) {
+    var getStatusUrl = "GetStatusByID";
+    /*
+    api call to get the  task id , activity name ie status to complete the task
+    */
+    $.ajax({
+        method: 'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        url: camundaBaseApiUrl + getStatusUrl + "/" + id,
+        data: JSON.stringify({}),
+        async: false,
+        cache: false,
+        success: function (data) {
+            var parsedData = data;
+            localStorage["taskID"] = '0';
+            localStorage["instanceID"] = '0';
+            localStorage["taskStatus"] = parsedData;
+            localStorage["sarfID"] = id;
+            console.log(parsedData);
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    });
+}
+
+function getTaskStatusbyProcessInstanceID(processInstanceID, sarfID) {
     var getStatusUrl = "task-by-process-instance";
     /*
     api call to get the  task id , activity name ie status to complete the task
@@ -202,6 +235,7 @@ function getTaskStatusbyProcessInstanceID(processInstanceID) {
             console.log(parsedData);
         },
         error: function (err) {
+            getTaskStatusbySarfID(sarfID);
             console.log(err);
         }
     });
@@ -421,7 +455,7 @@ function onLoadGis() {
                         localStorage["vertices"] = finalVal;
                     }
                 }
-                getTaskStatusbyProcessInstanceID($(self).attr('data-processinstanceid'));
+                getTaskStatusbyProcessInstanceID($(self).attr('data-processinstanceid'), sarfId);
                 window.location = appUrl + "SarfPage.aspx?processInstanceId=" + InstanceID + "&sarfid=" + sarfId;
                 
             });

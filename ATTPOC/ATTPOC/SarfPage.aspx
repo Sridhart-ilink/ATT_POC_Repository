@@ -124,21 +124,17 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <button type="button" id="promoteBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled"
-                                        value="promote">
-                                        PROMOTE</button>
+                                        value="promote">PROMOTE</button>
                                     <button type="button" id="demoteBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled"
-                                        value="demote">
-                                        DEMOTE</button>
+                                        value="demote">DEMOTE</button>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <button type="button" id="pullbackBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled"
-                                        value="pullback">
-                                        PULL BACK</button>
+                                        value="pullback">PULL BACK</button>
                                     <button type="button" id="cancelBtn" class="statusBtn redBtn btn btn-lg btn-danger btn-form btn-draw disabled"
-                                        value="cancel">
-                                        CANCEL</button>
+                                        value="cancel">CANCEL</button>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
@@ -291,6 +287,7 @@
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script>
+        var labelStatus = '';
         function loadScript(src, callback) {
             'use strict';
 
@@ -318,27 +315,27 @@
 
             switch (currentStatus) {
                 case statusEnum.One:
-                    $('#statusLabel').text(statusEnum.Two);
+                    labelStatus = statusEnum.Two;
                     $('#demoteBtn').show();
                     $('#pullbackBtn').show();
                     break;
                 case statusEnum.Two:
-                    $('#statusLabel').text(statusEnum.Three);
+                    labelStatus = statusEnum.Three;
                     $('#demoteBtn').show();
                     $('#pullbackBtn').show();
                     break;
                 case statusEnum.Three:
-                    $('#statusLabel').text(statusEnum.Six);
+                    labelStatus = statusEnum.Six;
                     $('#demoteBtn').hide();
                     $('#promoteBtn').hide();
                     $('#pullbackBtn').show();
                     break;
                 case statusEnum.Four:
-                    $('#statusLabel').text(statusEnum.Two);
+                    labelStatus = statusEnum.Two;
                     $('#demoteBtn').hide();
                     break;
                 case statusEnum.Five:
-                    $('#statusLabel').text(statusEnum.Three);
+                    labelStatus = statusEnum.Three;
                     $('#demoteBtn').hide();
                     break;
             }
@@ -347,10 +344,10 @@
         function updateDemoteStatus(currentStatus) {
             switch (currentStatus) {
                 case statusEnum.Two:
-                    $('#statusLabel').text(statusEnum.Four);
+                    labelStatus = statusEnum.Four;
                     break;
                 case statusEnum.Three:
-                    $('#statusLabel').text(statusEnum.Five);
+                    labelStatus = statusEnum.Five;
                     break;
             }
             $('#pullbackBtn').show();
@@ -360,19 +357,19 @@
         function updatePullbackStatus(currentStatus) {
             switch (currentStatus) {
                 case statusEnum.Six:
-                    $('#statusLabel').text(statusEnum.One);
+                    labelStatus = statusEnum.One;
                     break;
                 case statusEnum.Two:
-                    $('#statusLabel').text(statusEnum.One);
+                    labelStatus = statusEnum.One;
                     break;
                 case statusEnum.Three:
-                    $('#statusLabel').text(statusEnum.One);
+                    labelStatus = statusEnum.One;
                     break;
                 case statusEnum.Four:
-                    $('#statusLabel').text(statusEnum.One);
+                    labelStatus = statusEnum.One;
                     break;
                 case statusEnum.Five:
-                    $('#statusLabel').text(statusEnum.One);
+                    labelStatus = statusEnum.One;
                     break;
             }
             $('#cancelBtn').show();
@@ -381,7 +378,7 @@
         }
 
         function updateCancelStatus(currentStatus) {
-            $('#statusLabel').text(statusEnum.Seven);
+            labelStatus = statusEnum.Seven;
             $('#promoteBtn').hide();
             $('#demoteBtn').hide();
             $('#pullbackBtn').hide();
@@ -389,19 +386,45 @@
 
         function workflowUpdate(currentBtnText) {
             switch (currentBtnText) {
-                case "Promote":
-                    updatePromoteStatus(currentStatus);
+                case "PROMOTE":
+                    updatePromoteStatus(labelStatus);
                     break;
-                case "Demote":
-                    updateDemoteStatus(currentStatus);
+                case "DEMOTE":
+                    updateDemoteStatus(labelStatus);
                     break;
-                case "Pull Back":
-                    updatePullbackStatus(currentStatus);
+                case "PULL BACK":
+                    updatePullbackStatus(labelStatus);
                     break;
-                case "Cancel":
-                    updateCancelStatus(currentStatus);
+                case "CANCEL":
+                    updateCancelStatus(labelStatus);
                     break;
             }
+        }
+        function updateSarfStatus(id) {
+            var getStatusUrl = "UpdateSarfStatus";
+            var sarf = {
+                id : id,
+                sarfStatus: labelStatus
+            };
+            /*
+            api call to update status
+            */
+            $.ajax({
+                method: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                url: camundaBaseApiUrl + getStatusUrl,
+                data: JSON.stringify(sarf),
+                async: false,
+                cache: false,
+                success: function (data) {
+                    localStorage["taskStatus"] = labelStatus;
+                    $('#sarfForm').submit();
+                },
+                error: function (err) {
+                    $('#sarfForm').submit();
+                }
+            });
         }
 
         function updateStatus(wfStatus, currentText) {
@@ -432,8 +455,9 @@
                 },
                 error: function (err) {
                     localStorage["tabIndex"] = $('.tabs-left').find('li.active').attr('data-index');
+                    workflowUpdate(currentText);
+                    updateSarfStatus(localStorage["sarfID"]);
                     console.log(err);
-                    $('#sarfForm').submit();
                 }
             });
         }
@@ -606,13 +630,14 @@
             processInstanceID = GetParameterValues("processInstanceId");
             getTaskStatusbyProcessInstanceID(processInstanceID);
             $('#statusLabel').text(localStorage["taskStatus"]);
-
+            labelStatus = $('#statusLabel').text();
             $('#promoteBtn').hide();
             $('#demoteBtn').hide();
             $('#pullbackBtn').hide();
             $('#cancelBtn').hide();
 
             resetWorkflowButtons(localStorage["taskStatus"]);
+            $('#statusLabel').text(labelStatus);
             $('.txtDetails').hide();
             $('.lblDetails').show();
             $('#detailsupdatebtn').hide();
