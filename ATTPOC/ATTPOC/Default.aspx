@@ -27,6 +27,12 @@
             {
                 text-transform: none;
             }
+            #BasemapToggle {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          z-index: 50;
+    }
         </style>
     </head>
     
@@ -57,9 +63,12 @@
                            <img src="Styles/images/double-arrow-right-red.png" title="Hide&Show SideBar" width="15" />
                        </div>
                     <div id="search"></div>
-                    <div id="map" class="pull-left">
+                    <div id="map" class="pull-left">     
+                         <div id="BasemapToggle"></div>               
                     </div>
+                    
                 </div>
+                 
             </div>
             </div>
         </form>

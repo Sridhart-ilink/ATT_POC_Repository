@@ -18,8 +18,19 @@
     <link rel="stylesheet" type="text/css" href="Styles/claro-3.14.css" />
     <link rel="stylesheet" href="bootstrap.vertical-tabs.css" />
     <link rel="stylesheet" type="text/css" href="Styles/style.css" />
-</head>
 
+    <style>
+           
+           #BasemapToggle {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          z-index: 50;
+    }
+        </style>
+
+</head>
+ 
 <body>
     <form id="sarfForm" runat="server">
         <div class="container-fluid">
@@ -169,6 +180,7 @@
                             <div class="tab-pane active" id="mapview">
                                 <div id="map" style="width: 138%; height: 520px" class="pull-left">
                                     <%--<a id="btnExpandMap" class="btn btn-primary" title="Click to maximize/minimize map">--%>
+                                       <div id="BasemapToggle"></div>     
                                 </div>
                             </div>
                             <div class="tab-pane" id="workflow">
@@ -735,6 +747,7 @@
         function onLoadGis() {
             require([
               "esri/map",
+              "esri/dijit/BasemapToggle",
               "esri/layers/CSVLayer",
               "esri/Color",
                "esri/dijit/Search",
@@ -767,6 +780,7 @@
               "dojo/dom",
               "dojo/domReady!"],
             function (Map,
+              BasemapToggle,
               CSVLayer,
               Color,
               Search,
@@ -803,12 +817,17 @@
                 var drawing = false, editing = false;
                 Parser.parse();
                 map = new Map("map", {
-                    basemap: "streets",
+                    basemap: "satellite",
                     center: [-120.435, 46.159], // lon, lat
                     zoom: 5,
                     minZoom: 2
                 });
 
+                var toggle = new BasemapToggle({
+                    map: map,
+                    basemap: "streets"
+                }, "BasemapToggle");
+                toggle.startup();
 
                 events.push(map.on("load", function () {
                     map.graphics.clear();
@@ -851,8 +870,8 @@
                                         finalVertices = JSON.parse("[" + finalVertices + "]");
                                         polygon.addRing(finalVertices)
                                         var fillSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
-                                        new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
-                                        new Color([255, 0, 0]), 2), new Color([0, 0, 0, 0.25])
+                                        new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASHDOT,
+                                        new Color([201, 0, 0]), 2), new Color([0, 0, 0, 0.25])
                                         );
 
                                         var gra = new esri.Graphic(polygon, fillSymbol);

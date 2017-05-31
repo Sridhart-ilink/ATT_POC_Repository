@@ -210,6 +210,7 @@ function getTaskStatusbyProcessInstanceID(processInstanceID) {
 function onLoadGis() {
     require([
       "esri/map",
+      "esri/dijit/BasemapToggle",
       "esri/layers/CSVLayer",
       "esri/Color",
        "esri/dijit/Search",
@@ -242,6 +243,7 @@ function onLoadGis() {
       "dojo/dom",
       "dojo/domReady!"],
     function (Map,
+              BasemapToggle,
               CSVLayer,
               Color,
               Search,
@@ -279,7 +281,7 @@ function onLoadGis() {
         Parser.parse();
 
         map = new Map("map", {
-            basemap: "streets",
+            basemap: "satellite",
             center: [-115.94158, 48.89913, -125.14812, 44.75269], // lon, lat
             zoom: 5,
             minZoom: 2
@@ -289,6 +291,12 @@ function onLoadGis() {
             map: map
         }, "search");
         search.startup();
+
+        var toggle = new BasemapToggle({
+            map: map,
+            basemap: "streets"
+        }, "BasemapToggle");
+        toggle.startup();
 
         events.push(map.on("load", function () {
             initDrawing();
@@ -483,6 +491,14 @@ function onLoadGis() {
             createGraphicsMenu();
             // triggered the click event to enable the context for create sarf
             $(".btn-draw").click();
+     
+            var polygon = evt.geometry.rings[0];
+            var vertices = "";
+
+            var  longLat = WebMercatorUtils.xyToLngLat(polygon[0][0], polygon[0][1]);
+
+           x = round(longLat[0], DECIMAL_PRECISION);
+           y = round(longLat[1], DECIMAL_PRECISION);
         }
 
         function addGraphicToDrawingLayer(graphic) {
@@ -698,9 +714,13 @@ function onLoadGis() {
                             var dia = new Dialog({
                                 content: form
                             });
+                           
+
                             form.startup();
                             dia.show();
+                          
                             $('.dijitDialog').addClass('dialogStyle');
+                          //  $('.dijitDialog').attr('style', 'top:-94.1258px !important;left: 42.70476px !important; z-index: 950;position: absolute; opacity: 1;');
                             $('.dijitDialog').find('div[role="presentation"]').css('border-color', 'silver');
                             $('.dijitInputInner').attr('placeholder', 'Sarf Name');
                             $('.dijitInputInner').addClass('form-control');
