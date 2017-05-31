@@ -102,6 +102,7 @@ function cardViewDataBind() {
                                     '<span class="cardSpan clearfix">' + sarfList[count].AreaInSqKm + ' SqKm</span>' +
                                     '<span class="cardSpan clearfix">' + (sarfList[count].SarfStatus == null ?
                                         "" : sarfList[count].SarfStatus) + '</span>' +
+                                    '<span style="display:none;" class="cardSpan clearfix">' + sarfList[count].Vertices + '</span>' +
                              '</div>' +
                         '</div>';
             cardView.append(content);
