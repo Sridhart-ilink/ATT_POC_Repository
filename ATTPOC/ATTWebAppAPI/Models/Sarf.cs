@@ -22,6 +22,7 @@ namespace ATTWebAppAPI.Models
         public string Region { set; get; }
         public string RFDesignEnggId { set; get; }
         public decimal AreaSqKm { set; get; }
+        public string SarfStatus { set; get; }
 
     }
 }
