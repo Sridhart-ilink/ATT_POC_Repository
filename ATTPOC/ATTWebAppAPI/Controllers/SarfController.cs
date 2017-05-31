@@ -69,6 +69,21 @@ namespace ATTWebAppAPI.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("api/UpdateSarfStatus")]
+        public HttpResponseMessage UpdateSarfStatus([FromBody] Sarf sarf)
+        {
+            try
+            {
+                sarfDao.UpdateSarfStatus(sarf);
+                return WrapObjectToHttpResponse(1);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error : " + ex.Message);
+            }
+        }
+
         [HttpGet]
         [Route("api/SarfDetails/Get")]
         public DataTable GetSarfDetails()
@@ -76,6 +91,20 @@ namespace ATTWebAppAPI.Controllers
             try
             {
                 return sarfDao.GetSarfDetails();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error : " + ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/GetStatusByID/{id}")]
+        public string GetSarfStatusByID(int id)
+        {
+            try
+            {
+                return sarfDao.GetSarfStatusByID(id);
             }
             catch (Exception ex)
             {
