@@ -535,7 +535,7 @@
                 $('#txtregion').val(details.Region);
                 $('#txtsearchring').val(details.Search_Ring_ID);
                 $('#txtiplan').val(details.iPlan_Job);
-                $('#txtarea').text(details.AreaInSqKm);
+                $('#txtarea').val(details.AreaInSqKm);
                 
             }
         }
@@ -658,7 +658,7 @@
             /*
             api call to update status
             */
-            var getDetailsUrl = "AllSarfDetails/Get/" + processInstanceID;
+            var getDetailsUrl = "AllSarfDetails/Get/" + localStorage["sarfID"]; //processInstanceID;
             $.ajax({
                 method: 'GET',
                 dataType: 'json',
@@ -670,6 +670,7 @@
                 success: function (data) {
                     jsonDetails = data[0];
                     initializeDetailsLabel(jsonDetails);
+                    initializeDetailsText(jsonDetails);
                     console.log(data);
                 },
                 error: function (err) {
