@@ -66,7 +66,14 @@
                     <div id="map" class="pull-left">     
                          <div id="BasemapToggle"></div>               
                     </div>
-                    
+                     <a class="btn-draw" id="circle" value="circle">Circle</a>
+                      <a class="btn-draw" id="polygon" value="polygon">Polygon</a>
+                     <a class="btn-draw" id="freehandpolyline" value="freehandpolyline">Freehand</a>                   
+                     <%-- <div id="info">    
+                          <button id="Circle">Circle</button>  
+                          <button id="Polygon">Polygon</button>
+                          <button id="Freehand">Freehand</button>
+                        </div>  --%>                  
                 </div>
                  
             </div>

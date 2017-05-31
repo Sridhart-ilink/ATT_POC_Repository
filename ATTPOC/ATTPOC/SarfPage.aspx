@@ -873,7 +873,7 @@
                         var finalVal = JSON.parse(JSON.stringify(localStorage["vertices"]));
                         var fillSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
                              new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
-                             new Color([0, 0, 225]), 2), new Color([0, 0, 0, 0.25])
+                             new Color([255, 0, 0]), 2), new Color([0, 0, 0, 0.25])
                           );
                         var polygon = new Polygon(new esri.SpatialReference({ wkid: 4326 }));
                         finalVal = JSON.parse("[" + finalVal + "]");

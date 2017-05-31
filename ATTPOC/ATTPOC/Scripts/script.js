@@ -215,7 +215,7 @@ function onLoadGis() {
        "esri/dijit/Search",
       "esri/symbols/SimpleMarkerSymbol",
       "esri/renderers/SimpleRenderer",
-      "esri/InfoTemplate",
+     // "esri/InfoTemplate",
      // "esri/urlUtils",     
       "esri/toolbars/draw",
       "esri/graphic",
@@ -248,7 +248,7 @@ function onLoadGis() {
               Search,
               SimpleMarkerSymbol,
               SimpleRenderer,
-              InfoTemplate,
+              //InfoTemplate,
              // urlUtils,
               Draw,
               Graphic,
@@ -287,7 +287,11 @@ function onLoadGis() {
         });
 
         var search = new Search({
-            map: map
+            map: map,
+            enableButtonMode: false, //this enables the search widget to display as a single button  
+            enableLabel: false,
+            enableInfoWindow: false,
+            showInfoWindowOnSelect: false,
         }, "search");
         search.startup();
 
@@ -476,12 +480,7 @@ function onLoadGis() {
             $(".btn-draw.active").removeClass("active");
 
             //Use the appropriate symbol depending on geometry type
-            var symbol;
-            if (evt.geometry.type === "polyline") {
-                symbol = lineSymbol;
-            } else {
-                symbol = drawFillSymbol;
-            }
+            var symbol = drawFillSymbol;
 
             var graphic = new Graphic(evt.geometry, symbol);
 
@@ -490,14 +489,6 @@ function onLoadGis() {
             createGraphicsMenu();
             // triggered the click event to enable the context for create sarf
             $(".btn-draw").click();
-     
-            var polygon = evt.geometry.rings[0];
-            var vertices = "";
-
-            var  longLat = WebMercatorUtils.xyToLngLat(polygon[0][0], polygon[0][1]);
-
-           x = round(longLat[0], DECIMAL_PRECISION);
-           y = round(longLat[1], DECIMAL_PRECISION);
         }
 
         function addGraphicToDrawingLayer(graphic) {
@@ -674,7 +665,7 @@ function onLoadGis() {
                             }).placeAt(form.containerNode);
                          
                         new Button({
-                            label: "REMOVE POLYGON ",
+                            label: "CLEAR SEARCH RING ",
                             style: "padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #ba1a00, #ff2000 80%) no-repeat;",
                             onClick: function () {
                                 dia.destroy();
