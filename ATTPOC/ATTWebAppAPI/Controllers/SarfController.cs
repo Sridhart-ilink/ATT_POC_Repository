@@ -114,11 +114,11 @@ namespace ATTWebAppAPI.Controllers
 
         [HttpGet]
         [Route("api/AllSarfDetails/Get/{sarfID}")]
-        public DataTable GetAllSarfDetails(string sarfID)
+        public DataTable GetAllSarfDetails(int sarfID)
         {
             try
             {
-                return sarfDao.SarfDetailsByTaskID(sarfID);
+                return sarfDao.GetAllSarfDetails(sarfID);
             }
             catch (Exception ex)
             {
@@ -178,6 +178,51 @@ namespace ATTWebAppAPI.Controllers
             {
                 long transId = 1;
                 return WrapObjectToHttpResponse(transId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error : " + ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/Node/Get/{nodeId}")]
+        public HttpResponseMessage GetNodeByID(int nodeId)
+        {
+            try
+            {
+                var result = sarfDao.GetNodeByID(nodeId);
+                return WrapObjectToHttpResponse(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error : " + ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/GetNodesBySarfID/{sarfID}")]
+        public HttpResponseMessage GetNodesBySarfID(int sarfID)
+        {
+            try
+            {
+                var result = sarfDao.GetNodesBySarfID(sarfID);
+                return WrapObjectToHttpResponse(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error : " + ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("api/Node/Post")]
+        public HttpResponseMessage SaveNode([FromBody]Node node)
+        {
+            try
+            {
+                var result = sarfDao.SaveNode(node);
+                return WrapObjectToHttpResponse(result);
             }
             catch (Exception ex)
             {
