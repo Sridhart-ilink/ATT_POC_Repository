@@ -105,13 +105,14 @@
                     <div id="map" class="pull-left">     
                          <div id="BasemapToggle"></div>               
                         <div class="addSarfBtn">
-                            <a class="btn btn-default btn-form btnDraw" id="btnDraw" value="polygon">Add SARF</a>
+                            <a class="btn btn-default btn-form btnDraw" id="btnDraw" >Add SARF</a>
+                             <a class="btn-draw" id="freehandpolyline" value="freehandpolyline" style="position:relative;left:200px;bottom:35px;"><img src="Styles/images/freehand.png" style="cursor:pointer;width:30px;height:30px;" /></a>
+                     <a class="btn-draw" id="circle" value="circle" style="position:relative;left:235px;bottom:65px;"><img src="Styles/images/circle.png"  style="cursor:pointer;width:30px;height:30px;"/></a>
+                     <a class="btn-draw" id="value" value="polygon"  style="position:relative;left:270px;bottom:95px;"><img src="Styles/images/polygon.png"  style="cursor:pointer;width:30px;height:30px;"/></a>  </div>
+               
                         </div>
                     </div>
-                     <a class="btn-draw" id="freehandpolyline" value="freehandpolyline" style="position:fixed;left:400px;bottom:50px;"><img src="Styles/images/freehand.png" style="cursor:pointer;width:30px;height:30px;" /></a>
-                     <a class="btn-draw" id="circle" value="circle" style="position:fixed;left:435px;bottom:50px;"><img src="Styles/images/circle.png"  style="cursor:pointer;width:30px;height:30px;"/></a>
-                     <a class="btn-draw" id="value" value="polygon"  style="position:fixed;left:470px;bottom:50px;"><img src="Styles/images/polygon.png"  style="cursor:pointer;width:30px;height:30px;"/></a>  </div>
-                </div>
+                     </div>
             </div>
         </form>
     </body>
