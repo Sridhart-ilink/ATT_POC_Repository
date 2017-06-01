@@ -339,6 +339,7 @@ function onLoadGis() {
         events.push(map.on("load", function () {
             initDrawing();
             initEditing();
+            $('.btn-draw').css('display', 'none');
           // initcsv();
             //createGraphicsMenu();
             // createToolbarAndContextMenu();
@@ -472,6 +473,11 @@ function onLoadGis() {
                 window.location = appUrl + "SarfPage.aspx?processInstanceId=" + InstanceID + "&sarfid=" + sarfId;
                 
             });
+
+            $(".btnaddsarf").click(function () {
+                $('.btn-draw').css('display','block');
+            });
+
             //Set the click event for the draw buttons
             $(".btn-draw").click(function () {
                 map.graphics.clear();

@@ -32,7 +32,43 @@
           top: 20px;
           right: 20px;
           z-index: 50;
+            }
+            .drawicon {
+            position:relative;left:180px;bottom:100px;display:block;
+            }
+      .btnaddsarf {
+      background: #2e873e;
+      background-image: -webkit-linear-gradient(top, #2e873e, #2e873e);
+      background-image: -moz-linear-gradient(top, #2e873e, #2e873e);
+      background-image: -ms-linear-gradient(top, #2e873e, #2e873e);
+      background-image: -o-linear-gradient(top, #2e873e, #2e873e);
+      background-image: linear-gradient(to bottom, #2e873e, #2e873e);
+      -webkit-border-radius: 10;
+      -moz-border-radius: 10;
+      border-radius: 10px;
+      color: #ffffff;
+      font-size: 13px;
+      padding: 10px 15px 10px 15px;
+      text-decoration: none;
+      position:relative;
+      left:40px;
+      bottom:70px;
+      border-width: 0px;
+      height: 35px;
     }
+
+    .btnaddsarf:hover {
+  background: #2e873e;
+  background-image: -webkit-linear-gradient(top, #2e873e, #2e873e);
+  background-image: -moz-linear-gradient(top, #2e873e, #2e873e);
+  background-image: -ms-linear-gradient(top, #2e873e, #2e873e);
+  background-image: -o-linear-gradient(top, #2e873e, #2e873e);
+  background-image: linear-gradient(to bottom, #2e873e, #2e873e);
+  text-decoration: none;
+  position:relative;
+  left:40px;
+  bottom:70px;
+}
         </style>
     </head>
     
@@ -41,9 +77,9 @@
             <div id="mainWrapper" class="container-fluid">
               <div class="row">
                     <div class="col-md-2 pad-lr-5 slidingDiv" id="style-2">
-                        <div>
+                       <%-- <div>
                             <a class="btn btn-default btn-form btn-draw disabled btnDraw" id="btnDraw" value="polygon">Create Search Ring</a>
-                        </div>
+                        </div>--%>
                         <div class="cardView">
                         </div>
                         <div class="pager">
@@ -64,18 +100,14 @@
                        </div>
                     <div id="search"></div>
                     <div id="map" class="pull-left">     
-                         <div id="BasemapToggle"></div>               
-                    </div>
-                     <a class="btn-draw" id="circle" value="circle">Circle</a>
-                      <a class="btn-draw" id="polygon" value="polygon">Polygon</a>
-                     <a class="btn-draw" id="freehandpolyline" value="freehandpolyline">Freehand</a>                   
-                     <%-- <div id="info">    
-                          <button id="Circle">Circle</button>  
-                          <button id="Polygon">Polygon</button>
-                          <button id="Freehand">Freehand</button>
-                        </div>  --%>                  
-                </div>
-                 
+                         <div id="BasemapToggle"></div>   
+                    </div>  
+                    <input type="button" value="Add SARF" class="btnaddsarf" />  
+                            
+                     <a class="btn-draw" id="freehandpolyline" value="freehandpolyline" style="position:fixed;left:400px;bottom:50px;"><img src="Styles/images/freehand.png" style="cursor:pointer;width:30px;height:30px;" /></a>
+                     <a class="btn-draw" id="circle" value="circle" style="position:fixed;left:435px;bottom:50px;"><img src="Styles/images/circle.png"  style="cursor:pointer;width:30px;height:30px;"/></a>
+                     <a class="btn-draw" id="value" value="polygon"  style="position:fixed;left:470px;bottom:50px;"><img src="Styles/images/polygon.png"  style="cursor:pointer;width:30px;height:30px;"/></a>  </div>
+           
             </div>
             </div>
         </form>
