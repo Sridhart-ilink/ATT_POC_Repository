@@ -63,7 +63,7 @@ namespace ATTWebAppAPI
             request.Method = Method.ToString();
             request.ContentLength = 0;
             request.ContentType = ContentType;
-
+            
             if (!string.IsNullOrEmpty(PostData) && Method == HttpVerb.POST)
             {
                 var encoding = new UTF8Encoding();
