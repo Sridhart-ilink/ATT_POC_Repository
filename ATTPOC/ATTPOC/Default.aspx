@@ -17,10 +17,10 @@
   
         <!--CSS imports-->
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="Styles/bootstrap-3.3.4.min.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css" />
         <link rel="stylesheet" type="text/css" href="Styles/esri-3.14.css" />
         <link rel="stylesheet" type="text/css" href="Styles/claro-3.14.css" />
         <link rel="stylesheet" type="text/css" href="Styles/style.css" />
@@ -44,7 +44,7 @@
     <body>
     <form runat="server" id="sarfForm">
             <div id="mainWrapper" class="container-fluid">
-              <div class="row">
+                <div class="row">
                 <%--<div id="logoSection">
                     <img src="Styles/images/att-logo.png" class="att-logo" />
                     <span class="att-heading">BPM/Orchestration</span>
@@ -75,12 +75,12 @@
                     </div>
                 </nav>
             </div>
-            <div class="row" style ="margin-top: -15px;">
+                <div class="row">
                     <div class="col-md-2 pad-lr-5 slidingDiv" id="style-2">
                     
-                    <div class="cardHead">
-                        <h3>Recent SARFs</h3>
-                    </div>
+                        <div class="cardHead">
+                            <h3>Recent SARFs</h3>
+                        </div>
                         <div class="cardView">
                         </div>
                         <div class="pager">
@@ -96,7 +96,7 @@
                             <asp:HiddenField runat="server" ID="hdnArea" />
                         </div>
                     </div>
-                <div class="col-md-10 pad-lr-5 tabDiv">
+                    <div class="col-md-10 pad-lr-5 tabDiv">
                     <div class="toggleArrow rotateArrow">
                         <%--<img src="Styles/images/double-arrow-right-red.png" title="Hide&Show SideBar" width="15" />--%>
                         <i class="fa fa-chevron-right" aria-hidden="true"></i>

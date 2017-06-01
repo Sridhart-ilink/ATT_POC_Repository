@@ -1,7 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SarfPage.aspx.cs" Inherits="JavascriptBasedApp.SarfPage" %>
 
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Sarf Info</title>
@@ -14,285 +13,331 @@
     <link rel="stylesheet" type="text/css" href="Styles/bootstrap-3.3.4.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css" />
     <link rel="stylesheet" type="text/css" href="Styles/esri-3.14.css" />
     <link rel="stylesheet" type="text/css" href="Styles/claro-3.14.css" />
     <link rel="stylesheet" href="bootstrap.vertical-tabs.css" />
     <link rel="stylesheet" type="text/css" href="Styles/style.css" />
 
     <style>
-           
-           #BasemapToggle {
-          position: absolute;
-          top: 20px;
-          right: 20px;
-          z-index: 50;
-    }
-        </style>
+        #BasemapToggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 50;
+        }
+    </style>
 
 </head>
- 
+
 <body>
     <form id="sarfForm" runat="server">
         <div class="container-fluid">
             <div class="row">
-
-                <div class="col-md-3 pad-lr-5 slidingDiv">
-                    <div class="">
-                        <div class="col-md-12 borderBottom" style="margin-top: 10px; margin-bottom: 5px;">
-                            <button type="button" id="editBtn" class="btn btn-link pull-right linkcolor editLink">EDIT</button>
-                            <button type="button" id="detailsupdatebtn" class="btn btn-link pull-right linkcolor editLink">SAVE</button>
-                            <button type="button" id="detailscancelBtn" class="btn btn-link pull-right linkcolor editLink">CANCEL</button>
-
-                        </div>
-                        <div class="sarfDetails">
-
-                            <div class="row">
-                                <div class="col-md-6 pull-left">
-                                    <label for="txtsarfname">Sarf Name:</label>
-                                    <p class="lblDetails"><span id="lblsarfname"></span></p>
-                                    <input class="form-control txtDetails" runat="server" type="text" id="txtsarfname" />
-                                </div>
-                                <div class="col-md-6 pull-left">
-                                    <label for="txtfacode">FA Code:</label>
-                                    <p class="lblDetails"><span id="lblfacode"></span></p>
-                                    <input class="form-control txtDetails" runat="server" type="text" id="txtfacode" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 pull-left">
-                                    <label for="txtsearchring">Search Ring ID:</label>
-                                    <p class="lblDetails"><span id="lblsearchring"></span></p>
-                                    <input class="form-control txtDetails" runat="server" type="text" id="txtsearchring" />
-                                </div>
-                                <div class="col-md-6 pull-left">
-                                    <label for="txtiplan">IPlan Job #:</label>
-                                    <p class="lblDetails"><span id="lbliplan"></span></p>
-                                    <input class="form-control txtDetails" runat="server" type="text" id="txtiplan" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 pull-left">
-                                    <label for="txtpace">Pace Number #:</label>
-                                    <p class="lblDetails"><span id="lblpace"></span></p>
-                                    <input class="form-control txtDetails" runat="server" type="text" id="txtpace" />
-                                </div>
-                                <div class="col-md-6 pull-left">
-                                    <label for="txtmarket">Market:</label>
-                                    <p class="lblDetails"><span id="lblmarket"></span></p>
-                                    <input class="form-control txtDetails" runat="server" type="text" id="txtmarket" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 pull-left">
-                                    <label for="txtcounty">County:</label>
-                                    <p class="lblDetails"><span id="lblcounty"></span></p>
-                                    <input class="form-control txtDetails" runat="server" type="text" id="txtcounty" />
-                                </div>
-                                <div class="col-md-6 pull-left">
-                                    <label for="txtfatype">FA Type:</label>
-                                    <p class="lblDetails"><span id="lblfatype"></span></p>
-                                    <input class="form-control txtDetails" runat="server" type="text" id="txtfatype" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 pull-left">
-                                    <label for="txtmarketcluster">Market Cluster:</label>
-                                    <p class="lblDetails"><span id="lblmarketcluster"></span></p>
-                                    <input class="form-control txtDetails" runat="server" type="text" id="txtmarketcluster" />
-                                </div>
-                                <div class="col-md-6 pull-left">
-                                    <label for="txtregion">Region:</label>
-                                    <p class="lblDetails"><span id="lblregion"></span></p>
-                                    <input class="form-control txtDetails" runat="server" type="text" id="txtregion" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 pull-left">
-                                    <label for="txtrfdesign">RF Design Engineer ATTUID:</label>
-                                    <p class="lblDetails"><span id="lblrfdesign"></span></p>
-                                    <input class="form-control txtDetails" runat="server" type="text" id="txtrfdesign" />
-                                </div>
-                                <div class="col-md-6 pull-left">
-                                    <label for="txtarea">Area In SqKm:</label>
-                                    <p class="lblDetails"><span id="lblarea"></span></p>
-                                    <input class="form-control txtDetails" runat="server" type="text" id="txtarea" />
-                                </div>
-                            </div>
-                            <hr />
-                            <div class="row">
-                                <div class="col-md-8 pull-left">
-                                    <div>
-                                        <div class="form-group">
-                                            <label for="txtSarfName">Current Status</label>
-                                            <div class="col-xs-12" id="statusDiv">
-                                                <span id="statusLabel"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <button type="button" id="promoteBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled"
-                                        value="promote">PROMOTE</button>
-                                    <button type="button" id="demoteBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled"
-                                        value="demote">DEMOTE</button>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <button type="button" id="pullbackBtn" class="statusBtn blueBtn btn btn-lg btn-primary btn-form btn-draw disabled"
-                                        value="pullback">PULL BACK</button>
-                                    <button type="button" id="cancelBtn" class="statusBtn redBtn btn btn-lg btn-danger btn-form btn-draw disabled"
-                                        value="cancel">CANCEL</button>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
+                <%--<div id="logoSection">
+                    <img src="Styles/images/att-logo.png" class="att-logo" />
+                    <span class="att-heading">BPM/Orchestration</span>
                 </div>
-                <div class="col-md-9 tabDiv">
-                    <div class="toggleArrow rotateArrow">
-                        <img src="Styles/images/double-arrow-right-red.png" title="Hide&Show SideBar" width="15" />
-                    </div>
-                    <div class="col-md-12 borderBottom pageLink" style="margin-top: 7px; margin-bottom: 5px">
-                        <a href="Default.aspx" class="linkcolor" style="margin-left: 30px;">Home</a> :: <a class="linkcolor">Sarf Details</a>
-                    </div>
-                    <div class="col-xs-12">
-                        <!-- required for floating -->
-                        <!-- Nav tabs -->
-                        <ul class="nav nav-tabs tabs-left">
-                            <li class="" data-index ="0"><a href="#mapview" data-toggle="tab">Map View</a></li>
-                            <li class="" data-index="1"><a href="#workflow" data-toggle="tab">Workflow</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-xs-9">
-                        <!-- Tab panes -->
-                        <div class="toggleComment">
-                            <img src="Styles/images/ChatIcon.png" title="Hide&Show Comment" width="15" />
-                        </div>
-                        <div class="tab-content">
-                            <div class="tab-pane" id="mapview">
-                                <div id="map" style="width: 138%; height: 520px" class="pull-left">
-                                    <%--<a id="btnExpandMap" class="btn btn-primary" title="Click to maximize/minimize map">--%>
-                                       <div id="BasemapToggle"></div>     
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="workflow">
-                                <div style="width: 138%; height: 520px;" class="pull-left">
-                                    <iframe runat="server" id="workflowImg" style="width: 994px; height: 545px; padding-right: 5px;" src="#" frameborder="1" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 pad-lr-5 commentingDiv" id="style-2">
-                        <button type="button" class="close commentCloseBtn" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                <div id="search" class="att-search"></div>--%>
+                <nav class="navbar navbar-default clearfix" role="navigation">
+                    <div class="navbar-header pull-left">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
                         </button>
-                        <div class="clearfix"></div>
-                        <div>
-                            <div class="input-group">
-                                <span class="input-group-addon" id="basic-addon1">
-                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                </span>
-                                <input type="text" class="form-control" placeholder="Add your comment" aria-describedby="basic-addon1" />
-                            </div>
+                        <a class="navbar-brand" href="#">
+                            <img src="Styles/images/att-logo.png" class="att-logo" />
+                            <span class="att-heading">BPM/Orchestration</span>
+                        </a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                        <div class="col-sm-3 col-md-4 col-md-offset-2">
+                            <div id="search" class="att-search"></div>
+                        </div>
+                        <div class="col-md-3 pull-right text-right profile">
+                            <span class="profileInfo themeBlue">Maxine Walters</span>
+                            <i class="icon-user profileIcon themeBlue" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="row">
+
+                <div class="col-md-3 pad-lr-5 slidingDiv" id ="style-2">
+                    <div class="cardHead">
+                        <h3>SARF Details</h3>
+                    </div>
+                    <div class="cardHead ctrlOption">
+                        <div id="editBtn">
+                            <i class="fa fa-pencil menuIcon themeBlue" aria-hidden="true"></i>
+                            <span>Edit</span>
+                        </div>
+                        <div id="toggleComment">
+                            <i class="fa fa-wechat menuIcon themeBlue" aria-hidden="true"></i>
+                            <span>Discuss</span>
                         </div>
                         <div>
-                            <div class="clearfix"></div>
-                            <button type="button" id="postBtn" class="blueBtn btn btn-sm btn-primary btn-form btn-draw disabled pull-right"
-                                value="post">
-                                POST</button>
+                            <i class="fa fa-trash-o menuIcon themeBlue" aria-hidden="true"></i>
+                            <span>Delete</span>
                         </div>
-                        <div>
-                            <button type="button" id="seeMoreBtn" class="btn btn-link pull-left linkcolor editLink">See more comments</button>
+                </div>
+            <div class="">
+                <div class="col-md-12 borderBottom" style="margin-top: 10px; margin-bottom: 5px;margin-left : 15px;">
+                    <button type="button" id="detailsupdatebtn" class="btn btn-link pull-right linkcolor editLink">SAVE</button>
+                    <button type="button" id="detailscancelBtn" class="btn btn-link pull-right linkcolor editLink">CANCEL</button>
+                </div>
+                <div class="sarfDetails">
+
+                    <div class="row">
+                        <div class="col-md-6 pull-left">
+                            <label for="txtsarfname">Sarf Name:</label>
+                            <p class="lblDetails"><span id="lblsarfname"></span></p>
+                            <input class="form-control txtDetails" runat="server" type="text" id="txtsarfname" />
                         </div>
-                        <div class="clearfix"></div>
-                        <div>
-                            <div class="commentInfo">
-                                <%--<div class="input-group">
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                    </span>
-                                    <span>ASWED</span>
-                                </div>--%>
-                                <div class="chatHead clearfix">
-                                    <div class="pull-left">
-                                        <i class="glyphicon glyphicon-user"></i>
-                                    </div>
-                                    <div class="pull-right chatLabel">
-                                        <h3>ebenezer marchus</h3>
-                                        <p>April 27, 2017 11:40 am</p>
-                                    </div>
-                                </div>
-                                <div class="chatBody">
-                                    <p>
-                                        Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum 
-                                        Lorem Ipsum Lorem Ipsum Lorem Ipsum  
-                                    </p>
-                                    <div>
-                                        <input type="text" class="form-control" placeholder="leave a reply" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="commentInfo">
-                                <%--<div class="input-group">
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                    </span>
-                                    <span>ASWED</span>
-                                </div>--%>
-                                <div class="chatHead clearfix">
-                                    <div class="pull-left">
-                                        <i class="glyphicon glyphicon-user"></i>
-                                    </div>
-                                    <div class="pull-right chatLabel">
-                                        <h3>ebenezer marchus</h3>
-                                        <p>April 27, 2017 11:40 am</p>
-                                    </div>
-                                </div>
-                                <div class="chatBody">
-                                    <p>
-                                        Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum 
-                                        Lorem Ipsum Lorem Ipsum Lorem Ipsum  
-                                    </p>
-                                    <div>
-                                        <input type="text" class="form-control" placeholder="leave a reply" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="commentInfo">
-                                <%--<div class="input-group">
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                    </span>
-                                    <span>ASWED</span>
-                                </div>--%>
-                                <div class="chatHead clearfix">
-                                    <div class="pull-left">
-                                        <i class="glyphicon glyphicon-user"></i>
-                                    </div>
-                                    <div class="pull-right chatLabel">
-                                        <h3>ebenezer marchus</h3>
-                                        <p>April 27, 2017 11:40 am</p>
-                                    </div>
-                                </div>
-                                <div class="chatBody">
-                                    <p>
-                                        Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum 
-                                        Lorem Ipsum Lorem Ipsum Lorem Ipsum  
-                                    </p>
-                                    <div>
-                                        <input type="text" class="form-control" placeholder="leave a reply" />
+                        <div class="col-md-6 pull-left">
+                            <label for="txtfacode">FA Code:</label>
+                            <p class="lblDetails"><span id="lblfacode"></span></p>
+                            <input class="form-control txtDetails" runat="server" type="text" id="txtfacode" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 pull-left">
+                            <label for="txtsearchring">Search Ring ID:</label>
+                            <p class="lblDetails"><span id="lblsearchring"></span></p>
+                            <input class="form-control txtDetails" runat="server" type="text" id="txtsearchring" />
+                        </div>
+                        <div class="col-md-6 pull-left">
+                            <label for="txtiplan">IPlan Job #:</label>
+                            <p class="lblDetails"><span id="lbliplan"></span></p>
+                            <input class="form-control txtDetails" runat="server" type="text" id="txtiplan" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 pull-left">
+                            <label for="txtpace">Pace Number #:</label>
+                            <p class="lblDetails"><span id="lblpace"></span></p>
+                            <input class="form-control txtDetails" runat="server" type="text" id="txtpace" />
+                        </div>
+                        <div class="col-md-6 pull-left">
+                            <label for="txtmarket">Market:</label>
+                            <p class="lblDetails"><span id="lblmarket"></span></p>
+                            <input class="form-control txtDetails" runat="server" type="text" id="txtmarket" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 pull-left">
+                            <label for="txtcounty">County:</label>
+                            <p class="lblDetails"><span id="lblcounty"></span></p>
+                            <input class="form-control txtDetails" runat="server" type="text" id="txtcounty" />
+                        </div>
+                        <div class="col-md-6 pull-left">
+                            <label for="txtfatype">FA Type:</label>
+                            <p class="lblDetails"><span id="lblfatype"></span></p>
+                            <input class="form-control txtDetails" runat="server" type="text" id="txtfatype" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 pull-left">
+                            <label for="txtmarketcluster">Market Cluster:</label>
+                            <p class="lblDetails"><span id="lblmarketcluster"></span></p>
+                            <input class="form-control txtDetails" runat="server" type="text" id="txtmarketcluster" />
+                        </div>
+                        <div class="col-md-6 pull-left">
+                            <label for="txtregion">Region:</label>
+                            <p class="lblDetails"><span id="lblregion"></span></p>
+                            <input class="form-control txtDetails" runat="server" type="text" id="txtregion" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 pull-left">
+                            <label for="txtrfdesign">RF Design Engineer ATTUID:</label>
+                            <p class="lblDetails"><span id="lblrfdesign"></span></p>
+                            <input class="form-control txtDetails" runat="server" type="text" id="txtrfdesign" />
+                        </div>
+                        <div class="col-md-6 pull-left">
+                            <label for="txtarea">Area In SqKm:</label>
+                            <p class="lblDetails"><span id="lblarea"></span></p>
+                            <input class="form-control txtDetails" runat="server" type="text" id="txtarea" />
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-8 pull-left">
+                            <div>
+                                <div class="form-group">
+                                    <label for="txtSarfName">Current Status</label>
+                                    <div class="col-xs-12" id="statusDiv">
+                                        <span id="statusLabel"></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="button" id="promoteBtn" class="statusBtn mrg15-R whiteBtn btn btn-lg btn-primary btn-form btn-draw disabled"
+                                value="promote">PROMOTE</button>
+                            <button type="button" id="demoteBtn" class="statusBtn whiteBtn btn btn-lg btn-primary btn-form btn-draw disabled"
+                                value="demote">DEMOTE</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="button" id="pullbackBtn" class="statusBtn mrg15-R whiteBtn btn btn-lg btn-primary btn-form btn-draw disabled"
+                                value="pullback">PULL BACK</button>
+                            <button type="button" id="cancelBtn" class="statusBtn whiteBtn btn btn-lg btn-danger btn-form btn-draw disabled"
+                                value="cancel">CANCEL</button>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
             </div>
+        </div>
+        <div class="col-md-9 tabDiv">
+            <div class="toggleArrow rotateArrow">
+                <%--<img src="Styles/images/double-arrow-right-red.png" title="Hide&Show SideBar" width="15" />--%>
+                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            </div>
+            <div class="col-md-12 borderBottom pageLink" style="margin-top: 7px; margin-bottom: 5px">
+                <a href="Default.aspx" class="linkcolor" style="margin-left: 30px;">Home</a> :: <a class="linkcolor">Sarf Details</a>
+                <ul class="nav nav-tabs tabs-left navTabs-ul pull-right">
+                    <li class="" data-index="0"><a href="#mapview" data-toggle="tab">Map View</a></li>
+                    <li class="" data-index="1"><a href="#workflow" data-toggle="tab">Workflow</a></li>
+                </ul>
+            </div>
+            <div class="col-xs-12">
+                <!-- required for floating -->
+                <!-- Nav tabs -->
+                
+            </div>
+            <div class="col-xs-9">
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane" id="mapview">
+                        <div id="map" style="width: 138%; height: 520px" class="pull-left">
+                            <%--<a id="btnExpandMap" class="btn btn-primary" title="Click to maximize/minimize map">--%>
+                            <div id="BasemapToggle"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="workflow">
+                        <div style="width: 138%; height: 520px;" class="pull-left">
+                            <iframe runat="server" id="workflowImg" style="width: 994px; height: 545px; padding-right: 5px;" src="#" frameborder="1" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 pad-lr-5 commentingDiv" id="style-2">
+                <button type="button" class="close commentCloseBtn" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="clearfix"></div>
+                <div>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        </span>
+                        <input type="text" class="form-control" placeholder="Add your comment" aria-describedby="basic-addon1" />
+                    </div>
+                </div>
+                <div>
+                    <div class="clearfix"></div>
+                    <button type="button" id="postBtn" class="blueBtn btn btn-sm btn-primary btn-form btn-draw disabled pull-right"
+                        value="post">
+                        POST</button>
+                </div>
+                <div>
+                    <button type="button" id="seeMoreBtn" class="btn btn-link pull-left linkcolor editLink">See more comments</button>
+                </div>
+                <div class="clearfix"></div>
+                <div>
+                    <div class="commentInfo">
+                        <%--<div class="input-group">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                    </span>
+                                    <span>ASWED</span>
+                                </div>--%>
+                        <div class="chatHead clearfix">
+                            <div class="pull-left">
+                                <i class="glyphicon glyphicon-user"></i>
+                            </div>
+                            <div class="pull-right chatLabel">
+                                <h3>ebenezer marchus</h3>
+                                <p>April 27, 2017 11:40 am</p>
+                            </div>
+                        </div>
+                        <div class="chatBody">
+                            <p>
+                                Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum 
+                                        Lorem Ipsum Lorem Ipsum Lorem Ipsum  
+                            </p>
+                            <div>
+                                <input type="text" class="form-control" placeholder="leave a reply" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="commentInfo">
+                        <%--<div class="input-group">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                    </span>
+                                    <span>ASWED</span>
+                                </div>--%>
+                        <div class="chatHead clearfix">
+                            <div class="pull-left">
+                                <i class="glyphicon glyphicon-user"></i>
+                            </div>
+                            <div class="pull-right chatLabel">
+                                <h3>ebenezer marchus</h3>
+                                <p>April 27, 2017 11:40 am</p>
+                            </div>
+                        </div>
+                        <div class="chatBody">
+                            <p>
+                                Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum 
+                                        Lorem Ipsum Lorem Ipsum Lorem Ipsum  
+                            </p>
+                            <div>
+                                <input type="text" class="form-control" placeholder="leave a reply" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="commentInfo">
+                        <%--<div class="input-group">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                    </span>
+                                    <span>ASWED</span>
+                                </div>--%>
+                        <div class="chatHead clearfix">
+                            <div class="pull-left">
+                                <i class="glyphicon glyphicon-user"></i>
+                            </div>
+                            <div class="pull-right chatLabel">
+                                <h3>ebenezer marchus</h3>
+                                <p>April 27, 2017 11:40 am</p>
+                            </div>
+                        </div>
+                        <div class="chatBody">
+                            <p>
+                                Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum 
+                                        Lorem Ipsum Lorem Ipsum Lorem Ipsum  
+                            </p>
+                            <div>
+                                <input type="text" class="form-control" placeholder="leave a reply" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        </div>
             <div class="clearfix"></div>
         </div>
     </form>
@@ -415,7 +460,7 @@
         function updateSarfStatus(id) {
             var getStatusUrl = "UpdateSarfStatus";
             var sarf = {
-                id : id,
+                id: id,
                 sarfStatus: labelStatus
             };
             /*
@@ -536,7 +581,7 @@
                 $('#txtsearchring').val(details.Search_Ring_ID);
                 $('#txtiplan').val(details.iPlan_Job);
                 $('#txtarea').val(details.AreaInSqKm);
-                
+
             }
         }
 
@@ -613,29 +658,27 @@
         //Jquery - document load script method
         $(document).ready(function () {
             $('.commentingDiv').hide();
-                $('.toggleArrow').click(function () {
+            $('.toggleArrow').click(function () {
                 $('.toggleArrow').toggleClass('rotateArrow');
-                    if ($('.slidingDiv').is(":visible")) {
-                        //console.log('side bar shown');
-                        $(".slidingDiv").toggle();
-                        $('.tabDiv').removeClass('col-md-9');
-                        $('.tabDiv').addClass('col-md-12');
-                    }
-                    else {
-                        console.log('side bar hidden');
-                        $(".slidingDiv").toggle();
-                        $('.tabDiv').removeClass('col-md-12');
-                        $('.tabDiv').addClass('col-md-9');
-                    }
-                });
+                if ($('.slidingDiv').is(":visible")) {
+                    //console.log('side bar shown');
+                    $(".slidingDiv").toggle();
+                    $('.tabDiv').removeClass('col-md-9');
+                    $('.tabDiv').addClass('col-md-12');
+                }
+                else {
+                    console.log('side bar hidden');
+                    $(".slidingDiv").toggle();
+                    $('.tabDiv').removeClass('col-md-12');
+                    $('.tabDiv').addClass('col-md-9');
+                }
+            });
 
-            $('.toggleComment').click(function () {
-                $('.toggleComment').hide();
+            $('#toggleComment').click(function () {
                 $(".commentingDiv").toggle();
             });
 
             $('.commentCloseBtn').click(function () {
-                $('.toggleComment').show();
                 $(".commentingDiv").toggle();
             });
 
@@ -892,9 +935,9 @@
                 events.push(map.on("load", function () {
                     map.graphics.clear();
                     initDrawing();
-                    initEditing();                 
-                   // createToolbarAndContextMenu();
-                   
+                    initEditing();
+                    // createToolbarAndContextMenu();
+
                     if (localStorage["vertices"] != null || localStorage["vertices"] != "") {
                         var finalVal = JSON.parse(JSON.stringify(localStorage["vertices"]));
                         var fillSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
@@ -907,7 +950,7 @@
 
                         var gra = new esri.Graphic(polygon, fillSymbol);
                         map.graphics.add(gra);
-                        map.setExtent(gra.geometry.getExtent().expand(2));                      
+                        map.setExtent(gra.geometry.getExtent().expand(2));
 
                         if (polygonlist.length > 0) {
 
@@ -943,99 +986,99 @@
                     }
                 }));
 
-        //Creates right-click context menu for graphics on the point
-        function createGraphicsMenu() {
-                ctxMenuForGraphics = new Menu({});
-                ctxMenuForGraphics.addChild(new MenuItem({
-                    label: "Add Node",
-                    onClick: function () {
-                        if (selected != null && selected.geometry.type == "point") {
-                            var form = new Form();
+                //Creates right-click context menu for graphics on the point
+                function createGraphicsMenu() {
+                    ctxMenuForGraphics = new Menu({});
+                    ctxMenuForGraphics.addChild(new MenuItem({
+                        label: "Add Node",
+                        onClick: function () {
+                            if (selected != null && selected.geometry.type == "point") {
+                                var form = new Form();
 
-                            new TextBox({
-                                width: "150px",
-                            }).placeAt(form.containerNode);
-                            new TextBox({
-                                width: "150px",
-                            }).placeAt(form.containerNode);
-                            new TextBox({
-                                width: "150px",
-                            }).placeAt(form.containerNode);
-                            new TextBox({
-                                width: "150px",
-                            }).placeAt(form.containerNode);
-                            new Button({
-                                label: "CANCEL",
-                                style: "align:right;padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #ba1a00, #ff2000 80%) no-repeat;",
-                                onClick: function () {
-                                    dia.destroy();
-                                    clearGraphics();
-                                }
-                            }).placeAt(form.containerNode);
-                            new Button({
-                                label: "SAVE",
-                                style: "align:right;padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #005991, #007ecd 80%) no-repeat;",
-                                onClick: function () {
-                                    var getProcessUrl = "process-definition";
-                                    var jsonData = {
-                                        variables: {},
-                                        key: "identify-sarfs"
+                                new TextBox({
+                                    width: "150px",
+                                }).placeAt(form.containerNode);
+                                new TextBox({
+                                    width: "150px",
+                                }).placeAt(form.containerNode);
+                                new TextBox({
+                                    width: "150px",
+                                }).placeAt(form.containerNode);
+                                new TextBox({
+                                    width: "150px",
+                                }).placeAt(form.containerNode);
+                                new Button({
+                                    label: "CANCEL",
+                                    style: "align:right;padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #ba1a00, #ff2000 80%) no-repeat;",
+                                    onClick: function () {
+                                        dia.destroy();
+                                        clearGraphics();
                                     }
-
-                                    $.ajax({
-                                        method: 'POST',
-                                        dataType: 'json',
-                                        contentType: 'application/json',
-                                        url: camundaBaseApiUrl + getProcessUrl,
-                                        data: JSON.stringify(jsonData),
-                                        async: false,
-                                        cache: false,
-                                        success: function (data) {
-                                            saveSARFData(JSON.parse(data).id);
-                                        },
-                                        error: function (err) {
-                                            console.log(err);
+                                }).placeAt(form.containerNode);
+                                new Button({
+                                    label: "SAVE",
+                                    style: "align:right;padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #005991, #007ecd 80%) no-repeat;",
+                                    onClick: function () {
+                                        var getProcessUrl = "process-definition";
+                                        var jsonData = {
+                                            variables: {},
+                                            key: "identify-sarfs"
                                         }
-                                    });
-                                }
-                            }).placeAt(form.containerNode);
 
-                            var dia = new Dialog({
-                                content: form
-                            });
-                            form.startup();
-                            dia.show();
-                            $('.dijitDialog').addClass('dialogNodeStyle');
-                            $('.dijitDialog').find('div[role="presentation"]').css('border-color', 'silver');
-                            $('.dijitInputInner').attr('placeholder', 'Atoll Site Name');
-                            $('.dijitInputInner').addClass('form-control');
-                            $('.dijitDialog').find('input[type="button"]').addClass('btn btn-default dialogSaveBtn');
+                                        $.ajax({
+                                            method: 'POST',
+                                            dataType: 'json',
+                                            contentType: 'application/json',
+                                            url: camundaBaseApiUrl + getProcessUrl,
+                                            data: JSON.stringify(jsonData),
+                                            async: false,
+                                            cache: false,
+                                            success: function (data) {
+                                                saveSARFData(JSON.parse(data).id);
+                                            },
+                                            error: function (err) {
+                                                console.log(err);
+                                            }
+                                        });
+                                    }
+                                }).placeAt(form.containerNode);
+
+                                var dia = new Dialog({
+                                    content: form
+                                });
+                                form.startup();
+                                dia.show();
+                                $('.dijitDialog').addClass('dialogNodeStyle');
+                                $('.dijitDialog').find('div[role="presentation"]').css('border-color', 'silver');
+                                $('.dijitInputInner').attr('placeholder', 'Atoll Site Name');
+                                $('.dijitInputInner').addClass('form-control');
+                                $('.dijitDialog').find('input[type="button"]').addClass('btn btn-default dialogSaveBtn');
+                            }
                         }
-                    }
-                }));
+                    }));
 
-                ctxMenuForGraphics.startup();            
-          
+                    ctxMenuForGraphics.startup();
 
-            //Bind and unbind the context menu using the following two events
-            map.graphics.on("mouse-over", function (evt) {
-                // We'll use this "selected" graphic to enable editing tools
-                // on this graphic when the user click on one of the tools
-                // listed in the menu.             
-                    selected = evt.graphic;
-                // Let's bind to the graphic underneath the mouse cursor   
-                    if(evt.graphic.geometry.type == "point"){
-                        ctxMenuForGraphics.bindDomNode(evt.graphic.getDojoShape().getNode());
-                    }
-            });
 
-            map.graphics.on("mouse-out", function (evt) {              
-                if(evt.graphic.geometry.type == "point"){
-                    ctxMenuForGraphics.unBindDomNode(evt.graphic.getDojoShape().getNode());  
+                    //Bind and unbind the context menu using the following two events
+                    map.graphics.on("mouse-over", function (evt) {
+                        // We'll use this "selected" graphic to enable editing tools
+                        // on this graphic when the user click on one of the tools
+                        // listed in the menu.             
+                        selected = evt.graphic;
+                        // Let's bind to the graphic underneath the mouse cursor   
+                        if (evt.graphic.geometry.type == "point") {
+                            ctxMenuForGraphics.bindDomNode(evt.graphic.getDojoShape().getNode());
+                        }
+                    });
+
+                    map.graphics.on("mouse-out", function (evt) {
+                        if (evt.graphic.geometry.type == "point") {
+                            ctxMenuForGraphics.unBindDomNode(evt.graphic.getDojoShape().getNode());
+                        }
+                    });
+
                 }
-            });
-
-        }
                 //Unload all the events when the application closes to prevent memory leaks
                 events.push(map.on("unload", function () {
                     for (var i = 0; i < events.length; i++) {
@@ -1115,10 +1158,10 @@
 
                                 map.graphics.add(new esri.Graphic(evt.mapPoint, symbol));
                             }
-                           
+
                             createGraphicsMenu();
-                            
-                            
+
+
                         }
                     });
                 }
@@ -1276,26 +1319,26 @@
                 }
 
 
-             //   function createToolbarAndContextMenu() {
+                //   function createToolbarAndContextMenu() {
 
-             //       map.graphics.on("click", function (evt) {
-             //          if (drawing !== true) {
-             //          var symbol = new SimpleMarkerSymbol(
-             //                                        SimpleMarkerSymbol.STYLE_CIRCLE,
-             //                                        12,
-             //                                        new SimpleLineSymbol(
-             //                                          SimpleLineSymbol.STYLE_NULL,
-             //                                          new Color([247, 34, 101, 0.9]),
-             //                                          1
-             //                                        ),
-             //                                        new Color([207, 34, 171, 0.5])
-             //                                      );
+                //       map.graphics.on("click", function (evt) {
+                //          if (drawing !== true) {
+                //          var symbol = new SimpleMarkerSymbol(
+                //                                        SimpleMarkerSymbol.STYLE_CIRCLE,
+                //                                        12,
+                //                                        new SimpleLineSymbol(
+                //                                          SimpleLineSymbol.STYLE_NULL,
+                //                                          new Color([247, 34, 101, 0.9]),
+                //                                          1
+                //                                        ),
+                //                                        new Color([207, 34, 171, 0.5])
+                //                                      );
 
-             //       // map.graphics.add(new esri.Graphic(evt.mapPoint,symbol));
-             //        //createGraphicsMenu();
-             //     }
-             //   });
-             //}
+                //       // map.graphics.add(new esri.Graphic(evt.mapPoint,symbol));
+                //        //createGraphicsMenu();
+                //     }
+                //   });
+                //}
 
                 //Disable double-click zoom if a graphic is being clicked while editing
                 events.push(map.on("mouse-down", function (e) {
@@ -1313,6 +1356,6 @@
                 }));
             });
         }
-    </script>
-</body>
+         </script>
+     </body>
 </html>

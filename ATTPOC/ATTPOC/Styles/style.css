@@ -4,6 +4,7 @@ html, body {
 }
 
 body {
+    background-color:#fafafa;
 }
 
 .inline {
@@ -53,7 +54,14 @@ label {
     position: relative;
     background-color: lightblue;
 }
-
+#map-2 {
+    width: auto;
+    position: relative;
+    background-color: lightblue;
+}
+.mrg15-R {
+    margin-right:15px;
+}
 #search {
     display: block;
     position: absolute;
@@ -176,6 +184,7 @@ label {
 }
 
 .sarfDetails {
+    margin-left : 15px;
 }
 .sarfDetails label {
         font-size: 12px;
@@ -184,19 +193,36 @@ label {
     }
 
 .blueBtn{
-    background: #007ecd; /* Old browsers */
-background: -moz-linear-gradient(top, #007ecd 0%, #005991 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(top, #007ecd 0%,#005991 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to bottom, #007ecd 0%,#005991 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007ecd', endColorstr='#005991',GradientType=0 ); /* IE6-9 */
+    box-shadow: 1px 2px 1px 0px rgba(0,0,0,0.25);
+    border: 1px solid;
+    border-color:#0879c0;
+    background: #0878c0; /* Old browsers */
+background: -moz-linear-gradient(top, #0878c0 0%, #056ab0 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #0878c0 0%,#056ab0 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #0878c0 0%,#056ab0 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0878c0', endColorstr='#056ab0',GradientType=0 ); /* IE6-9 */
 }
-.redBtn{
-    background: #ff2000; /* Old browsers */
-background: -moz-linear-gradient(top, #ff2000 0%, #ba1a00 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(top, #ff2000 0%,#ba1a00 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to bottom, #ff2000 0%,#ba1a00 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff2000', endColorstr='#ba1a00',GradientType=0 ); /* IE6-9 */
+.whiteBtn{
+    font-family: "Roboto", Light !important;
+    font-weight:100 !important;
+    color:#0876be;
+     box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.1);
+    border: 1px solid;
+    border-color:#d2d2d2;
+    background: #fbfcfc; /* Old browsers */
+background: -moz-linear-gradient(top, #fbfcfc 0%, #f3f2f3 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #fbfcfc 0%,#f3f2f3 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #fbfcfc 0%,#f3f2f3 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbfcfc', endColorstr='#f3f2f3',GradientType=0 ); /* IE6-9 */
 }
+    .whiteBtn:hover {
+        border-color:#0879c0;
+    background: #0878c0; /* Old browsers */
+background: -moz-linear-gradient(top, #0878c0 0%, #056ab0 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #0878c0 0%,#056ab0 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #0878c0 0%,#056ab0 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0878c0', endColorstr='#056ab0',GradientType=0 ); /* IE6-9 */
+    }
     .sarfDetails p span, .sarfDetails input {
         font-size: 12px;
         font-family : "Roboto", Light;
@@ -210,7 +236,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff2000', end
 .btn {
     font-family : "Roboto", Regular;
     min-width: 110px;
-    border-radius: 0px;
+    border-radius: 5px;
     font-size: 14px;
     font-weight: 600;
 }
@@ -220,6 +246,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff2000', end
 }
 .tabDiv {
 position:relative;
+margin-top : -20px
 }
 .commentingDiv {
     position:absolute;
@@ -504,6 +531,23 @@ position:relative;
 .profileIcon{
     font-size : 20pt;
 }
+.menuIcon{
+    font-size : 20pt;
+    margin : 5px 25px;
+ }
+.ctrlOption div
+ {
+    display:inline-block;
+    padding:10px;
+    cursor:pointer;
+    text-align:center;
+}
+    .ctrlOption div span {
+        display:block;
+    }
+    .ctrlOption div:hover span {
+        text-decoration:underline;
+    }
 .dijitButtonNode {border:0px solid gray;margin:0;line-height:normal;vertical-align: middle; #vertical-align: autotext-align:centerwhite-space: nowrap;}
 .cardHead div.pull-left{
     width: 215px;
@@ -580,7 +624,16 @@ position:relative;
     height: 602px;
     overflow-y: auto;
     overflow-x : hidden;
+    margin-top : -16px;
     /*width : auto;*/
+}
+.navTabs-ul{
+    border-bottom: 1px solid #fff !important;
+}
+.pageLink a
+{
+    margin-top: 10px;
+    font-size: 12pt;
 }
 .cardView{
     width: 100%;
