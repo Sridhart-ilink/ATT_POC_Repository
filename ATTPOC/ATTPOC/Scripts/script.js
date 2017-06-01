@@ -269,7 +269,7 @@ function onLoadGis() {
       "dojo/parser",
       "dijit/Menu",
       "dijit/MenuItem",
-       "dijit/Dialog",
+      "dijit/Dialog",
       "dijit/form/Form",
       "dijit/form/TextBox",
       "dijit/form/Button",
@@ -313,6 +313,7 @@ function onLoadGis() {
         var editToolBar, drawToolBar, drawingLayer, ctxMenuForGraphics, ctxMenuForGraphics1, selectedGraphic = null;
         var drawing = false, editing = false;
         Parser.parse();
+        var dialogBox;
 
         map = new Map("map", {
             basemap: "satellite",
@@ -690,6 +691,27 @@ function onLoadGis() {
             }
 
         }
+        function showMapInDialog() {
+        if (!dialogBox) {
+          var htmlFragment = '<div>Click on the map.</div>';
+         
+          
+          // CREATE DIALOG
+          dialogBox = new dijit.Dialog({
+            title: "My Map",
+            content: htmlFragment,
+            autofocus: !dojo.isIE, // NOTE: turning focus ON in IE causes errors when reopening the dialog
+            refocus: !dojo.isIE
+          });
+          
+          // DISPLAY DIALOG
+          dialogBox.show();
+        }
+        else {
+          dialogBox.show();
+        }
+        }
+       
 
         //Creates right-click context menu for graphics on the drawingLayer
         function createGraphicsMenu() {
@@ -698,13 +720,13 @@ function onLoadGis() {
             ctxMenuForGraphics.addChild(new MenuItem({
                 label: "Create Sarf",
                 onClick: function () {
-                    if (selectedGraphic != null && selectedGraphic.geometry.type !== "point") {      
-                            var form = new Form();
+                    if (selectedGraphic != null && selectedGraphic.geometry.type !== "point") {
+                        var form = new Form();
 
-                            new TextBox({
-                                width:"150px",
-                            }).placeAt(form.containerNode);
-                         
+                        new TextBox({
+                            width: "150px",
+                        }).placeAt(form.containerNode);
+
                         new Button({
                             label: "CLEAR SEARCH RING ",
                             style: "padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #ba1a00, #ff2000 80%) no-repeat;",
@@ -712,50 +734,50 @@ function onLoadGis() {
                                 dia.destroy();
                                 clearGraphics();
                             }
-                            }).placeAt(form.containerNode);
-                            new Button({
-                                label: "SAVE",
-                                style: "padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #005991, #007ecd 80%) no-repeat;",
-                                onClick: function () {
-                                    var getProcessUrl = "process-definition";
-                                    var jsonData = {
-                                        variables: {},
-                                        key: "identify-sarfs"
-                                    }
-
-                                    $.ajax({
-                                        method: 'POST',
-                                        dataType: 'json',
-                                        contentType: 'application/json',
-                                        url: camundaBaseApiUrl + getProcessUrl,
-                                        data: JSON.stringify(jsonData),
-                                        async: false,
-                                        cache: false,
-                                        success: function (data) {
-                                            saveSARFData(JSON.parse(data).id);
-                                        },
-                                        error: function (err) {
-                                            saveSARFData(0);
-                                            console.log(err);
-                                        }
-                                    });
+                        }).placeAt(form.containerNode);
+                        new Button({
+                            label: "SAVE",
+                            style: "padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #005991, #007ecd 80%) no-repeat;",
+                            onClick: function () {
+                                var getProcessUrl = "process-definition";
+                                var jsonData = {
+                                    variables: {},
+                                    key: "identify-sarfs"
                                 }
-                            }).placeAt(form.containerNode);
 
-                            var dia = new Dialog({
-                                content: form
-                            });
-                           
+                                $.ajax({
+                                    method: 'POST',
+                                    dataType: 'json',
+                                    contentType: 'application/json',
+                                    url: camundaBaseApiUrl + getProcessUrl,
+                                    data: JSON.stringify(jsonData),
+                                    async: false,
+                                    cache: false,
+                                    success: function (data) {
+                                        saveSARFData(JSON.parse(data).id);
+                                    },
+                                    error: function (err) {
+                                        saveSARFData(0);
+                                        console.log(err);
+                                    }
+                                });
+                            }
+                        }).placeAt(form.containerNode);
 
-                            form.startup();
-                            dia.show();
-                          
-                            $('.dijitDialog').addClass('dialogStyle');
-                          //  $('.dijitDialog').attr('style', 'top:-94.1258px !important;left: 42.70476px !important; z-index: 950;position: absolute; opacity: 1;');
-                            $('.dijitDialog').find('div[role="presentation"]').css('border-color', 'silver');
-                            $('.dijitInputInner').attr('placeholder', 'Sarf Name');
-                            $('.dijitInputInner').addClass('form-control');
-                            $('.dijitDialog').find('input[type="button"]').addClass('btn btn-default dialogSaveBtn');                     
+                        var dia = new Dialog({
+                            content: form
+                        });
+
+
+                        form.startup();
+                        dia.show();
+
+                        $('.dijitDialog').addClass('dialogStyle');
+                        //  $('.dijitDialog').attr('style', 'top:-94.1258px !important;left: 42.70476px !important; z-index: 950;position: absolute; opacity: 1;');
+                        $('.dijitDialog').find('div[role="presentation"]').css('border-color', 'silver');
+                        $('.dijitInputInner').attr('placeholder', 'Sarf Name');
+                        $('.dijitInputInner').addClass('form-control');
+                        $('.dijitDialog').find('input[type="button"]').addClass('btn btn-default dialogSaveBtn');
                     }
                 }
             }));

@@ -5,6 +5,7 @@ use autoforms;
 
 drop table SARF;
 drop table Polygon;
+drop table Node;
 
 CREATE TABLE SARF(
 	SarfId int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -14,6 +15,7 @@ CREATE TABLE SARF(
 	DateCreated datetime NULL,
 	DateModified datetime NULL 	 
 );
+ALTER TABLE SARF AUTO_INCREMENT=1001;
 
 INSERT INTO SARF (SarfName, SarfStatus, ProcessInstanceID, DateCreated) VALUES ('sarfname1', 'RF Pending Completion', '3579ed8f-3bd7-11e7-9aa9-dacc20524153', now());
 INSERT INTO SARF (SarfName, SarfStatus, ProcessInstanceID, DateCreated) VALUES ('sarfname2', 'C&E Vendor Assignment', '8579ed8f-3bd7-11e7-9aa9-eacc20524158', now());
@@ -31,17 +33,18 @@ CREATE TABLE Polygon (
 	DateCreated datetime NULL,
 	DateModified datetime NULL
 );
+ALTER TABLE Polygon AUTO_INCREMENT=1001;
 
-INSERT INTO Polygon (Vertices, SarfId, AreaInSqKm, DateCreated) VALUES ('-80.95556,37.60069;-79.30761,39.9977;-78.56054,38.80927;-80.95556,37.60069;', 1, '345.670', now());
-INSERT INTO Polygon (Vertices, SarfId, AreaInSqKm, DateCreated) VALUES ('-88.00878,38.99737;-86.03124,40.45066;-83.98778,39.37205;-84.11962,37.44385;-86.58056,37.19922;-88.00878,38.99737;', 2, '75.920', now());
-INSERT INTO Polygon (Vertices, SarfId, AreaInSqKm, DateCreated) VALUES ('-82.09813,37.79194;-81.76854,39.52476;-80.49413,40.88399;-78.99999,37.84401;-82.09813,37.84401;-82.09813,37.79194;', 3, '2645.800', now());
-INSERT INTO Polygon (Vertices, SarfId, AreaInSqKm, DateCreated) VALUES ('-122.28612,46.96859;-120.74804,48.79561;-118.02343,47.68347;-117.71581,46.27441;-119.86913,47.50566;-122.15429,47.02854;-122.28612,46.96859;', 4, '567.000', now());
-INSERT INTO Polygon (Vertices, SarfId, AreaInSqKm, DateCreated) VALUES ('-122.28612,46.96859;-120.74804,48.79561;-118.02343,47.68347;-117.71581,46.27441;-119.86913,47.50566;-122.15429,47.02854;-122.28612,46.96859;', 5, '568.000', now());
+INSERT INTO Polygon (Vertices, SarfId, AreaInSqKm, DateCreated) VALUES ('-80.95556,37.60069;-79.30761,39.9977;-78.56054,38.80927;-80.95556,37.60069;', 1001, '345.670', now());
+INSERT INTO Polygon (Vertices, SarfId, AreaInSqKm, DateCreated) VALUES ('-88.00878,38.99737;-86.03124,40.45066;-83.98778,39.37205;-84.11962,37.44385;-86.58056,37.19922;-88.00878,38.99737;', 1002, '75.920', now());
+INSERT INTO Polygon (Vertices, SarfId, AreaInSqKm, DateCreated) VALUES ('-82.09813,37.79194;-81.76854,39.52476;-80.49413,40.88399;-78.99999,37.84401;-82.09813,37.84401;-82.09813,37.79194;', 1003, '2645.800', now());
+INSERT INTO Polygon (Vertices, SarfId, AreaInSqKm, DateCreated) VALUES ('-122.28612,46.96859;-120.74804,48.79561;-118.02343,47.68347;-117.71581,46.27441;-119.86913,47.50566;-122.15429,47.02854;-122.28612,46.96859;', 1004, '567.000', now());
+INSERT INTO Polygon (Vertices, SarfId, AreaInSqKm, DateCreated) VALUES ('-122.28612,46.96859;-120.74804,48.79561;-118.02343,47.68347;-117.71581,46.27441;-119.86913,47.50566;-122.15429,47.02854;-122.28612,46.96859;', 1005, '568.000', now());
 
 /*select * from polygon;*/
 
-SELECT s.SarfId, s.SarfName, s.SarfStatus, p.PolygonId, p.Vertices, p.AreaInSqKm, s.ProcessInstanceID
-FROM SARF s INNER JOIN Polygon p ON s.SarfId = p.SarfId;
+/*SELECT s.SarfId, s.SarfName, s.SarfStatus, p.PolygonId, p.Vertices, p.AreaInSqKm, s.ProcessInstanceID
+FROM SARF s INNER JOIN Polygon p ON s.SarfId = p.SarfId;*/
 
 /************************************************************************/
 
@@ -74,37 +77,13 @@ CREATE TABLE Node(
 );
 
 INSERT INTO Node (SarfId, Latitude, Longitude, AtollSiteName, iPlanJobNumber, PaceNumber, DateCreated) 
-VALUES (1, '47.6101497', '-122.2015159', 'TestAtoll1', 'WR_-RUTH-11-00318', 'MRUTH000105', now());
+VALUES (1001, '47.6101497', '-122.2015159', 'TestAtoll1', 'WR_-RUTH-11-00318', 'MRUTH000105', now());
 INSERT INTO Node (SarfId, Latitude, Longitude, AtollSiteName, iPlanJobNumber, PaceNumber, DateCreated) 
-VALUES (1, '47.6101000', '-122.2015000', 'TestAtoll2', 'WR_-RUTH-11-00318', 'MRUTH000105', now());
+VALUES (1001, '47.6101000', '-122.2015000', 'TestAtoll2', 'WR_-RUTH-11-00318', 'MRUTH000105', now());
 INSERT INTO Node (SarfId, Latitude, Longitude, AtollSiteName, iPlanJobNumber, PaceNumber, DateCreated) 
-VALUES (2, '47.6062095', '-122.3320708', 'TestAtoll3', 'WR_-RUTH-11-00318', 'MRUTH000105', now());
+VALUES (1002, '47.6062095', '-122.3320708', 'TestAtoll3', 'WR_-RUTH-11-00318', 'MRUTH000105', now());
 INSERT INTO Node (SarfId, Latitude, Longitude, AtollSiteName, iPlanJobNumber, PaceNumber, DateCreated) 
-VALUES (2, '47.6063155', '-122.3327984', 'TestAtoll4', 'WR_-RUTH-11-00318', 'MRUTH000105', now());
+VALUES (1002, '47.6063155', '-122.3327984', 'TestAtoll4', 'WR_-RUTH-11-00318', 'MRUTH000105', now());
+
 
 /************************************************************************/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
