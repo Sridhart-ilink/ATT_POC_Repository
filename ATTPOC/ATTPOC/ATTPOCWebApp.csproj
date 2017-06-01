@@ -110,6 +110,7 @@
     <Content Include="Styles\bootstrap.vertical-tabs.min.css" />
     <Content Include="Styles\claro-3.14.css" />
     <Content Include="Styles\esri-3.14.css" />
+    <Content Include="Styles\images\att-logo.png" />
     <Content Include="Styles\images\ChatIcon.png" />
     <Content Include="Styles\images\circle.png" />
     <Content Include="Styles\images\double-arrow-right-red.png" />

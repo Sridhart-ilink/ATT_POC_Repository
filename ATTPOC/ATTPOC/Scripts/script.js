@@ -98,7 +98,7 @@ function cardViewDataBind() {
             content += '<div class="cardInfo" style="cursor:pointer;">' +
                             '<button id="sarfclick" type="button" class="btn btn-link linkcolor sarfclick" data-vertices="' + sarfList[count].Vertices + '">' + sarfList[count].SARFID + '</button>' +
                             '<div class="cardBody">' +
-                                    '<h3>' + sarfList[count].SARFNAME + '</h3>' +
+                                    '<span class = "cardSpan themeBlue">' + sarfList[count].SARFNAME + '</span>' +
                                     '<span class="cardSpan clearfix">' + sarfList[count].AreaInSqKm + ' SqKm</span>' +
                                     '<span class="cardSpan clearfix">' + (sarfList[count].SarfStatus == null ?
                                         "" : sarfList[count].SarfStatus) + '</span>' +

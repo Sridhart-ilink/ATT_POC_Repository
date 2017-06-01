@@ -13,28 +13,13 @@ using System.Web.Http.Cors;
 namespace ATTWebAppAPI.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class SarfController : ApiController
+    public class SarfController : BaseApiController
     {
         SarfDao sarfDao = null;
         static long transId = 0;
         public SarfController()
         {
             sarfDao = new SarfDao();
-        }
-
-        protected HttpResponseMessage WrapObjectToHttpResponse<T>(T responseData)
-        {
-            IContentNegotiator negotiator = this.Configuration.Services.GetContentNegotiator();
-            ContentNegotiationResult result = negotiator.Negotiate(typeof(T), this.Request, this.Configuration.Formatters);
-            return new HttpResponseMessage()
-            {
-                Content = new ObjectContent(typeof(T),
-                    responseData, // What we are serializing
-                    result.Formatter, // The media formatter
-                    result.MediaType.MediaType), // The MIME type
-                StatusCode = HttpStatusCode.OK,
-                RequestMessage = this.Request
-            };
         }
 
         [HttpPost]
