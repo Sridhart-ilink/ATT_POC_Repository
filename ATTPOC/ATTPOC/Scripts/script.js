@@ -96,7 +96,7 @@ function cardViewDataBind() {
             countReset++;
             var content = '';
             content += '<div class="cardInfo" style="cursor:pointer;">' +
-                            '<button id="sarfclick" type="button" data-processInstanceID = "" class="btn btn-link linkcolor sarfclick" data-vertices="' + sarfList[count].Vertices + '">' + sarfList[count].SARFID + '</button>' +
+                            '<button id="sarfclick" type="button" data-processinstanceid = "' + sarfList[count].ProcessInstanceID + '" class="btn btn-link linkcolor sarfclick" data-vertices="' + sarfList[count].Vertices + '">' + sarfList[count].SARFID + '</button>' +
                             '<div class="cardBody">' +
                                     '<span class = "cardSpan themeBlue">' + sarfList[count].SARFNAME + '</span>' +
                                     '<span class="cardSpan clearfix">' + sarfList[count].AreaInSqKm + ' SqKm</span>' +
