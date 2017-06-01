@@ -474,7 +474,7 @@ function onLoadGis() {
                 
             });
 
-            $(".btnaddsarf").click(function () {
+            $(".addSarfBtn").click(function () {
                 $('.btn-draw').css('display','block');
             });
 

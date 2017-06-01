@@ -351,24 +351,19 @@ position:relative;
 /*default sarf draw button*/
 
 .btnDraw {
-    background: #266f3b;
-    /*background-image: -webkit-linear-gradient(top, #b50909, #b50909);
-    background-image: -moz-linear-gradient(top, #b50909, #b50909);
-    background-image: -ms-linear-gradient(top, #b50909, #b50909);
-    background-image: -o-linear-gradient(top, #b50909, #b50909);
-    background-image: linear-gradient(to bottom, #b50909, #b50909);*/
+        background: #266f3b !important;
     -webkit-border-radius: 60;
     -moz-border-radius: 60;
     border-radius: 5px;
     font-family: Arial;
     color: #fff;
-        font-size: 12pt;
+    font-size: 12pt;
     width: 80px;
-    font-weight : 100;
+    font-weight: 100;
     padding: 8px 10px 7px 10px;
     margin-bottom: 4px;
     text-decoration: none;
-    border-color: transparent;
+    border-color: transparent !important;
 }
 .addSarfBtn{
     z-index: 999;
