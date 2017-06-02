@@ -347,12 +347,15 @@ namespace ATTWebAppAPI.DAL
                     cn.Open();
                     if (sarfId > 0)
                     {
+                        decimal area;
+                        decimal.TryParse(polygon.AreaInSqKm, out area);
+
                         query = "INSERT INTO Polygon(Vertices,SarfId, AreaInSqKm, DateCreated,DateModified) VALUES(?Vertices, ?SarfId, ?AreaInSqKm, ?DateCreated,?DateModified);";
                         using (MySqlCommand cmd = new MySqlCommand(query, cn))
                         {
                             cmd.Parameters.Add("?SarfId", MySqlDbType.Int32).Value = sarfId;
                             cmd.Parameters.Add("?Vertices", MySqlDbType.VarChar).Value = polygon.Vertices;
-                            cmd.Parameters.Add("?AreaInSqKm", MySqlDbType.Decimal).Value = Convert.ToDecimal(polygon.AreaInSqKm);
+                            cmd.Parameters.Add("?AreaInSqKm", MySqlDbType.Decimal).Value = area;
                             cmd.Parameters.Add("?DateCreated", MySqlDbType.DateTime).Value = DateTime.Now;
                             cmd.Parameters.Add("?DateModified", MySqlDbType.DateTime).Value = DateTime.Now;
                             return cmd.ExecuteNonQuery();
