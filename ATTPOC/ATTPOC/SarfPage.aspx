@@ -1074,11 +1074,12 @@
                             var node = dom.byId('drawingLayer_layer');
                             if (!tooltipDialog) {
                                 var htmlFragment = '';
-                                htmlFragment += '<div id="mapTwo" class="dialogtooltip"><input type="text" id="txtatollname" width="150px" class="dialogtooltipinput">';
-                                htmlFragment += '<div><input type="text" id="txtiplannumber" width="150px" class="dialogtooltipinput" style="margin-top:0px;"></div>'
-                                htmlFragment += '<div><input type="text" id="txtpacenumber" width="150px" class="dialogtooltipinput" style="margin-top:0px;"></div>'
+                                htmlFragment += '<div id="mapTwo" class="dialogtooltip"><input type="text" placeholder="Atoll Site Name" id="txtatollname" width="150px" class="dialogtooltipinput">';
+                                htmlFragment += '<div><input type="text" id="txtiplannumber" placeholder="IPlan Job No" width="150px" class="dialogtooltipinput" style="margin-top:0px;"></div>'
+                                htmlFragment += '<div><input type="text" id="txtpacenumber" placeholder="Pace Number" width="150px" class="dialogtooltipinput" style="margin-top:0px;"></div>'
                                 htmlFragment += '<div><input type="button" id="btncreatenode" value="Save" class="btn blueBtn dialogtootipbtn"/>'
                                 htmlFragment += '<input type="button"  id="btncancelnode"  value="Cancel" class="btn whiteBtn dialogtootipbtncancel"/></div></div>'
+                                var errorMsg = '<div class= "errorMsg" style = "margin-left: 20px;"><span style="color : red;">Fields must not be empty</span></div>';
                                 // CREATE TOOLTIP DIALOG
                                 tooltipDialog = new dijit.TooltipDialog({
                                     content: htmlFragment,
@@ -1096,6 +1097,18 @@
                                 map.enableMapNavigation();
                                 //Remove active style from draw button
                                 $(".btn-draw.active").removeClass("active");
+
+                                $('#txtatollname').keypress(function () {
+                                    $('div.errorMsg').remove();
+                                });
+
+                                $('#txtiplannumber').keypress(function () {
+                                    $('div.errorMsg').remove();
+                                });
+
+                                $('#txtpacenumber').keypress(function () {
+                                    $('div.errorMsg').remove();
+                                });
 
                             } else {
                                 if (tooltipDialog.opened_) {
@@ -1123,7 +1136,43 @@
                             });
                             $("#btncreatenode").click(function () {
                                 // add node
+                                var saveNodeUrl = "Node/Post";
+                                var txtAtollName = $('#txtatollname').val();
+                                var txtIplanNumber = $('#txtiplannumber').val();
+                                var txtPaceNumber = $('#txtpacenumber').val();
 
+                                var jsonData = {
+                                    sarfId: localStorage["sarfID"],
+                                    latitude: localStorage["lat"],
+                                    longitude: localStorage["long"],
+                                    atollSiteName: txtAtollName,
+                                    iPlanJobNumber: txtIplanNumber,
+                                    paceNumber: txtPaceNumber
+                                }
+
+                                if (txtAtollName.length > 0 && txtIplanNumber.length > 0 && txtPaceNumber.length > 0) {
+                                    $.ajax({
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        contentType: 'application/json',
+                                        url: camundaBaseApiUrl + saveNodeUrl,
+                                        data: JSON.stringify(jsonData),
+                                        async: false,
+                                        cache: false,
+                                        success: function (data) {
+                                            console.log(data);
+                                            $('#sarfForm').submit();
+                                        },
+                                        error: function (err) {
+                                            console.log(err);
+                                            $('#sarfForm').submit();
+                                        }
+                                    });
+                                }
+                                else {
+                                    $('#txtpacenumber').after(errorMsg);
+                                }
+                                
                             });
 
                         }
