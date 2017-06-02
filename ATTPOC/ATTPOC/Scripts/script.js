@@ -102,7 +102,7 @@ function cardViewDataBind() {
                                     '<span class="cardSpan clearfix">' + sarfList[count].AreaInSqKm + ' SqKm</span>' +
                                     '<span class="cardSpan clearfix">' + (sarfList[count].SarfStatus == null ?
                                         "" : sarfList[count].SarfStatus) + '</span>' +
-                                    '<span style="display:none;" class="cardSpan clearfix">' + sarfList[count].Vertices + '</span>' +
+                                    '<span style="display:none;" class="cardSpan clearfix vertices">' + sarfList[count].Vertices + '</span>' +
                              '</div>' +
                         '</div>';
             cardView.append(content);
@@ -403,21 +403,17 @@ function onLoadGis() {
 
             map.addLayer(drawingLayer);
 
-            $(".cardBody").click(function () {
+            $(".cardInfo").click(function () {
                 map.graphics.clear();
                 var cell = $(this);
-               
-                $(".cardBody").css("background-color", "white");
-                $.each($(".cardBody"), function (i, val) {
-                    val.children['1'].style.color = "Gray";
-                    val.children['2'].style.color = "Gray";
+                $.each($(".cardInfo"), function (i, val) {
+                    $(val).css({ 'background-color': '', 'opacity': '' });
+                    $(val).find('button,span').css('color', '');
                 });
-
-                if (cell[0].children['3'] != undefined) {
-                    cell[0].style.backgroundColor = "Gray";
-                    cell[0].children['1'].style.color = "White";
-                    cell[0].children['2'].style.color = "White";
-                    var verticesVal = cell[0].children['3'].innerText;
+                $(cell).css("background-color", "#0878c0");
+                $(cell).find('button,span').css('color', '#F4F4F4');
+                if ($(cell).find('.cardBody .vertices').text() != undefined) {
+                    var verticesVal = $(cell).find('.cardBody .vertices').text();
                 if (verticesVal != "") {
                     var vertices_arr = [];
                     vertices_arr.push(verticesVal.split(';'))
