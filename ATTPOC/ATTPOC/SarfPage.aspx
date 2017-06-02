@@ -1044,15 +1044,28 @@
                     }
                 }));
 
-                function clearGraphics(graphic) {
-                   map.getLayer('drawingLayerPoint').clear();
-                   map.graphics.remove(graphic.geometry.type);
-                  // map.graphic.clear();
+                function clearGraphics() {
+                    //first remove all graphics added directly to map
+                    if (map.graphics.type == "point") {
+                        map.graphics.clear();
+                    }
+
+
+                    //now go into each graphic layer and clear it
+                    var graphicLayerIds = map.graphicsLayerIds;
+                    var len = graphicLayerIds.length;
+                    for (var i = 0; i < len; i++) {
+                        var gLayer = map.getLayer(graphicLayerIds[i]);
+                        //clear this Layer
+                        if (map.graphics.type == "point") {
+                            gLayer.clear();
+                        }
+                    }
 
                 }
 
                 //Creates right-click context menu for graphics on the point
-                function createGraphicsMenu(graphic) {
+                function createGraphicsMenu() {
                     ctxMenuForGraphics = new Menu({});
                     ctxMenuForGraphics.addChild(new MenuItem({
                         label: "Add Node",
@@ -1061,11 +1074,12 @@
                             var node = dom.byId('drawingLayer_layer');
                             if (!tooltipDialog) {
                                 var htmlFragment = '';
-                                htmlFragment += '<div id="mapTwo" class="dialogtooltip"><input type="text" id="txtatollname" width="150px" class="dialogtooltipinput">';
-                                htmlFragment += '<div><input type="text" id="txtiplannumber" width="150px" class="dialogtooltipinput" style="margin-top:0px;"></div>'
-                                htmlFragment += '<div><input type="text" id="txtpacenumber" width="150px" class="dialogtooltipinput" style="margin-top:0px;"></div>'
+                                htmlFragment += '<div id="mapTwo" class="dialogtooltip"><input type="text" placeholder="Atoll Site Name" id="txtatollname" width="150px" class="dialogtooltipinput">';
+                                htmlFragment += '<div><input type="text" id="txtiplannumber" placeholder="IPlan Job No" width="150px" class="dialogtooltipinput" style="margin-top:0px;"></div>'
+                                htmlFragment += '<div><input type="text" id="txtpacenumber" placeholder="Pace Number" width="150px" class="dialogtooltipinput" style="margin-top:0px;"></div>'
                                 htmlFragment += '<div><input type="button" id="btncreatenode" value="Save" class="btn blueBtn dialogtootipbtn"/>'
                                 htmlFragment += '<input type="button"  id="btncancelnode"  value="Cancel" class="btn whiteBtn dialogtootipbtncancel"/></div></div>'
+                                var errorMsg = '<div class= "errorMsg" style = "margin-left: 20px;"><span style="color : red;">Fields must not be empty</span></div>';
                                 // CREATE TOOLTIP DIALOG
                                 tooltipDialog = new dijit.TooltipDialog({
                                     content: htmlFragment,
@@ -1083,6 +1097,18 @@
                                 map.enableMapNavigation();
                                 //Remove active style from draw button
                                 $(".btn-draw.active").removeClass("active");
+
+                                $('#txtatollname').keypress(function () {
+                                    $('div.errorMsg').remove();
+                                });
+
+                                $('#txtiplannumber').keypress(function () {
+                                    $('div.errorMsg').remove();
+                                });
+
+                                $('#txtpacenumber').keypress(function () {
+                                    $('div.errorMsg').remove();
+                                });
 
                             } else {
                                 if (tooltipDialog.opened_) {
@@ -1110,7 +1136,43 @@
                             });
                             $("#btncreatenode").click(function () {
                                 // add node
+                                var saveNodeUrl = "Node/Post";
+                                var txtAtollName = $('#txtatollname').val();
+                                var txtIplanNumber = $('#txtiplannumber').val();
+                                var txtPaceNumber = $('#txtpacenumber').val();
 
+                                var jsonData = {
+                                    sarfId: localStorage["sarfID"],
+                                    latitude: localStorage["lat"],
+                                    longitude: localStorage["long"],
+                                    atollSiteName: txtAtollName,
+                                    iPlanJobNumber: txtIplanNumber,
+                                    paceNumber: txtPaceNumber
+                                }
+
+                                if (txtAtollName.length > 0 && txtIplanNumber.length > 0 && txtPaceNumber.length > 0) {
+                                    $.ajax({
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        contentType: 'application/json',
+                                        url: camundaBaseApiUrl + saveNodeUrl,
+                                        data: JSON.stringify(jsonData),
+                                        async: false,
+                                        cache: false,
+                                        success: function (data) {
+                                            console.log(data);
+                                            $('#sarfForm').submit();
+                                        },
+                                        error: function (err) {
+                                            console.log(err);
+                                            $('#sarfForm').submit();
+                                        }
+                                    });
+                                }
+                                else {
+                                    $('#txtpacenumber').after(errorMsg);
+                                }
+                                
                             });
 
                         }
@@ -1118,7 +1180,7 @@
                     ctxMenuForGraphics.addChild(new MenuItem({
                         label: "Clear Node",
                         onClick: function () {
-                            clearGraphics(graphic);
+                            clearGraphics();
                         }
                     }));
 
@@ -1220,23 +1282,11 @@
                                                               ),
                                                               new Color([207, 34, 171, 0.5])
                                                             );
-                                drawingLayer = new GraphicsLayer({
-                                    id: "drawingLayerPoint"
-                                });
 
-                                map.addLayer(drawingLayer);
-                                var graphic = new Graphic(evt.mapPoint, symbol);
-                                drawingLayer.add(graphic);
-                               // map.graphics.add(new esri.Graphic(evt.mapPoint, symbol));                             
-                                map.graphics.add(new esri.Graphic(graphic.geometry, symbol));
-
-                                if (graphic.geometry.type === 'point') {
-                                    localStorage["lat"] = graphic.geometry.x;
-                                    localStorage["long"] = graphic.geometry.y;
-                                }
+                                map.graphics.add(new esri.Graphic(evt.mapPoint, symbol));
                             }
 
-                            createGraphicsMenu(graphic);
+                            createGraphicsMenu();
 
 
                         }
