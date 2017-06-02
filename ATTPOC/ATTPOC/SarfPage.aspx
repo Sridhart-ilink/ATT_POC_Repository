@@ -1044,28 +1044,15 @@
                     }
                 }));
 
-                function clearGraphics() {
-                    //first remove all graphics added directly to map
-                    if (map.graphics.type == "point") {
-                        map.graphics.clear();
-                    }
-                    
-
-                    //now go into each graphic layer and clear it
-                    var graphicLayerIds = map.graphicsLayerIds;
-                    var len = graphicLayerIds.length;
-                    for (var i = 0; i < len; i++) {
-                        var gLayer = map.getLayer(graphicLayerIds[i]);
-                        //clear this Layer
-                        if (map.graphics.type == "point") {
-                            gLayer.clear();
-                        }
-                    }
+                function clearGraphics(graphic) {
+                   map.getLayer('drawingLayerPoint').clear();
+                   map.graphics.remove(graphic.geometry.type);
+                  // map.graphic.clear();
 
                 }
 
                 //Creates right-click context menu for graphics on the point
-                function createGraphicsMenu() {
+                function createGraphicsMenu(graphic) {
                     ctxMenuForGraphics = new Menu({});
                     ctxMenuForGraphics.addChild(new MenuItem({
                         label: "Add Node",
@@ -1131,7 +1118,7 @@
                     ctxMenuForGraphics.addChild(new MenuItem({
                         label: "Clear Node",
                         onClick: function () {
-                            clearGraphics();
+                            clearGraphics(graphic);
                         }
                     }));
 
@@ -1233,11 +1220,23 @@
                                                               ),
                                                               new Color([207, 34, 171, 0.5])
                                                             );
-                            
-                                map.graphics.add(new esri.Graphic(evt.mapPoint, symbol));
+                                drawingLayer = new GraphicsLayer({
+                                    id: "drawingLayerPoint"
+                                });
+
+                                map.addLayer(drawingLayer);
+                                var graphic = new Graphic(evt.mapPoint, symbol);
+                                drawingLayer.add(graphic);
+                               // map.graphics.add(new esri.Graphic(evt.mapPoint, symbol));                             
+                                map.graphics.add(new esri.Graphic(graphic.geometry, symbol));
+
+                                if (graphic.geometry.type === 'point') {
+                                    localStorage["lat"] = graphic.geometry.x;
+                                    localStorage["long"] = graphic.geometry.y;
+                                }
                             }
 
-                            createGraphicsMenu();
+                            createGraphicsMenu(graphic);
 
 
                         }
