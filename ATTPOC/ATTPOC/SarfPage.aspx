@@ -1049,7 +1049,7 @@
                     if (map.graphics.type == "point") {
                         map.graphics.clear();
                     }
-                    
+
 
                     //now go into each graphic layer and clear it
                     var graphicLayerIds = map.graphicsLayerIds;
@@ -1233,7 +1233,7 @@
                                                               ),
                                                               new Color([207, 34, 171, 0.5])
                                                             );
-                            
+
                                 map.graphics.add(new esri.Graphic(evt.mapPoint, symbol));
                             }
 
