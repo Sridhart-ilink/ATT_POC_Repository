@@ -267,14 +267,15 @@
                                 <i class="glyphicon glyphicon-user"></i>
                             </div>
                             <div class="pull-right chatLabel">
-                                <h3>ebenezer marchus</h3>
+                                <h3>john anderson </h3>
                                 <p>April 27, 2017 11:40 am</p>
                             </div>
                         </div>
                         <div class="chatBody">
                             <p>
-                                Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum 
-                                        Lorem Ipsum Lorem Ipsum Lorem Ipsum  
+                                Mark, 
+                                SARF detials have beeen updated as per your review comments.
+                                Can you please review and let me know your feedback again ? 
                             </p>
                             <div>
                                 <input type="text" class="form-control" placeholder="leave a reply" />
@@ -299,8 +300,8 @@
                         </div>
                         <div class="chatBody">
                             <p>
-                                Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum 
-                                        Lorem Ipsum Lorem Ipsum Lorem Ipsum  
+                                Thank you John for the quick turn around. Let me get back to you...
+                                ~Mark 
                             </p>
                             <div>
                                 <input type="text" class="form-control" placeholder="leave a reply" />
