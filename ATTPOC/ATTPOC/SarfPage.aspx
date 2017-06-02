@@ -27,6 +27,36 @@
             right: 20px;
             z-index: 50;
         }
+        .dijitTooltipContainer {
+                border:0px !important;
+                background:none !important;
+            }
+            .dialogtooltip {
+                width:230px; height:205px; border: 1px solid lightgray;
+                background-color:white; border-radius:20px;
+            }
+            .dialogtooltipinput {
+               border:1px solid lightgray;margin:20px;padding-top:5px;
+               border-radius:5px;
+               width:190px;
+            }
+            .dialogtootipbtn {
+               width:30px;
+               min-width:50px;
+               height: 25px;   
+               color: white;
+               margin-left:100px;
+               font-weight:normal;
+               padding:0px;
+            }
+            .dialogtootipbtncancel {
+               min-width:50px;
+               height: 25px;   
+               color: #0878c0;             
+               font-weight:normal;
+               padding:0px;
+               margin-left:10px;
+            }
     </style>
 
 </head>
@@ -890,6 +920,7 @@
               "dijit/Menu",
               "dijit/MenuItem",
                "dijit/Dialog",
+               "dijit/TooltipDialog",
               "dijit/form/Form",
               "dijit/form/TextBox",
               "dijit/form/Button",
@@ -924,6 +955,7 @@
               Menu,
               MenuItem,
               Dialog,
+              TooltipDialog,
               Form,
               TextBox,
               Button,
@@ -932,6 +964,7 @@
 
                 var editToolBar, drawToolBar, drawingLayer, ctxMenuForGraphics, selectedGraphic = null;
                 var drawing = false, editing = false;
+                var tooltipDialog;
                 Parser.parse();
                 map = new Map("map", {
                     basemap: "streets",
@@ -942,7 +975,7 @@
 
                 var toggle = new BasemapToggle({
                     map: map,
-                    basemap: "streets",
+                    basemap: "satellite",
                     basemaps:
                     {
                         "streets": {
@@ -1011,74 +1044,94 @@
                     }
                 }));
 
+                function clearGraphics() {
+                    //first remove all graphics added directly to map
+                    if (map.graphics.type == "point") {
+                        map.graphics.clear();
+                    }
+                    
+
+                    //now go into each graphic layer and clear it
+                    var graphicLayerIds = map.graphicsLayerIds;
+                    var len = graphicLayerIds.length;
+                    for (var i = 0; i < len; i++) {
+                        var gLayer = map.getLayer(graphicLayerIds[i]);
+                        //clear this Layer
+                        if (map.graphics.type == "point") {
+                            gLayer.clear();
+                        }
+                    }
+
+                }
+
                 //Creates right-click context menu for graphics on the point
                 function createGraphicsMenu() {
                     ctxMenuForGraphics = new Menu({});
                     ctxMenuForGraphics.addChild(new MenuItem({
                         label: "Add Node",
                         onClick: function () {
-                            if (selected != null && selected.geometry.type == "point") {
-                                var form = new Form();
-
-                                new TextBox({
-                                    width: "150px",
-                                }).placeAt(form.containerNode);
-                                new TextBox({
-                                    width: "150px",
-                                }).placeAt(form.containerNode);
-                                new TextBox({
-                                    width: "150px",
-                                }).placeAt(form.containerNode);
-                                new TextBox({
-                                    width: "150px",
-                                }).placeAt(form.containerNode);
-                                new Button({
-                                    label: "CANCEL",
-                                    style: "align:right;padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #ba1a00, #ff2000 80%) no-repeat;",
-                                    onClick: function () {
-                                        dia.destroy();
-                                        clearGraphics();
-                                    }
-                                }).placeAt(form.containerNode);
-                                new Button({
-                                    label: "SAVE",
-                                    style: "align:right;padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #005991, #007ecd 80%) no-repeat;",
-                                    onClick: function () {
-                                        var getProcessUrl = "process-definition";
-                                        var jsonData = {
-                                            variables: {},
-                                            key: "identify-sarfs"
-                                        }
-
-                                        $.ajax({
-                                            method: 'POST',
-                                            dataType: 'json',
-                                            contentType: 'application/json',
-                                            url: camundaBaseApiUrl + getProcessUrl,
-                                            data: JSON.stringify(jsonData),
-                                            async: false,
-                                            cache: false,
-                                            success: function (data) {
-                                                saveSARFData(JSON.parse(data).id);
-                                            },
-                                            error: function (err) {
-                                                console.log(err);
-                                            }
-                                        });
-                                    }
-                                }).placeAt(form.containerNode);
-
-                                var dia = new Dialog({
-                                    content: form
+                            // CREATE DIALOG
+                            var node = dom.byId('drawingLayer_layer');
+                            if (!tooltipDialog) {
+                                var htmlFragment = '';
+                                htmlFragment += '<div id="mapTwo" class="dialogtooltip"><input type="text" id="txtatollname" width="150px" class="dialogtooltipinput">';
+                                htmlFragment += '<div><input type="text" id="txtiplannumber" width="150px" class="dialogtooltipinput" style="margin-top:0px;"></div>'
+                                htmlFragment += '<div><input type="text" id="txtpacenumber" width="150px" class="dialogtooltipinput" style="margin-top:0px;"></div>'
+                                htmlFragment += '<div><input type="button" id="btncreatenode" value="Save" class="btn blueBtn dialogtootipbtn"/>'
+                                htmlFragment += '<input type="button"  id="btncancelnode"  value="Cancel" class="btn whiteBtn dialogtootipbtncancel"/></div></div>'
+                                // CREATE TOOLTIP DIALOG
+                                tooltipDialog = new dijit.TooltipDialog({
+                                    content: htmlFragment,
+                                    autofocus: !dojo.isIE, // NOTE: turning focus ON in IE causes errors when reopening the dialog
+                                    refocus: !dojo.isIE
                                 });
-                                form.startup();
-                                dia.show();
-                                $('.dijitDialog').addClass('dialogNodeStyle');
-                                $('.dijitDialog').find('div[role="presentation"]').css('border-color', 'silver');
-                                $('.dijitInputInner').attr('placeholder', 'Atoll Site Name');
-                                $('.dijitInputInner').addClass('form-control');
-                                $('.dijitDialog').find('input[type="button"]').addClass('btn btn-default dialogSaveBtn');
+
+                                // DISPLAY TOOLTIP DIALOG AROUND THE CLICKED ELEMENT
+                                dijit.popup.open({ popup: tooltipDialog, around: node });
+                                tooltipDialog.opened_ = true;
+                                //Deactivate the toolbar
+                                drawToolBar.deactivate();
+                                drawing = false;
+                                //Enable panning
+                                map.enableMapNavigation();
+                                //Remove active style from draw button
+                                $(".btn-draw.active").removeClass("active");
+
+                            } else {
+                                if (tooltipDialog.opened_) {
+                                    dijit.popup.close(tooltipDialog);
+                                    tooltipDialog.opened_ = false;
+                                    // node.innerHTML = "Show map below me";
+                                } else {
+                                    dijit.popup.open({ popup: tooltipDialog, around: node });
+                                    tooltipDialog.opened_ = true;
+                                    //Deactivate the toolbar
+                                    drawToolBar.deactivate();
+                                    drawing = false;
+                                    //Enable panning
+                                    map.enableMapNavigation();
+                                    //Remove active style from draw button
+                                    $(".btn-draw.active").removeClass("active");
+                                }
                             }
+
+                            $("#btncancelnode").click(function () {
+                                if (tooltipDialog.opened_) {
+                                    dijit.popup.close(tooltipDialog);
+                                    tooltipDialog.opened_ = false;
+                                }
+                            });
+                            $("#btncreatenode").click(function () {
+                                // add node
+
+                            });
+
+                        }
+                    }));
+                    ctxMenuForGraphics.addChild(new MenuItem({
+                        label: "Clear Node",
+                        onClick: function () {
+                            clearGraphics();
                         }
                     }));
 
@@ -1180,7 +1233,7 @@
                                                               ),
                                                               new Color([207, 34, 171, 0.5])
                                                             );
-
+                            
                                 map.graphics.add(new esri.Graphic(evt.mapPoint, symbol));
                             }
 
