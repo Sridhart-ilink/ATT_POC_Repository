@@ -209,8 +209,8 @@
             </div>
             <div class="col-md-12 borderBottom pageLink" style="margin-top: 7px; margin-bottom: 5px">
                 <a href="Default.aspx" class="linkcolor" style="margin-left: 30px;">Home</a> :: <a class="linkcolor">SARF Details</a>
-                <ul class="nav nav-tabs tabs-left navTabs-ul pull-right">
-                    <li class="" data-index="0"><a href="#mapview" data-toggle="tab">Map View</a></li>
+                <ul class="nav nav-tabs tabs-left navTabs-ul pull-right tabMenu">
+                    <li class="active" data-index="0"><a href="#mapview" data-toggle="tab">Map</a></li>
                     <li class="" data-index="1"><a href="#workflow" data-toggle="tab">Workflow</a></li>
                 </ul>
             </div>
@@ -255,7 +255,7 @@
                         POST</button>
                 </div>
                 <div>
-                    <button type="button" id="seeMoreBtn" class="btn btn-link pull-left linkcolor editLink">See more comments</button>
+                    <button type="button" id="seeMoreBtn" class="btn btn-link pull-left linkcolor editLink fontClass">See more comments</button>
                 </div>
                 <div class="clearfix"></div>
                 <div>
@@ -271,14 +271,13 @@
                                 <i class="glyphicon glyphicon-user"></i>
                             </div>
                             <div class="pull-right chatLabel">
-                                <h3>john anderson </h3>
-                                <p>April 27, 2017 11:40 am</p>
+                                <h3 class="fontClass">john anderson </h3>
+                                <p class="fontClass">April 25, 2017 11:40 am</p>
                             </div>
                         </div>
                         <div class="chatBody">
-                            <p>
-                                Mark, 
-                                SARF detials have beeen updated as per your review comments.
+                            <p class="fontClass">
+                                Mark, SARF detials have beeen updated as per your review comments.
                                 Can you please review and let me know your feedback again ? 
                             </p>
                             <div>
@@ -298,12 +297,12 @@
                                 <i class="glyphicon glyphicon-user"></i>
                             </div>
                             <div class="pull-right chatLabel">
-                                <h3>ebenezer marchus</h3>
-                                <p>April 27, 2017 11:40 am</p>
+                                <h3 class="fontClass">ebenezer marchus</h3>
+                                <p class="fontClass">April 26, 2017 09:15 am</p>
                             </div>
                         </div>
                         <div class="chatBody">
-                            <p>
+                            <p class="fontClass">
                                 Thank you John for the quick turn around. Let me get back to you...
                                 ~Mark 
                             </p>
@@ -324,14 +323,15 @@
                                 <i class="glyphicon glyphicon-user"></i>
                             </div>
                             <div class="pull-right chatLabel">
-                                <h3>ebenezer marchus</h3>
-                                <p>April 27, 2017 11:40 am</p>
+                                <h3 class="fontClass">Jesse Williams</h3>
+                                <p class="fontClass">April 27, 2017 10:30 am</p>
                             </div>
                         </div>
                         <div class="chatBody">
-                            <p>
-                                Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum 
-                                        Lorem Ipsum Lorem Ipsum Lorem Ipsum  
+                            <p class="fontClass">
+                                Let us have the review by the end of day aroung 9.30 PM. Please
+                                make yoourself available on Skype on that time. Thanks
+                                -Jesse.
                             </p>
                             <div>
                                 <input type="text" class="form-control" placeholder="leave a reply" />
@@ -660,12 +660,14 @@
                     default:
                         $($('.tabs-left').find('li')[0]).addClass('active');
                         $($('.tab-content').find('.tab-pane')[0]).addClass('active');
+                        $($('.tabs-left li')[0]).find('a').focus();
                         break;
                 }
             }
             else {
                 $($('.tabs-left').find('li')[0]).addClass('active');
                 $($('.tab-content').find('.tab-pane')[0]).addClass('active');
+                $($('.tabs-left li')[0]).find('a').focus();
             }
         }
 
