@@ -1097,6 +1097,52 @@
                                 //Remove active style from draw button
                                 $(".btn-draw.active").removeClass("active");
 
+                                new TextBox({
+                                    width: "150px",
+                                }).placeAt(form.containerNode);
+                                new TextBox({
+                                    width: "150px",
+                                }).placeAt(form.containerNode);
+                                new TextBox({
+                                    width: "150px",
+                                }).placeAt(form.containerNode);
+                                new Button({
+                                    label: "CANCEL",
+                                    style: "align:right;padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #ba1a00, #ff2000 80%) no-repeat;",
+                                    onClick: function () {
+                                        dia.destroy();
+                                        clearGraphics();
+                                    }
+                                }).placeAt(form.containerNode);
+                                new Button({
+                                    label: "SAVE",
+                                    style: "align:right;padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #005991, #007ecd 80%) no-repeat;",
+                                    onClick: function () {
+                                        var getProcessUrl = "process-definition";
+                                        var jsonData = {
+                                            variables: {},
+                                            key: "identify-sarfs"
+                                        }
+                                        $.ajax({
+                                            method: 'POST',
+                                            dataType: 'json',
+                                            contentType: 'application/json',
+                                            url: camundaBaseApiUrl + saveNodeUrl,
+                                            data: JSON.stringify(jsonData),
+                                            async: false,
+                                            cache: false,
+                                            success: function (data) {
+                                                console.log(data);
+                                                $('#sarfForm').submit();
+                                            },
+                                            error: function (err) {
+                                                console.log(err);
+                                                $('#sarfForm').submit();
+                                            }
+                                        });
+                                    }
+                                }).placeAt(form.containerNode);
+
                             } else {
                                 if (tooltipDialog.opened_) {
                                     dijit.popup.close(tooltipDialog);
@@ -1112,21 +1158,24 @@
                                     map.enableMapNavigation();
                                     //Remove active style from draw button
                                     $(".btn-draw.active").removeClass("active");
-                                }
-                            }
+                                    
+                                
 
-                            $("#btncancelnode").click(function () {
-                                if (tooltipDialog.opened_) {
-                                    dijit.popup.close(tooltipDialog);
-                                    tooltipDialog.opened_ = false;
-                                }
-                            });
+                                       
                             $("#btncreatenode").click(function () {
                                 // add node
 
-                            });
-
-                        }
+                                });
+                                form.startup();
+                                dia.show();
+                                $('.dijitDialog').addClass('dialogNodeStyle');
+                                $('.dijitDialog').find('div[role="presentation"]').css('border-color', 'silver');
+                                $('#dijit_form_TextBox_0').attr('placeholder', 'Atoll Site Name');
+                                $('#dijit_form_TextBox_1').attr('placeholder', 'IPlan Job Number');
+                                $('#dijit_form_TextBox_2').attr('placeholder', 'Pace Number');
+                                $('.dijitInputInner').addClass('form-control');
+                                $('.dijitDialog').find('input[type="button"]').addClass('btn btn-default dialogSaveBtn');
+                            }
                     }));
                     ctxMenuForGraphics.addChild(new MenuItem({
                         label: "Clear Node",
@@ -1233,7 +1282,7 @@
                                                               ),
                                                               new Color([207, 34, 171, 0.5])
                                                             );
-                            
+
                                 map.graphics.add(new esri.Graphic(evt.mapPoint, symbol));
                             }
 
