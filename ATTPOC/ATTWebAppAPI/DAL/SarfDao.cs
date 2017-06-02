@@ -19,7 +19,7 @@ namespace ATTWebAppAPI.DAL
             {
                 try
                 {
-                    string query = "SELECT S.SARFID,S.SARFNAME,S.ProcessInstanceID, S.SarfStatus, P.Vertices,P.AreaInSqKm FROM SARF S JOIN Polygon P ON S.SarfId=P.SarfId ;";
+                    string query = "SELECT S.SARFID,S.SARFNAME,S.ProcessInstanceID, S.SarfStatus, P.Vertices,P.AreaInSqKm FROM SARF S JOIN Polygon P ON S.SarfId=P.SarfId order by S.DateCreated desc;";
                     cn.Open();
                     using (MySqlCommand cmd = new MySqlCommand(query, cn))
                     {
@@ -380,7 +380,7 @@ namespace ATTWebAppAPI.DAL
             {
                 try
                 {
-                    string query = "SELECT P.Vertices FROM SARF S JOIN Polygon P ON S.SarfId=P.SarfId ;";
+                    string query = "SELECT P.Vertices FROM SARF S JOIN Polygon P ON S.SarfId=P.SarfId order by S.DateCreated desc;";
                     cn.Open();
                     using (MySqlCommand cmd = new MySqlCommand(query, cn))
                     {

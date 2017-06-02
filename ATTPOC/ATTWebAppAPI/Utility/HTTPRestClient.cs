@@ -58,52 +58,58 @@ namespace ATTWebAppAPI
 
         public string MakeRequest(string parameters)
         {
-            
-            var request = (HttpWebRequest)WebRequest.Create(EndPoint + parameters);
-
-            request.Method = Method.ToString();
-            request.ContentLength = 0;
-            request.ContentType = ContentType;
-
-            if (!string.IsNullOrEmpty(PostData) && Method == HttpVerb.POST)
+            try
             {
-                var encoding = new UTF8Encoding();
-                var bytes = Encoding.GetEncoding("iso-8859-1").GetBytes(PostData);
-                request.ContentLength = bytes.Length;
+                var request = (HttpWebRequest)WebRequest.Create(EndPoint + parameters);
 
-                using (var writeStream = request.GetRequestStream())
+                request.Method = Method.ToString();
+                request.ContentLength = 0;
+                request.ContentType = ContentType;
+
+                if (!string.IsNullOrEmpty(PostData) && Method == HttpVerb.POST)
                 {
-                    writeStream.Write(bytes, 0, bytes.Length);
+                    var encoding = new UTF8Encoding();
+                    var bytes = Encoding.GetEncoding("iso-8859-1").GetBytes(PostData);
+                    request.ContentLength = bytes.Length;
+
+                    using (var writeStream = request.GetRequestStream())
+                    {
+                        writeStream.Write(bytes, 0, bytes.Length);
+                    }
                 }
-            }
 
-            using (var response = (HttpWebResponse)request.GetResponse())
-            {
-                var responseValue = string.Empty;
-
-                if (response.StatusCode == HttpStatusCode.NoContent)
+                using (var response = (HttpWebResponse)request.GetResponse())
                 {
-                    responseValue = "true";
+                    var responseValue = string.Empty;
+
+                    if (response.StatusCode == HttpStatusCode.NoContent)
+                    {
+                        responseValue = "true";
+                        return responseValue;
+                    }
+
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        var message = String.Format("Request failed. Received HTTP {0}", response.StatusCode);
+                        throw new ApplicationException(message);
+                    }
+
+                    // grab the response
+                    using (var responseStream = response.GetResponseStream())
+                    {
+                        if (responseStream != null)
+                            using (var reader = new StreamReader(responseStream))
+                            {
+                                responseValue = reader.ReadToEnd();
+                            }
+                    }
+
                     return responseValue;
                 }
-
-                if (response.StatusCode != HttpStatusCode.OK)
-                {
-                    var message = String.Format("Request failed. Received HTTP {0}", response.StatusCode);
-                    throw new ApplicationException(message);
-                }
-
-                // grab the response
-                using (var responseStream = response.GetResponseStream())
-                {
-                    if (responseStream != null)
-                        using (var reader = new StreamReader(responseStream))
-                        {
-                            responseValue = reader.ReadToEnd();
-                        }
-                }
-
-                return responseValue;
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
         }
 

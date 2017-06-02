@@ -183,6 +183,8 @@ $(document).ready(function () {
         pageIndex = pageIndex < 0 ? 0 : (pageIndex - 10);
         cardViewDataBind();
     });
+    
+    
 });
 
 function getTaskStatusbySarfID(id) {
@@ -226,14 +228,19 @@ function getTaskStatusbyProcessInstanceID(processInstanceID, sarfID) {
         async: false,
         cache: false,
         success: function (data) {
-            var parsedData = JSON.parse(data);
-            InstanceID = parsedData[0].processInstanceId;
-            TaskID = parsedData[0].id;
-            TaskStatus = parsedData[0].name;
-            localStorage["taskID"] = TaskID;
-            localStorage["instanceID"] = InstanceID;
-            localStorage["taskStatus"] = TaskStatus;
-            console.log(parsedData);
+            if (data != null) {
+                var parsedData = JSON.parse(data);
+                InstanceID = parsedData[0].processInstanceId;
+                TaskID = parsedData[0].id;
+                TaskStatus = parsedData[0].name;
+                localStorage["taskID"] = TaskID;
+                localStorage["instanceID"] = InstanceID;
+                localStorage["taskStatus"] = TaskStatus;
+                console.log(parsedData);
+            }
+            else {
+                getTaskStatusbySarfID(sarfID);
+            }
         },
         error: function (err) {
             getTaskStatusbySarfID(sarfID);
@@ -727,6 +734,7 @@ function onLoadGis() {
             ctxMenuForGraphics.addChild(new MenuItem({
                 label: "Create Sarf",
                 onClick: function () {
+                    
                     if (selectedGraphic != null && selectedGraphic.geometry.type !== "point") {
                         var form = new Form();
 
@@ -751,23 +759,33 @@ function onLoadGis() {
                                     variables: {},
                                     key: "identify-sarfs"
                                 }
-
-                                $.ajax({
-                                    method: 'POST',
-                                    dataType: 'json',
-                                    contentType: 'application/json',
-                                    url: camundaBaseApiUrl + getProcessUrl,
-                                    data: JSON.stringify(jsonData),
-                                    async: false,
-                                    cache: false,
-                                    success: function (data) {
-                                        saveSARFData(JSON.parse(data).id);
-                                    },
-                                    error: function (err) {
-                                        saveSARFData(0);
-                                        console.log(err);
-                                    }
-                                });
+                                var sarfNameTxt = $('#dijit_form_TextBox_0').val();
+                                var errorMsg = '<div class= "errorMsg"><span style="color : red;">SARF name is invalid</span></div>';
+                                if (sarfNameTxt != null && sarfNameTxt != '') {
+                                    $.ajax({
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        contentType: 'application/json',
+                                        url: camundaBaseApiUrl + getProcessUrl,
+                                        data: JSON.stringify(jsonData),
+                                        async: false,
+                                        cache: false,
+                                        success: function (data) {
+                                            if (data != null)
+                                                saveSARFData(JSON.parse(data).id);
+                                            else
+                                                saveSARFData(0);
+                                        },
+                                        error: function (err) {
+                                            saveSARFData(0);
+                                            console.log(err);
+                                        }
+                                    });
+                                }
+                                else {
+                                    $('#widget_dijit_form_TextBox_0').append(errorMsg);
+                                }
+                                
                             }
                         }).placeAt(form.containerNode);
 
@@ -775,16 +793,18 @@ function onLoadGis() {
                             content: form
                         });
 
-
                         form.startup();
                         dia.show();
-
+                        $('#dijit_form_TextBox_0').next('div.errorMsg').remove();
                         $('.dijitDialog').addClass('dialogStyle');
                         //  $('.dijitDialog').attr('style', 'top:-94.1258px !important;left: 42.70476px !important; z-index: 950;position: absolute; opacity: 1;');
                         $('.dijitDialog').find('div[role="presentation"]').css('border-color', 'silver');
                         $('.dijitInputInner').attr('placeholder', 'Sarf Name');
                         $('.dijitInputInner').addClass('form-control');
                         $('.dijitDialog').find('input[type="button"]').addClass('btn btn-default dialogSaveBtn');
+                        $('#dijit_form_TextBox_0').keypress(function () {
+                            $('div.errorMsg').remove();
+                        })
                     }
                 }
             }));

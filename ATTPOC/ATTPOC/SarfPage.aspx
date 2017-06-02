@@ -50,7 +50,7 @@
                         </button>
                         <a class="navbar-brand" href="#">
                             <img src="Styles/images/att-logo.png" class="att-logo" />
-                            <span class="att-heading">BPM/Orchestration</span>
+                            <span class="att-heading">Site Build</span>
                         </a>
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -505,11 +505,18 @@
                 async: false,
                 cache: false,
                 success: function (data) {
-                    getTaskStatusbyProcessInstanceID(processInstanceID);
-                    workflowUpdate(currentText);
-                    console.log(data);
-                    localStorage["tabIndex"] = $('.tabs-left').find('li.active').attr('data-index');
-                    $('#sarfForm').submit();
+                    if (data) {
+                        getTaskStatusbyProcessInstanceID(processInstanceID);
+                        workflowUpdate(currentText);
+                        console.log(data);
+                        localStorage["tabIndex"] = $('.tabs-left').find('li.active').attr('data-index');
+                        $('#sarfForm').submit();
+                    }
+                    else {
+                        localStorage["tabIndex"] = $('.tabs-left').find('li.active').attr('data-index');
+                        workflowUpdate(currentText);
+                        updateSarfStatus(localStorage["sarfID"]);
+                    }
                 },
                 error: function (err) {
                     localStorage["tabIndex"] = $('.tabs-left').find('li.active').attr('data-index');
@@ -534,14 +541,16 @@
                 async: false,
                 cache: false,
                 success: function (data) {
-                    var parsedData = JSON.parse(data)[0];
-                    TaskID = parsedData.id;
-                    TaskStatus = parsedData.name;
-                    localStorage["taskID"] = TaskID;
-                    localStorage["instanceID"] = processInstanceID;
-                    InstanceID = processInstanceID;
-                    localStorage["taskStatus"] = TaskStatus;
-                    console.log(parsedData);
+                    if (data != null) {
+                        var parsedData = JSON.parse(data)[0];
+                        TaskID = parsedData.id;
+                        TaskStatus = parsedData.name;
+                        localStorage["taskID"] = TaskID;
+                        localStorage["instanceID"] = processInstanceID;
+                        InstanceID = processInstanceID;
+                        localStorage["taskStatus"] = TaskStatus;
+                        console.log(parsedData);
+                    }
                 },
                 error: function (err) {
                     console.log(err);
