@@ -270,6 +270,7 @@ function onLoadGis() {
       "dijit/Menu",
       "dijit/MenuItem",
       "dijit/Dialog",
+      "dijit/TooltipDialog",
       "dijit/form/Form",
       "dijit/form/TextBox",
       "dijit/form/Button",
@@ -304,6 +305,7 @@ function onLoadGis() {
               Menu,
               MenuItem,
               Dialog,
+              TooltipDialog,
               Form,
               TextBox,
               Button,
@@ -312,6 +314,7 @@ function onLoadGis() {
 
         var editToolBar, drawToolBar, drawingLayer, ctxMenuForGraphics, ctxMenuForGraphics1, selectedGraphic = null;
         var drawing = false, editing = false;
+        var tooltipDialog;
         Parser.parse();
         var dialogBox;
 
@@ -409,7 +412,7 @@ function onLoadGis() {
             //Create a dedicated drawing layer
             //You could also just draw on map.graphics (built-in GraphicsLayer)
             drawingLayer = new GraphicsLayer({
-                id: "drawingLayer"
+                id: "drawingLayer",              
             });
 
             map.addLayer(drawingLayer);
@@ -515,6 +518,7 @@ function onLoadGis() {
 
             //Enable the draw buttons
             $(".btn-draw").removeClass("disabled");
+          
         }
 
         function onDrawEnd(evt) {
@@ -538,6 +542,7 @@ function onLoadGis() {
             createGraphicsMenu();
             // triggered the click event to enable the context for create sarf
             $(".btn-draw").click();
+
         }
 
         function addGraphicToDrawingLayer(graphic) {
@@ -698,94 +703,111 @@ function onLoadGis() {
             }
 
         }
-        function showMapInDialog() {
-        if (!dialogBox) {
-          var htmlFragment = '<div>Click on the map.</div>';
-         
-          
-          // CREATE DIALOG
-          dialogBox = new dijit.Dialog({
-            title: "My Map",
-            content: htmlFragment,
-            autofocus: !dojo.isIE, // NOTE: turning focus ON in IE causes errors when reopening the dialog
-            refocus: !dojo.isIE
-          });
-          
-          // DISPLAY DIALOG
-          dialogBox.show();
+        function closetootipdialog()
+        {
+            alert();
         }
-        else {
-          dialogBox.show();
-        }
-        }
-       
-
         //Creates right-click context menu for graphics on the drawingLayer
         function createGraphicsMenu() {
 
             ctxMenuForGraphics = new Menu({});
             ctxMenuForGraphics.addChild(new MenuItem({
-                label: "Create Sarf",
+                label: "Create Sarf",               
                 onClick: function () {
-                    if (selectedGraphic != null && selectedGraphic.geometry.type !== "point") {
-                        var form = new Form();
-
-                        new TextBox({
-                            width: "150px",
-                        }).placeAt(form.containerNode);
-
-                        //new Button({
-                        //    label: "CLEAR SEARCH RING ",
-                        //    style: "padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #ba1a00, #ff2000 80%) no-repeat;",
-                        //    onClick: function () {
-                        //        dia.destroy();
-                        //        clearGraphics();
-                        //    }
-                        //}).placeAt(form.containerNode);
-                        new Button({
-                            label: "SAVE",
-                            style: "padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #005991, #007ecd 80%) no-repeat;",
-                            onClick: function () {
-                                var getProcessUrl = "process-definition";
-                                var jsonData = {
-                                    variables: {},
-                                    key: "identify-sarfs"
-                                }
-
-                                $.ajax({
-                                    method: 'POST',
-                                    dataType: 'json',
-                                    contentType: 'application/json',
-                                    url: camundaBaseApiUrl + getProcessUrl,
-                                    data: JSON.stringify(jsonData),
-                                    async: false,
-                                    cache: false,
-                                    success: function (data) {
-                                        saveSARFData(JSON.parse(data).id);
-                                    },
-                                    error: function (err) {
-                                        saveSARFData(0);
-                                        console.log(err);
-                                    }
-                                });
-                            }
-                        }).placeAt(form.containerNode);
-
-                        var dia = new Dialog({
-                            content: form
+                    // CREATE DIALOG
+                    var node = dom.byId('drawingLayer_layer');                  
+                    if (!tooltipDialog) {
+                        var htmlFragment = '';
+                        htmlFragment += '<div id="mapTwo" class="dialogtooltip"><input type="text" id="txtsarf" width="150px" class="dialogtooltipinput">';
+                        htmlFragment += '<div><input type="button" id="btncreatesarf" value="Save" class="btn blueBtn dialogtootipbtn"/>'
+                        htmlFragment += '<input type="button"  id="btncancelsarf"  value="Cancel" class="btn whiteBtn dialogtootipbtncancel"/></div></div>'
+                        // CREATE TOOLTIP DIALOG
+                        tooltipDialog = new dijit.TooltipDialog({
+                            content: htmlFragment,
+                            autofocus: !dojo.isIE, // NOTE: turning focus ON in IE causes errors when reopening the dialog
+                            refocus: !dojo.isIE
                         });
 
-
-                        form.startup();
-                        dia.show();
-
-                        $('.dijitDialog').addClass('dialogStyle');
-                        //  $('.dijitDialog').attr('style', 'top:-94.1258px !important;left: 42.70476px !important; z-index: 950;position: absolute; opacity: 1;');
-                        $('.dijitDialog').find('div[role="presentation"]').css('border-color', 'silver');
-                        $('.dijitInputInner').attr('placeholder', 'Sarf Name');
-                        $('.dijitInputInner').addClass('form-control');
-                        $('.dijitDialog').find('input[type="button"]').addClass('btn btn-default dialogSaveBtn');
+                        // DISPLAY TOOLTIP DIALOG AROUND THE CLICKED ELEMENT
+                        dijit.popup.open({ popup: tooltipDialog, around: node });
+                        tooltipDialog.opened_ = true;
+                        //Deactivate the toolbar
+                        drawToolBar.deactivate();
+                        drawing = false;
+                       //Enable panning
+                        map.enableMapNavigation();
+                        //Remove active style from draw button
+                        $(".btn-draw.active").removeClass("active");
+                      
+                    } else {
+                        if (tooltipDialog.opened_) {
+                            dijit.popup.close(tooltipDialog);
+                            tooltipDialog.opened_ = false;
+                           // node.innerHTML = "Show map below me";
+                        } else {
+                            dijit.popup.open({ popup: tooltipDialog, around: node });
+                            tooltipDialog.opened_ = true;
+                            //Deactivate the toolbar
+                            drawToolBar.deactivate();
+                            drawing = false;
+                            //Enable panning
+                            map.enableMapNavigation();
+                            //Remove active style from draw button
+                            $(".btn-draw.active").removeClass("active");
+                        }
                     }
+
+                    $("#btncancelsarf").click(function () {                       
+                        if (tooltipDialog.opened_) {
+                            dijit.popup.close(tooltipDialog);
+                            tooltipDialog.opened_ = false;
+                        }
+                    });
+                    $("#btncreatesarf").click(function () {
+                        var getProcessUrl = "process-definition";
+                        var jsonData = {
+                            variables: {},
+                            key: "identify-sarfs"
+                        }
+                        var sarfNameTxt = $('#txtsarf').val();
+                        var errorMsg = '<div class= "errorMsg"><span style="color : red;">SARF name is invalid</span></div>';
+                        if (sarfNameTxt != null && sarfNameTxt != '') {
+                            $.ajax({
+                                method: 'POST',
+                                dataType: 'json',
+                                contentType: 'application/json',
+                                url: camundaBaseApiUrl + getProcessUrl,
+                                data: JSON.stringify(jsonData),
+                                async: false,
+                                cache: false,
+                                success: function (data) {
+                                    if (data != null)
+                                        saveSARFData(JSON.parse(data).id);
+                                    else
+                                        saveSARFData(0);
+                                },
+                                error: function (err) {
+                                    saveSARFData(0);
+                                    console.log(err);
+                                }
+                            });
+                        }
+
+
+                    });
+                    tooltipDialog.getChildren().forEach(function(w) {
+                        if (w.id == 'btncancelsarf') {
+                            //------------THIS CONNECT DOESN'T WORK
+                            dojo.connect(
+                                w,
+                                "onClick",
+                                function(e) {
+                                   // if (this.open) {
+                                        dijit.popup.close(tooltipDialog);
+                                        tooltipDialog.opened_ = false;
+                                   // }
+                                });  }})
+
                 }
             }));
             ctxMenuForGraphics.addChild(new MenuItem({
@@ -796,6 +818,7 @@ function onLoadGis() {
             }));
             ctxMenuForGraphics.startup();
 
+          
             //Bind and unbind the context menu using the following two events
             events.push(drawingLayer.on("mouse-over", function (e) {
                 selectedGraphic = e.graphic;

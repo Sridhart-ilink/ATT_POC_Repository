@@ -38,6 +38,37 @@
             .drawicon {
                 position:relative;left:180px;bottom:100px;display:block;
             }
+            .dijitTooltipContainer {
+                border:0px !important;
+                background:none !important;
+            }
+            .dialogtooltip {
+                width:230px; height:110px; border: 1px solid lightgray;
+                background-color:white; border-radius:20px;
+            }
+            .dialogtooltipinput {
+               border:1px solid lightgray;margin:20px;padding-top:5px;
+               border-radius:5px;
+               width:190px;
+            }
+            .dialogtootipbtn {
+               width:30px;
+               min-width:50px;
+               height: 25px;   
+               color: white;
+               margin-left:100px;
+               font-weight:normal;
+               padding:0px;
+            }
+            .dialogtootipbtncancel {
+               min-width:50px;
+               height: 25px;   
+               color: #0878c0;             
+               font-weight:normal;
+               padding:0px;
+               margin-left:10px;
+            }
+
         </style>
     </head>
     
