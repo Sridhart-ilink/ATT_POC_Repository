@@ -920,7 +920,7 @@
                 var drawing = false, editing = false;
                 Parser.parse();
                 map = new Map("map", {
-                    basemap: "satellite",
+                    basemap: "streets",
                     center: [-120.435, 46.159], // lon, lat
                     zoom: 5,
                     minZoom: 2
@@ -928,7 +928,18 @@
 
                 var toggle = new BasemapToggle({
                     map: map,
-                    basemap: "streets"
+                    basemap: "streets",
+                    basemaps:
+                    {
+                        "streets": {
+                            "title": "Map",
+                            "thumbnailUrl": "https://js.arcgis.com/3.15/esri/images/basemap/streets.jpg"
+                        },
+                        "satellite": {
+                            "title": "Satellite",
+                            "thumbnailUrl": "https://js.arcgis.com/3.15/esri/images/basemap/satellite.jpg"
+                        }
+                    }
                 }, "BasemapToggle");
                 toggle.startup();
 

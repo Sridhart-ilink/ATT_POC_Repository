@@ -316,7 +316,7 @@ function onLoadGis() {
         var dialogBox;
 
         map = new Map("map", {
-            basemap: "satellite",
+            basemap: "streets",
             center: [-115.94158, 48.89913, -125.14812, 44.75269], // lon, lat
             zoom: 5,
             minZoom: 2
@@ -333,7 +333,18 @@ function onLoadGis() {
 
         var toggle = new BasemapToggle({
             map: map,
-            basemap: "streets"
+            basemap: "streets",
+            basemaps:
+            {
+                "streets": {
+                    "title": "Map",
+                    "thumbnailUrl": "https://js.arcgis.com/3.15/esri/images/basemap/streets.jpg"
+                },
+                "satellite": {
+                    "title": "Satellite",
+                    "thumbnailUrl": "https://js.arcgis.com/3.15/esri/images/basemap/satellite.jpg"
+                }
+            }
         }, "BasemapToggle");
         toggle.startup();
 
@@ -723,14 +734,14 @@ function onLoadGis() {
                             width: "150px",
                         }).placeAt(form.containerNode);
 
-                        new Button({
-                            label: "CLEAR SEARCH RING ",
-                            style: "padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #ba1a00, #ff2000 80%) no-repeat;",
-                            onClick: function () {
-                                dia.destroy();
-                                clearGraphics();
-                            }
-                        }).placeAt(form.containerNode);
+                        //new Button({
+                        //    label: "CLEAR SEARCH RING ",
+                        //    style: "padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #ba1a00, #ff2000 80%) no-repeat;",
+                        //    onClick: function () {
+                        //        dia.destroy();
+                        //        clearGraphics();
+                        //    }
+                        //}).placeAt(form.containerNode);
                         new Button({
                             label: "SAVE",
                             style: "padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #005991, #007ecd 80%) no-repeat;",
@@ -777,7 +788,12 @@ function onLoadGis() {
                     }
                 }
             }));
-
+            ctxMenuForGraphics.addChild(new MenuItem({
+                label: "Clear Search Ring",
+                onClick: function () {
+                    clearGraphics();
+                }
+            }));
             ctxMenuForGraphics.startup();
 
             //Bind and unbind the context menu using the following two events
