@@ -745,7 +745,7 @@
             /*
             api call to update status
             */
-            var getDetailsUrl = "AllSarfDetails/Get/" + localStorage["sarfID"]; //processInstanceID;
+            var getDetailsUrl = "SarfDetailsByTaskID/Get/" + processInstanceID;
             $.ajax({
                 method: 'GET',
                 dataType: 'json',
