@@ -99,7 +99,7 @@ function cardViewDataBind() {
                             '<button id="sarfclick" type="button" data-processinstanceid = "' + sarfList[count].ProcessInstanceID + '" class="btn btn-link linkcolor sarfclick" data-vertices="' + sarfList[count].Vertices + '">' + sarfList[count].SARFID + '</button>' +
                             '<div class="cardBody">' +
                                     '<span class = "cardSpan themeBlue">' + sarfList[count].SARFNAME + '</span>' +
-                                    '<span class="cardSpan clearfix">' + sarfList[count].AreaInSqKm + ' SqKm</span>' +
+                                    '<span class="cardSpan clearfix">' + sarfList[count].AreaInSqKm + ' Sq Km</span>' +
                                     '<span class="cardSpan clearfix">' + (sarfList[count].SarfStatus == null ?
                                         "" : sarfList[count].SarfStatus) + '</span>' +
                                     '<span style="display:none;" class="cardSpan clearfix vertices">' + sarfList[count].Vertices + '</span>' +

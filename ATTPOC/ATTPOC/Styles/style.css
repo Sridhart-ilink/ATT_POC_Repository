@@ -507,8 +507,11 @@ margin-top : -20px
 
 }
 .chatBody p {
-    font-size:14px;
-    color:#454545;
+    font-size: 12px;
+    color: #454545;
+    text-align: justify;
+    text-indent: 10px;
+    color : #7f7f7f;
 }
 .chatBody input::placeholder {
     font-style:italic;
@@ -610,8 +613,12 @@ margin-top : -20px
     padding-bottom: 20px;
     width: 350px;
 }
+.tabMenu>li.active>a.active, .tabMenu>li.active>a:focus{
+    color: #fff !important;
+    background-color: #0568ae !important;
+}
 #statusLabel{
-    margin:0px;
+    margin:-15px;
     font-size:14pt;
     font-weight:600;
     font-family:"Roboto", Light;
@@ -630,6 +637,7 @@ margin-top : -20px
 }
 .wfbtnSet{
     margin-top: 15px;
+    margin-left : 0px;
 }
 .detailsSlider{
     height: 625px !important;
@@ -646,7 +654,7 @@ margin-top : -20px
     height: 602px;
     overflow-y: auto;
     overflow-x : hidden;
-    margin-top : -16px;
+    margin-top: -21px;
     /*width : auto;*/
 }
 .navTabs-ul{
@@ -702,4 +710,8 @@ margin-top : -20px
 }
 .pageLength{
     padding-left: 3px;
+}
+.fontClass {
+    font-family: 'Roboto', sans-serif;  
+    font-weight: 400;
 }
