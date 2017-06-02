@@ -255,7 +255,7 @@ margin-top : -20px
     display: block;
     background-color: #ffffff;
     margin-top: 50px;
-    height : 600px;
+    height : 665px !important;
     overflow-y : scroll;
     z-index : 99;
 }
@@ -602,6 +602,20 @@ margin-top : -20px
     border-top: 1px dotted #ccc;
     border-bottom: 1px dotted #ccc;
 }
+.cardTail{
+        margin-left: 0px;
+    /* border-top: 1px dotted #ccc; */
+    border-bottom: 1px dotted #ccc;
+    /* padding: 10px 0; */
+    padding-bottom: 20px;
+    width: 350px;
+}
+#statusLabel{
+    margin:0px;
+    font-size:14pt;
+    font-weight:600;
+    font-family:"Roboto", Light;
+}
 .cardInfo button{
     margin-left : -35px;
     padding-bottom: 0px;
@@ -613,6 +627,12 @@ margin-top : -20px
     font-size: 15px;
     font-family : "Roboto", Light;
     color:#7f7f7f;
+}
+.wfbtnSet{
+    margin-top: 15px;
+}
+.detailsSlider{
+    height: 625px !important;
 }
 .themeBlue{
     color: #248ace;
@@ -654,7 +674,7 @@ margin-top : -20px
     /* line-height: 20px; */
     font-size: 15px;
     margin-left : 0px;
-    color: #ccc;
+    color: maroon;
     height: 36px;
 }
 #frontIcon{
@@ -667,11 +687,15 @@ margin-top : -20px
     /* line-height: 20px; */
     font-size: 15px;
     margin-left : -3px;
-    color: #ccc;
+    color: maroon;
     height: 36px;
 }
 #backIcon:hover, #frontIcon:hover{
-    color: maroon;
+    border: 2px solid maroon;
+}
+.pagingDisabled, .pagingDisabled:hover{
+    border: 2px solid #ccc !important;
+    color: #ccc !important;
 }
 .pageTxt{
     width: 40px;

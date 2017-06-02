@@ -142,6 +142,7 @@ function initGrid() {
 
 $(document).ready(function () {
     initGrid();
+    $('#backIcon').addClass('pagingDisabled');
     $('.toggleArrow').click(function () {
         $('.toggleArrow').toggleClass('rotateArrow');
         if ($('.slidingDiv').is(":visible")) {
@@ -173,7 +174,12 @@ $(document).ready(function () {
     $('#frontIcon').click(function () {
         currentPage += 1;
         currentPage = currentPage >= noOfPages ? noOfPages : currentPage;
+        $('#frontIcon').removeClass('pagingDisabled');
         cardViewDataBind();
+        if (currentPage == noOfPages) {
+            $('#frontIcon').addClass('pagingDisabled');
+            $('#backIcon').removeClass('pagingDisabled');
+        }
     });
 
     //paging backward
@@ -181,7 +187,12 @@ $(document).ready(function () {
         currentPage -= 1;
         currentPage = currentPage < 1 ? 1 : currentPage;
         pageIndex = pageIndex < 0 ? 0 : (pageIndex - 10);
+        $('#backIcon').removeClass('pagingDisabled');
         cardViewDataBind();
+        if (currentPage == 1) {
+            $('#frontIcon').removeClass('pagingDisabled');
+            $('#backIcon').addClass('pagingDisabled');
+        }
     });
     
     
@@ -732,7 +743,7 @@ function onLoadGis() {
 
             ctxMenuForGraphics = new Menu({});
             ctxMenuForGraphics.addChild(new MenuItem({
-                label: "Create Sarf",
+                label: "Create SARF",
                 onClick: function () {
                     
                     if (selectedGraphic != null && selectedGraphic.geometry.type !== "point") {
@@ -799,7 +810,7 @@ function onLoadGis() {
                         $('.dijitDialog').addClass('dialogStyle');
                         //  $('.dijitDialog').attr('style', 'top:-94.1258px !important;left: 42.70476px !important; z-index: 950;position: absolute; opacity: 1;');
                         $('.dijitDialog').find('div[role="presentation"]').css('border-color', 'silver');
-                        $('.dijitInputInner').attr('placeholder', 'Sarf Name');
+                        $('.dijitInputInner').attr('placeholder', 'SARF Name');
                         $('.dijitInputInner').addClass('form-control');
                         $('.dijitDialog').find('input[type="button"]').addClass('btn btn-default dialogSaveBtn');
                         $('#dijit_form_TextBox_0').keypress(function () {

@@ -67,7 +67,7 @@
             </div>
             <div class="row">
 
-                <div class="col-md-3 pad-lr-5 slidingDiv" id ="style-2">
+                <div class="col-md-3 pad-lr-5 slidingDiv detailsSlider" id ="style-2">
                     <div class="cardHead">
                         <h3>SARF Details</h3>
                     </div>
@@ -94,7 +94,7 @@
 
                     <div class="row">
                         <div class="col-md-6 pull-left">
-                            <label for="txtsarfname">Sarf Name:</label>
+                            <label for="txtsarfname">SARF Name:</label>
                             <p class="lblDetails"><span id="lblsarfname"></span></p>
                             <input class="form-control txtDetails" runat="server" type="text" id="txtsarfname" />
                         </div>
@@ -167,7 +167,7 @@
                     <hr />
                     <div class="row">
                         <div class="col-md-8 pull-left">
-                            <div>
+                            <div class="cardTail">
                                 <div class="form-group">
                                     <label for="txtSarfName">Current Status</label>
                                     <div class="col-xs-12" id="statusDiv">
@@ -179,21 +179,25 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="row">
-                        <div class="col-md-12 text-center">
-                            <button type="button" id="promoteBtn" class="statusBtn mrg15-R whiteBtn btn btn-lg btn-primary btn-form btn-draw disabled"
+                        <div class="col-md-12 col-md-offset-2 wfbtnSet">
+                            <button type="button" id="promoteBtn" class="statusBtn mrg15-R blueBtn btn btn-lg btn-primary btn-form btn-draw disabled"
                                 value="promote">PROMOTE</button>
                             <button type="button" id="demoteBtn" class="statusBtn whiteBtn btn btn-lg btn-primary btn-form btn-draw disabled"
                                 value="demote">DEMOTE</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 text-center">
                             <button type="button" id="pullbackBtn" class="statusBtn mrg15-R whiteBtn btn btn-lg btn-primary btn-form btn-draw disabled"
                                 value="pullback">PULL BACK</button>
                             <button type="button" id="cancelBtn" class="statusBtn whiteBtn btn btn-lg btn-danger btn-form btn-draw disabled"
                                 value="cancel">CANCEL</button>
                         </div>
                     </div>
+                    <%--<div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="button" id="pullbackBtn" class="statusBtn mrg15-R whiteBtn btn btn-lg btn-primary btn-form btn-draw disabled"
+                                value="pullback">PULL BACK</button>
+                            <button type="button" id="cancelBtn" class="statusBtn whiteBtn btn btn-lg btn-danger btn-form btn-draw disabled"
+                                value="cancel">CANCEL</button>
+                        </div>
+                    </div>--%>
                     <div class="clearfix"></div>
                 </div>
             </div>
@@ -204,7 +208,7 @@
                 <i class="fa fa-chevron-right" aria-hidden="true"></i>
             </div>
             <div class="col-md-12 borderBottom pageLink" style="margin-top: 7px; margin-bottom: 5px">
-                <a href="Default.aspx" class="linkcolor" style="margin-left: 30px;">Home</a> :: <a class="linkcolor">Sarf Details</a>
+                <a href="Default.aspx" class="linkcolor" style="margin-left: 30px;">Home</a> :: <a class="linkcolor">SARF Details</a>
                 <ul class="nav nav-tabs tabs-left navTabs-ul pull-right">
                     <li class="" data-index="0"><a href="#mapview" data-toggle="tab">Map View</a></li>
                     <li class="" data-index="1"><a href="#workflow" data-toggle="tab">Workflow</a></li>
