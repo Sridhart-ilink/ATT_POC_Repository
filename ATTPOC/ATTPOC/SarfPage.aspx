@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Sarf Info</title>
+    <title>Autoforms</title>
     <script type="text/javascript" src="Scripts/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="Scripts/angular-1.3.15.min.js"></script>
     <script type="text/javascript" src="Scripts/bootstrap-3.3.4.min.js"></script>
@@ -50,7 +50,7 @@
                         </button>
                         <a class="navbar-brand" href="#">
                             <img src="Styles/images/att-logo.png" class="att-logo" />
-                            <span class="att-heading">BPM/Orchestration</span>
+                            <span class="att-heading">Site Build</span>
                         </a>
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -67,7 +67,7 @@
             </div>
             <div class="row">
 
-                <div class="col-md-3 pad-lr-5 slidingDiv" id ="style-2">
+                <div class="col-md-3 pad-lr-5 slidingDiv detailsSlider" id ="style-2">
                     <div class="cardHead">
                         <h3>SARF Details</h3>
                     </div>
@@ -94,7 +94,7 @@
 
                     <div class="row">
                         <div class="col-md-6 pull-left">
-                            <label for="txtsarfname">Sarf Name:</label>
+                            <label for="txtsarfname">SARF Name:</label>
                             <p class="lblDetails"><span id="lblsarfname"></span></p>
                             <input class="form-control txtDetails" runat="server" type="text" id="txtsarfname" />
                         </div>
@@ -167,7 +167,7 @@
                     <hr />
                     <div class="row">
                         <div class="col-md-8 pull-left">
-                            <div>
+                            <div class="cardTail">
                                 <div class="form-group">
                                     <label for="txtSarfName">Current Status</label>
                                     <div class="col-xs-12" id="statusDiv">
@@ -179,21 +179,25 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="row">
-                        <div class="col-md-12 text-center">
-                            <button type="button" id="promoteBtn" class="statusBtn mrg15-R whiteBtn btn btn-lg btn-primary btn-form btn-draw disabled"
+                        <div class="col-md-12 col-md-offset-2 wfbtnSet">
+                            <button type="button" id="promoteBtn" class="statusBtn mrg15-R blueBtn btn btn-lg btn-primary btn-form btn-draw disabled"
                                 value="promote">PROMOTE</button>
                             <button type="button" id="demoteBtn" class="statusBtn whiteBtn btn btn-lg btn-primary btn-form btn-draw disabled"
                                 value="demote">DEMOTE</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 text-center">
                             <button type="button" id="pullbackBtn" class="statusBtn mrg15-R whiteBtn btn btn-lg btn-primary btn-form btn-draw disabled"
                                 value="pullback">PULL BACK</button>
                             <button type="button" id="cancelBtn" class="statusBtn whiteBtn btn btn-lg btn-danger btn-form btn-draw disabled"
                                 value="cancel">CANCEL</button>
                         </div>
                     </div>
+                    <%--<div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="button" id="pullbackBtn" class="statusBtn mrg15-R whiteBtn btn btn-lg btn-primary btn-form btn-draw disabled"
+                                value="pullback">PULL BACK</button>
+                            <button type="button" id="cancelBtn" class="statusBtn whiteBtn btn btn-lg btn-danger btn-form btn-draw disabled"
+                                value="cancel">CANCEL</button>
+                        </div>
+                    </div>--%>
                     <div class="clearfix"></div>
                 </div>
             </div>
@@ -204,9 +208,9 @@
                 <i class="fa fa-chevron-right" aria-hidden="true"></i>
             </div>
             <div class="col-md-12 borderBottom pageLink" style="margin-top: 7px; margin-bottom: 5px">
-                <a href="Default.aspx" class="linkcolor" style="margin-left: 30px;">Home</a> :: <a class="linkcolor">Sarf Details</a>
-                <ul class="nav nav-tabs tabs-left navTabs-ul pull-right">
-                    <li class="" data-index="0"><a href="#mapview" data-toggle="tab">Map View</a></li>
+                <a href="Default.aspx" class="linkcolor" style="margin-left: 30px;">Home</a> :: <a class="linkcolor">SARF Details</a>
+                <ul class="nav nav-tabs tabs-left navTabs-ul pull-right tabMenu">
+                    <li class="active" data-index="0"><a href="#mapview" data-toggle="tab">Map</a></li>
                     <li class="" data-index="1"><a href="#workflow" data-toggle="tab">Workflow</a></li>
                 </ul>
             </div>
@@ -251,30 +255,23 @@
                         POST</button>
                 </div>
                 <div>
-                    <button type="button" id="seeMoreBtn" class="btn btn-link pull-left linkcolor editLink">See more comments</button>
+                    <button type="button" id="seeMoreBtn" class="btn btn-link pull-left linkcolor editLink fontClass">See more comments</button>
                 </div>
                 <div class="clearfix"></div>
                 <div>
                     <div class="commentInfo">
-                        <%--<div class="input-group">
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                    </span>
-                                    <span>ASWED</span>
-                                </div>--%>
                         <div class="chatHead clearfix">
                             <div class="pull-left">
                                 <i class="glyphicon glyphicon-user"></i>
                             </div>
                             <div class="pull-right chatLabel">
-                                <h3>ebenezer marchus</h3>
-                                <p>April 27, 2017 11:40 am</p>
+                                <h3 class="fontClass">John Markus (C&E PM)</h3>
+                                <p class="fontClass">April 25, 2017 11:40 am</p>
                             </div>
                         </div>
                         <div class="chatBody">
-                            <p>
-                                Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum 
-                                        Lorem Ipsum Lorem Ipsum Lorem Ipsum  
+                            <p class="fontClass">
+                                @Jill, Demoting the form as the iPlan details are incorrect. 
                             </p>
                             <div>
                                 <input type="text" class="form-control" placeholder="leave a reply" />
@@ -282,25 +279,19 @@
                         </div>
                     </div>
                     <div class="commentInfo">
-                        <%--<div class="input-group">
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                    </span>
-                                    <span>ASWED</span>
-                                </div>--%>
                         <div class="chatHead clearfix">
                             <div class="pull-left">
                                 <i class="glyphicon glyphicon-user"></i>
                             </div>
                             <div class="pull-right chatLabel">
-                                <h3>ebenezer marchus</h3>
-                                <p>April 27, 2017 11:40 am</p>
+                                <h3 class="fontClass">Jill Baker (RF Engineer)</h3>
+                                <p class="fontClass">April 26, 2017 09:15 am</p>
                             </div>
                         </div>
                         <div class="chatBody">
-                            <p>
-                                Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum 
-                                        Lorem Ipsum Lorem Ipsum Lorem Ipsum  
+                            <p class="fontClass">
+                                @John, Corrected the iPlan details and promoted the SARF again.
+                                Can you plese review it and assign it to the vendor ?
                             </p>
                             <div>
                                 <input type="text" class="form-control" placeholder="leave a reply" />
@@ -308,25 +299,37 @@
                         </div>
                     </div>
                     <div class="commentInfo">
-                        <%--<div class="input-group">
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                    </span>
-                                    <span>ASWED</span>
-                                </div>--%>
                         <div class="chatHead clearfix">
                             <div class="pull-left">
                                 <i class="glyphicon glyphicon-user"></i>
                             </div>
                             <div class="pull-right chatLabel">
-                                <h3>ebenezer marchus</h3>
-                                <p>April 27, 2017 11:40 am</p>
+                                <h3 class="fontClass">John Markus (C&E PM)</h3>
+                                <p class="fontClass">April 26, 2017 90:20 am</p>
                             </div>
                         </div>
                         <div class="chatBody">
-                            <p>
-                                Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum 
-                                        Lorem Ipsum Lorem Ipsum Lorem Ipsum  
+                            <p class="fontClass">
+                                Need time to assign the SARF to the right vendor.
+                            </p>
+                            <div>
+                                <input type="text" class="form-control" placeholder="leave a reply" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="commentInfo">
+                        <div class="chatHead clearfix">
+                            <div class="pull-left">
+                                <i class="glyphicon glyphicon-user"></i>
+                            </div>
+                            <div class="pull-right chatLabel">
+                                <h3 class="fontClass">Jill Baker (RF Engineer)</h3>
+                                <p class="fontClass">April 26, 2017 09:22 am</p>
+                            </div>
+                        </div>
+                        <div class="chatBody">
+                            <p class="fontClass">
+                                That's fine John. Thank you!
                             </p>
                             <div>
                                 <input type="text" class="form-control" placeholder="leave a reply" />
@@ -504,11 +507,18 @@
                 async: false,
                 cache: false,
                 success: function (data) {
-                    getTaskStatusbyProcessInstanceID(processInstanceID);
-                    workflowUpdate(currentText);
-                    console.log(data);
-                    localStorage["tabIndex"] = $('.tabs-left').find('li.active').attr('data-index');
-                    $('#sarfForm').submit();
+                    if (data) {
+                        getTaskStatusbyProcessInstanceID(processInstanceID);
+                        workflowUpdate(currentText);
+                        console.log(data);
+                        localStorage["tabIndex"] = $('.tabs-left').find('li.active').attr('data-index');
+                        $('#sarfForm').submit();
+                    }
+                    else {
+                        localStorage["tabIndex"] = $('.tabs-left').find('li.active').attr('data-index');
+                        workflowUpdate(currentText);
+                        updateSarfStatus(localStorage["sarfID"]);
+                    }
                 },
                 error: function (err) {
                     localStorage["tabIndex"] = $('.tabs-left').find('li.active').attr('data-index');
@@ -533,14 +543,16 @@
                 async: false,
                 cache: false,
                 success: function (data) {
-                    var parsedData = JSON.parse(data)[0];
-                    TaskID = parsedData.id;
-                    TaskStatus = parsedData.name;
-                    localStorage["taskID"] = TaskID;
-                    localStorage["instanceID"] = processInstanceID;
-                    InstanceID = processInstanceID;
-                    localStorage["taskStatus"] = TaskStatus;
-                    console.log(parsedData);
+                    if (data != null) {
+                        var parsedData = JSON.parse(data)[0];
+                        TaskID = parsedData.id;
+                        TaskStatus = parsedData.name;
+                        localStorage["taskID"] = TaskID;
+                        localStorage["instanceID"] = processInstanceID;
+                        InstanceID = processInstanceID;
+                        localStorage["taskStatus"] = TaskStatus;
+                        console.log(parsedData);
+                    }
                 },
                 error: function (err) {
                     console.log(err);
@@ -646,12 +658,14 @@
                     default:
                         $($('.tabs-left').find('li')[0]).addClass('active');
                         $($('.tab-content').find('.tab-pane')[0]).addClass('active');
+                        $($('.tabs-left li')[0]).find('a').focus();
                         break;
                 }
             }
             else {
                 $($('.tabs-left').find('li')[0]).addClass('active');
                 $($('.tab-content').find('.tab-pane')[0]).addClass('active');
+                $($('.tabs-left li')[0]).find('a').focus();
             }
         }
 

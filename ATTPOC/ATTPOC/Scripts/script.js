@@ -99,7 +99,7 @@ function cardViewDataBind() {
                             '<button id="sarfclick" type="button" data-processinstanceid = "' + sarfList[count].ProcessInstanceID + '" class="btn btn-link linkcolor sarfclick" data-vertices="' + sarfList[count].Vertices + '">' + sarfList[count].SARFID + '</button>' +
                             '<div class="cardBody">' +
                                     '<span class = "cardSpan themeBlue">' + sarfList[count].SARFNAME + '</span>' +
-                                    '<span class="cardSpan clearfix">' + sarfList[count].AreaInSqKm + ' SqKm</span>' +
+                                    '<span class="cardSpan clearfix">' + sarfList[count].AreaInSqKm + ' Sq Km</span>' +
                                     '<span class="cardSpan clearfix">' + (sarfList[count].SarfStatus == null ?
                                         "" : sarfList[count].SarfStatus) + '</span>' +
                                     '<span style="display:none;" class="cardSpan clearfix vertices">' + sarfList[count].Vertices + '</span>' +
@@ -142,6 +142,7 @@ function initGrid() {
 
 $(document).ready(function () {
     initGrid();
+    $('#backIcon').addClass('pagingDisabled');
     $('.toggleArrow').click(function () {
         $('.toggleArrow').toggleClass('rotateArrow');
         if ($('.slidingDiv').is(":visible")) {
@@ -173,7 +174,12 @@ $(document).ready(function () {
     $('#frontIcon').click(function () {
         currentPage += 1;
         currentPage = currentPage >= noOfPages ? noOfPages : currentPage;
+        $('#frontIcon').removeClass('pagingDisabled');
         cardViewDataBind();
+        if (currentPage == noOfPages) {
+            $('#frontIcon').addClass('pagingDisabled');
+            $('#backIcon').removeClass('pagingDisabled');
+        }
     });
 
     //paging backward
@@ -181,8 +187,15 @@ $(document).ready(function () {
         currentPage -= 1;
         currentPage = currentPage < 1 ? 1 : currentPage;
         pageIndex = pageIndex < 0 ? 0 : (pageIndex - 10);
+        $('#backIcon').removeClass('pagingDisabled');
         cardViewDataBind();
+        if (currentPage == 1) {
+            $('#frontIcon').removeClass('pagingDisabled');
+            $('#backIcon').addClass('pagingDisabled');
+        }
     });
+    
+    
 });
 
 function getTaskStatusbySarfID(id) {
@@ -226,6 +239,7 @@ function getTaskStatusbyProcessInstanceID(processInstanceID, sarfID) {
         async: false,
         cache: false,
         success: function (data) {
+            if (data != null) {
             var parsedData = JSON.parse(data);
             InstanceID = parsedData[0].processInstanceId;
             TaskID = parsedData[0].id;
@@ -234,6 +248,10 @@ function getTaskStatusbyProcessInstanceID(processInstanceID, sarfID) {
             localStorage["instanceID"] = InstanceID;
             localStorage["taskStatus"] = TaskStatus;
             console.log(parsedData);
+            }
+            else {
+                getTaskStatusbySarfID(sarfID);
+            }
         },
         error: function (err) {
             getTaskStatusbySarfID(sarfID);
@@ -709,12 +727,12 @@ function onLoadGis() {
         }
         //Creates right-click context menu for graphics on the drawingLayer
         function createGraphicsMenu() {
-
+         
             ctxMenuForGraphics = new Menu({});
             ctxMenuForGraphics.addChild(new MenuItem({
                 label: "Create Sarf",               
                 onClick: function () {
-                    // CREATE DIALOG
+          // CREATE DIALOG
                     var node = dom.byId('drawingLayer_layer');                  
                     if (!tooltipDialog) {
                         var htmlFragment = '';
@@ -723,11 +741,11 @@ function onLoadGis() {
                         htmlFragment += '<input type="button"  id="btncancelsarf"  value="Cancel" class="btn whiteBtn dialogtootipbtncancel"/></div></div>'
                         // CREATE TOOLTIP DIALOG
                         tooltipDialog = new dijit.TooltipDialog({
-                            content: htmlFragment,
-                            autofocus: !dojo.isIE, // NOTE: turning focus ON in IE causes errors when reopening the dialog
-                            refocus: !dojo.isIE
-                        });
-
+            content: htmlFragment,
+            autofocus: !dojo.isIE, // NOTE: turning focus ON in IE causes errors when reopening the dialog
+            refocus: !dojo.isIE
+          });
+          
                         // DISPLAY TOOLTIP DIALOG AROUND THE CLICKED ELEMENT
                         dijit.popup.open({ popup: tooltipDialog, around: node });
                         tooltipDialog.opened_ = true;
@@ -754,47 +772,47 @@ function onLoadGis() {
                             map.enableMapNavigation();
                             //Remove active style from draw button
                             $(".btn-draw.active").removeClass("active");
-                        }
-                    }
+        }
+        }
 
                     $("#btncancelsarf").click(function () {                       
                         if (tooltipDialog.opened_) {
                             dijit.popup.close(tooltipDialog);
                             tooltipDialog.opened_ = false;
-                        }
+        }
                     });
                     $("#btncreatesarf").click(function () {
-                        var getProcessUrl = "process-definition";
-                        var jsonData = {
-                            variables: {},
-                            key: "identify-sarfs"
-                        }
+                                var getProcessUrl = "process-definition";
+                                var jsonData = {
+                                    variables: {},
+                                    key: "identify-sarfs"
+                                }
                         var sarfNameTxt = $('#txtsarf').val();
                         var errorMsg = '<div class= "errorMsg"><span style="color : red;">SARF name is invalid</span></div>';
                         if (sarfNameTxt != null && sarfNameTxt != '') {
-                            $.ajax({
-                                method: 'POST',
-                                dataType: 'json',
-                                contentType: 'application/json',
-                                url: camundaBaseApiUrl + getProcessUrl,
-                                data: JSON.stringify(jsonData),
-                                async: false,
-                                cache: false,
-                                success: function (data) {
-                                    if (data != null)
+                                $.ajax({
+                                    method: 'POST',
+                                    dataType: 'json',
+                                    contentType: 'application/json',
+                                    url: camundaBaseApiUrl + getProcessUrl,
+                                    data: JSON.stringify(jsonData),
+                                    async: false,
+                                    cache: false,
+                                    success: function (data) {
+                                            if (data != null)
                                         saveSARFData(JSON.parse(data).id);
-                                    else
+                                            else
+                                                saveSARFData(0);
+                                    },
+                                    error: function (err) {
                                         saveSARFData(0);
-                                },
-                                error: function (err) {
-                                    saveSARFData(0);
-                                    console.log(err);
-                                }
-                            });
-                        }
+                                        console.log(err);
+                                    }
+                                });
+                            }
 
 
-                    });
+                        });
                     tooltipDialog.getChildren().forEach(function(w) {
                         if (w.id == 'btncancelsarf') {
                             //------------THIS CONNECT DOESN'T WORK

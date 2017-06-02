@@ -91,7 +91,7 @@
                         </button>
                         <a class="navbar-brand" href="#">
                             <img src="Styles/images/att-logo.png" class="att-logo" />
-                            <span class="att-heading">BPM/Orchestration</span>
+                            <span class="att-heading">Site Build</span>
                         </a>
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

@@ -182,7 +182,9 @@ label {
 .divTableBody {
     display: table-row-group;
 }
-
+.errorSpan{
+    color : red !important;
+}
 .sarfDetails {
     margin-left : 15px;
 }
@@ -253,7 +255,7 @@ margin-top : -20px
     display: block;
     background-color: #ffffff;
     margin-top: 50px;
-    height : 600px;
+    height : 665px !important;
     overflow-y : scroll;
     z-index : 99;
 }
@@ -505,8 +507,11 @@ margin-top : -20px
 
 }
 .chatBody p {
-    font-size:14px;
-    color:#454545;
+    font-size: 12px;
+    color: #454545;
+    text-align: justify;
+    text-indent: 10px;
+    color : #7f7f7f;
 }
 .chatBody input::placeholder {
     font-style:italic;
@@ -600,6 +605,24 @@ margin-top : -20px
     border-top: 1px dotted #ccc;
     border-bottom: 1px dotted #ccc;
 }
+.cardTail{
+        margin-left: 0px;
+    /* border-top: 1px dotted #ccc; */
+    border-bottom: 1px dotted #ccc;
+    /* padding: 10px 0; */
+    padding-bottom: 20px;
+    width: 350px;
+}
+.tabMenu>li.active>a.active, .tabMenu>li.active>a:focus{
+    color: #fff !important;
+    background-color: #0568ae !important;
+}
+#statusLabel{
+    margin:-15px;
+    font-size:14pt;
+    font-weight:600;
+    font-family:"Roboto", Light;
+}
 .cardInfo button{
     margin-left : -35px;
     padding-bottom: 0px;
@@ -611,6 +634,13 @@ margin-top : -20px
     font-size: 15px;
     font-family : "Roboto", Light;
     color:#7f7f7f;
+}
+.wfbtnSet{
+    margin-top: 15px;
+    margin-left : 0px;
+}
+.detailsSlider{
+    height: 625px !important;
 }
 .themeBlue{
     color: #248ace;
@@ -624,7 +654,7 @@ margin-top : -20px
     height: 602px;
     overflow-y: auto;
     overflow-x : hidden;
-    margin-top : -16px;
+    margin-top: -21px;
     /*width : auto;*/
 }
 .navTabs-ul{
@@ -652,7 +682,7 @@ margin-top : -20px
     /* line-height: 20px; */
     font-size: 15px;
     margin-left : 0px;
-    color: #ccc;
+    color: maroon;
     height: 36px;
 }
 #frontIcon{
@@ -665,15 +695,23 @@ margin-top : -20px
     /* line-height: 20px; */
     font-size: 15px;
     margin-left : -3px;
-    color: #ccc;
+    color: maroon;
     height: 36px;
 }
 #backIcon:hover, #frontIcon:hover{
-    color: maroon;
+    border: 2px solid maroon;
+}
+.pagingDisabled, .pagingDisabled:hover{
+    border: 2px solid #ccc !important;
+    color: #ccc !important;
 }
 .pageTxt{
     width: 40px;
 }
 .pageLength{
     padding-left: 3px;
+}
+.fontClass {
+    font-family: 'Roboto', sans-serif;  
+    font-weight: 400;
 }
