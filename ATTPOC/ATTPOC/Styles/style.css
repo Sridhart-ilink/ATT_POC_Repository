@@ -182,7 +182,9 @@ label {
 .divTableBody {
     display: table-row-group;
 }
-
+.errorSpan{
+    color : red !important;
+}
 .sarfDetails {
     margin-left : 15px;
 }
