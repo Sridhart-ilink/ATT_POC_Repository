@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Sarf Info</title>
+    <title>Autoforms</title>
     <script type="text/javascript" src="Scripts/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="Scripts/angular-1.3.15.min.js"></script>
     <script type="text/javascript" src="Scripts/bootstrap-3.3.4.min.js"></script>
@@ -260,25 +260,18 @@
                 <div class="clearfix"></div>
                 <div>
                     <div class="commentInfo">
-                        <%--<div class="input-group">
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                    </span>
-                                    <span>ASWED</span>
-                                </div>--%>
                         <div class="chatHead clearfix">
                             <div class="pull-left">
                                 <i class="glyphicon glyphicon-user"></i>
                             </div>
                             <div class="pull-right chatLabel">
-                                <h3 class="fontClass">john anderson </h3>
+                                <h3 class="fontClass">John Markus (C&E PM)</h3>
                                 <p class="fontClass">April 25, 2017 11:40 am</p>
                             </div>
                         </div>
                         <div class="chatBody">
                             <p class="fontClass">
-                                Mark, SARF detials have beeen updated as per your review comments.
-                                Can you please review and let me know your feedback again ? 
+                                @Jill, Demoting the form as the iPlan details are incorrect. 
                             </p>
                             <div>
                                 <input type="text" class="form-control" placeholder="leave a reply" />
@@ -286,25 +279,19 @@
                         </div>
                     </div>
                     <div class="commentInfo">
-                        <%--<div class="input-group">
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                    </span>
-                                    <span>ASWED</span>
-                                </div>--%>
                         <div class="chatHead clearfix">
                             <div class="pull-left">
                                 <i class="glyphicon glyphicon-user"></i>
                             </div>
                             <div class="pull-right chatLabel">
-                                <h3 class="fontClass">ebenezer marchus</h3>
+                                <h3 class="fontClass">Jill Baker (RF Engineer)</h3>
                                 <p class="fontClass">April 26, 2017 09:15 am</p>
                             </div>
                         </div>
                         <div class="chatBody">
                             <p class="fontClass">
-                                Thank you John for the quick turn around. Let me get back to you...
-                                ~Mark 
+                                @John, Corrected the iPlan details and promoted the SARF again.
+                                Can you plese review it and assign it to the vendor ?
                             </p>
                             <div>
                                 <input type="text" class="form-control" placeholder="leave a reply" />
@@ -312,26 +299,37 @@
                         </div>
                     </div>
                     <div class="commentInfo">
-                        <%--<div class="input-group">
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                    </span>
-                                    <span>ASWED</span>
-                                </div>--%>
                         <div class="chatHead clearfix">
                             <div class="pull-left">
                                 <i class="glyphicon glyphicon-user"></i>
                             </div>
                             <div class="pull-right chatLabel">
-                                <h3 class="fontClass">Jesse Williams</h3>
-                                <p class="fontClass">April 27, 2017 10:30 am</p>
+                                <h3 class="fontClass">John Markus (C&E PM)</h3>
+                                <p class="fontClass">April 26, 2017 90:20 am</p>
                             </div>
                         </div>
                         <div class="chatBody">
                             <p class="fontClass">
-                                Let us have the review by the end of day aroung 9.30 PM. Please
-                                make yoourself available on Skype on that time. Thanks
-                                -Jesse.
+                                Need time to assign the SARF to the right vendor.
+                            </p>
+                            <div>
+                                <input type="text" class="form-control" placeholder="leave a reply" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="commentInfo">
+                        <div class="chatHead clearfix">
+                            <div class="pull-left">
+                                <i class="glyphicon glyphicon-user"></i>
+                            </div>
+                            <div class="pull-right chatLabel">
+                                <h3 class="fontClass">Jill Baker (RF Engineer)</h3>
+                                <p class="fontClass">April 26, 2017 09:22 am</p>
+                            </div>
+                        </div>
+                        <div class="chatBody">
+                            <p class="fontClass">
+                                That's fine John. Thank you!
                             </p>
                             <div>
                                 <input type="text" class="form-control" placeholder="leave a reply" />
