@@ -1029,9 +1029,6 @@
                                 new TextBox({
                                     width: "150px",
                                 }).placeAt(form.containerNode);
-                                new TextBox({
-                                    width: "150px",
-                                }).placeAt(form.containerNode);
                                 new Button({
                                     label: "CANCEL",
                                     style: "align:right;padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #ba1a00, #ff2000 80%) no-repeat;",
@@ -1044,25 +1041,31 @@
                                     label: "SAVE",
                                     style: "align:right;padding:5px 5px 5px 5px;font-size:12px;font-family:Roboto regular;color:white;border:0px solid #ff2000 !important; background: linear-gradient(0deg, #005991, #007ecd 80%) no-repeat;",
                                     onClick: function () {
-                                        var getProcessUrl = "process-definition";
+                                        var saveNodeUrl = "Node/Post";
                                         var jsonData = {
-                                            variables: {},
-                                            key: "identify-sarfs"
+                                            sarfId: localStorage["sarfID"],
+                                            latitude: localStorage["lat"],
+                                            longitude: localStorage["long"],
+                                            atollSiteName: $('#dijit_form_TextBox_0').val(),
+                                            iPlanJobNumber: $('#dijit_form_TextBox_1').val(),
+                                            paceNumber: $('#dijit_form_TextBox_2').val()
                                         }
 
                                         $.ajax({
                                             method: 'POST',
                                             dataType: 'json',
                                             contentType: 'application/json',
-                                            url: camundaBaseApiUrl + getProcessUrl,
+                                            url: camundaBaseApiUrl + saveNodeUrl,
                                             data: JSON.stringify(jsonData),
                                             async: false,
                                             cache: false,
                                             success: function (data) {
-                                                saveSARFData(JSON.parse(data).id);
+                                                console.log(data);
+                                                $('#sarfForm').submit();
                                             },
                                             error: function (err) {
                                                 console.log(err);
+                                                $('#sarfForm').submit();
                                             }
                                         });
                                     }
@@ -1075,7 +1078,9 @@
                                 dia.show();
                                 $('.dijitDialog').addClass('dialogNodeStyle');
                                 $('.dijitDialog').find('div[role="presentation"]').css('border-color', 'silver');
-                                $('.dijitInputInner').attr('placeholder', 'Atoll Site Name');
+                                $('#dijit_form_TextBox_0').attr('placeholder', 'Atoll Site Name');
+                                $('#dijit_form_TextBox_1').attr('placeholder', 'IPlan Job Number');
+                                $('#dijit_form_TextBox_2').attr('placeholder', 'Pace Number');
                                 $('.dijitInputInner').addClass('form-control');
                                 $('.dijitDialog').find('input[type="button"]').addClass('btn btn-default dialogSaveBtn');
                             }
