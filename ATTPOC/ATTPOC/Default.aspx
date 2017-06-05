@@ -13,6 +13,7 @@
         <script type="text/javascript" src="Scripts/angular-1.3.15.min.js"></script>
         <script type="text/javascript" src="Scripts/bootstrap-3.3.4.min.js"></script>
         <script type="text/javascript" src="Scripts/globals.js"></script>
+        <script type="text/javascript" src="Scripts/common.js"></script>
         <script type="text/javascript" src="Scripts/script.js"></script>
   
         <!--CSS imports-->
@@ -43,7 +44,7 @@
                 background:none !important;
             }
             .dialogtooltip {
-                width:230px; height:110px; border: 1px solid lightgray;
+                width:230px; height:185px; border: 1px solid lightgray;
                 background-color:white; border-radius:20px;
             }
             .dialogtooltipinput {

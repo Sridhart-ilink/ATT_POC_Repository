@@ -8,6 +8,7 @@
     <script type="text/javascript" src="Scripts/angular-1.3.15.min.js"></script>
     <script type="text/javascript" src="Scripts/bootstrap-3.3.4.min.js"></script>
     <script type="text/javascript" src="Scripts/globals.js"></script>
+    <script type="text/javascript" src="Scripts/common.js"></script>
 
     <!--CSS imports-->
     <link rel="stylesheet" type="text/css" href="Styles/bootstrap-3.3.4.min.css" />
@@ -404,28 +405,28 @@
         function updatePromoteStatus(currentStatus) {
 
             switch (currentStatus) {
-                case statusEnum.One:
-                    labelStatus = statusEnum.Two;
+                case statusEnum.RF_Pending_Completion:
+                    labelStatus = statusEnum.CE_PM_Vendor_Assignment;
                     $('#demoteBtn').show();
                     $('#pullbackBtn').show();
                     break;
-                case statusEnum.Two:
-                    labelStatus = statusEnum.Three;
+                case statusEnum.CE_PM_Vendor_Assignment:
+                    labelStatus = statusEnum.TV_Pending_Approval;
                     $('#demoteBtn').show();
                     $('#pullbackBtn').show();
                     break;
-                case statusEnum.Three:
-                    labelStatus = statusEnum.Six;
+                case statusEnum.TV_Pending_Approval:
+                    labelStatus = statusEnum.TV_Complete;
                     $('#demoteBtn').hide();
                     $('#promoteBtn').hide();
                     $('#pullbackBtn').show();
                     break;
-                case statusEnum.Four:
-                    labelStatus = statusEnum.Two;
+                case statusEnum.RF_Mod_CE_PM_Vendor_Assignment:
+                    labelStatus = statusEnum.CE_PM_Vendor_Assignment;
                     $('#demoteBtn').hide();
                     break;
-                case statusEnum.Five:
-                    labelStatus = statusEnum.Three;
+                case statusEnum.RF_Mod_TV_Pending_Approval:
+                    labelStatus = statusEnum.TV_Pending_Approval;
                     $('#demoteBtn').hide();
                     break;
             }
@@ -433,11 +434,11 @@
 
         function updateDemoteStatus(currentStatus) {
             switch (currentStatus) {
-                case statusEnum.Two:
-                    labelStatus = statusEnum.Four;
+                case statusEnum.CE_PM_Vendor_Assignment:
+                    labelStatus = statusEnum.RF_Mod_CE_PM_Vendor_Assignment;
                     break;
-                case statusEnum.Three:
-                    labelStatus = statusEnum.Five;
+                case statusEnum.TV_Pending_Approval:
+                    labelStatus = statusEnum.RF_Mod_TV_Pending_Approval;
                     break;
             }
             $('#pullbackBtn').show();
@@ -446,20 +447,20 @@
 
         function updatePullbackStatus(currentStatus) {
             switch (currentStatus) {
-                case statusEnum.Six:
-                    labelStatus = statusEnum.One;
+                case statusEnum.TV_Complete:
+                    labelStatus = statusEnum.RF_Pending_Completion;
                     break;
-                case statusEnum.Two:
-                    labelStatus = statusEnum.One;
+                case statusEnum.CE_PM_Vendor_Assignment:
+                    labelStatus = statusEnum.RF_Pending_Completion;
                     break;
-                case statusEnum.Three:
-                    labelStatus = statusEnum.One;
+                case statusEnum.TV_Pending_Approval:
+                    labelStatus = statusEnum.RF_Pending_Completion;
                     break;
-                case statusEnum.Four:
-                    labelStatus = statusEnum.One;
+                case statusEnum.RF_Mod_CE_PM_Vendor_Assignment:
+                    labelStatus = statusEnum.RF_Pending_Completion;
                     break;
-                case statusEnum.Five:
-                    labelStatus = statusEnum.One;
+                case statusEnum.RF_Mod_TV_Pending_Approval:
+                    labelStatus = statusEnum.RF_Pending_Completion;
                     break;
             }
             $('#cancelBtn').show();
@@ -468,7 +469,7 @@
         }
 
         function updateCancelStatus(currentStatus) {
-            labelStatus = statusEnum.Seven;
+            labelStatus = statusEnum.Cancel;
             $('#promoteBtn').hide();
             $('#demoteBtn').hide();
             $('#pullbackBtn').hide();
@@ -629,30 +630,30 @@
 
         function resetWorkflowButtons(currentStatus) {
             switch (currentStatus) {
-                case statusEnum.One:
+                case statusEnum.RF_Pending_Completion:
                     $('#promoteBtn').show();
                     $('#cancelBtn').show();
                     break;
-                case statusEnum.Two:
-                case statusEnum.Three:
+                case statusEnum.CE_PM_Vendor_Assignment:
+                case statusEnum.TV_Pending_Approval:
                     $('#promoteBtn').show();
                     $('#demoteBtn').show();
                     $('#pullbackBtn').show();
                     $('#cancelBtn').show();
                     break;
 
-                case statusEnum.Four:
-                case statusEnum.Five:
+                case statusEnum.RF_Mod_CE_PM_Vendor_Assignment:
+                case statusEnum.RF_Mod_TV_Pending_Approval:
                     $('#promoteBtn').show();
                     $('#pullbackBtn').show();
                     break;
 
-                case statusEnum.Six:
+                case statusEnum.TV_Complete:
                     $('#pullbackBtn').show();
                     $('#cancelBtn').show();
                     break;
 
-                case statusEnum.Seven:
+                case statusEnum.Cancel:
                     break;
 
                 default:
@@ -745,7 +746,7 @@
             /*
             api call to update status
             */
-            var getDetailsUrl = "SarfDetailsByTaskID/Get/" + processInstanceID;
+            var getDetailsUrl = "AllSarfDetails/Get/" + localStorage["sarfID"];//processInstanceID;
             $.ajax({
                 method: 'GET',
                 dataType: 'json',
@@ -1070,6 +1071,7 @@
                     ctxMenuForGraphics.addChild(new MenuItem({
                         label: "Add Node",
                         onClick: function () {
+                            $('div.errorMsg').remove();
                             // CREATE DIALOG
                             var node = dom.byId('drawingLayer_layer');
                             if (!tooltipDialog) {
@@ -1133,9 +1135,11 @@
                                     dijit.popup.close(tooltipDialog);
                                     tooltipDialog.opened_ = false;
                                 }
+                                $('div.errorMsg').remove();
                             });
                             $("#btncreatenode").click(function () {
                                 // add node
+                                ('div.errorMsg').remove();
                                 var saveNodeUrl = "Node/Post";
                                 var txtAtollName = $('#txtatollname').val();
                                 var txtIplanNumber = $('#txtiplannumber').val();
