@@ -10,9 +10,9 @@ var statusEnum = {
 };
 //constants for sarf details
 var constants = {
-    MarketCluster: 'WASHIONGTON',
+    MarketCluster: 'SEATTLE/OREGON/NO. ID',
     Region: 'WEST',
     County: 'SPOKANE',
-    Market: 'SPOKANE',
+    Market: 'WASHINGTON',
     FAType: 'CELL'
 };
