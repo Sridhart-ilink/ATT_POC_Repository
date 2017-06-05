@@ -1,0 +1,26 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/ATTPOC/ATTPOC/obj/Debug/JavascriptBasedApp.pdb
+/ATTPOC/ATTPOC/obj/Debug/ATTPOCWebApp.csproj.App.config
+/ATTPOC/ATTPOC/obj/Debug/ATTPOCWebApp.csproj.FileListAbsolute.txt
+/ATTPOC/ATTPOC/obj/Debug/ATTPOCWebApp.csprojResolveAssemblyReference.cache
+/ATTPOC/ATTPOC/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+/ATTPOC/ATTPOC/obj/Debug/JavascriptBasedApp.dll
+/ATTPOC/ATTPOC/obj/Release/Package/PackageTmp/bin/JavascriptBasedApp.dll
+/ATTPOC/ATTPOC/obj/Release/Package/PackageTmp/bin/MySql.Data.dll
+/ATTPOC/ATTPOC/obj/Release/Package/PackageTmp/bin/Newtonsoft.Json.dll
+/ATTPOC/ATTPOC/obj/Release/Package/PackageTmp/bin/System.IO.dll
+/ATTPOC/ATTPOC/obj/Release/Package/PackageTmp/bin/System.Net.Http.dll
+/ATTPOC/ATTPOC/obj/Release/Package/PackageTmp/bin/System.Net.Http.Extensions.dll
+/ATTPOC/ATTPOC/obj/Release/Package/PackageTmp/bin/System.Net.Http.Primitives.dll
+/ATTPOC/ATTPOC/obj/Release/Package/PackageTmp/bin/System.Net.Http.WebRequest.dll
+/ATTPOC/ATTPOC/obj/Release/Package/PackageTmp/bin/System.Runtime.dll
+/ATTPOC/ATTPOC/obj/Release/Package/PackageTmp/bin/System.Threading.Tasks.dll
+/ATTPOC/ATTPOC/obj/Release
+/ATTPOC/ATTWebAppAPI/obj
+/ATTPOC/packages
+/ATTPOC/ATTWebAppAPI/Properties/PublishProfiles/api.pubxml.user
+/ATTPOC/ATTPOC/Properties/PublishProfiles/webapp.pubxml.user
+/ATTPOC/ATTPOC.v12.suo
