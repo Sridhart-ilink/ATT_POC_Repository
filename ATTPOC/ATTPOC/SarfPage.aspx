@@ -5,8 +5,12 @@
 <head runat="server">
     <title>Autoforms</title>
     <script type="text/javascript" src="Scripts/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="Scripts/angular-1.3.15.min.js"></script>
     <script type="text/javascript" src="Scripts/bootstrap-3.3.4.min.js"></script>
+    <%--<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>--%>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay_progress.min.js"></script>
     <script type="text/javascript" src="Scripts/globals.js"></script>
     <script type="text/javascript" src="Scripts/common.js"></script>
 
@@ -375,8 +379,7 @@
             <div class="clearfix"></div>
         </div>
     </form>
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    
     <script>
         var labelStatus = '';
         function loadScript(src, callback) {
@@ -492,6 +495,7 @@
             }
         }
         function updateSarfStatus(id) {
+            $.LoadingOverlay("show");
             var getStatusUrl = "UpdateSarfStatus";
             var sarf = {
                 id: id,
@@ -510,15 +514,18 @@
                 cache: false,
                 success: function (data) {
                     localStorage["taskStatus"] = labelStatus;
+                    $.LoadingOverlay("hide");
                     $('#sarfForm').submit();
                 },
                 error: function (err) {
+                    $.LoadingOverlay("hide");
                     $('#sarfForm').submit();
                 }
             });
         }
 
         function updateStatus(wfStatus, currentText) {
+            $.LoadingOverlay("show");
             var getStatusUrl = "taskcomplete";
             var jsonData = {
                 variables: {
@@ -543,6 +550,7 @@
                         workflowUpdate(currentText);
                         console.log(data);
                         localStorage["tabIndex"] = $('.tabs-left').find('li.active').attr('data-index');
+                        $.LoadingOverlay("hide");
                         $('#sarfForm').submit();
                     }
                     else {
@@ -561,6 +569,7 @@
         }
 
         function getTaskStatusbyProcessInstanceID(processInstanceID) {
+            $.LoadingOverlay("show");
             var getStatusUrl = "task-by-process-instance";
             /*
             api call to get the  task id , activity name ie status to complete the task
@@ -583,10 +592,12 @@
                         InstanceID = processInstanceID;
                         localStorage["taskStatus"] = TaskStatus;
                         console.log(parsedData);
+                        $.LoadingOverlay("hide");
                     }
                 },
                 error: function (err) {
                     console.log(err);
+                    $.LoadingOverlay("hide");
                 }
             });
         }
@@ -702,6 +713,7 @@
 
         //Jquery - document load script method
         $(document).ready(function () {
+            $.LoadingOverlay("show");
             $('.commentingDiv').hide();
             $('.toggleArrow').click(function () {
                 $('.toggleArrow').toggleClass('rotateArrow');
@@ -760,9 +772,11 @@
                     initializeDetailsLabel(jsonDetails);
                     initializeDetailsText(jsonDetails);
                     console.log(data);
+                    $.LoadingOverlay("hide");
                 },
                 error: function (err) {
                     console.log(err);
+                    $.LoadingOverlay("hide");
                 }
             });
 
@@ -781,10 +795,11 @@
                         console.log(item.Vertices);
                         polygonlist.push(item.Vertices);
                     });
-
+                    $.LoadingOverlay("hide");
                 },
                 error: function (err) {
                     console.log(err);
+                    $.LoadingOverlay("hide");
                 }
             });
 
@@ -834,7 +849,7 @@
             }
 
             $('#detailsupdatebtn').click(function (e) {
-
+                $.LoadingOverlay("show");
                 var sarfid = GetParameterValues("sarfid");
                 var sarfNameTxt = $('#txtsarfname').val();
                 var facodeTxt = $('#txtfacode').val();
@@ -881,9 +896,11 @@
                         $('.lblDetails').show();
                         $('.txtDetails').hide();
                         console.log(data);
+                        $.LoadingOverlay("hide");
                     },
                     error: function (err) {
                         console.log(err);
+                        $.LoadingOverlay("hide");
                     }
                 });
                 $('#sarfForm').submit();
@@ -1138,6 +1155,7 @@
                                 $('div.errorMsg').remove();
                             });
                             $("#btncreatenode").click(function () {
+                                $.LoadingOverlay("show");
                                 // add node
                                 ('div.errorMsg').remove();
                                 var saveNodeUrl = "Node/Post";
@@ -1165,10 +1183,12 @@
                                         cache: false,
                                         success: function (data) {
                                             console.log(data);
+                                            $.LoadingOverlay("hide");
                                             $('#sarfForm').submit();
                                         },
                                         error: function (err) {
                                             console.log(err);
+                                            $.LoadingOverlay("hide");
                                             $('#sarfForm').submit();
                                         }
                                     });

@@ -58,6 +58,7 @@ ALTER TABLE SARF ADD FA_Type nvarchar(100)NULL;
 ALTER TABLE SARF ADD Market_Cluster nvarchar(200)NULL;
 ALTER TABLE SARF ADD Region nvarchar(200)NULL;
 ALTER TABLE SARF ADD RF_Design_Engineer_ATTUID nvarchar (500) NULL;
+ALTER TABLE SARF ADD AtollSiteName nvarchar (500) NULL;
 /************************************************************************/
 
 /* delete from sarf where sarfname is null;

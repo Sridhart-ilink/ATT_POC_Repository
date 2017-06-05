@@ -13,6 +13,12 @@ var constants = {
     MarketCluster: 'SEATTLE/OREGON/NO. ID',
     Region: 'WEST',
     County: 'SPOKANE',
+<<<<<<< HEAD
     Market: 'WASHINGTON',
     FAType: 'CELL'
+=======
+    Market: 'SPOKANE',
+    FAType: 'CELL',
+    RFDesignEnggId: 'RF0001'
+>>>>>>> SheikBranch
 };
