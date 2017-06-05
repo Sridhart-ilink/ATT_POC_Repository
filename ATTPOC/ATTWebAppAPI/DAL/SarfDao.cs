@@ -19,7 +19,7 @@ namespace ATTWebAppAPI.DAL
             {
                 try
                 {
-                    string query = "SELECT S.SARFID,S.SARFNAME,S.ProcessInstanceID, S.SarfStatus, P.Vertices,P.AreaInSqKm FROM SARF S JOIN Polygon P ON S.SarfId=P.SarfId order by S.DateCreated desc;";
+                    string query = "SELECT S.SARFID,S.SARFNAME,S.ProcessInstanceID, S.SarfStatus, S.AtollSiteName, P.Vertices,P.AreaInSqKm FROM SARF S JOIN Polygon P ON S.SarfId=P.SarfId order by S.DateCreated desc;";
                     cn.Open();
                     using (MySqlCommand cmd = new MySqlCommand(query, cn))
                     {
@@ -50,7 +50,12 @@ namespace ATTWebAppAPI.DAL
                 try
                 {
                     long id = 0;
-                    string query = "INSERT INTO SARF(SarfName,DateCreated,ProcessInstanceID, SarfStatus) VALUES(?SarfName,?DateCreated,?ProcessInstanceID, ?SarfStatus);";
+                    string query = "INSERT INTO SARF(SarfName,DateCreated,ProcessInstanceID, "+
+                        "SarfStatus, AtollSiteName, FA_Code, Search_Ring_ID, iPlan_Job, " +
+                        "Pace, Market, County, FA_Type, Market_Cluster, Region) VALUES(" +
+                        "?SarfName,?DateCreated,?ProcessInstanceID, ?SarfStatus, "+
+                        "?AtollSiteName, ?FA_Code, ?Search_Ring_ID, ?iPlan_Job, ?Pace, ?Market,"+
+                        "?County, ?FA_Type, ?Market_Cluster, ?Region);";
                     cn.Open();
                     using (MySqlCommand cmd = new MySqlCommand(query, cn))
                     {                           
@@ -58,6 +63,16 @@ namespace ATTWebAppAPI.DAL
                         cmd.Parameters.Add("?DateCreated", MySqlDbType.DateTime).Value = sarf.CreatedDate;
                         cmd.Parameters.Add("?ProcessInstanceID", MySqlDbType.VarChar).Value = sarf.ProcessInstanceID;
                         cmd.Parameters.Add("?SarfStatus", MySqlDbType.VarChar).Value = sarf.SarfStatus;
+                        cmd.Parameters.Add("?AtollSiteName", MySqlDbType.VarChar).Value = sarf.AtollSiteName;
+                        cmd.Parameters.Add("?FA_Code", MySqlDbType.VarChar).Value = sarf.FACode;
+                        cmd.Parameters.Add("?Search_Ring_ID", MySqlDbType.VarChar).Value = sarf.SearchRingId;
+                        cmd.Parameters.Add("?iPlan_Job", MySqlDbType.VarChar).Value = sarf.IPlanJob;
+                        cmd.Parameters.Add("?Pace", MySqlDbType.VarChar).Value = sarf.PaceNumber;
+                        cmd.Parameters.Add("?Market", MySqlDbType.VarChar).Value = sarf.Market;
+                        cmd.Parameters.Add("?County", MySqlDbType.VarChar).Value = sarf.County;
+                        cmd.Parameters.Add("?FA_Type", MySqlDbType.VarChar).Value = sarf.FAType;
+                        cmd.Parameters.Add("?Market_Cluster", MySqlDbType.VarChar).Value = sarf.MarketCluster;
+                        cmd.Parameters.Add("?Region", MySqlDbType.VarChar).Value = sarf.Region;
                         cmd.ExecuteNonQuery();
                         id = cmd.LastInsertedId;
 
@@ -252,7 +267,7 @@ namespace ATTWebAppAPI.DAL
                 {
                     string query = "SELECT s.SarfName,s.FA_Code,s.Search_Ring_ID,s.iPlan_Job, " +
                         "s.Pace,s.Market,s.County,s.FA_Type,s.Market_Cluster,s.Region," +
-                        "s.RF_Design_Engineer_ATTUID, s.SarfStatus, p.AreaInSqKm " +
+                        "s.RF_Design_Engineer_ATTUID, s.SarfStatus, s.AtollSiteName, p.AreaInSqKm " +
                         "FROM SARF s INNER JOIN Polygon p ON s.SarfId = p.SarfId WHERE " + 
                         "s.SarfId=" + sarfId + ";";
                     cn.Open();
@@ -312,7 +327,7 @@ namespace ATTWebAppAPI.DAL
             {
                 try
                 {
-                    string query = "SELECT s.SarfName,s.FA_Code,s.Search_Ring_ID,s.iPlan_Job, s.Pace,s.Market,s.County,s.FA_Type,s.Market_Cluster,s.Region,s.RF_Design_Engineer_ATTUID, s.SarfStatus, p.AreaInSqKm FROM SARF s INNER JOIN Polygon p ON s.SarfId = p.SarfId WHERE ProcessInstanceID='" + taskID + "';";
+                    string query = "SELECT s.SarfName,s.FA_Code,s.Search_Ring_ID,s.iPlan_Job, s.Pace,s.Market,s.County,s.FA_Type,s.Market_Cluster,s.Region,s.RF_Design_Engineer_ATTUID, s.SarfStatus, s.AtollSiteName, p.AreaInSqKm FROM SARF s INNER JOIN Polygon p ON s.SarfId = p.SarfId WHERE ProcessInstanceID='" + taskID + "';";
                     cn.Open();
                     using (MySqlCommand cmd = new MySqlCommand(query, cn))
                     {
