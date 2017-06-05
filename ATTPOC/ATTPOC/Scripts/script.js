@@ -271,6 +271,7 @@ function getTaskStatusbyProcessInstanceID(processInstanceID, sarfID) {
             localStorage["taskStatus"] = TaskStatus;
             console.log(parsedData);
             $.LoadingOverlay("hide");
+            window.location = appUrl + "SarfPage.aspx?processInstanceId=" + InstanceID + "&sarfid=" + localStorage["sarfID"];
             }
             else {
                 getTaskStatusbySarfID(sarfID);
@@ -500,7 +501,7 @@ function onLoadGis() {
                }
             });
 
-            $(".sarfclick").click(function () {
+            $(document).on('click', ".sarfclick", function () {
                 map.graphics.clear();
 
                 var self = $(this);
@@ -524,7 +525,7 @@ function onLoadGis() {
                 }
                 $.LoadingOverlay("show");
                 getTaskStatusbyProcessInstanceID($(self).attr('data-processinstanceid'), sarfId);
-                
+                //window.location = appUrl + "SarfPage.aspx?processInstanceId=" + InstanceID + "&sarfid=" + sarfId;
                 
             });
 

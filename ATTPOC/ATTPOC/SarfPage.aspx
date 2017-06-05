@@ -758,7 +758,8 @@
             /*
             api call to update status
             */
-            var getDetailsUrl = "AllSarfDetails/Get/" + localStorage["sarfID"];//processInstanceID;
+            //var getDetailsUrl = "AllSarfDetails/Get/" + localStorage["sarfID"];//processInstanceID;
+            var getDetailsUrl = "SarfDetailsByTaskID/Get/" + processInstanceID;
             $.ajax({
                 method: 'GET',
                 dataType: 'json',
@@ -1261,7 +1262,7 @@
                             $("#btncreatenode").click(function () {
                                 $.LoadingOverlay("show");
                                 // add node
-                                ('div.errorMsg').remove();
+                                //('div.errorMsg').remove();
                                 var saveNodeUrl = "Node/Post";
                                 var txtAtollName = $('#txtatollname').val();
                                 var txtIplanNumber = $('#txtiplannumber').val();
