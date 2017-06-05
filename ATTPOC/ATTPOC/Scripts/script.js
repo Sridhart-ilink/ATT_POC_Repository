@@ -28,10 +28,23 @@ function loadScript(src, callback) {
 function saveSARFData(workflowProcessInstanceID) {
     var postSarfDataUrl = "Sarf/Post";
     var sarfNameTxt = $('#txtsarf').val();
+    var atollSiteNameTxt = $('#txtatollsitename').val();
+    var sarfRandomID = (Math.floor(1000 + Math.random() * 9000)).toString();
     var jsonData = {
         sarfName: sarfNameTxt,
+        atollSiteName: atollSiteNameTxt,
+        fACode: constants.FACode + sarfRandomID,
+        iPlanJob: constants.IPlanJob + sarfRandomID,
+        paceNumber: constants.PaceNumber + sarfRandomID,
+        searchRingId: constants.SearchRingId + sarfRandomID,
+        marketCluster: constants.MarketCluster,
+        region: constants.Region,
+        county: constants.County,
+        market: constants.Market,
+        fAType: constants.FAType,
+        rFDesignEnggId: constants.RFDesignEnggId,
         processInstanceID: workflowProcessInstanceID,
-        sarfStatus : "RF Pending Completion"
+        sarfStatus: statusEnum.RF_Pending_Completion
     };
     /*
    api call to post sarf data
@@ -42,7 +55,7 @@ function saveSARFData(workflowProcessInstanceID) {
         contentType: 'application/json',
         url: camundaBaseApiUrl + postSarfDataUrl,
         data: JSON.stringify(jsonData),
-        async: false,
+        //async: false,
         cache: false,
         success: function (data) {
             console.log(data);
@@ -51,6 +64,7 @@ function saveSARFData(workflowProcessInstanceID) {
         },
         error: function (err) {
             console.log(err);
+            $.LoadingOverlay("hide");
         }
     });
 }
@@ -72,12 +86,14 @@ function savePolygonData() {
         contentType: 'application/json',
         url: camundaBaseApiUrl + postPolyDataUrl,
         data: JSON.stringify(jsonData),
-        async: false,
+        //async: false,
         cache: false,
         success: function (data) {
+            $.LoadingOverlay("hide");
             $('#sarfForm').submit();
         },
         error: function (err) {
+            $.LoadingOverlay("hide");
             console.log(err);
         }
     });
@@ -124,7 +140,7 @@ function initGrid() {
         contentType: 'application/json; charset=utf-8',
         url: camundaBaseApiUrl + getDetailsAction,
         data: JSON.stringify({}),
-        async: false,
+        //async: false,
         cache: false,
         success: function (data) {
             sarfList = data;
@@ -133,14 +149,17 @@ function initGrid() {
             $('.pageLength').text(' of ' + noOfPages);
             cardViewDataBind();
             console.log(sarfList);
+            $.LoadingOverlay("hide");
         },
         error: function (err) {
             console.log(err);
+            $.LoadingOverlay("hide");
         }
     });
 }
 
 $(document).ready(function () {
+    $.LoadingOverlay("show");
     initGrid();
     $('#backIcon').addClass('pagingDisabled');
     $('.toggleArrow').click(function () {
@@ -209,7 +228,7 @@ function getTaskStatusbySarfID(id) {
         contentType: 'application/json; charset=utf-8',
         url: camundaBaseApiUrl + getStatusUrl + "/" + id,
         data: JSON.stringify({}),
-        async: false,
+        //async: false,
         cache: false,
         success: function (data) {
             var parsedData = data;
@@ -218,9 +237,12 @@ function getTaskStatusbySarfID(id) {
             localStorage["taskStatus"] = parsedData;
             localStorage["sarfID"] = id;
             console.log(parsedData);
+            $.LoadingOverlay("hide");
+            window.location = appUrl + "SarfPage.aspx?processInstanceId=" + InstanceID + "&sarfid=" + localStorage["sarfID"];
         },
         error: function (err) {
             console.log(err);
+            $.LoadingOverlay("hide");
         }
     });
 }
@@ -236,7 +258,7 @@ function getTaskStatusbyProcessInstanceID(processInstanceID, sarfID) {
         contentType: 'application/json; charset=utf-8',
         url: camundaBaseApiUrl + getStatusUrl + "/" + processInstanceID,
         data: JSON.stringify({}),
-        async: false,
+        //async: false,
         cache: false,
         success: function (data) {
             if (data != null) {
@@ -248,6 +270,7 @@ function getTaskStatusbyProcessInstanceID(processInstanceID, sarfID) {
             localStorage["instanceID"] = InstanceID;
             localStorage["taskStatus"] = TaskStatus;
             console.log(parsedData);
+            $.LoadingOverlay("hide");
             }
             else {
                 getTaskStatusbySarfID(sarfID);
@@ -256,6 +279,7 @@ function getTaskStatusbyProcessInstanceID(processInstanceID, sarfID) {
         error: function (err) {
             getTaskStatusbySarfID(sarfID);
             console.log(err);
+            $.LoadingOverlay("hide");
         }
     });
 }
@@ -498,8 +522,9 @@ function onLoadGis() {
                         localStorage["vertices"] = finalVal;
                     }
                 }
+                $.LoadingOverlay("show");
                 getTaskStatusbyProcessInstanceID($(self).attr('data-processinstanceid'), sarfId);
-                window.location = appUrl + "SarfPage.aspx?processInstanceId=" + InstanceID + "&sarfid=" + sarfId;
+                
                 
             });
 
@@ -733,15 +758,17 @@ function onLoadGis() {
                     var node = dom.byId('drawingLayer_layer');                  
                     if (!tooltipDialog) {
                         var htmlFragment = '';
-                        htmlFragment += '<div id="mapTwo" class="dialogtooltip"><input type="text" id="txtsarf" width="150px" class="dialogtooltipinput">';
+                        htmlFragment += '<div id="mapTwo" class="dialogtooltip"><input type="text" id="txtsarf" placeholder = "Sarf Name" width="150px" class="dialogtooltipinput">';
+                        htmlFragment += '<div><input type="text" id="txtatollsitename" placeholder="Atoll Site Name" width="150px" class="dialogtooltipinput" style="margin-top:0px;"></div>';
                         htmlFragment += '<div><input type="button" id="btncreatesarf" value="Save" class="btn blueBtn dialogtootipbtn"/>'
                         htmlFragment += '<input type="button"  id="btncancelsarf"  value="Cancel" class="btn whiteBtn dialogtootipbtncancel"/></div></div>'
+                        var errorMsg = '<div class= "errorMsg" style = "margin-left: 20px;"><span style="color : red;">Fields must not be empty</span></div>';
                         // CREATE TOOLTIP DIALOG
                         tooltipDialog = new dijit.TooltipDialog({
-                        content: htmlFragment,
-                        autofocus: !dojo.isIE, // NOTE: turning focus ON in IE causes errors when reopening the dialog
-                        refocus: !dojo.isIE
-                      });
+                            content: htmlFragment,
+                            autofocus: !dojo.isIE, // NOTE: turning focus ON in IE causes errors when reopening the dialog
+                            refocus: !dojo.isIE
+                        });
           
                         // DISPLAY TOOLTIP DIALOG AROUND THE CLICKED ELEMENT
                         dijit.popup.open({ popup: tooltipDialog, around: node });
@@ -753,6 +780,14 @@ function onLoadGis() {
                         map.enableMapNavigation();
                         //Remove active style from draw button
                         $(".btn-draw.active").removeClass("active");
+                       
+                        $('#txtsarf').keypress(function () {
+                            $('div.errorMsg').remove();
+                        });
+
+                        $('#txtatollsitename').keypress(function () {
+                            $('div.errorMsg').remove();
+                        });
                       
                     } else {
                         if (tooltipDialog.opened_) {
@@ -769,7 +804,7 @@ function onLoadGis() {
                             map.enableMapNavigation();
                             //Remove active style from draw button
                             $(".btn-draw.active").removeClass("active");
-                    }
+                        }
                     }
 
                     $("#btncancelsarf").click(function () {                       
@@ -777,27 +812,30 @@ function onLoadGis() {
                             dijit.popup.close(tooltipDialog);
                             tooltipDialog.opened_ = false;
                         }
+                        $('div.errorMsg').remove();
                     });
                     $("#btncreatesarf").click(function () {
-                                var getProcessUrl = "process-definition";
-                                var jsonData = {
-                                    variables: {},
-                                    key: "identify-sarfs"
-                                }
+                        $.LoadingOverlay("show");
+                        $('div.errorMsg').remove();
+                        var getProcessUrl = "process-definition";
+                        var jsonData = {
+                            variables: {},
+                            key: "identify-sarfs"
+                        }
                         var sarfNameTxt = $('#txtsarf').val();
-                        var errorMsg = '<div class= "errorMsg"><span style="color : red;">SARF name is invalid</span></div>';
-                        if (sarfNameTxt != null && sarfNameTxt != '') {
+                        var atollSiteNameTxt = $('#txtatollsitename').val();
+                        if (sarfNameTxt.length > 0 && atollSiteNameTxt.length > 0) {
                                 $.ajax({
                                     method: 'POST',
                                     dataType: 'json',
                                     contentType: 'application/json',
                                     url: camundaBaseApiUrl + getProcessUrl,
                                     data: JSON.stringify(jsonData),
-                                    async: false,
+                                    //async: false,
                                     cache: false,
                                     success: function (data) {
                                             if (data != null)
-                                        saveSARFData(JSON.parse(data).id);
+                                                saveSARFData(JSON.parse(data).id);
                                             else
                                                 saveSARFData(0);
                                     },
@@ -807,8 +845,10 @@ function onLoadGis() {
                                     }
                                 });
                             }
-
-                        });
+                        else {
+                            $('#txtatollsitename').after(errorMsg);
+                        }
+                    });
 
                 }
             }));

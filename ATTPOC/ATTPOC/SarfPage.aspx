@@ -5,9 +5,14 @@
 <head runat="server">
     <title>Autoforms</title>
     <script type="text/javascript" src="Scripts/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="Scripts/angular-1.3.15.min.js"></script>
     <script type="text/javascript" src="Scripts/bootstrap-3.3.4.min.js"></script>
+    <%--<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>--%>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay_progress.min.js"></script>
     <script type="text/javascript" src="Scripts/globals.js"></script>
+    <script type="text/javascript" src="Scripts/common.js"></script>
 
     <!--CSS imports-->
     <link rel="stylesheet" type="text/css" href="Styles/bootstrap-3.3.4.min.css" />
@@ -374,8 +379,7 @@
             <div class="clearfix"></div>
         </div>
     </form>
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    
     <script>
         var labelStatus = '';
         function loadScript(src, callback) {
@@ -404,28 +408,28 @@
         function updatePromoteStatus(currentStatus) {
 
             switch (currentStatus) {
-                case statusEnum.One:
-                    labelStatus = statusEnum.Two;
+                case statusEnum.RF_Pending_Completion:
+                    labelStatus = statusEnum.CE_PM_Vendor_Assignment;
                     $('#demoteBtn').show();
                     $('#pullbackBtn').show();
                     break;
-                case statusEnum.Two:
-                    labelStatus = statusEnum.Three;
+                case statusEnum.CE_PM_Vendor_Assignment:
+                    labelStatus = statusEnum.TV_Pending_Approval;
                     $('#demoteBtn').show();
                     $('#pullbackBtn').show();
                     break;
-                case statusEnum.Three:
-                    labelStatus = statusEnum.Six;
+                case statusEnum.TV_Pending_Approval:
+                    labelStatus = statusEnum.TV_Complete;
                     $('#demoteBtn').hide();
                     $('#promoteBtn').hide();
                     $('#pullbackBtn').show();
                     break;
-                case statusEnum.Four:
-                    labelStatus = statusEnum.Two;
+                case statusEnum.RF_Mod_CE_PM_Vendor_Assignment:
+                    labelStatus = statusEnum.CE_PM_Vendor_Assignment;
                     $('#demoteBtn').hide();
                     break;
-                case statusEnum.Five:
-                    labelStatus = statusEnum.Three;
+                case statusEnum.RF_Mod_TV_Pending_Approval:
+                    labelStatus = statusEnum.TV_Pending_Approval;
                     $('#demoteBtn').hide();
                     break;
             }
@@ -433,11 +437,11 @@
 
         function updateDemoteStatus(currentStatus) {
             switch (currentStatus) {
-                case statusEnum.Two:
-                    labelStatus = statusEnum.Four;
+                case statusEnum.CE_PM_Vendor_Assignment:
+                    labelStatus = statusEnum.RF_Mod_CE_PM_Vendor_Assignment;
                     break;
-                case statusEnum.Three:
-                    labelStatus = statusEnum.Five;
+                case statusEnum.TV_Pending_Approval:
+                    labelStatus = statusEnum.RF_Mod_TV_Pending_Approval;
                     break;
             }
             $('#pullbackBtn').show();
@@ -446,20 +450,20 @@
 
         function updatePullbackStatus(currentStatus) {
             switch (currentStatus) {
-                case statusEnum.Six:
-                    labelStatus = statusEnum.One;
+                case statusEnum.TV_Complete:
+                    labelStatus = statusEnum.RF_Pending_Completion;
                     break;
-                case statusEnum.Two:
-                    labelStatus = statusEnum.One;
+                case statusEnum.CE_PM_Vendor_Assignment:
+                    labelStatus = statusEnum.RF_Pending_Completion;
                     break;
-                case statusEnum.Three:
-                    labelStatus = statusEnum.One;
+                case statusEnum.TV_Pending_Approval:
+                    labelStatus = statusEnum.RF_Pending_Completion;
                     break;
-                case statusEnum.Four:
-                    labelStatus = statusEnum.One;
+                case statusEnum.RF_Mod_CE_PM_Vendor_Assignment:
+                    labelStatus = statusEnum.RF_Pending_Completion;
                     break;
-                case statusEnum.Five:
-                    labelStatus = statusEnum.One;
+                case statusEnum.RF_Mod_TV_Pending_Approval:
+                    labelStatus = statusEnum.RF_Pending_Completion;
                     break;
             }
             $('#cancelBtn').show();
@@ -468,7 +472,7 @@
         }
 
         function updateCancelStatus(currentStatus) {
-            labelStatus = statusEnum.Seven;
+            labelStatus = statusEnum.Cancel;
             $('#promoteBtn').hide();
             $('#demoteBtn').hide();
             $('#pullbackBtn').hide();
@@ -491,6 +495,7 @@
             }
         }
         function updateSarfStatus(id) {
+            $.LoadingOverlay("show");
             var getStatusUrl = "UpdateSarfStatus";
             var sarf = {
                 id: id,
@@ -505,19 +510,22 @@
                 contentType: 'application/json',
                 url: camundaBaseApiUrl + getStatusUrl,
                 data: JSON.stringify(sarf),
-                async: false,
+                //async: false,
                 cache: false,
                 success: function (data) {
                     localStorage["taskStatus"] = labelStatus;
+                    $.LoadingOverlay("hide");
                     $('#sarfForm').submit();
                 },
                 error: function (err) {
+                    $.LoadingOverlay("hide");
                     $('#sarfForm').submit();
                 }
             });
         }
 
         function updateStatus(wfStatus, currentText) {
+            $.LoadingOverlay("show");
             var getStatusUrl = "taskcomplete";
             var jsonData = {
                 variables: {
@@ -534,7 +542,7 @@
                 contentType: 'application/json',
                 url: camundaBaseApiUrl + getStatusUrl,
                 data: JSON.stringify(jsonData),
-                async: false,
+                //async: false,
                 cache: false,
                 success: function (data) {
                     if (data) {
@@ -542,6 +550,7 @@
                         workflowUpdate(currentText);
                         console.log(data);
                         localStorage["tabIndex"] = $('.tabs-left').find('li.active').attr('data-index');
+                        $.LoadingOverlay("hide");
                         $('#sarfForm').submit();
                     }
                     else {
@@ -560,6 +569,7 @@
         }
 
         function getTaskStatusbyProcessInstanceID(processInstanceID) {
+            $.LoadingOverlay("show");
             var getStatusUrl = "task-by-process-instance";
             /*
             api call to get the  task id , activity name ie status to complete the task
@@ -570,7 +580,7 @@
                 contentType: 'application/json; charset=utf-8',
                 url: camundaBaseApiUrl + getStatusUrl + "/" + processInstanceID,
                 data: JSON.stringify({}),
-                async: false,
+                //async: false,
                 cache: false,
                 success: function (data) {
                     if (data != null) {
@@ -582,10 +592,12 @@
                         InstanceID = processInstanceID;
                         localStorage["taskStatus"] = TaskStatus;
                         console.log(parsedData);
+                        $.LoadingOverlay("hide");
                     }
                 },
                 error: function (err) {
                     console.log(err);
+                    $.LoadingOverlay("hide");
                 }
             });
         }
@@ -629,30 +641,30 @@
 
         function resetWorkflowButtons(currentStatus) {
             switch (currentStatus) {
-                case statusEnum.One:
+                case statusEnum.RF_Pending_Completion:
                     $('#promoteBtn').show();
                     $('#cancelBtn').show();
                     break;
-                case statusEnum.Two:
-                case statusEnum.Three:
+                case statusEnum.CE_PM_Vendor_Assignment:
+                case statusEnum.TV_Pending_Approval:
                     $('#promoteBtn').show();
                     $('#demoteBtn').show();
                     $('#pullbackBtn').show();
                     $('#cancelBtn').show();
                     break;
 
-                case statusEnum.Four:
-                case statusEnum.Five:
+                case statusEnum.RF_Mod_CE_PM_Vendor_Assignment:
+                case statusEnum.RF_Mod_TV_Pending_Approval:
                     $('#promoteBtn').show();
                     $('#pullbackBtn').show();
                     break;
 
-                case statusEnum.Six:
+                case statusEnum.TV_Complete:
                     $('#pullbackBtn').show();
                     $('#cancelBtn').show();
                     break;
 
-                case statusEnum.Seven:
+                case statusEnum.Cancel:
                     break;
 
                 default:
@@ -701,6 +713,7 @@
 
         //Jquery - document load script method
         $(document).ready(function () {
+            $.LoadingOverlay("show");
             $('.commentingDiv').hide();
             $('.toggleArrow').click(function () {
                 $('.toggleArrow').toggleClass('rotateArrow');
@@ -745,25 +758,25 @@
             /*
             api call to update status
             */
-           // var getDetailsUrl = "SarfDetailsByTaskID/Get/" + processInstanceID;
-            var getDetailsUrl = "AllSarfDetails/Get/" + localStorage["sarfID"]; //processInstanceID;
-
+            var getDetailsUrl = "AllSarfDetails/Get/" + localStorage["sarfID"];//processInstanceID;
             $.ajax({
                 method: 'GET',
                 dataType: 'json',
                 contentType: 'application/json',
                 url: camundaBaseApiUrl + getDetailsUrl,
                 data: JSON.stringify({}),
-                async: false,
+                //async: false,
                 cache: false,
                 success: function (data) {
                     jsonDetails = data[0];
                     initializeDetailsLabel(jsonDetails);
                     initializeDetailsText(jsonDetails);
                     console.log(data);
+                    $.LoadingOverlay("hide");
                 },
                 error: function (err) {
                     console.log(err);
+                    $.LoadingOverlay("hide");
                 }
             });
 
@@ -775,17 +788,18 @@
                 contentType: 'application/json; charset=utf-8',
                 url: camundaBaseApiUrl + getSarfPolygonUrl,
                 data: JSON.stringify({}),
-                async: false,
+                //async: false,
                 cache: false,
                 success: function (data) {
                     $.each(data, function (i, item) {
                         console.log(item.Vertices);
                         polygonlist.push(item.Vertices);
                     });
-
+                    $.LoadingOverlay("hide");
                 },
                 error: function (err) {
                     console.log(err);
+                    $.LoadingOverlay("hide");
                 }
             });
 
@@ -835,7 +849,7 @@
             }
 
             $('#detailsupdatebtn').click(function (e) {
-
+                $.LoadingOverlay("show");
                 var sarfid = GetParameterValues("sarfid");
                 var sarfNameTxt = $('#txtsarfname').val();
                 var facodeTxt = $('#txtfacode').val();
@@ -873,7 +887,7 @@
                     contentType: 'application/json',
                     url: camundaBaseApiUrl + postSarfDataUrl,
                     data: JSON.stringify(sarf),
-                    async: false,
+                    //async: false,
                     cache: false,
                     success: function (data) {
                         $('#editBtn').show();
@@ -882,9 +896,11 @@
                         $('.lblDetails').show();
                         $('.txtDetails').hide();
                         console.log(data);
+                        $.LoadingOverlay("hide");
                     },
                     error: function (err) {
                         console.log(err);
+                        $.LoadingOverlay("hide");
                     }
                 });
                 $('#sarfForm').submit();
@@ -1001,7 +1017,7 @@
                     map.graphics.clear();
                     initDrawing();
                     initEditing();
-                    // createToolbarAndContextMenu();                   
+                    // createToolbarAndContextMenu();
                     if (localStorage["vertices"] != null || localStorage["vertices"] != "") {
                         var finalVal = JSON.parse(JSON.stringify(localStorage["vertices"]));
                         var fillSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
@@ -1176,6 +1192,7 @@
                     ctxMenuForGraphics.addChild(new MenuItem({
                         label: "Add Node",
                         onClick: function () {
+                            $('div.errorMsg').remove();
                             // CREATE DIALOG
                             var node = dom.byId('drawingLayer_layer');
                             if (!tooltipDialog) {
@@ -1239,9 +1256,12 @@
                                     dijit.popup.close(tooltipDialog);
                                     tooltipDialog.opened_ = false;
                                 }
+                                $('div.errorMsg').remove();
                             });
                             $("#btncreatenode").click(function () {
+                                $.LoadingOverlay("show");
                                 // add node
+                                ('div.errorMsg').remove();
                                 var saveNodeUrl = "Node/Post";
                                 var txtAtollName = $('#txtatollname').val();
                                 var txtIplanNumber = $('#txtiplannumber').val();
@@ -1263,14 +1283,16 @@
                                         contentType: 'application/json',
                                         url: camundaBaseApiUrl + saveNodeUrl,
                                         data: JSON.stringify(jsonData),
-                                        async: false,
+                                        //async: false,
                                         cache: false,
                                         success: function (data) {
                                             console.log(data);
+                                            $.LoadingOverlay("hide");
                                             $('#sarfForm').submit();
                                         },
                                         error: function (err) {
                                             console.log(err);
+                                            $.LoadingOverlay("hide");
                                             $('#sarfForm').submit();
                                         }
                                     });
@@ -1386,7 +1408,7 @@
                            // addPoints(mp);
                             localStorage["lat"] = mp.x;
                             localStorage["long"] = mp.y;
-                       }
+                            }
 
                             createGraphicsMenu();
 

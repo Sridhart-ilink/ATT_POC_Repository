@@ -12,7 +12,10 @@
         <script type="text/javascript" src="Scripts/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="Scripts/angular-1.3.15.min.js"></script>
         <script type="text/javascript" src="Scripts/bootstrap-3.3.4.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay_progress.min.js"></script>
         <script type="text/javascript" src="Scripts/globals.js"></script>
+        <script type="text/javascript" src="Scripts/common.js"></script>
         <script type="text/javascript" src="Scripts/script.js"></script>
   
         <!--CSS imports-->
@@ -43,7 +46,7 @@
                 background:none !important;
             }
             .dialogtooltip {
-                width:230px; height:110px; border: 1px solid lightgray;
+                width:230px; height:185px; border: 1px solid lightgray;
                 background-color:white; border-radius:20px;
             }
             .dialogtooltipinput {
