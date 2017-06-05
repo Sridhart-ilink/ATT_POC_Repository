@@ -23,6 +23,13 @@
 /ATTPOC/packages
 /ATTPOC/ATTWebAppAPI/Properties/PublishProfiles/api.pubxml.user
 /ATTPOC/ATTPOC/Properties/PublishProfiles/webapp.pubxml.user
+/ATTPOC/ATTPOC/bin/JavascriptBasedApp.dll
+/ATTPOC/ATTPOC/bin/JavascriptBasedApp.dll.config
+/ATTPOC/ATTPOC/bin/JavascriptBasedApp.pdb
+/ATTPOC/ATTPOC/obj/Debug/JavascriptBasedApp.pdb
+/ATTPOC/ATTPOC/obj/Debug/JavascriptBasedApp.pdb
+/ATTPOC/ATTWebAppAPI/bin/ATTWebAppAPI.dll
+/ATTPOC/ATTWebAppAPI/bin/ATTWebAppAPI.pdb
 <<<<<<< HEAD
 /ATTPOC/ATTPOC.v12.suo
 =======
