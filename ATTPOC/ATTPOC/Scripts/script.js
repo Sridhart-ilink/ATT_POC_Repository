@@ -27,7 +27,7 @@ function loadScript(src, callback) {
 
 function saveSARFData(workflowProcessInstanceID) {
     var postSarfDataUrl = "Sarf/Post";
-    var sarfNameTxt = $('#dijit_form_TextBox_0').val();
+    var sarfNameTxt = $('#txtsarf').val();
     var jsonData = {
         sarfName: sarfNameTxt,
         processInstanceID: workflowProcessInstanceID,
@@ -96,7 +96,7 @@ function cardViewDataBind() {
             countReset++;
             var content = '';
             content += '<div class="cardInfo" style="cursor:pointer;">' +
-                            '<button id="sarfclick" type="button" data-processinstanceid = "' + sarfList[count].ProcessInstanceID + '" class="btn btn-link linkcolor sarfclick" data-vertices="' + sarfList[count].Vertices + '">' + sarfList[count].SARFID + '</button>' +
+                            '<span type="button" data-processinstanceid = "' + sarfList[count].ProcessInstanceID + '" class="btn btn-link linkcolor sarfclick" data-vertices="' + sarfList[count].Vertices + '">' + sarfList[count].SARFID + '</span>' +
                             '<div class="cardBody">' +
                                     '<span class = "cardSpan themeBlue">' + sarfList[count].SARFNAME + '</span>' +
                                     '<span class="cardSpan clearfix">' + sarfList[count].AreaInSqKm + ' Sq Km</span>' +
@@ -354,16 +354,16 @@ function onLoadGis() {
 
         var toggle = new BasemapToggle({
             map: map,
-            basemap: "streets",
+            basemap: "satellite",
             basemaps:
             {
-                "streets": {
-                    "title": "Map",
-                    "thumbnailUrl": "https://js.arcgis.com/3.15/esri/images/basemap/streets.jpg"
-                },
                 "satellite": {
                     "title": "Satellite",
                     "thumbnailUrl": "https://js.arcgis.com/3.15/esri/images/basemap/satellite.jpg"
+                  },
+                "streets": {
+                    "title": "Map",
+                    "thumbnailUrl": "https://js.arcgis.com/3.15/esri/images/basemap/streets.jpg"
                 }
             }
         }, "BasemapToggle");
@@ -435,7 +435,7 @@ function onLoadGis() {
 
             map.addLayer(drawingLayer);
 
-            $(".cardInfo").click(function () {
+            $(document).on('click', ".cardInfo", function () {
                 map.graphics.clear();
                 var cell = $(this);
                 $.each($(".cardInfo"), function (i, val) {
@@ -721,18 +721,15 @@ function onLoadGis() {
             }
 
         }
-        function closetootipdialog()
-        {
-            alert();
-        }
+      
         //Creates right-click context menu for graphics on the drawingLayer
         function createGraphicsMenu() {
          
             ctxMenuForGraphics = new Menu({});
             ctxMenuForGraphics.addChild(new MenuItem({
-                label: "Create Sarf",               
+                label: "Create SARF",               
                 onClick: function () {
-          // CREATE DIALOG
+                    // CREATE DIALOG
                     var node = dom.byId('drawingLayer_layer');                  
                     if (!tooltipDialog) {
                         var htmlFragment = '';
@@ -741,10 +738,10 @@ function onLoadGis() {
                         htmlFragment += '<input type="button"  id="btncancelsarf"  value="Cancel" class="btn whiteBtn dialogtootipbtncancel"/></div></div>'
                         // CREATE TOOLTIP DIALOG
                         tooltipDialog = new dijit.TooltipDialog({
-            content: htmlFragment,
-            autofocus: !dojo.isIE, // NOTE: turning focus ON in IE causes errors when reopening the dialog
-            refocus: !dojo.isIE
-          });
+                        content: htmlFragment,
+                        autofocus: !dojo.isIE, // NOTE: turning focus ON in IE causes errors when reopening the dialog
+                        refocus: !dojo.isIE
+                      });
           
                         // DISPLAY TOOLTIP DIALOG AROUND THE CLICKED ELEMENT
                         dijit.popup.open({ popup: tooltipDialog, around: node });
@@ -772,14 +769,14 @@ function onLoadGis() {
                             map.enableMapNavigation();
                             //Remove active style from draw button
                             $(".btn-draw.active").removeClass("active");
-        }
-        }
+                    }
+                    }
 
                     $("#btncancelsarf").click(function () {                       
                         if (tooltipDialog.opened_) {
                             dijit.popup.close(tooltipDialog);
                             tooltipDialog.opened_ = false;
-        }
+                        }
                     });
                     $("#btncreatesarf").click(function () {
                                 var getProcessUrl = "process-definition";
@@ -811,20 +808,7 @@ function onLoadGis() {
                                 });
                             }
 
-
                         });
-                    tooltipDialog.getChildren().forEach(function(w) {
-                        if (w.id == 'btncancelsarf') {
-                            //------------THIS CONNECT DOESN'T WORK
-                            dojo.connect(
-                                w,
-                                "onClick",
-                                function(e) {
-                                   // if (this.open) {
-                                        dijit.popup.close(tooltipDialog);
-                                        tooltipDialog.opened_ = false;
-                                   // }
-                                });  }})
 
                 }
             }));
