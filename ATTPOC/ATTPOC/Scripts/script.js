@@ -42,6 +42,7 @@ function saveSARFData(workflowProcessInstanceID) {
         county: constants.County,
         market: constants.Market,
         fAType: constants.FAType,
+        rFDesignEnggId: constants.RFDesignEnggId,
         processInstanceID: workflowProcessInstanceID,
         sarfStatus: statusEnum.RF_Pending_Completion
     };
@@ -63,6 +64,7 @@ function saveSARFData(workflowProcessInstanceID) {
         },
         error: function (err) {
             console.log(err);
+            $.LoadingOverlay("hide");
         }
     });
 }
@@ -87,9 +89,11 @@ function savePolygonData() {
         async: false,
         cache: false,
         success: function (data) {
+            $.LoadingOverlay("hide");
             $('#sarfForm').submit();
         },
         error: function (err) {
+            $.LoadingOverlay("hide");
             console.log(err);
         }
     });
@@ -145,14 +149,17 @@ function initGrid() {
             $('.pageLength').text(' of ' + noOfPages);
             cardViewDataBind();
             console.log(sarfList);
+            $.LoadingOverlay("hide");
         },
         error: function (err) {
             console.log(err);
+            $.LoadingOverlay("hide");
         }
     });
 }
 
 $(document).ready(function () {
+    $.LoadingOverlay("show");
     initGrid();
     $('#backIcon').addClass('pagingDisabled');
     $('.toggleArrow').click(function () {
@@ -230,9 +237,11 @@ function getTaskStatusbySarfID(id) {
             localStorage["taskStatus"] = parsedData;
             localStorage["sarfID"] = id;
             console.log(parsedData);
+            $.LoadingOverlay("hide");
         },
         error: function (err) {
             console.log(err);
+            $.LoadingOverlay("hide");
         }
     });
 }
@@ -260,6 +269,7 @@ function getTaskStatusbyProcessInstanceID(processInstanceID, sarfID) {
             localStorage["instanceID"] = InstanceID;
             localStorage["taskStatus"] = TaskStatus;
             console.log(parsedData);
+            $.LoadingOverlay("hide");
             }
             else {
                 getTaskStatusbySarfID(sarfID);
@@ -268,6 +278,7 @@ function getTaskStatusbyProcessInstanceID(processInstanceID, sarfID) {
         error: function (err) {
             getTaskStatusbySarfID(sarfID);
             console.log(err);
+            $.LoadingOverlay("hide");
         }
     });
 }
@@ -510,6 +521,7 @@ function onLoadGis() {
                         localStorage["vertices"] = finalVal;
                     }
                 }
+                $.LoadingOverlay("show");
                 getTaskStatusbyProcessInstanceID($(self).attr('data-processinstanceid'), sarfId);
                 window.location = appUrl + "SarfPage.aspx?processInstanceId=" + InstanceID + "&sarfid=" + sarfId;
                 
@@ -802,6 +814,7 @@ function onLoadGis() {
                         $('div.errorMsg').remove();
                     });
                     $("#btncreatesarf").click(function () {
+                        $.LoadingOverlay("show");
                         $('div.errorMsg').remove();
                         var getProcessUrl = "process-definition";
                         var jsonData = {

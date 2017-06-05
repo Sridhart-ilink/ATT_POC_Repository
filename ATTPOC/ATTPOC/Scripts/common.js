@@ -14,5 +14,6 @@ var constants = {
     Region: 'WEST',
     County: 'SPOKANE',
     Market: 'SPOKANE',
-    FAType: 'CELL'
+    FAType: 'CELL',
+    RFDesignEnggId: 'RF0001'
 };

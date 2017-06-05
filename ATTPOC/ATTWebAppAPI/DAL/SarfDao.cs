@@ -19,7 +19,7 @@ namespace ATTWebAppAPI.DAL
             {
                 try
                 {
-                    string query = "SELECT S.SARFID,S.SARFNAME,S.ProcessInstanceID, S.SarfStatus, S.AtollSiteName, P.Vertices,P.AreaInSqKm FROM SARF S JOIN Polygon P ON S.SarfId=P.SarfId order by S.DateCreated desc;";
+                    string query = "SELECT S.SARFID,S.SARFNAME,S.ProcessInstanceID, S.SarfStatus, S.AtollSiteName, S.RF_Design_Engineer_ATTUID, P.Vertices,P.AreaInSqKm FROM SARF S JOIN Polygon P ON S.SarfId=P.SarfId order by S.DateCreated desc;";
                     cn.Open();
                     using (MySqlCommand cmd = new MySqlCommand(query, cn))
                     {
@@ -52,10 +52,10 @@ namespace ATTWebAppAPI.DAL
                     long id = 0;
                     string query = "INSERT INTO SARF(SarfName,DateCreated,ProcessInstanceID, "+
                         "SarfStatus, AtollSiteName, FA_Code, Search_Ring_ID, iPlan_Job, " +
-                        "Pace, Market, County, FA_Type, Market_Cluster, Region) VALUES(" +
+                        "Pace, Market, County, FA_Type, Market_Cluster, Region, RF_Design_Engineer_ATTUID) VALUES(" +
                         "?SarfName,?DateCreated,?ProcessInstanceID, ?SarfStatus, "+
                         "?AtollSiteName, ?FA_Code, ?Search_Ring_ID, ?iPlan_Job, ?Pace, ?Market,"+
-                        "?County, ?FA_Type, ?Market_Cluster, ?Region);";
+                        "?County, ?FA_Type, ?Market_Cluster, ?Region, ?RF_Design_Engineer_ATTUID);";
                     cn.Open();
                     using (MySqlCommand cmd = new MySqlCommand(query, cn))
                     {                           
@@ -73,6 +73,7 @@ namespace ATTWebAppAPI.DAL
                         cmd.Parameters.Add("?FA_Type", MySqlDbType.VarChar).Value = sarf.FAType;
                         cmd.Parameters.Add("?Market_Cluster", MySqlDbType.VarChar).Value = sarf.MarketCluster;
                         cmd.Parameters.Add("?Region", MySqlDbType.VarChar).Value = sarf.Region;
+                        cmd.Parameters.Add("?RF_Design_Engineer_ATTUID", MySqlDbType.VarChar).Value = sarf.RFDesignEnggId;
                         cmd.ExecuteNonQuery();
                         id = cmd.LastInsertedId;
 
