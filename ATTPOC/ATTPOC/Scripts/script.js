@@ -33,10 +33,10 @@ function saveSARFData(workflowProcessInstanceID) {
     var jsonData = {
         sarfName: sarfNameTxt,
         atollSiteName: atollSiteNameTxt,
-        fACode: 'FA ' + sarfRandomID,
-        iPlanJob: 'IPLAN ' + sarfRandomID,
-        paceNumber: 'PACE ' + sarfRandomID,
-        searchRingId: 'SEARCH-RING ' + sarfRandomID,
+        fACode: constants.FACode + sarfRandomID,
+        iPlanJob: constants.IPlanJob + sarfRandomID,
+        paceNumber: constants.PaceNumber + sarfRandomID,
+        searchRingId: constants.SearchRingId + sarfRandomID,
         marketCluster: constants.MarketCluster,
         region: constants.Region,
         county: constants.County,
@@ -55,7 +55,7 @@ function saveSARFData(workflowProcessInstanceID) {
         contentType: 'application/json',
         url: camundaBaseApiUrl + postSarfDataUrl,
         data: JSON.stringify(jsonData),
-        async: false,
+        //async: false,
         cache: false,
         success: function (data) {
             console.log(data);
@@ -86,7 +86,7 @@ function savePolygonData() {
         contentType: 'application/json',
         url: camundaBaseApiUrl + postPolyDataUrl,
         data: JSON.stringify(jsonData),
-        async: false,
+        //async: false,
         cache: false,
         success: function (data) {
             $.LoadingOverlay("hide");
@@ -140,7 +140,7 @@ function initGrid() {
         contentType: 'application/json; charset=utf-8',
         url: camundaBaseApiUrl + getDetailsAction,
         data: JSON.stringify({}),
-        async: false,
+        //async: false,
         cache: false,
         success: function (data) {
             sarfList = data;
@@ -228,7 +228,7 @@ function getTaskStatusbySarfID(id) {
         contentType: 'application/json; charset=utf-8',
         url: camundaBaseApiUrl + getStatusUrl + "/" + id,
         data: JSON.stringify({}),
-        async: false,
+        //async: false,
         cache: false,
         success: function (data) {
             var parsedData = data;
@@ -238,6 +238,7 @@ function getTaskStatusbySarfID(id) {
             localStorage["sarfID"] = id;
             console.log(parsedData);
             $.LoadingOverlay("hide");
+            window.location = appUrl + "SarfPage.aspx?processInstanceId=" + InstanceID + "&sarfid=" + localStorage["sarfID"];
         },
         error: function (err) {
             console.log(err);
@@ -257,7 +258,7 @@ function getTaskStatusbyProcessInstanceID(processInstanceID, sarfID) {
         contentType: 'application/json; charset=utf-8',
         url: camundaBaseApiUrl + getStatusUrl + "/" + processInstanceID,
         data: JSON.stringify({}),
-        async: false,
+        //async: false,
         cache: false,
         success: function (data) {
             if (data != null) {
@@ -523,7 +524,7 @@ function onLoadGis() {
                 }
                 $.LoadingOverlay("show");
                 getTaskStatusbyProcessInstanceID($(self).attr('data-processinstanceid'), sarfId);
-                window.location = appUrl + "SarfPage.aspx?processInstanceId=" + InstanceID + "&sarfid=" + sarfId;
+                
                 
             });
 
@@ -830,7 +831,7 @@ function onLoadGis() {
                                     contentType: 'application/json',
                                     url: camundaBaseApiUrl + getProcessUrl,
                                     data: JSON.stringify(jsonData),
-                                    async: false,
+                                    //async: false,
                                     cache: false,
                                     success: function (data) {
                                             if (data != null)

@@ -15,5 +15,9 @@ var constants = {
     County: 'SPOKANE',
     Market: 'WASHINGTON',
     FAType: 'CELL',
-    RFDesignEnggId: 'RF0001'
+    RFDesignEnggId: 'RF0001',
+    FACode: '1167',
+    IPlanJob: 'WR_-RWOR-14-0',
+    PaceNumber: 'MRGEO00',
+    SearchRingId: '13'
 };

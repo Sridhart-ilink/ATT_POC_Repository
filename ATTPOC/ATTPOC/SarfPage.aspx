@@ -510,7 +510,7 @@
                 contentType: 'application/json',
                 url: camundaBaseApiUrl + getStatusUrl,
                 data: JSON.stringify(sarf),
-                async: false,
+                //async: false,
                 cache: false,
                 success: function (data) {
                     localStorage["taskStatus"] = labelStatus;
@@ -542,7 +542,7 @@
                 contentType: 'application/json',
                 url: camundaBaseApiUrl + getStatusUrl,
                 data: JSON.stringify(jsonData),
-                async: false,
+                //async: false,
                 cache: false,
                 success: function (data) {
                     if (data) {
@@ -580,7 +580,7 @@
                 contentType: 'application/json; charset=utf-8',
                 url: camundaBaseApiUrl + getStatusUrl + "/" + processInstanceID,
                 data: JSON.stringify({}),
-                async: false,
+                //async: false,
                 cache: false,
                 success: function (data) {
                     if (data != null) {
@@ -765,7 +765,7 @@
                 contentType: 'application/json',
                 url: camundaBaseApiUrl + getDetailsUrl,
                 data: JSON.stringify({}),
-                async: false,
+                //async: false,
                 cache: false,
                 success: function (data) {
                     jsonDetails = data[0];
@@ -788,7 +788,7 @@
                 contentType: 'application/json; charset=utf-8',
                 url: camundaBaseApiUrl + getSarfPolygonUrl,
                 data: JSON.stringify({}),
-                async: false,
+                //async: false,
                 cache: false,
                 success: function (data) {
                     $.each(data, function (i, item) {
@@ -887,7 +887,7 @@
                     contentType: 'application/json',
                     url: camundaBaseApiUrl + postSarfDataUrl,
                     data: JSON.stringify(sarf),
-                    async: false,
+                    //async: false,
                     cache: false,
                     success: function (data) {
                         $('#editBtn').show();
@@ -1179,7 +1179,7 @@
                                         contentType: 'application/json',
                                         url: camundaBaseApiUrl + saveNodeUrl,
                                         data: JSON.stringify(jsonData),
-                                        async: false,
+                                        //async: false,
                                         cache: false,
                                         success: function (data) {
                                             console.log(data);
