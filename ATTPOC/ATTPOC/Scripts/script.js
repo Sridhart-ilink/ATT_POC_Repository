@@ -435,7 +435,7 @@ function onLoadGis() {
 
             map.addLayer(drawingLayer);
 
-            $(".cardInfo").click(function () {
+            $(document).on('click', ".cardInfo", function () {
                 map.graphics.clear();
                 var cell = $(this);
                 $.each($(".cardInfo"), function (i, val) {
