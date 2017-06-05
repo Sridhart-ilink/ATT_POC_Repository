@@ -8,12 +8,3 @@ var camundaBaseApiUrl = "http://localhost:55537/api/";
 var appUrl = "http://attpoc-websvr.cloudapp.net/ATTWorkflowPOC";
 var camundaBaseApiUrl = "http://attpoc-websvr.cloudapp.net/ATTWebAppAPI/api/";
 */
-var statusEnum = {
-    One: "RF Pending Completion",
-    Two: "C&E PM Vendor Assignment",
-    Three: "TV Pending Approval",
-    Four: "RF Mod - C&E PM Vendor Assignment",
-    Five: "RF Mod - TV Pending Approval",
-    Six: "TV Complete",
-    Seven: "Cancel"
-};

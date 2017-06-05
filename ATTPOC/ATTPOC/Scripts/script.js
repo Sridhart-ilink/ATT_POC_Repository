@@ -28,10 +28,22 @@ function loadScript(src, callback) {
 function saveSARFData(workflowProcessInstanceID) {
     var postSarfDataUrl = "Sarf/Post";
     var sarfNameTxt = $('#txtsarf').val();
+    var atollSiteNameTxt = $('#txtatollsitename').val();
+    var sarfRandomID = (Math.floor(1000 + Math.random() * 9000)).toString();
     var jsonData = {
         sarfName: sarfNameTxt,
+        atollSiteName: atollSiteNameTxt,
+        fACode: 'FA ' + sarfRandomID,
+        iPlanJob: 'IPLAN ' + sarfRandomID,
+        paceNumber: 'PACE ' + sarfRandomID,
+        searchRingId: 'SEARCH-RING ' + sarfRandomID,
+        marketCluster: constants.MarketCluster,
+        region: constants.Region,
+        county: constants.County,
+        market: constants.Market,
+        fAType: constants.FAType,
         processInstanceID: workflowProcessInstanceID,
-        sarfStatus : "RF Pending Completion"
+        sarfStatus: statusEnum.RF_Pending_Completion
     };
     /*
    api call to post sarf data
@@ -733,15 +745,17 @@ function onLoadGis() {
                     var node = dom.byId('drawingLayer_layer');                  
                     if (!tooltipDialog) {
                         var htmlFragment = '';
-                        htmlFragment += '<div id="mapTwo" class="dialogtooltip"><input type="text" id="txtsarf" width="150px" class="dialogtooltipinput">';
+                        htmlFragment += '<div id="mapTwo" class="dialogtooltip"><input type="text" id="txtsarf" placeholder = "Sarf Name" width="150px" class="dialogtooltipinput">';
+                        htmlFragment += '<div><input type="text" id="txtatollsitename" placeholder="Atoll Site Name" width="150px" class="dialogtooltipinput" style="margin-top:0px;"></div>';
                         htmlFragment += '<div><input type="button" id="btncreatesarf" value="Save" class="btn blueBtn dialogtootipbtn"/>'
                         htmlFragment += '<input type="button"  id="btncancelsarf"  value="Cancel" class="btn whiteBtn dialogtootipbtncancel"/></div></div>'
+                        var errorMsg = '<div class= "errorMsg" style = "margin-left: 20px;"><span style="color : red;">Fields must not be empty</span></div>';
                         // CREATE TOOLTIP DIALOG
                         tooltipDialog = new dijit.TooltipDialog({
-                        content: htmlFragment,
-                        autofocus: !dojo.isIE, // NOTE: turning focus ON in IE causes errors when reopening the dialog
-                        refocus: !dojo.isIE
-                      });
+                            content: htmlFragment,
+                            autofocus: !dojo.isIE, // NOTE: turning focus ON in IE causes errors when reopening the dialog
+                            refocus: !dojo.isIE
+                        });
           
                         // DISPLAY TOOLTIP DIALOG AROUND THE CLICKED ELEMENT
                         dijit.popup.open({ popup: tooltipDialog, around: node });
@@ -753,6 +767,14 @@ function onLoadGis() {
                         map.enableMapNavigation();
                         //Remove active style from draw button
                         $(".btn-draw.active").removeClass("active");
+                       
+                        $('#txtsarf').keypress(function () {
+                            $('div.errorMsg').remove();
+                        });
+
+                        $('#txtatollsitename').keypress(function () {
+                            $('div.errorMsg').remove();
+                        });
                       
                     } else {
                         if (tooltipDialog.opened_) {
@@ -769,7 +791,7 @@ function onLoadGis() {
                             map.enableMapNavigation();
                             //Remove active style from draw button
                             $(".btn-draw.active").removeClass("active");
-                    }
+                        }
                     }
 
                     $("#btncancelsarf").click(function () {                       
@@ -777,16 +799,18 @@ function onLoadGis() {
                             dijit.popup.close(tooltipDialog);
                             tooltipDialog.opened_ = false;
                         }
+                        $('div.errorMsg').remove();
                     });
                     $("#btncreatesarf").click(function () {
-                                var getProcessUrl = "process-definition";
-                                var jsonData = {
-                                    variables: {},
-                                    key: "identify-sarfs"
-                                }
+                        $('div.errorMsg').remove();
+                        var getProcessUrl = "process-definition";
+                        var jsonData = {
+                            variables: {},
+                            key: "identify-sarfs"
+                        }
                         var sarfNameTxt = $('#txtsarf').val();
-                        var errorMsg = '<div class= "errorMsg"><span style="color : red;">SARF name is invalid</span></div>';
-                        if (sarfNameTxt != null && sarfNameTxt != '') {
+                        var atollSiteNameTxt = $('#txtatollsitename').val();
+                        if (sarfNameTxt.length > 0 && atollSiteNameTxt.length > 0) {
                                 $.ajax({
                                     method: 'POST',
                                     dataType: 'json',
@@ -797,7 +821,7 @@ function onLoadGis() {
                                     cache: false,
                                     success: function (data) {
                                             if (data != null)
-                                        saveSARFData(JSON.parse(data).id);
+                                                saveSARFData(JSON.parse(data).id);
                                             else
                                                 saveSARFData(0);
                                     },
@@ -807,8 +831,10 @@ function onLoadGis() {
                                     }
                                 });
                             }
-
-                        });
+                        else {
+                            $('#txtatollsitename').after(errorMsg);
+                        }
+                    });
 
                 }
             }));
