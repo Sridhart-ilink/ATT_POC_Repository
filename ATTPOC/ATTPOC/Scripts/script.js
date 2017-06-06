@@ -58,7 +58,6 @@ function saveSARFData(workflowProcessInstanceID) {
         //async: false,
         cache: false,
         success: function (data) {
-            console.log(data);
             localStorage["sarfID"] = data;
             savePolygonData();
         },
@@ -148,7 +147,6 @@ function initGrid() {
             noOfPages = (sarfList.length % 10 == 0) ? (sarfList.length / 10) : Math.ceil(sarfList.length / 10);
             $('.pageLength').text(' of ' + noOfPages);
             cardViewDataBind();
-            console.log(sarfList);
             $.LoadingOverlay("hide");
         },
         error: function (err) {
@@ -236,7 +234,6 @@ function getTaskStatusbySarfID(id) {
             localStorage["instanceID"] = '0';
             localStorage["taskStatus"] = parsedData;
             localStorage["sarfID"] = id;
-            console.log(parsedData);
             $.LoadingOverlay("hide");
             window.location = appUrl + "SarfPage.aspx?processInstanceId=" + InstanceID + "&sarfid=" + localStorage["sarfID"];
         },
@@ -262,23 +259,18 @@ function getTaskStatusbyProcessInstanceID(processInstanceID, sarfID) {
         cache: false,
         success: function (data) {
             if (data != null) {
-            var parsedData = JSON.parse(data);
-            InstanceID = parsedData[0].processInstanceId;
-            TaskID = parsedData[0].id;
-            TaskStatus = parsedData[0].name;
-            localStorage["taskID"] = TaskID;
-            localStorage["instanceID"] = InstanceID;
-            localStorage["taskStatus"] = TaskStatus;
-            console.log(parsedData);
-            $.LoadingOverlay("hide");
-            window.location = appUrl + "SarfPage.aspx?processInstanceId=" + InstanceID + "&sarfid=" + localStorage["sarfID"];
-            }
-            else {
-                getTaskStatusbySarfID(sarfID);
+                var parsedData = JSON.parse(data);
+                InstanceID = parsedData[0].processInstanceId;
+                TaskID = parsedData[0].id;
+                TaskStatus = parsedData[0].name;
+                localStorage["taskID"] = TaskID;
+                localStorage["instanceID"] = InstanceID;
+                localStorage["taskStatus"] = TaskStatus;
+                $.LoadingOverlay("hide");
+                window.location = appUrl + "SarfPage.aspx?processInstanceId=" + InstanceID + "&sarfid=" + localStorage["sarfID"];
             }
         },
         error: function (err) {
-            getTaskStatusbySarfID(sarfID);
             console.log(err);
             $.LoadingOverlay("hide");
         }
@@ -524,9 +516,12 @@ function onLoadGis() {
                     }
                 }
                 $.LoadingOverlay("show");
-                getTaskStatusbyProcessInstanceID($(self).attr('data-processinstanceid'), sarfId);
-                //window.location = appUrl + "SarfPage.aspx?processInstanceId=" + InstanceID + "&sarfid=" + sarfId;
-                
+                if (isPortActive) {
+                    getTaskStatusbyProcessInstanceID($(self).attr('data-processinstanceid'), sarfId);
+                }
+                else {
+                    getTaskStatusbySarfID(sarfId);
+                }
             });
 
             $(".addSarfBtn").click(function () {
@@ -826,6 +821,7 @@ function onLoadGis() {
                         var sarfNameTxt = $('#txtsarf').val();
                         var atollSiteNameTxt = $('#txtatollsitename').val();
                         if (sarfNameTxt.length > 0 && atollSiteNameTxt.length > 0) {
+                            if (isPortActive) {
                                 $.ajax({
                                     method: 'POST',
                                     dataType: 'json',
@@ -835,17 +831,18 @@ function onLoadGis() {
                                     //async: false,
                                     cache: false,
                                     success: function (data) {
-                                            if (data != null)
-                                                saveSARFData(JSON.parse(data).id);
-                                            else
-                                                saveSARFData(0);
+                                        if (data != null)
+                                            saveSARFData(JSON.parse(data).id);
                                     },
                                     error: function (err) {
-                                        saveSARFData(0);
                                         console.log(err);
                                     }
                                 });
                             }
+                            else {
+                                saveSARFData(0);
+                            }
+                        }
                         else {
                             $('#txtatollsitename').after(errorMsg);
                         }

@@ -104,6 +104,7 @@
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\globals.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />
+    <Content Include="Scripts\sarfDetails.js" />
     <Content Include="Scripts\script.js" />
     <Content Include="Styles\images\application-leave.png" />
     <Content Include="Styles\bootstrap-3.3.4.min.css" />

@@ -1,10 +1,11 @@
 ﻿var DECIMAL_PRECISION = 5;
 var events = [];
-//url path declarations
-var appUrl = "http://localhost:54981/";
-var camundaBaseApiUrl = "http://localhost:55537/api/";
-//var camundaBaseApiUrl = "http://attpoc-websvr.cloudapp.net/ATTWebAppAPI/api/";
-/*
-var appUrl = "http://attpoc-websvr.cloudapp.net/ATTWorkflowPOC";
-var camundaBaseApiUrl = "http://attpoc-websvr.cloudapp.net/ATTWebAppAPI/api/";
-*/
+var isPortActive = false;
+var localAppUrl = "localhost:54981";
+var serverAppUrl = "attpoc-websvr.cloudapp.net/ATTWorkflowPOC";
+var localApiUrl = "localhost:55537";
+var serverApiUrl = "attpoc-websvr.cloudapp.net/ATTWebAppAPI";
+
+var camundaBaseApiUrl = isPortActive ? "http://" + serverApiUrl + "/api/" :
+    "http://" + localApiUrl + "/api/";
+var appUrl = isPortActive ? "http://" + serverAppUrl + "/" : "http://" + localAppUrl + "/";
