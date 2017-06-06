@@ -726,8 +726,8 @@ function onLoadGis() {
                     SimpleMarkerSymbol.STYLE_CIRCLE).setColor(
                     new Color([255, 255, 0, 0.5]));
                 var attr = {
-                    "Xcoord": p.x,
-                    "Ycoord": p.y,
+                    "Xcoord": p.y,
+                    "Ycoord": p.x,
                     "Atoll": p.atoll,
                     "iPlan": p.iplan
                 }; // Set what attributes you want to add to graphics's info template.
