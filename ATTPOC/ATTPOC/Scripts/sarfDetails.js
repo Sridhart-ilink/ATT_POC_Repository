@@ -720,14 +720,14 @@ function onLoadGis() {
             graphicLayer = new GraphicsLayer();
            
             array.forEach(poinArr, function(p) {
-                var pointGeom = new Point([p.x, p.y], new esri.SpatialReference({ wkid: 4326 }));
+                var pointGeom = new Point([p.y, p.x], new esri.SpatialReference({ wkid: 4326 }));
                      
                 var sms = new SimpleMarkerSymbol().setStyle(
                     SimpleMarkerSymbol.STYLE_CIRCLE).setColor(
                     new Color([255, 255, 0, 0.5]));
                 var attr = {
-                    "Xcoord": p.x,
-                    "Ycoord": p.y,
+                    "Xcoord": p.y,
+                    "Ycoord": p.x,
                     "Atoll": p.atoll,
                     "iPlan": p.iplan
                 }; // Set what attributes you want to add to graphics's info template.
@@ -747,13 +747,13 @@ function onLoadGis() {
                     //  if (parseInt(map.graphics.graphics[i].geometry.x) == parseInt(localStorage["currentlat"]) || parseInt(map.graphics.graphics[i].geometry.y) == parseInt(localStorage["currentlong"])) {
                     if (map.graphics.graphics[i].attributes != undefined) {
                         if (map.graphics.graphics[i].attributes.name == "newPointLayer") {
-                            map.graphics.graphics[i].hide();
-                            localStorage["currentlat"] = "";
-                            localStorage["currentlong"] = "";
+                        map.graphics.graphics[i].hide();
+                        localStorage["currentlat"] = "";
+                        localStorage["currentlong"] = "";
 
 
-                        }
                     }
+                }
                   
                 }
             });
@@ -888,7 +888,7 @@ function onLoadGis() {
 
             ctxMenuForGraphics.startup();
 
-           
+
 
             //Bind and unbind the context menu using the following two events
             map.graphics.on("mouse-over", function (evt) {
@@ -899,8 +899,8 @@ function onLoadGis() {
                 // Let's bind to the graphic underneath the mouse cursor   
                 if (evt.graphic.geometry.type == "point" && evt.graphic.attributes != undefined) {
                     if (evt.graphic.attributes.name == "newPointLayer") {
-                        ctxMenuForGraphics.bindDomNode(evt.graphic.getDojoShape().getNode());
-                    }
+                    ctxMenuForGraphics.bindDomNode(evt.graphic.getDojoShape().getNode());
+                }
                 }
                     
             });
@@ -908,8 +908,8 @@ function onLoadGis() {
             map.graphics.on("mouse-out", function (evt) {
                 if (evt.graphic.geometry.type == "point" && evt.graphic.attributes != undefined) {
                     if (evt.graphic.attributes.name == "newPointLayer") {
-                        ctxMenuForGraphics.unBindDomNode(evt.graphic.getDojoShape().getNode());
-                    }
+                    ctxMenuForGraphics.unBindDomNode(evt.graphic.getDojoShape().getNode());
+                }
                 }
             });
 
@@ -982,25 +982,25 @@ function onLoadGis() {
                     if (evt.graphic.geometry.type == "polygon") {
                         if (localStorage["currentPolygonRing"] == evt.graphic.geometry.rings) {
 
-                            if (localStorage["currentlat"] == "" && localStorage["currentlong"] == "") {
+                        if (localStorage["currentlat"] == "" && localStorage["currentlong"] == "") {
 
-                                var sms = new SimpleMarkerSymbol().setStyle(
-                                 SimpleMarkerSymbol.STYLE_CIRCLE).setColor(
-                                 new Color([255, 110, 0, 0.5]));
-                                var mp = webMercatorUtils.webMercatorToGeographic(evt.mapPoint);
+                            var sms = new SimpleMarkerSymbol().setStyle(
+                             SimpleMarkerSymbol.STYLE_CIRCLE).setColor(
+                             new Color([255, 110, 0, 0.5]));
+                            var mp = webMercatorUtils.webMercatorToGeographic(evt.mapPoint);
                                 map.graphics.add(new esri.Graphic(evt.mapPoint, sms, { "name": "newPointLayer" }));
-                                // addPoints(mp);
-                                localStorage["lat"] = mp.x;
-                                localStorage["long"] = mp.y;
+                            // addPoints(mp);
+                            localStorage["lat"] = mp.x;
+                            localStorage["long"] = mp.y;
 
-                                localStorage["currentlat"] = evt.mapPoint.x;
-                                localStorage["currentlong"] = evt.mapPoint.y;
+                            localStorage["currentlat"] = evt.mapPoint.x;
+                            localStorage["currentlong"] = evt.mapPoint.y;
 
-                                createGraphicsMenu();
-                            }
-                            else {
-                                alert("Please save/clear the current node before adding another node.");
-                            }
+                            createGraphicsMenu();
+                        }
+                        else {
+                            alert("Please save/clear the current node before adding another node.");
+                        }
                         }
 
                     }

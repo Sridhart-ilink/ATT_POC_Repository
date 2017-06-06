@@ -133,7 +133,9 @@ namespace ATTWebAppAPI.Controllers
             {
                 polygon.ModifiedDate = DateTime.Now;
                 long polyId = sarfDao.SavePolygon(polygon, transId);
-                return WrapObjectToHttpResponse(polyId);
+                polygon.SarfId = (int)transId;
+                bool result = GenerateNodesByVertices(polygon);
+                return WrapObjectToHttpResponse(result);
             }
             catch (Exception ex)
             {
