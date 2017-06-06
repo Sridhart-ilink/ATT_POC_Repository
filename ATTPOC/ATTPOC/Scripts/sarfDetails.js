@@ -990,8 +990,8 @@ function onLoadGis() {
                             var mp = webMercatorUtils.webMercatorToGeographic(evt.mapPoint);
                                 map.graphics.add(new esri.Graphic(evt.mapPoint, sms, { "name": "newPointLayer" }));
                             // addPoints(mp);
-                            localStorage["lat"] = mp.x;
-                            localStorage["long"] = mp.y;
+                            localStorage["lat"] = mp.y;
+                            localStorage["long"] = mp.x;
 
                             localStorage["currentlat"] = evt.mapPoint.x;
                             localStorage["currentlong"] = evt.mapPoint.y;
