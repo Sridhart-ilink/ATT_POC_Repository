@@ -720,7 +720,7 @@ function onLoadGis() {
             graphicLayer = new GraphicsLayer();
            
             array.forEach(poinArr, function(p) {
-                var pointGeom = new Point([p.x, p.y], new esri.SpatialReference({ wkid: 4326 }));
+                var pointGeom = new Point([p.y, p.x], new esri.SpatialReference({ wkid: 4326 }));
                      
                 var sms = new SimpleMarkerSymbol().setStyle(
                     SimpleMarkerSymbol.STYLE_CIRCLE).setColor(
@@ -735,9 +735,9 @@ function onLoadGis() {
                 var g = new Graphic(pointGeom, sms, attr, infoTemplate);
                 g.setInfoTemplate(infoTemplate);
                 map.graphics.add(g);
-                       
+
             });
-           
+          
         }
 
         function clearGraphics() {
@@ -747,8 +747,8 @@ function onLoadGis() {
                         map.graphics.graphics[i].hide();
                         localStorage["currentlat"] = "";
                         localStorage["currentlong"] = "";
-                    }
                 }
+            }
             });
         }
 
@@ -969,19 +969,19 @@ function onLoadGis() {
                     if (evt.graphic.geometry.type == "polygon") {
                         if (localStorage["currentlat"] == "" && localStorage["currentlong"] == "") {
 
-                            var sms = new SimpleMarkerSymbol().setStyle(
-                             SimpleMarkerSymbol.STYLE_CIRCLE).setColor(
-                             new Color([255, 110, 0, 0.5]));
-                            var mp = webMercatorUtils.webMercatorToGeographic(evt.mapPoint);
-                            map.graphics.add(new esri.Graphic(evt.mapPoint, sms));
-                            // addPoints(mp);
-                            localStorage["lat"] = mp.x;
-                            localStorage["long"] = mp.y;
+                        var sms = new SimpleMarkerSymbol().setStyle(
+                         SimpleMarkerSymbol.STYLE_CIRCLE).setColor(
+                         new Color([255, 110, 0, 0.5]));
+                        var mp = webMercatorUtils.webMercatorToGeographic(evt.mapPoint);
+                        map.graphics.add(new esri.Graphic(evt.mapPoint, sms));
+                        // addPoints(mp);
+                        localStorage["lat"] = mp.x;
+                        localStorage["long"] = mp.y;
 
                             localStorage["currentlat"] = evt.mapPoint.x;
                             localStorage["currentlong"] = evt.mapPoint.y;
 
-                            createGraphicsMenu();
+                    createGraphicsMenu();
                         }
                         else {
                             alert("Please save/clear the current node before adding another node.");
