@@ -648,7 +648,7 @@ function onLoadGis() {
                 var polygon = new Polygon(new esri.SpatialReference({ wkid: 4326 }));
                 finalVal = JSON.parse("[" + finalVal + "]");
                 polygon.addRing(finalVal)
-
+                localStorage["currentPolygonRing"] = polygon.rings;
                 var gra = new esri.Graphic(polygon, fillSymbol);
                 map.graphics.add(gra);
                 map.setExtent(gra.geometry.getExtent().expand(2));
@@ -743,11 +743,18 @@ function onLoadGis() {
         function clearGraphics() {
             $.each(map.graphics.graphics, function (i, val) {
                 if (map.graphics.graphics[i].geometry.type == "point") {
-                    if (parseInt(map.graphics.graphics[i].geometry.x) == parseInt(localStorage["currentlat"]) || parseInt(map.graphics.graphics[i].geometry.y) == parseInt(localStorage["currentlong"])) {
-                        map.graphics.graphics[i].hide();
-                        localStorage["currentlat"] = "";
-                        localStorage["currentlong"] = "";
+                   
+                    //  if (parseInt(map.graphics.graphics[i].geometry.x) == parseInt(localStorage["currentlat"]) || parseInt(map.graphics.graphics[i].geometry.y) == parseInt(localStorage["currentlong"])) {
+                    if (map.graphics.graphics[i].attributes != undefined) {
+                        if (map.graphics.graphics[i].attributes.name == "newPointLayer") {
+                            map.graphics.graphics[i].hide();
+                            localStorage["currentlat"] = "";
+                            localStorage["currentlong"] = "";
+
+
+                        }
                     }
+                  
                 }
             });
         }
@@ -881,6 +888,7 @@ function onLoadGis() {
 
             ctxMenuForGraphics.startup();
 
+           
 
             //Bind and unbind the context menu using the following two events
             map.graphics.on("mouse-over", function (evt) {
@@ -889,14 +897,19 @@ function onLoadGis() {
                 // listed in the menu.             
                 selected = evt.graphic;
                 // Let's bind to the graphic underneath the mouse cursor   
-                if (evt.graphic.geometry.type == "point") {
-                    ctxMenuForGraphics.bindDomNode(evt.graphic.getDojoShape().getNode());
+                if (evt.graphic.geometry.type == "point" && evt.graphic.attributes != undefined) {
+                    if (evt.graphic.attributes.name == "newPointLayer") {
+                        ctxMenuForGraphics.bindDomNode(evt.graphic.getDojoShape().getNode());
+                    }
                 }
+                    
             });
 
             map.graphics.on("mouse-out", function (evt) {
-                if (evt.graphic.geometry.type == "point") {
-                    ctxMenuForGraphics.unBindDomNode(evt.graphic.getDojoShape().getNode());
+                if (evt.graphic.geometry.type == "point" && evt.graphic.attributes != undefined) {
+                    if (evt.graphic.attributes.name == "newPointLayer") {
+                        ctxMenuForGraphics.unBindDomNode(evt.graphic.getDojoShape().getNode());
+                    }
                 }
             });
 
@@ -967,24 +980,27 @@ function onLoadGis() {
             map.graphics.on("click", function (evt) {
                 if (drawing !== true) {
                     if (evt.graphic.geometry.type == "polygon") {
-                        if (localStorage["currentlat"] == "" && localStorage["currentlong"] == "") {
+                        if (localStorage["currentPolygonRing"] == evt.graphic.geometry.rings) {
 
-                            var sms = new SimpleMarkerSymbol().setStyle(
-                             SimpleMarkerSymbol.STYLE_CIRCLE).setColor(
-                             new Color([255, 110, 0, 0.5]));
-                            var mp = webMercatorUtils.webMercatorToGeographic(evt.mapPoint);
-                            map.graphics.add(new esri.Graphic(evt.mapPoint, sms));
-                            // addPoints(mp);
-                            localStorage["lat"] = mp.x;
-                            localStorage["long"] = mp.y;
+                            if (localStorage["currentlat"] == "" && localStorage["currentlong"] == "") {
 
-                            localStorage["currentlat"] = evt.mapPoint.x;
-                            localStorage["currentlong"] = evt.mapPoint.y;
+                                var sms = new SimpleMarkerSymbol().setStyle(
+                                 SimpleMarkerSymbol.STYLE_CIRCLE).setColor(
+                                 new Color([255, 110, 0, 0.5]));
+                                var mp = webMercatorUtils.webMercatorToGeographic(evt.mapPoint);
+                                map.graphics.add(new esri.Graphic(evt.mapPoint, sms, { "name": "newPointLayer" }));
+                                // addPoints(mp);
+                                localStorage["lat"] = mp.x;
+                                localStorage["long"] = mp.y;
 
-                            createGraphicsMenu();
-                        }
-                        else {
-                            alert("Please save/clear the current node before adding another node.");
+                                localStorage["currentlat"] = evt.mapPoint.x;
+                                localStorage["currentlong"] = evt.mapPoint.y;
+
+                                createGraphicsMenu();
+                            }
+                            else {
+                                alert("Please save/clear the current node before adding another node.");
+                            }
                         }
 
                     }
