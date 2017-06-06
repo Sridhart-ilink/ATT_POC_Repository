@@ -707,7 +707,7 @@ function onLoadGis() {
                 cache: false,
                 success: function (data) {
                     $.each(data, function (i, item) {                               
-                        poinArr.push({x:item.Latitude,y:item.Longitude});
+                        poinArr.push({atoll:item.AtollSiteName,iplan:item.iPlanJobNumber,x:item.Latitude,y:item.Longitude});
                     });
 
                 },
@@ -718,28 +718,7 @@ function onLoadGis() {
 
             //access the lat long data.
             graphicLayer = new GraphicsLayer();
-            //var poinArr = [
-            //    [-121.86320179687232, 51.1626541767109],
-            //    [-74.049, 38.485],
-            //    [-78.119, 36.125],
-            //    [-58.189, 33.765],
-            //    [-59.259, 31.405],
-            //    [-84.329, 37.045],
-            //    [-64.399, 28.685],
-            //    [-88.469, 24.325],
-            //    [-65.539, 56.965],
-            //    [-64.609, 19.605],
-            //    [-65.679, 17.245],
-            //    [-79.749, 34.885],
-            //    [-76.819, 45.525],
-            //    [-110.889, 27.165],
-            //    [-105.959, 37.805],
-            //    [-117.029, 20.445],
-            //    [-110.099, 52.085],
-            //    [-98.169, 45.7250],
-            //    [-87.239, 59.635],
-            //    [-75.309, 58.995]
-            //];
+           
             array.forEach(poinArr, function(p) {
                 var pointGeom = new Point([p.x, p.y], new esri.SpatialReference({ wkid: 4326 }));
                      
@@ -748,55 +727,29 @@ function onLoadGis() {
                     new Color([255, 255, 0, 0.5]));
                 var attr = {
                     "Xcoord": p.x,
-                    "Ycoord": p.y
+                    "Ycoord": p.y,
+                    "Atoll": p.atoll,
+                    "iPlan": p.iplan
                 }; // Set what attributes you want to add to graphics's info template.
-                var infoTemplate = new InfoTemplate("My LatLongs", "Latitude: ${Ycoord} <br/>Longitude: ${Xcoord} <br/>");
+                var infoTemplate = new InfoTemplate("Node Details", "Atoll SiteName: ${Atoll} <br/>iPlan JobNumber: ${iPlan} <br/>  Latitude: ${Ycoord} <br/>Longitude: ${Xcoord} <br/>");
                 var g = new Graphic(pointGeom, sms, attr, infoTemplate);
                 g.setInfoTemplate(infoTemplate);
-                graphicLayer.add(g);
-
-                //map.infoWindow.setContent(g.getContent());
-                //map.infoWindow.setTitle(g.getTitle());
-                //map.infoWindow.show();                      
+                map.graphics.add(g);
                        
             });
-            map.addLayer(graphicLayer);
-        }
-          
-        function addPoints(mappoint) {
-            //access the lat long data.
-            graphicLayer = new GraphicsLayer();
-                  
-            var pointGeom = new Point([mappoint.x, mappoint.y], new esri.SpatialReference({ wkid: 4326 }));
-            var sms = new SimpleMarkerSymbol().setStyle(
-                SimpleMarkerSymbol.STYLE_CIRCLE).setColor(
-                new Color([255, 110, 0, 0.5]));
-            var attr = {
-                "Xcoord": mappoint.x,
-                "Ycoord": mappoint.y
-            }; // Set what attributes you want to add to graphics's info template.
-            var infoTemplate = new InfoTemplate("My LatLongs", "Latitude: ${Ycoord} <br/>Longitude: ${Xcoord} <br/>");
-            var g = new Graphic(pointGeom, sms, attr, infoTemplate);
-            graphicLayer.add(g);
-            map.addLayer(graphicLayer);
+           
         }
 
         function clearGraphics() {
-            //first remove all graphics added directly to map
-            if (map.graphics.type == "point") {
-                map.graphics.clear();
-            }
-
-            //now go into each graphic layer and clear it
-            var graphicLayerIds = map.graphicsLayerIds;
-            var len = graphicLayerIds.length;
-            for (var i = 0; i < len; i++) {
-                var gLayer = map.getLayer(graphicLayerIds[i]);
-                //clear this Layer
-                if (map.graphics.type == "point") {
-                    gLayer.clear();
+            $.each(map.graphics.graphics, function (i, val) {
+                if (map.graphics.graphics[i].geometry.type == "point") {
+                    if (parseInt(map.graphics.graphics[i].geometry.x) == parseInt(localStorage["currentlat"]) || parseInt(map.graphics.graphics[i].geometry.y) == parseInt(localStorage["currentlong"])) {
+                        map.graphics.graphics[i].hide();
+                        localStorage["currentlat"] = "";
+                        localStorage["currentlong"] = "";
+                    }
                 }
-            }
+            });
         }
 
         //Creates right-click context menu for graphics on the point
@@ -805,7 +758,7 @@ function onLoadGis() {
             ctxMenuForGraphics.addChild(new MenuItem({
                 label: "Add Node",
                 onClick: function () {
-                    $('div.errorMsg').remove();
+                    //$('div.errorMsg').remove();
                     // CREATE DIALOG
                     var node = dom.byId('drawingLayer_layer');
                     if (!tooltipDialog) {
@@ -900,6 +853,8 @@ function onLoadGis() {
                                 cache: false,
                                 success: function (data) {
                                     $.LoadingOverlay("hide");
+                                    localStorage["currentlat"] = "";
+                                    localStorage["currentlong"] = "";
                                     $('#sarfForm').submit();
                                 },
                                 error: function (err) {
@@ -1012,18 +967,27 @@ function onLoadGis() {
             map.graphics.on("click", function (evt) {
                 if (drawing !== true) {
                     if (evt.graphic.geometry.type == "polygon") {
-                        var sms = new SimpleMarkerSymbol().setStyle(
-                         SimpleMarkerSymbol.STYLE_CIRCLE).setColor(
-                         new Color([255, 110, 0, 0.5]));
-                        var mp = webMercatorUtils.webMercatorToGeographic(evt.mapPoint);
-                        map.graphics.add(new esri.Graphic(evt.mapPoint, sms));
-                        // addPoints(mp);
-                        localStorage["lat"] = mp.x;
-                        localStorage["long"] = mp.y;
+                        if (localStorage["currentlat"] == "" && localStorage["currentlong"] == "") {
+
+                            var sms = new SimpleMarkerSymbol().setStyle(
+                             SimpleMarkerSymbol.STYLE_CIRCLE).setColor(
+                             new Color([255, 110, 0, 0.5]));
+                            var mp = webMercatorUtils.webMercatorToGeographic(evt.mapPoint);
+                            map.graphics.add(new esri.Graphic(evt.mapPoint, sms));
+                            // addPoints(mp);
+                            localStorage["lat"] = mp.x;
+                            localStorage["long"] = mp.y;
+
+                            localStorage["currentlat"] = evt.mapPoint.x;
+                            localStorage["currentlong"] = evt.mapPoint.y;
+
+                            createGraphicsMenu();
+                        }
+                        else {
+                            alert("Please save/clear the current node before adding another node.");
+                        }
+
                     }
-
-                    createGraphicsMenu();
-
 
                 }
             });
@@ -1180,28 +1144,6 @@ function onLoadGis() {
             var multiplier = Math.pow(10, places);
             return Math.round((num + 0.00001) * multiplier) / multiplier;
         }
-
-
-        //   function createToolbarAndContextMenu() {
-
-        //       map.graphics.on("click", function (evt) {
-        //          if (drawing !== true) {
-        //          var symbol = new SimpleMarkerSymbol(
-        //                                        SimpleMarkerSymbol.STYLE_CIRCLE,
-        //                                        12,
-        //                                        new SimpleLineSymbol(
-        //                                          SimpleLineSymbol.STYLE_NULL,
-        //                                          new Color([247, 34, 101, 0.9]),
-        //                                          1
-        //                                        ),
-        //                                        new Color([207, 34, 171, 0.5])
-        //                                      );
-
-        //       // map.graphics.add(new esri.Graphic(evt.mapPoint,symbol));
-        //        //createGraphicsMenu();
-        //     }
-        //   });
-        //}
 
         //Disable double-click zoom if a graphic is being clicked while editing
         events.push(map.on("mouse-down", function (e) {
