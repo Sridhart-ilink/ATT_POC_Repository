@@ -331,6 +331,12 @@ function restoreCurrentTab() {
 
 //Jquery - document load script method
 $(document).ready(function () {
+    if (localStorage["currentlong"] == null) {
+        localStorage["currentlong"] = "";
+    }
+    if (localStorage["currentlat"] == null) {
+        localStorage["currentlat"] = "";
+    }
     $.LoadingOverlay("show");
     $('.commentingDiv').hide();
     $('.toggleArrow').click(function () {

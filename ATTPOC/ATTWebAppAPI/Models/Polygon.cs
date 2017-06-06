@@ -14,4 +14,10 @@ namespace ATTWebAppAPI.Models
         public DateTime? CreatedDate { set; get; }
         public DateTime? ModifiedDate { set; get; }
     }
+
+    public class LatLong
+    {
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
+    }
 }

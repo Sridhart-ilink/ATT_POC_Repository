@@ -395,6 +395,18 @@ margin-top : -20px
     margin-bottom: 4px;
     text-decoration: none;
     border-color: transparent !important;
+    margin-right: 25px;
+}
+.shapeIcon{
+    display: block;
+    font-size: 20pt;
+    font-weight: bolder;
+    padding-right: 10px;
+    color : black;
+}
+.shapeIcon:hover{
+    color : yellow;
+    font-size: 22pt;
 }
 .addSarfBtn{
     z-index: 999;

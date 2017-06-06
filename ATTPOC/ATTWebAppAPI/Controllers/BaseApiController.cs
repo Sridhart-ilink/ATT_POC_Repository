@@ -40,6 +40,7 @@ namespace ATTWebAppAPI.Controllers
                 string maxLat = latList.Max();
                 string minLong = longList.Min();
                 string maxLong = longList.Max();
+
                 decimal decMinLat;
                 decimal.TryParse(minLat, out decMinLat);
                 decimal decMaxLat;
@@ -48,8 +49,52 @@ namespace ATTWebAppAPI.Controllers
                 decimal.TryParse(minLong, out decMinLong);
                 decimal decMaxLong;
                 decimal.TryParse(maxLong, out decMaxLong);
-                var centerOfLat = (decMaxLat + decMinLat) / 2;
-                var centerOfLong = (decMaxLong + decMinLong) / 2;
+
+                decimal decMidLat = (decMinLat + decMaxLat) / 2;
+                decimal decMidLong = (decMinLong + decMaxLong) / 2;
+
+                List<LatLong> latLongs = new List<LatLong>();
+                decimal nodeLat;
+                decimal nodeLong;
+                decimal latAddSub;
+                decimal longAddSub;
+                for (int latDivider = 2, longDivider = 2;
+                    latDivider <= 5 && longDivider <= 5;
+                    latDivider++, longDivider++)
+                {
+                    //Top Left
+                    latAddSub = (decMaxLat - decMidLat) / latDivider;
+                    nodeLat = decMidLat + latAddSub;
+                    longAddSub = (decMaxLong - decMidLong) / longDivider;
+                    nodeLong = decMidLong + longAddSub;
+
+                    latLongs.Add(new LatLong() { Latitude = nodeLat, Longitude = nodeLong });
+
+                    //Botton Left
+                    latAddSub = (decMidLat - decMinLat) / latDivider;
+                    nodeLat = decMidLat - latAddSub;
+                    longAddSub = (decMaxLong - decMidLong) / longDivider;
+                    nodeLong = decMidLong + longAddSub;
+
+                    latLongs.Add(new LatLong() { Latitude = nodeLat, Longitude = nodeLong });
+
+                    //Botton Right
+                    latAddSub = (decMidLat - decMinLat) / latDivider;
+                    nodeLat = decMidLat - latAddSub;
+                    longAddSub = (decMidLong - decMinLong) / longDivider;
+                    nodeLong = decMidLong - longAddSub;
+
+                    latLongs.Add(new LatLong() { Latitude = nodeLat, Longitude = nodeLong });
+
+                    //Top Right
+                    latAddSub = (decMidLat - decMinLat) / latDivider;
+                    nodeLat = decMidLat + latAddSub;
+                    longAddSub = (decMidLong - decMinLong) / longDivider;
+                    nodeLong = decMidLong - longAddSub;
+
+                    latLongs.Add(new LatLong() { Latitude = nodeLat, Longitude = nodeLong });
+                }
+                
 
                 //bool isValid = centerOfLat > decMinLat && centerOfLat < decMaxLat &&
                 //    centerOfLong < decMinLong && centerOfLong > decMaxLong;
@@ -63,8 +108,8 @@ namespace ATTWebAppAPI.Controllers
                     nodes.Add(new Node
                     {
                         SarfId = polygon.SarfId,
-                        Latitude = decMaxLat,
-                        Longitude = decMaxLong,
+                        Latitude = latLongs[1].Latitude,// decMaxLat,
+                        Longitude = latLongs[1].Longitude, //decMaxLong,
                         AtollSiteName = "SITE A",
                         iPlanJobNumber = "WR-RWOR-14-0" + randomNumber,
                         PaceNumber = "MRGE00014" + randomNumber
@@ -72,8 +117,8 @@ namespace ATTWebAppAPI.Controllers
                     nodes.Add(new Node
                     {
                         SarfId = polygon.SarfId,
-                        Latitude = decMinLat,
-                        Longitude = decMinLong,
+                        Latitude = latLongs[8].Latitude,
+                        Longitude = latLongs[8].Longitude,
                         AtollSiteName = "SITE B",
                         iPlanJobNumber = "WR-RWOR-15-0" + randomNumber,
                         PaceNumber = "MRGE00015" + randomNumber
@@ -81,8 +126,8 @@ namespace ATTWebAppAPI.Controllers
                     nodes.Add(new Node
                     {
                         SarfId = polygon.SarfId,
-                        Latitude = centerOfLat,
-                        Longitude = centerOfLong,
+                        Latitude = latLongs[14].Latitude,
+                        Longitude = latLongs[14].Longitude,
                         AtollSiteName = "SITE C",
                         iPlanJobNumber = "WR-RWOR-16-0" + randomNumber,
                         PaceNumber = "MRGE00016" + randomNumber

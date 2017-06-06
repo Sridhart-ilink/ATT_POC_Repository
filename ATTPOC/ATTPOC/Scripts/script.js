@@ -212,7 +212,11 @@ $(document).ready(function () {
         }
     });
     
-    
+    $('.shapeIcon').click(function () {
+        $('.shapeIcon').css({ 'color': '', 'opacity': '' });
+        var currentIcon = $(this);
+        $(currentIcon).css({ 'color': 'yellow', 'font-size': '22pt' });
+    });
 });
 
 function getTaskStatusbySarfID(id) {
