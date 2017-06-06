@@ -85,6 +85,25 @@ INSERT INTO Node (SarfId, Latitude, Longitude, AtollSiteName, iPlanJobNumber, Pa
 VALUES (1002, '47.6062095', '-122.3320708', 'TestAtoll3', 'WR_-RUTH-11-00318', 'MRUTH000105', now());
 INSERT INTO Node (SarfId, Latitude, Longitude, AtollSiteName, iPlanJobNumber, PaceNumber, DateCreated) 
 VALUES (1002, '47.6063155', '-122.3327984', 'TestAtoll4', 'WR_-RUTH-11-00318', 'MRUTH000105', now());
+/************************************************************************/
+CREATE TABLE Hub(
+	HubId int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	SarfId int NULL,
+    Latitude decimal(12,7) NULL,
+    Longitude decimal(12,7) NULL,
+    Address varchar(200),  
+	DateCreated datetime NULL,
+	DateModified datetime NULL 	 
+);
 
+INSERT INTO Hub (SarfId, Latitude, Longitude, Address, DateCreated) 
+VALUES (1006, '47.6101497', '-122.2015159', 'Water Street, Spokane, Washington', now());
+INSERT INTO Hub (SarfId, Latitude, Longitude, Address, DateCreated) 
+VALUES (1006, '48.6101497', '-121.2015159', 'Water Street, Spokane, Washington', now());
+INSERT INTO Hub (SarfId, Latitude, Longitude, Address, DateCreated) 
+VALUES (1007, '49.6101497', '-120.2015159', 'Big Street, Spokane, Washington', now());
+INSERT INTO Hub (SarfId, Latitude, Longitude, Address, DateCreated) 
+VALUES (1007, '46.6101497', '-123.2015159', 'Big Street, Spokane, Washington', now());
 
+ALTER TABLE Node ADD HubId int NULL;
 /************************************************************************/
