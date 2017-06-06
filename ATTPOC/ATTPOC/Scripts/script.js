@@ -487,9 +487,9 @@ function onLoadGis() {
                         var gra = new esri.Graphic(polygon, drawFillSymbol);
                         map.graphics.add(gra);
                         map.setExtent(gra.geometry.getExtent().expand(2));
-                       
+
                     }
-                }
+                 }
                }
             });
 

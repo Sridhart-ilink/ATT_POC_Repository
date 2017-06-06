@@ -741,14 +741,14 @@ function onLoadGis() {
             //    [-75.309, 58.995]
             //];
             array.forEach(poinArr, function(p) {
-                var pointGeom = new Point([p.x, p.y], new esri.SpatialReference({ wkid: 4326 }));
+                var pointGeom = new Point([p.y, p.x], new esri.SpatialReference({ wkid: 4326 }));
                      
                 var sms = new SimpleMarkerSymbol().setStyle(
                     SimpleMarkerSymbol.STYLE_CIRCLE).setColor(
                     new Color([255, 255, 0, 0.5]));
                 var attr = {
-                    "Xcoord": p.x,
-                    "Ycoord": p.y
+                    "Xcoord": p.y,
+                    "Ycoord": p.x
                 }; // Set what attributes you want to add to graphics's info template.
                 var infoTemplate = new InfoTemplate("My LatLongs", "Latitude: ${Ycoord} <br/>Longitude: ${Xcoord} <br/>");
                 var g = new Graphic(pointGeom, sms, attr, infoTemplate);
