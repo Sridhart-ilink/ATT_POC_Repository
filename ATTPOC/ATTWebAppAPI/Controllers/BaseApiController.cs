@@ -7,6 +7,7 @@ using System.Net.Http.Formatting;
 using System.Web.Http;
 using ATTWebAppAPI.Models;
 using ATTWebAppAPI.DAL;
+using System.Drawing;
 namespace ATTWebAppAPI.Controllers
 {
     public class BaseApiController : ApiController
@@ -27,10 +28,79 @@ namespace ATTWebAppAPI.Controllers
             };
         }
 
-        protected bool GenerateNodesByVertices(Polygon polygon)
+        private bool isPointInside(List<decimal> point, List<List<decimal>> vertices)
+        {
+            var x = point[0];
+            var y = point[1];
+
+            var inside = false;
+            for (int i = 0, j = vertices.Count - 1; i < vertices.Count; j = i++)
+            {
+                var xi = vertices[i][0];
+                var yi = vertices[i][1];
+                var xj = vertices[j][0];
+                var yj = vertices[j][1];
+
+                var intersect = ((yi > y) != (yj > y))
+                    && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+                if (intersect) inside = !inside;
+            }
+
+            return inside;
+        }
+
+        private List<List<decimal>> GeneratePolyArray(string vertices)
         {
             try
             {
+                List<List<decimal>> polyArray = new List<List<decimal>>();
+                List<string> array = vertices.Split(';').ToList();
+                array.RemoveAll(l => l.Trim().Length == 0);
+                foreach (string vertex in array)
+                {
+                    var coordinates = vertex.Split(',');
+                    List<decimal> decVertex = new List<decimal>();
+                    decVertex.Add(Convert.ToDecimal(coordinates[0]));
+                    decVertex.Add(Convert.ToDecimal(coordinates[1]));
+                    polyArray.Add(decVertex);
+                }
+                return polyArray;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        protected bool GenerateNodesAndHubs(Polygon polygon)
+        {
+            try
+            {
+                return GenerateHubs(polygon);
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        protected bool GenerateHubs(Polygon polygon)
+        {
+            try
+            {
+                return GenerateNodes(polygon);
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        protected bool GenerateNodes(Polygon polygon)
+        {
+            try
+            {
+                var polyArray = GeneratePolyArray(polygon.Vertices);
                 polygon.Vertices = polygon.Vertices.Replace(';', ',');
                 List<string> latlongList = polygon.Vertices.Split(',').ToList();
                 latlongList.RemoveAll(l => l.Trim().Length == 0);
@@ -58,8 +128,8 @@ namespace ATTWebAppAPI.Controllers
                 decimal nodeLong;
                 decimal latAddSub;
                 decimal longAddSub;
-                for (int latDivider = 2, longDivider = 2;
-                    latDivider <= 5 && longDivider <= 5;
+                for (int latDivider = 3, longDivider = 2;
+                    latDivider <= 6 && longDivider <= 5;
                     latDivider++, longDivider++)
                 {
                     //Top Left
@@ -94,52 +164,35 @@ namespace ATTWebAppAPI.Controllers
 
                     latLongs.Add(new LatLong() { Latitude = nodeLat, Longitude = nodeLong });
                 }
-                
+
 
                 //bool isValid = centerOfLat > decMinLat && centerOfLat < decMaxLat &&
                 //    centerOfLong < decMinLong && centerOfLong > decMaxLong;
-                bool isValid = true;
-                if (isValid)
+                sarfDao = new SarfDao();
+                foreach (var item in latLongs)
                 {
-                    List<Node> nodes = new List<Node>();
-
-                    Random random = new Random(1000);
-                    var randomNumber = random.Next(9999).ToString();
-                    nodes.Add(new Node
+                    List<decimal> point = new List<decimal>();
+                    point.Add(item.Longitude);
+                    point.Add(item.Latitude);
+                    bool isValid = isPointInside(point, polyArray);
+                    if (isValid)
                     {
-                        SarfId = polygon.SarfId,
-                        Latitude = latLongs[1].Latitude,// decMaxLat,
-                        Longitude = latLongs[1].Longitude, //decMaxLong,
-                        AtollSiteName = "SITE A",
-                        iPlanJobNumber = "WR-RWOR-14-0" + randomNumber,
-                        PaceNumber = "MRGE00014" + randomNumber
-                    });
-                    nodes.Add(new Node
-                    {
-                        SarfId = polygon.SarfId,
-                        Latitude = latLongs[8].Latitude,
-                        Longitude = latLongs[8].Longitude,
-                        AtollSiteName = "SITE B",
-                        iPlanJobNumber = "WR-RWOR-15-0" + randomNumber,
-                        PaceNumber = "MRGE00015" + randomNumber
-                    });
-                    nodes.Add(new Node
-                    {
-                        SarfId = polygon.SarfId,
-                        Latitude = latLongs[14].Latitude,
-                        Longitude = latLongs[14].Longitude,
-                        AtollSiteName = "SITE C",
-                        iPlanJobNumber = "WR-RWOR-16-0" + randomNumber,
-                        PaceNumber = "MRGE00016" + randomNumber
-                    });
-                    sarfDao = new SarfDao();
-                    foreach (var node in nodes)
-                    {
+                        Node node = null;
+                        Random random = new Random(1000);
+                        var randomNumber = random.Next(9999).ToString();
+                        node = new Node
+                        {
+                            SarfId = polygon.SarfId,
+                            Latitude = point[1],// decMaxLat,
+                            Longitude = point[0], //decMaxLong,
+                            AtollSiteName = "SITE SF-" + polygon.SarfId + "-0" + randomNumber,
+                            iPlanJobNumber = "WR-RWOR-" + polygon.SarfId + "-0" + randomNumber,
+                            PaceNumber = "MRGE000" + polygon.SarfId + "-0" + randomNumber
+                        };
                         sarfDao.SaveNode(node);
                     }
-                    return true;
                 }
-                return false;
+                return true;
             }
             catch (Exception ex)
             {
