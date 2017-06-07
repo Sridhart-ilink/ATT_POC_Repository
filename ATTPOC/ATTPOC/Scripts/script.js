@@ -213,10 +213,12 @@ $(document).ready(function () {
     });
     
     $('.shapeIcon').click(function () {
-        $('.shapeIcon').css({ 'color': '', 'opacity': '' });
+        $('.shapeIcon').css({ 'color': '', 'opacity': '', 'font-size': '' });
         var currentIcon = $(this);
-        $(currentIcon).css({ 'color': 'yellow', 'font-size': '22pt' });
+        $(currentIcon).css({ 'font-size': '24pt' });
     });
+
+    
 });
 
 function getTaskStatusbySarfID(id) {
@@ -497,6 +499,10 @@ function onLoadGis() {
                }
             });
 
+            $(document).on('click', 'div.basemapBG', function () {
+                $('.shapeIcon').toggleClass('satelliteMode');
+            });
+
             $(document).on('click', ".sarfclick", function () {
                 map.graphics.clear();
 
@@ -529,7 +535,7 @@ function onLoadGis() {
             });
 
             $(".addSarfBtn").click(function () {
-                $('.btn-draw').css('display','block');
+                $('.btn-draw').css('display', 'block');
             });
 
             //Set the click event for the draw buttons

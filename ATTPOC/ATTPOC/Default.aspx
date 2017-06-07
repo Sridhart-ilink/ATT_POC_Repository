@@ -140,13 +140,13 @@
                          <div id="BasemapToggle"></div>               
                         <div class="addSarfBtn">
                             <a class="btn btn-default btn-form btnDraw pull-left" id="btnDraw" >Create Search Ring</a>
-                            <a class="btn-draw pull-left shapeIcon" id="freehandpolyline" value="freehandpolyline" >
+                            <a class="btn-draw pull-left shapeIcon" title="Draw free hand" id="freehandpolyline" value="freehandpolyline" >
                                 <i class="fa fa-hand-paper-o" aria-hidden="true"></i>
                             </a>
-                            <a class="btn-draw pull-left shapeIcon" id="circle" value="circle" >
-                                <i class="fa fa-circle" aria-hidden="true"></i>
+                            <a class="btn-draw pull-left shapeIcon" title="Draw circle" id="circle" value="circle" >
+                                <i class="fa fa-circle-thin" aria-hidden="true"></i>
                             </a>
-                            <a class="btn-draw pull-left shapeIcon" id="value" value="polygon"  >
+                            <a class="btn-draw pull-left shapeIcon" title="Draw polygon" id="value" value="polygon"  >
                                 <i class="fa fa-connectdevelop" aria-hidden="true"></i>
                             </a>  
                         </div>

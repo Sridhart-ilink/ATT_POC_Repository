@@ -399,13 +399,24 @@ margin-top : -20px
 }
 .shapeIcon{
     display: block;
-    font-size: 20pt;
+    font-size: 18pt;
     font-weight: bolder;
     padding-right: 10px;
-    color : black;
+    color : #600000;
+}
+.satelliteMode{
+    display: block;
+    font-size: 18pt;
+    font-weight: bolder;
+    padding-right: 10px;
+    color : #f4f4f4;
 }
 .shapeIcon:hover{
-    color : yellow;
+    color : #600000;
+    font-size: 22pt;
+}
+.satelliteMode:hover{
+    color : #f4f4f4;
     font-size: 22pt;
 }
 .addSarfBtn{
