@@ -724,23 +724,30 @@ function onLoadGis() {
 
             //access the lat long data.
             graphicLayer = new GraphicsLayer();
-           
+           //get the cuurent polygon
+            var finalVal = JSON.parse(JSON.stringify(localStorage["vertices"]));
+            finalVal = JSON.parse("[" + finalVal + "]");
+            var polygon = new Polygon(new esri.SpatialReference({ wkid: 4326 }));
+            polygon.addRing(finalVal)
+
             array.forEach(poinArr, function(p) {
-                var pointGeom = new Point([p.y, p.x], new esri.SpatialReference({ wkid: 4326 }));
-                     
-                var sms = new SimpleMarkerSymbol().setStyle(
-                    SimpleMarkerSymbol.STYLE_CIRCLE).setColor(
-                    new Color([255, 255, 0, 0.5]));
-                var attr = {
-                    "Xcoord": p.y,
-                    "Ycoord": p.x,
-                    "Atoll": p.atoll,
-                    "iPlan": p.iplan
-                }; // Set what attributes you want to add to graphics's info template.
-                var infoTemplate = new InfoTemplate("Node Details", "Atoll SiteName: ${Atoll} <br/>iPlan JobNumber: ${iPlan} <br/>  Latitude: ${Ycoord} <br/>Longitude: ${Xcoord} <br/>");
-                var g = new Graphic(pointGeom, sms, attr, infoTemplate);
-                g.setInfoTemplate(infoTemplate);
-                map.graphics.add(g);
+                var pointGeom = new Point([p.y, p.x], new esri.SpatialReference({ wkid: 4326 }));             
+                if (polygon.contains(pointGeom)) {
+                    // if point lies inside polygon
+                    var sms = new SimpleMarkerSymbol().setStyle(
+                        SimpleMarkerSymbol.STYLE_CIRCLE).setColor(
+                        new Color([255, 255, 0, 0.5]));
+                    var attr = {
+                        "Xcoord": p.y,
+                        "Ycoord": p.x,
+                        "Atoll": p.atoll,
+                        "iPlan": p.iplan
+                    }; // Set what attributes you want to add to graphics's info template.
+                    var infoTemplate = new InfoTemplate("Node Details", "Atoll SiteName: ${Atoll} <br/>iPlan JobNumber: ${iPlan} <br/>  Latitude: ${Ycoord} <br/>Longitude: ${Xcoord} <br/>");
+                    var g = new Graphic(pointGeom, sms, attr, infoTemplate);
+                    g.setInfoTemplate(infoTemplate);
+                    map.graphics.add(g);
+                }
                        
             });
            
