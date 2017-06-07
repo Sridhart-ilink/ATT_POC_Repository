@@ -728,6 +728,11 @@ function onLoadGis() {
                 }
 
                 $("#vertices").text(points);
+               
+                var polyline = esri.geometry.webMercatorToGeographic(geometry);               
+                var area = esri.geometry.geodesicLengths([polyline], esri.Units.METERS);
+                var areaInsqkm = area * 0.001 * 0.00404685642;
+                $("#hdnArea").val(areaInsqkm);
             }
         }
 
