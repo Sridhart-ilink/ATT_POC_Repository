@@ -615,6 +615,7 @@ function onLoadGis() {
         var drawing = false, editing = false;
         var tooltipDialog;
         var graphicLayer;
+        var hubArray = [];
         Parser.parse();
         map = new Map("map", {
             basemap: "streets",
@@ -658,12 +659,13 @@ function onLoadGis() {
                 var gra = new esri.Graphic(polygon, fillSymbol);
                 map.graphics.add(gra);
                 map.setExtent(gra.geometry.getExtent().expand(2));
-
-                       
+                 
+                // load hubs
+                LoadHubs();
 
                 // load nodes
-                LoadPoints();
-                        
+                LoadNodes();
+
                 // load other polygons
                 if (polygonlist.length > 0) {
 
@@ -699,7 +701,7 @@ function onLoadGis() {
             }
         }));
 
-        function LoadPoints() {
+        function LoadNodes() {
             var sarfid = localStorage["sarfID"];
             var getSarfNodesUrl = "GetNodesBySarfID/" + sarfid;;
             var poinArr = [];
@@ -713,7 +715,7 @@ function onLoadGis() {
                 cache: false,
                 success: function (data) {
                     $.each(data, function (i, item) {                               
-                        poinArr.push({atoll:item.AtollSiteName,iplan:item.iPlanJobNumber,x:item.Latitude,y:item.Longitude});
+                        poinArr.push({atoll:item.AtollSiteName,iplan:item.iPlanJobNumber,x:item.Latitude,y:item.Longitude,hubid:item.HubId});
                     });
 
                 },
@@ -747,10 +749,86 @@ function onLoadGis() {
                     var g = new Graphic(pointGeom, sms, attr, infoTemplate);
                     g.setInfoTemplate(infoTemplate);
                     map.graphics.add(g);
+
+                    
+                    // connect the node with hub
+                    //hubArray
+                    var lineSymbol = new CartographicLineSymbol(
+                       CartographicLineSymbol.STYLE_SOLID,
+                       new Color([255, 0, 0]), 1,
+                       CartographicLineSymbol.CAP_ROUND,
+                       CartographicLineSymbol.JOIN_MITER, 2
+                     );
+                    array.forEach(hubArray, function (h) {
+                        if (h.id == p.hubid) {
+                            var lineGeometry = new Polyline(new esri.SpatialReference({ wkid: 4326 }));
+                            lineGeometry.addPath([[p.y, p.x], [h.y, h.x]])
+
+                            var lineGraphic = new Graphic(lineGeometry, lineSymbol);
+                            map.graphics.add(lineGraphic)
+                        }
+                    });
                 }
                        
             });
            
+        }
+
+        function LoadHubs() {
+            var sarfid = localStorage["sarfID"];
+            var getSarfHubsUrl = "GetHubsBySarfID/" + sarfid;
+            var poinArr = [];
+            $.ajax({
+                method: 'GET',
+                dataType: 'json',
+                contentType: 'application/json',
+                url: camundaBaseApiUrl + getSarfHubsUrl,
+                data: JSON.stringify({}),
+                async: false,
+                cache: false,
+                success: function (data) {
+                    $.each(data, function (i, item) {
+                        poinArr.push({ address: item.Address, x: item.Latitude, y: item.Longitude });
+                        hubArray.push({ x: item.Latitude, y: item.Longitude, id: item.HubId })
+                    });
+
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+
+            //access the lat long data.
+            graphicLayer = new GraphicsLayer();
+            //get the cuurent polygon
+            var finalVal = JSON.parse(JSON.stringify(localStorage["vertices"]));
+            finalVal = JSON.parse("[" + finalVal + "]");
+            var polygon = new Polygon(new esri.SpatialReference({ wkid: 4326 }));
+            polygon.addRing(finalVal)
+
+            array.forEach(poinArr, function (p) {
+                var pointGeom = new Point([p.y, p.x], new esri.SpatialReference({ wkid: 4326 }));
+                if (polygon.contains(pointGeom)) {
+                    // if point lies inside polygon
+                    var sms = new SimpleMarkerSymbol({
+                        style: "square",
+                        color: "blue",
+                        size: "8px"
+                     }).setColor(
+                        new Color([0, 0, 255, 0.5]));
+                    var attr = {
+                        "Xcoord": p.y,
+                        "Ycoord": p.x,
+                        "Address": p.address,
+                    }; // Set what attributes you want to add to graphics's info template.
+                    var infoTemplate = new InfoTemplate("Hub Details", "Address: ${Address} <br/>Latitude: ${Ycoord} <br/>Longitude: ${Xcoord} <br/>");
+                    var g = new Graphic(pointGeom, sms, attr, infoTemplate);
+                    g.setInfoTemplate(infoTemplate);
+                    map.graphics.add(g);
+                }
+
+            });
+
         }
 
         function clearGraphics() {
