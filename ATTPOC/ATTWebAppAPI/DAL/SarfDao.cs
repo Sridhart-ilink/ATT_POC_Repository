@@ -72,6 +72,35 @@ namespace ATTWebAppAPI.DAL
                 }
             }
         }
+        public DataTable GetHubByID(int hubId)
+        {
+            using (MySqlConnection cn = new MySqlConnection(connString))
+            {
+                try
+                {
+                    string query = "SELECT * from HUB WHERE HubId=" + hubId + ";";
+                    cn.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(query, cn))
+                    {
+                        MySqlDataAdapter returnVal = new MySqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        returnVal.Fill(dt);
+                        return dt;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Data Error : " + ex.Message);
+                }
+                finally
+                {
+                    if (cn.State == System.Data.ConnectionState.Open)
+                    {
+                        cn.Close();
+                    }
+                }
+            }
+        }
         public DataTable GetNodesBySarfID(int sarfId)
         {
             using (MySqlConnection cn = new MySqlConnection(connString))
@@ -79,6 +108,35 @@ namespace ATTWebAppAPI.DAL
                 try
                 {
                     string query = "SELECT * from NODE WHERE SarfId=" + sarfId + ";";
+                    cn.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(query, cn))
+                    {
+                        MySqlDataAdapter returnVal = new MySqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        returnVal.Fill(dt);
+                        return dt;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Data Error : " + ex.Message);
+                }
+                finally
+                {
+                    if (cn.State == System.Data.ConnectionState.Open)
+                    {
+                        cn.Close();
+                    }
+                }
+            }
+        }
+        public DataTable GetHubsBySarfID(int sarfId)
+        {
+            using (MySqlConnection cn = new MySqlConnection(connString))
+            {
+                try
+                {
+                    string query = "SELECT * from HUB WHERE SarfId=" + sarfId + ";";
                     cn.Open();
                     using (MySqlCommand cmd = new MySqlCommand(query, cn))
                     {

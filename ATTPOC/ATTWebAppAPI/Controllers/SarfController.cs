@@ -188,12 +188,42 @@ namespace ATTWebAppAPI.Controllers
         }
 
         [HttpGet]
+        [Route("api/Hub/Get/{hubId}")]
+        public HttpResponseMessage GetHubByID(int hubId)
+        {
+            try
+            {
+                var result = sarfDao.GetHubByID(hubId);
+                return WrapObjectToHttpResponse(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error : " + ex.Message);
+            }
+        }
+
+        [HttpGet]
         [Route("api/GetNodesBySarfID/{sarfID}")]
         public HttpResponseMessage GetNodesBySarfID(int sarfID)
         {
             try
             {
                 var result = sarfDao.GetNodesBySarfID(sarfID);
+                return WrapObjectToHttpResponse(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error : " + ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/GetHubsBySarfID/{sarfID}")]
+        public HttpResponseMessage GetHubsBySarfID(int sarfID)
+        {
+            try
+            {
+                var result = sarfDao.GetHubsBySarfID(sarfID);
                 return WrapObjectToHttpResponse(result);
             }
             catch (Exception ex)
@@ -209,6 +239,21 @@ namespace ATTWebAppAPI.Controllers
             try
             {
                 var result = sarfDao.SaveNode(node);
+                return WrapObjectToHttpResponse(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error : " + ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("api/Hub/Post")]
+        public HttpResponseMessage SaveHub([FromBody]Hub hub)
+        {
+            try
+            {
+                var result = sarfDao.SaveHub(hub);
                 return WrapObjectToHttpResponse(result);
             }
             catch (Exception ex)
