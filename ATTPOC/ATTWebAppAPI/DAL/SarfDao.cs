@@ -13,6 +13,7 @@ namespace ATTWebAppAPI.DAL
     {
         static string connString = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
 
+        #region Get Methods
         public DataTable GetSarfDetails()
         {
             using (MySqlConnection cn = new MySqlConnection(connString))
@@ -42,7 +43,185 @@ namespace ATTWebAppAPI.DAL
                 }
             }
         }
+        public DataTable GetNodeByID(int nodeId)
+        {
+            using (MySqlConnection cn = new MySqlConnection(connString))
+            {
+                try
+                {
+                    string query = "SELECT * from NODE WHERE NodeId=" + nodeId + ";";
+                    cn.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(query, cn))
+                    {
+                        MySqlDataAdapter returnVal = new MySqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        returnVal.Fill(dt);
+                        return dt;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Data Error : " + ex.Message);
+                }
+                finally
+                {
+                    if (cn.State == System.Data.ConnectionState.Open)
+                    {
+                        cn.Close();
+                    }
+                }
+            }
+        }
+        public DataTable GetNodesBySarfID(int sarfId)
+        {
+            using (MySqlConnection cn = new MySqlConnection(connString))
+            {
+                try
+                {
+                    string query = "SELECT * from NODE WHERE SarfId=" + sarfId + ";";
+                    cn.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(query, cn))
+                    {
+                        MySqlDataAdapter returnVal = new MySqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        returnVal.Fill(dt);
+                        return dt;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Data Error : " + ex.Message);
+                }
+                finally
+                {
+                    if (cn.State == System.Data.ConnectionState.Open)
+                    {
+                        cn.Close();
+                    }
+                }
+            }
+        }
+        public DataTable GetAllSarfDetails(int sarfId)
+        {
+            using (MySqlConnection cn = new MySqlConnection(connString))
+            {
+                try
+                {
+                    string query = "SELECT s.SarfName,s.FA_Code,s.Search_Ring_ID,s.iPlan_Job, " +
+                        "s.Pace,s.Market,s.County,s.FA_Type,s.Market_Cluster,s.Region," +
+                        "s.RF_Design_Engineer_ATTUID, s.SarfStatus, s.AtollSiteName, p.AreaInSqKm " +
+                        "FROM SARF s INNER JOIN Polygon p ON s.SarfId = p.SarfId WHERE " +
+                        "s.SarfId=" + sarfId + ";";
+                    cn.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(query, cn))
+                    {
+                        MySqlDataAdapter returnVal = new MySqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        returnVal.Fill(dt);
+                        return dt;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Data Error : " + ex.Message);
+                }
+                finally
+                {
+                    if (cn.State == System.Data.ConnectionState.Open)
+                    {
+                        cn.Close();
+                    }
+                }
+            }
+        }
+        public string GetSarfStatusByID(int id)
+        {
+            using (MySqlConnection cn = new MySqlConnection(connString))
+            {
+                try
+                {
+                    string query = "SELECT SarfStatus from SARF WHERE SarfId=" + id + ";";
+                    cn.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(query, cn))
+                    {
+                        var status = cmd.ExecuteScalar().ToString();
+                        return status;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Data Error : " + ex.Message);
+                }
+                finally
+                {
+                    if (cn.State == System.Data.ConnectionState.Open)
+                    {
+                        cn.Close();
+                    }
+                }
+            }
+        }
+        public DataTable SarfDetailsByTaskID(string taskID)
+        {
+            using (MySqlConnection cn = new MySqlConnection(connString))
+            {
+                try
+                {
+                    string query = "SELECT s.SarfName,s.FA_Code,s.Search_Ring_ID,s.iPlan_Job, s.Pace,s.Market,s.County,s.FA_Type,s.Market_Cluster,s.Region,s.RF_Design_Engineer_ATTUID, s.SarfStatus, s.AtollSiteName, p.AreaInSqKm FROM SARF s INNER JOIN Polygon p ON s.SarfId = p.SarfId WHERE ProcessInstanceID='" + taskID + "';";
+                    cn.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(query, cn))
+                    {
+                        MySqlDataAdapter returnVal = new MySqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        returnVal.Fill(dt);
+                        return dt;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Data Error : " + ex.Message);
+                }
+                finally
+                {
+                    if (cn.State == System.Data.ConnectionState.Open)
+                    {
+                        cn.Close();
+                    }
+                }
+            }
+        }
+        public DataTable GetAllPolygons()
+        {
+            using (MySqlConnection cn = new MySqlConnection(connString))
+            {
+                try
+                {
+                    string query = "SELECT P.Vertices FROM SARF S JOIN Polygon P ON S.SarfId=P.SarfId order by S.DateCreated desc;";
+                    cn.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(query, cn))
+                    {
+                        MySqlDataAdapter returnVal = new MySqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        returnVal.Fill(dt);
+                        return dt;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Data Error : " + ex.Message);
+                }
+                finally
+                {
+                    if (cn.State == System.Data.ConnectionState.Open)
+                    {
+                        cn.Close();
+                    }
+                }
+            }
+        }
+        #endregion
 
+        #region Save Methods
         public long SaveSarf(Sarf sarf)
         {
             using (MySqlConnection cn = new MySqlConnection(connString))
@@ -50,15 +229,15 @@ namespace ATTWebAppAPI.DAL
                 try
                 {
                     long id = 0;
-                    string query = "INSERT INTO SARF(SarfName,DateCreated,ProcessInstanceID, "+
+                    string query = "INSERT INTO SARF(SarfName,DateCreated,ProcessInstanceID, " +
                         "SarfStatus, AtollSiteName, FA_Code, Search_Ring_ID, iPlan_Job, " +
                         "Pace, Market, County, FA_Type, Market_Cluster, Region, RF_Design_Engineer_ATTUID) VALUES(" +
-                        "?SarfName,?DateCreated,?ProcessInstanceID, ?SarfStatus, "+
-                        "?AtollSiteName, ?FA_Code, ?Search_Ring_ID, ?iPlan_Job, ?Pace, ?Market,"+
+                        "?SarfName,?DateCreated,?ProcessInstanceID, ?SarfStatus, " +
+                        "?AtollSiteName, ?FA_Code, ?Search_Ring_ID, ?iPlan_Job, ?Pace, ?Market," +
                         "?County, ?FA_Type, ?Market_Cluster, ?Region, ?RF_Design_Engineer_ATTUID);";
                     cn.Open();
                     using (MySqlCommand cmd = new MySqlCommand(query, cn))
-                    {                           
+                    {
                         cmd.Parameters.Add("?SarfName", MySqlDbType.VarChar).Value = sarf.SarfName;
                         cmd.Parameters.Add("?DateCreated", MySqlDbType.DateTime).Value = sarf.CreatedDate;
                         cmd.Parameters.Add("?ProcessInstanceID", MySqlDbType.VarChar).Value = sarf.ProcessInstanceID;
@@ -93,7 +272,6 @@ namespace ATTWebAppAPI.DAL
                 }
             }
         }
-        
         public long SaveNode(Node node)
         {
             using (MySqlConnection cn = new MySqlConnection(connString))
@@ -101,14 +279,15 @@ namespace ATTWebAppAPI.DAL
                 try
                 {
                     long id = 0;
-                    string query = "INSERT INTO NODE(SarfId,Latitude,Longitude, AtollSiteName," +
+                    string query = "INSERT INTO NODE(SarfId, HubId, Latitude,Longitude, AtollSiteName," +
                         "iPlanJobNumber, PaceNumber, DateCreated, DateModified) VALUES" +
-                        "(?SarfId,?Latitude,?Longitude, ?AtollSiteName,?iPlanJobNumber, " +
+                        "(?SarfId, ?HubId, ?Latitude,?Longitude, ?AtollSiteName,?iPlanJobNumber, " +
                         "?PaceNumber, ?DateCreated, ?DateModified);";
                     cn.Open();
                     using (MySqlCommand cmd = new MySqlCommand(query, cn))
                     {
                         cmd.Parameters.Add("?SarfId", MySqlDbType.Int32).Value = node.SarfId;
+                        cmd.Parameters.Add("?HubId", MySqlDbType.Int32).Value = node.HubId;
                         cmd.Parameters.Add("?Latitude", MySqlDbType.Decimal).Value = node.Latitude;
                         cmd.Parameters.Add("?Longitude", MySqlDbType.Decimal).Value = node.Longitude;
                         cmd.Parameters.Add("?AtollSiteName", MySqlDbType.VarChar).Value = node.AtollSiteName;
@@ -136,86 +315,30 @@ namespace ATTWebAppAPI.DAL
                 }
             }
         }
-
-        public DataTable GetNodeByID(int nodeId)
+        public long SaveHub(Hub hub)
         {
             using (MySqlConnection cn = new MySqlConnection(connString))
             {
                 try
                 {
-                    string query = "SELECT * from NODE WHERE NodeId=" + nodeId + ";";
+                    long id = 0;
+                    string query = "INSERT INTO HUB(SarfId,Latitude,Longitude, Address," +
+                        "DateCreated, DateModified) VALUES (?SarfId, ?Latitude, ?Longitude, ?Address," +
+                        "?DateCreated, ?DateModified);";
                     cn.Open();
                     using (MySqlCommand cmd = new MySqlCommand(query, cn))
                     {
-                        MySqlDataAdapter returnVal = new MySqlDataAdapter(cmd);
-                        DataTable dt = new DataTable();
-                        returnVal.Fill(dt);
-                        return dt;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Data Error : " + ex.Message);
-                }
-                finally
-                {
-                    if (cn.State == System.Data.ConnectionState.Open)
-                    {
-                        cn.Close();
-                    }
-                }
-            }
-        }
-        
-        public DataTable GetNodesBySarfID(int sarfId)
-        {
-            using (MySqlConnection cn = new MySqlConnection(connString))
-            {
-                try
-                {
-                    string query = "SELECT * from NODE WHERE SarfId=" + sarfId + ";";
-                    cn.Open();
-                    using (MySqlCommand cmd = new MySqlCommand(query, cn))
-                    {
-                        MySqlDataAdapter returnVal = new MySqlDataAdapter(cmd);
-                        DataTable dt = new DataTable();
-                        returnVal.Fill(dt);
-                        return dt;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Data Error : " + ex.Message);
-                }
-                finally
-                {
-                    if (cn.State == System.Data.ConnectionState.Open)
-                    {
-                        cn.Close();
-                    }
-                }
-            }
-        }
-
-        public void UpdateSarf(Sarf sarf)
-        {
-            using (MySqlConnection cn = new MySqlConnection(connString))
-            {
-                try
-                {
-                    string query = "update sarf set SarfName='" + sarf.SarfName + "',FA_Code='" + 
-                        sarf.FACode + "',Search_Ring_ID='" + sarf.SearchRingId + "',iPlan_Job='" + 
-                        sarf.IPlanJob + "',Pace='" + sarf.PaceNumber + "',Market='" + sarf.Market + 
-                        "',County='" + sarf.County + "',FA_Type='" + sarf.FAType + 
-                        "',Market_Cluster='" + sarf.MarketCluster + "',Region='" + sarf.Region + 
-                        "',RF_Design_Engineer_ATTUID='" + sarf.RFDesignEnggId + "' where SarfId='" + 
-                        sarf.Id + "';";
-                    cn.Open();
-                    using (MySqlCommand cmd = new MySqlCommand(query, cn))
-                    {
+                        cmd.Parameters.Add("?SarfId", MySqlDbType.Int32).Value = hub.SarfId;
+                        cmd.Parameters.Add("?Latitude", MySqlDbType.Decimal).Value = hub.Latitude;
+                        cmd.Parameters.Add("?Longitude", MySqlDbType.Decimal).Value = hub.Longitude;
+                        cmd.Parameters.Add("?Address", MySqlDbType.VarChar).Value = hub.Address;
+                        cmd.Parameters.Add("?DateCreated", MySqlDbType.Datetime).Value = DateTime.Now;
+                        cmd.Parameters.Add("?DateModified", MySqlDbType.Datetime).Value = DateTime.Now;
                         cmd.ExecuteNonQuery();
-                    }
+                        id = cmd.LastInsertedId;
 
+                    }
+                    return id;
                 }
                 catch (Exception ex)
                 {
@@ -230,128 +353,6 @@ namespace ATTWebAppAPI.DAL
                 }
             }
         }
-
-        public void UpdateSarfStatus(Sarf sarf)
-        {
-            using (MySqlConnection cn = new MySqlConnection(connString))
-            {
-                try
-                {
-                    string query = "update sarf set SarfStatus='" + sarf.SarfStatus + 
-                        "' where SarfId='" + sarf.Id + "';";
-                    cn.Open();
-                    using (MySqlCommand cmd = new MySqlCommand(query, cn))
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Data Error : " + ex.Message);
-                }
-                finally
-                {
-                    if (cn.State == System.Data.ConnectionState.Open)
-                    {
-                        cn.Close();
-                    }
-                }
-            }
-        }
-
-        public DataTable GetAllSarfDetails(int sarfId)
-        {
-            using (MySqlConnection cn = new MySqlConnection(connString))
-            {
-                try
-                {
-                    string query = "SELECT s.SarfName,s.FA_Code,s.Search_Ring_ID,s.iPlan_Job, " +
-                        "s.Pace,s.Market,s.County,s.FA_Type,s.Market_Cluster,s.Region," +
-                        "s.RF_Design_Engineer_ATTUID, s.SarfStatus, s.AtollSiteName, p.AreaInSqKm " +
-                        "FROM SARF s INNER JOIN Polygon p ON s.SarfId = p.SarfId WHERE " + 
-                        "s.SarfId=" + sarfId + ";";
-                    cn.Open();
-                    using (MySqlCommand cmd = new MySqlCommand(query, cn))
-                    {
-                        MySqlDataAdapter returnVal = new MySqlDataAdapter(cmd);
-                        DataTable dt = new DataTable();
-                        returnVal.Fill(dt);
-                        return dt;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Data Error : " + ex.Message);
-                }
-                finally
-                {
-                    if (cn.State == System.Data.ConnectionState.Open)
-                    {
-                        cn.Close();
-                    }
-                }
-            }
-        }
-
-        public string GetSarfStatusByID(int id)
-        {
-            using (MySqlConnection cn = new MySqlConnection(connString))
-            {
-                try
-                {
-                    string query = "SELECT SarfStatus from SARF WHERE SarfId=" + id + ";";
-                    cn.Open();
-                    using (MySqlCommand cmd = new MySqlCommand(query, cn))
-                    {
-                        var status = cmd.ExecuteScalar().ToString();
-                        return status;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Data Error : " + ex.Message);
-                }
-                finally
-                {
-                    if (cn.State == System.Data.ConnectionState.Open)
-                    {
-                        cn.Close();
-                    }
-                }
-            }
-        }
-
-        public DataTable SarfDetailsByTaskID(string taskID)
-        {
-            using (MySqlConnection cn = new MySqlConnection(connString))
-            {
-                try
-                {
-                    string query = "SELECT s.SarfName,s.FA_Code,s.Search_Ring_ID,s.iPlan_Job, s.Pace,s.Market,s.County,s.FA_Type,s.Market_Cluster,s.Region,s.RF_Design_Engineer_ATTUID, s.SarfStatus, s.AtollSiteName, p.AreaInSqKm FROM SARF s INNER JOIN Polygon p ON s.SarfId = p.SarfId WHERE ProcessInstanceID='" + taskID + "';";
-                    cn.Open();
-                    using (MySqlCommand cmd = new MySqlCommand(query, cn))
-                    {
-                        MySqlDataAdapter returnVal = new MySqlDataAdapter(cmd);
-                        DataTable dt = new DataTable();
-                        returnVal.Fill(dt);
-                        return dt;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Data Error : " + ex.Message);
-                }
-                finally
-                {
-                    if (cn.State == System.Data.ConnectionState.Open)
-                    {
-                        cn.Close();
-                    }
-                }
-            }
-        }
-
         public int SavePolygon(Polygon polygon, long sarfId)
         {
             using (MySqlConnection cn = new MySqlConnection(connString))
@@ -392,22 +393,28 @@ namespace ATTWebAppAPI.DAL
                 }
             }
         }
+        #endregion
 
-        public DataTable GetAllPolygons()
+        #region Update Methods
+        public void UpdateSarf(Sarf sarf)
         {
             using (MySqlConnection cn = new MySqlConnection(connString))
             {
                 try
                 {
-                    string query = "SELECT P.Vertices FROM SARF S JOIN Polygon P ON S.SarfId=P.SarfId order by S.DateCreated desc;";
+                    string query = "update sarf set SarfName='" + sarf.SarfName + "',FA_Code='" +
+                        sarf.FACode + "',Search_Ring_ID='" + sarf.SearchRingId + "',iPlan_Job='" +
+                        sarf.IPlanJob + "',Pace='" + sarf.PaceNumber + "',Market='" + sarf.Market +
+                        "',County='" + sarf.County + "',FA_Type='" + sarf.FAType +
+                        "',Market_Cluster='" + sarf.MarketCluster + "',Region='" + sarf.Region +
+                        "',RF_Design_Engineer_ATTUID='" + sarf.RFDesignEnggId + "' where SarfId='" +
+                        sarf.Id + "';";
                     cn.Open();
                     using (MySqlCommand cmd = new MySqlCommand(query, cn))
                     {
-                        MySqlDataAdapter returnVal = new MySqlDataAdapter(cmd);
-                        DataTable dt = new DataTable();
-                        returnVal.Fill(dt);
-                        return dt;
+                        cmd.ExecuteNonQuery();
                     }
+
                 }
                 catch (Exception ex)
                 {
@@ -422,5 +429,34 @@ namespace ATTWebAppAPI.DAL
                 }
             }
         }
+        public void UpdateSarfStatus(Sarf sarf)
+        {
+            using (MySqlConnection cn = new MySqlConnection(connString))
+            {
+                try
+                {
+                    string query = "update sarf set SarfStatus='" + sarf.SarfStatus +
+                        "' where SarfId='" + sarf.Id + "';";
+                    cn.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(query, cn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Data Error : " + ex.Message);
+                }
+                finally
+                {
+                    if (cn.State == System.Data.ConnectionState.Open)
+                    {
+                        cn.Close();
+                    }
+                }
+            }
+        }
+        #endregion
     }
 }

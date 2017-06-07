@@ -99,6 +99,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BPMWorkFlow.cs" />
+    <Compile Include="Models\Hub.cs" />
     <Compile Include="Models\Node.cs" />
     <Compile Include="Models\Polygon.cs" />
     <Compile Include="Models\Sarf.cs" />
