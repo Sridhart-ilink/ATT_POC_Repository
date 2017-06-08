@@ -167,7 +167,7 @@ namespace ATTWebAppAPI.DAL
                 {
                     string query = "SELECT s.SarfName,s.FA_Code,s.Search_Ring_ID,s.iPlan_Job, " +
                         "s.Pace,s.Market,s.County,s.FA_Type,s.Market_Cluster,s.Region," +
-                        "s.RF_Design_Engineer_ATTUID, s.SarfStatus, s.AtollSiteName, p.AreaInSqKm " +
+                        "s.RF_Design_Engineer_ATTUID, s.SarfStatus, s.AtollSiteName, p.AreaInSqKm, p.Vertices " +
                         "FROM SARF s INNER JOIN Polygon p ON s.SarfId = p.SarfId WHERE " +
                         "s.SarfId=" + sarfId + ";";
                     cn.Open();
@@ -225,7 +225,7 @@ namespace ATTWebAppAPI.DAL
             {
                 try
                 {
-                    string query = "SELECT s.SarfName,s.FA_Code,s.Search_Ring_ID,s.iPlan_Job, s.Pace,s.Market,s.County,s.FA_Type,s.Market_Cluster,s.Region,s.RF_Design_Engineer_ATTUID, s.SarfStatus, s.AtollSiteName, p.AreaInSqKm FROM SARF s INNER JOIN Polygon p ON s.SarfId = p.SarfId WHERE ProcessInstanceID='" + taskID + "';";
+                    string query = "SELECT s.SarfName,s.FA_Code,s.Search_Ring_ID,s.iPlan_Job, s.Pace,s.Market,s.County,s.FA_Type,s.Market_Cluster,s.Region,s.RF_Design_Engineer_ATTUID, s.SarfStatus, s.AtollSiteName, p.AreaInSqKm, p.Vertices FROM SARF s INNER JOIN Polygon p ON s.SarfId = p.SarfId WHERE ProcessInstanceID='" + taskID + "';";
                     cn.Open();
                     using (MySqlCommand cmd = new MySqlCommand(query, cn))
                     {

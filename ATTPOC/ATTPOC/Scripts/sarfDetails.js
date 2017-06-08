@@ -401,6 +401,47 @@ $(document).ready(function () {
             jsonDetails = data[0];
             initializeDetailsLabel(jsonDetails);
             initializeDetailsText(jsonDetails);
+
+
+            var getDetailUrl = "AllSarfDetails/Get/" + localStorage["sarfID"];
+
+            $.ajax({
+                method: 'GET',
+                dataType: 'json',
+                contentType: 'application/json',
+                url: camundaBaseApiUrl + getDetailUrl,
+                data: JSON.stringify({}),
+                //async: false,
+                cache: false,
+                success: function (data) {
+                    jsonDetails = data[0];
+
+                    if (jsonDetails.Vertices != "") {
+                        var vertices_arr = [];
+                        vertices_arr.push(jsonDetails.Vertices.split(';'))
+                        var finalVal = "";
+                        $.each(vertices_arr[0], function (i, val) {
+                            if (vertices_arr[0][i].length > 0) {
+                                finalVal = finalVal + '[' + vertices_arr[0][i] + ']' + ','
+                            }
+
+                        });
+                        if (finalVal.length > 0) {
+                            finalVal = finalVal.substring(0, finalVal.length - 1)
+                            localStorage["vertices"] = finalVal;
+                        }
+                    }
+                    
+                    $.LoadingOverlay("hide");
+                },
+                error: function (err) {
+                    console.log(err);
+                    $.LoadingOverlay("hide");
+                }
+            });
+
+
+
             $.LoadingOverlay("hide");
         },
         error: function (err) {
