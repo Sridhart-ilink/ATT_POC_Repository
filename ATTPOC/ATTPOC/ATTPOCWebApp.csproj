@@ -97,6 +97,9 @@
     <Reference Include="System.Web.ApplicationServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="dijit\images\close-white.png" />
+    <Content Include="dijit\images\close.gif" />
+    <Content Include="dijit\images\popup.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\modernpics.svg" />
     <Content Include="SarfPage.aspx" />
