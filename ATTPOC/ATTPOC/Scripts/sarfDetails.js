@@ -555,6 +555,7 @@ function onLoadGis() {
       "esri/symbols/SimpleLineSymbol",
       "esri/symbols/SimpleFillSymbol",
       "esri/symbols/CartographicLineSymbol",
+      "esri/symbols/TextSymbol",
       "esri/geometry/Circle",
       "esri/geometry/Point",
       "esri/geometry/Polygon",
@@ -592,6 +593,7 @@ function onLoadGis() {
       SimpleLineSymbol,
       SimpleFillSymbol,
       CartographicLineSymbol,
+      TextSymbol,
       Circle,
       Point,
       Polygon,
@@ -736,16 +738,16 @@ function onLoadGis() {
                 var pointGeom = new Point([p.y, p.x], new esri.SpatialReference({ wkid: 4326 }));             
                 if (polygon.contains(pointGeom)) {
                     // if point lies inside polygon
-                    var sms = new SimpleMarkerSymbol().setStyle(
-                        SimpleMarkerSymbol.STYLE_CIRCLE).setColor(
-                        new Color([255, 255, 0, 0.5]));
+                    var sms =  new SimpleMarkerSymbol().setStyle(
+                       SimpleMarkerSymbol.STYLE_CIRCLE).setColor(
+                       new Color([255, 255, 0, 0.5]));
                     var attr = {
                         "Xcoord": p.y,
                         "Ycoord": p.x,
                         "Atoll": p.atoll,
                         "iPlan": p.iplan
                     }; // Set what attributes you want to add to graphics's info template.
-                    var infoTemplate = new InfoTemplate("Node Details", "Atoll SiteName: ${Atoll} <br/>iPlan JobNumber: ${iPlan} <br/>  Latitude: ${Ycoord} <br/>Longitude: ${Xcoord} <br/>");
+                    var infoTemplate = new InfoTemplate("Node Details", "Atoll SiteName: ${Atoll} <br/>iPlan JobNumber: ${iPlan} <br/>  Latitude: ${Ycoord} <br/>Longitude: ${Xcoord} <br/>_______________________________<br/>Reasons to consider this node:<br/>Fiber is already available<br/>Low leasing cost");
                     var g = new Graphic(pointGeom, sms, attr, infoTemplate);
                     g.setInfoTemplate(infoTemplate);
                     map.graphics.add(g);
@@ -810,8 +812,9 @@ function onLoadGis() {
                 var pointGeom = new Point([p.y, p.x], new esri.SpatialReference({ wkid: 4326 }));
                 if (polygon.contains(pointGeom)) {
                     // if point lies inside polygon
-                    var sms = new SimpleMarkerSymbol({
-                        style: "square",
+                    //<i class="icon-signal" aria-hidden="true" style="font-size: x-large;"></i>
+                    var sms =new SimpleMarkerSymbol({
+                         style: 'square',
                         color: "blue",
                         size: "8px"
                      }).setColor(
