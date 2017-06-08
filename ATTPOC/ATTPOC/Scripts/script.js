@@ -272,6 +272,7 @@ function getTaskStatusbyProcessInstanceID(processInstanceID, sarfID) {
                 localStorage["taskID"] = TaskID;
                 localStorage["instanceID"] = InstanceID;
                 localStorage["taskStatus"] = TaskStatus;
+                localStorage["sarfID"] = sarfID;
                 $.LoadingOverlay("hide");
                 window.location = appUrl + "SarfPage.aspx?processInstanceId=" + InstanceID + "&sarfid=" + localStorage["sarfID"];
             }
