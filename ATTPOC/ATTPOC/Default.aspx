@@ -120,7 +120,7 @@
                         <div class="pager">
                         <span class="glyphicon glyphicon-backward" id="backIcon" aria-hidden="true"></span>
                         <span class="glyphicon glyphicon-forward" id="frontIcon" aria-hidden="true"></span>
-                            <span>Page</span>
+                        <span>Page</span>
                         <span>
                             <input type="text" value="1" class="pageTxt" /></span>
                             <span class="pageLength"></span>
