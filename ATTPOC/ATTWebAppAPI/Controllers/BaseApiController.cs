@@ -118,6 +118,7 @@ namespace ATTWebAppAPI.Controllers
             pointsToReject = new List<List<decimal>>();
             hubs = new List<Hub>();
             hubIDList = new List<long>();
+            int midIndex = points.Count / 2;
             if (points.Count == 1)
             {
                 Hub hub = null;
@@ -153,6 +154,22 @@ namespace ATTWebAppAPI.Controllers
                 };
                 hubs.Add(hub);
 
+                if (midIndex > 1)
+                {
+                    randomNumber = random.Next(9999).ToString();
+                    vertex = points[midIndex];
+                    pointsToReject.Add(vertex);
+                    hub = new Hub
+                    {
+                        SarfId = currentSarfId,
+                        Latitude = vertex[1],// decMaxLat,
+                        Longitude = vertex[0], //decMaxLong,
+                        Address = "SITE SF-" + currentSarfId + "-0" + randomNumber,
+                        DateCreated = DateTime.Now
+                    };
+                    hubs.Add(hub);
+                }
+
                 randomNumber = random.Next(9999).ToString();
                 vertex = points[points.Count - 1];
                 pointsToReject.Add(vertex);
@@ -176,7 +193,8 @@ namespace ATTWebAppAPI.Controllers
         private void SaveNodes(List<List<decimal>> points)
         {
             List<decimal> vertex = new List<decimal>();
-            int midIndex = points.Count / 2;
+            int midIndex = points.Count / 3;
+            int hubCount = 0;
             nodes = new List<Node>();
             if (points.Count == 1)
             {
@@ -201,53 +219,37 @@ namespace ATTWebAppAPI.Controllers
             else
             {
                 Node node = null;
-                Random random = new Random(1000);
-                var randomNumber = random.Next(9999).ToString();
-                vertex = points.First();
-                node = new Node
+                int checkCount = 0;
+                for (var count = 0; count < points.Count; count++)
                 {
-                    SarfId = currentSarfId,
-                    HubId = (int)hubIDList[0],
-                    Latitude = vertex[1],// decMaxLat,
-                    Longitude = vertex[0], //decMaxLong,
-                    AtollSiteName = "SITE SF-" + currentSarfId + "-0" + randomNumber,
-                    iPlanJobNumber = "WR-RWOR-" + currentSarfId + "-0" + randomNumber,
-                    PaceNumber = "MRGE000" + currentSarfId + "-0" + randomNumber,
-                    DateCreated = DateTime.Now
-                };
-                nodes.Add(node);
-                if (midIndex > 1)
-                {
-                    randomNumber = random.Next(9999).ToString();
-                    vertex = points[midIndex];
+                    checkCount++;
+                    Random random = new Random(1000);
+                    var randomNumber = random.Next(9999).ToString();
+                    vertex = points[count];
                     node = new Node
                     {
                         SarfId = currentSarfId,
-                        HubId = (int)hubIDList[hubIDList.Count - 1],
+                        HubId = (int)hubIDList[hubCount],
                         Latitude = vertex[1],// decMaxLat,
                         Longitude = vertex[0], //decMaxLong,
-                        AtollSiteName = "SITE SF-" + currentSarfId + "-0" + randomNumber,
-                        iPlanJobNumber = "WR-RWOR-" + currentSarfId + "-0" + randomNumber,
-                        PaceNumber = "MRGE000" + currentSarfId + "-0" + randomNumber,
+                        AtollSiteName = "SITE SF-" + currentSarfId + (int)hubIDList[hubCount] + "-0" + randomNumber,
+                        iPlanJobNumber = "WR-RWOR-" + currentSarfId + (int)hubIDList[hubCount] + "-0" + randomNumber,
+                        PaceNumber = "MRGE000" + currentSarfId + (int)hubIDList[hubCount] + "-0" + randomNumber,
                         DateCreated = DateTime.Now
                     };
                     nodes.Add(node);
+                    if (checkCount == midIndex)
+                    {
+                        hubCount++;
+                        checkCount = 0;
+                        if (hubCount >= hubIDList.Count)
+                        {
+                            hubCount = hubIDList.Count - 1;
+                        }
+                    }
                 }
-                randomNumber = random.Next(9999).ToString();
-                vertex = points.Last();
-                node = new Node
-                {
-                    SarfId = currentSarfId,
-                    HubId = (int)hubIDList[hubIDList.Count - 1],
-                    Latitude = vertex[1],// decMaxLat,
-                    Longitude = vertex[0], //decMaxLong,
-                    AtollSiteName = "SITE SF-" + currentSarfId + "-0" + randomNumber,
-                    iPlanJobNumber = "WR-RWOR-" + currentSarfId + "-0" + randomNumber,
-                    PaceNumber = "MRGE000" + currentSarfId + "-0" + randomNumber,
-                    DateCreated = DateTime.Now
-                };
-                nodes.Add(node);
             }
+            
             foreach (var nodeItem in nodes)
             {
                 sarfDao.SaveNode(nodeItem);
@@ -351,68 +353,68 @@ namespace ATTWebAppAPI.Controllers
             {
                 var polyArray = GeneratePolyArray(polygon.Vertices);
                 SetCoordinates(polygon.Vertices);
-                List<LatLong> latLongs = new List<LatLong>();
+                //List<LatLong> latLongs = new List<LatLong>();
                 
-                decimal nodeLat;
-                decimal nodeLong;
-                decimal latAddSub;
-                decimal longAddSub;
-                decimal decMidLat = (decMinLat + decMaxLat) / 2;
-                decimal decMidLong = (decMinLong + decMaxLong) / 2;
+                //decimal nodeLat;
+                //decimal nodeLong;
+                //decimal latAddSub;
+                //decimal longAddSub;
+                //decimal decMidLat = (decMinLat + decMaxLat) / 2;
+                //decimal decMidLong = (decMinLong + decMaxLong) / 2;
 
-                for (int latDivider = 3, longDivider = 2;
-                    latDivider <= 6 && longDivider <= 5;
-                    latDivider++, longDivider++)
-                {
-                    //Top Left
-                    latAddSub = (decMaxLat - decMidLat) / latDivider;
-                    nodeLat = decMidLat + latAddSub;
-                    longAddSub = (decMaxLong - decMidLong) / longDivider;
-                    nodeLong = decMidLong + longAddSub;
+                //for (int latDivider = 3, longDivider = 2;
+                //    latDivider <= 6 && longDivider <= 5;
+                //    latDivider++, longDivider++)
+                //{
+                //    //Top Left
+                //    latAddSub = (decMaxLat - decMidLat) / latDivider;
+                //    nodeLat = decMidLat + latAddSub;
+                //    longAddSub = (decMaxLong - decMidLong) / longDivider;
+                //    nodeLong = decMidLong + longAddSub;
 
-                    latLongs.Add(new LatLong() { Latitude = nodeLat, Longitude = nodeLong });
+                //    latLongs.Add(new LatLong() { Latitude = nodeLat, Longitude = nodeLong });
 
-                    //Botton Left
-                    latAddSub = (decMidLat - decMinLat) / latDivider;
-                    nodeLat = decMidLat - latAddSub;
-                    longAddSub = (decMaxLong - decMidLong) / longDivider;
-                    nodeLong = decMidLong + longAddSub;
+                //    //Botton Left
+                //    latAddSub = (decMidLat - decMinLat) / latDivider;
+                //    nodeLat = decMidLat - latAddSub;
+                //    longAddSub = (decMaxLong - decMidLong) / longDivider;
+                //    nodeLong = decMidLong + longAddSub;
 
-                    latLongs.Add(new LatLong() { Latitude = nodeLat, Longitude = nodeLong });
+                //    latLongs.Add(new LatLong() { Latitude = nodeLat, Longitude = nodeLong });
 
-                    //Botton Right
-                    latAddSub = (decMidLat - decMinLat) / latDivider;
-                    nodeLat = decMidLat - latAddSub;
-                    longAddSub = (decMidLong - decMinLong) / longDivider;
-                    nodeLong = decMidLong - longAddSub;
+                //    //Botton Right
+                //    latAddSub = (decMidLat - decMinLat) / latDivider;
+                //    nodeLat = decMidLat - latAddSub;
+                //    longAddSub = (decMidLong - decMinLong) / longDivider;
+                //    nodeLong = decMidLong - longAddSub;
 
-                    latLongs.Add(new LatLong() { Latitude = nodeLat, Longitude = nodeLong });
+                //    latLongs.Add(new LatLong() { Latitude = nodeLat, Longitude = nodeLong });
 
-                    //Top Right
-                    latAddSub = (decMidLat - decMinLat) / latDivider;
-                    nodeLat = decMidLat + latAddSub;
-                    longAddSub = (decMidLong - decMinLong) / longDivider;
-                    nodeLong = decMidLong - longAddSub;
+                //    //Top Right
+                //    latAddSub = (decMidLat - decMinLat) / latDivider;
+                //    nodeLat = decMidLat + latAddSub;
+                //    longAddSub = (decMidLong - decMinLong) / longDivider;
+                //    nodeLong = decMidLong - longAddSub;
 
-                    latLongs.Add(new LatLong() { Latitude = nodeLat, Longitude = nodeLong });
-                }
+                //    latLongs.Add(new LatLong() { Latitude = nodeLat, Longitude = nodeLong });
+                //}
 
 
-                //bool isValid = centerOfLat > decMinLat && centerOfLat < decMaxLat &&
-                //    centerOfLong < decMinLong && centerOfLong > decMaxLong;
-                sarfDao = new SarfDao();
-                pointsToDraw = new List<List<decimal>>();
-                foreach (var item in latLongs)
-                {
-                    point = new List<decimal>();
-                    point.Add(item.Longitude);
-                    point.Add(item.Latitude);
-                    bool isValid = isPointInside(point, polyArray);
-                    if (isValid)
-                    {
-                        pointsToDraw.Add(point);
-                    }
-                }
+                ////bool isValid = centerOfLat > decMinLat && centerOfLat < decMaxLat &&
+                ////    centerOfLong < decMinLong && centerOfLong > decMaxLong;
+                //sarfDao = new SarfDao();
+                ////pointsToDraw = new List<List<decimal>>();
+                //foreach (var item in latLongs)
+                //{
+                //    point = new List<decimal>();
+                //    point.Add(item.Longitude);
+                //    point.Add(item.Latitude);
+                //    bool isValid = isPointInside(point, polyArray);
+                //    if (isValid)
+                //    {
+                //        //pointsToDraw.Add(point);
+                //    }
+                //}
                 var nodePoints = pointsToDraw.Except(pointsToReject).ToList();
                 SaveNodes(nodePoints);
                 return true;
