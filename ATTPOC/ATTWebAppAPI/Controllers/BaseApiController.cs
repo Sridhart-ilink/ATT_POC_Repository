@@ -192,8 +192,6 @@ namespace ATTWebAppAPI.Controllers
         private void SaveNodes(List<List<decimal>> points)
         {
             List<decimal> vertex = new List<decimal>();
-            int midIndex = points.Count / 3;
-            int hubCount = 0;
             nodes = new List<Node>();
             if (points.Count == 1)
             {
@@ -216,14 +214,23 @@ namespace ATTWebAppAPI.Controllers
             }
             else
             {
+                List<List<decimal>> mappedList = new List<List<decimal>>();
+                List<List<decimal>> notMappedList = new List<List<decimal>>();
+                int filterLength = points.Count * 3 / 4;
+                mappedList.AddRange(points.Take(10).ToList());
+                notMappedList.AddRange(points.Skip(mappedList.Count).Take(points.Count - mappedList.Count).ToList());
+                int midIndex = mappedList.Count / 3;
+                int hubCount = 0;
                 Node node = null;
                 int checkCount = 0;
-                for (var count = 0; count < points.Count; count++)
+
+                //adding nodes with mapping hub
+                for (var count = 0; count < mappedList.Count; count++)
                 {
                     checkCount++;
                     Random random = new Random(1000);
                     var randomNumber = random.Next(9999).ToString();
-                    vertex = points[count];
+                    vertex = mappedList[count];
                     node = new Node
                     {
                         SarfId = currentSarfId,
@@ -245,6 +252,26 @@ namespace ATTWebAppAPI.Controllers
                             hubCount = hubIDList.Count - 1;
                         }
                     }
+                }
+
+                //adding nodes without mapping hub
+                for (var count = 0; count < notMappedList.Count; count++)
+                {
+                    Random random = new Random(1000);
+                    var randomNumber = random.Next(9999).ToString();
+                    vertex = notMappedList[count];
+                    node = new Node
+                    {
+                        SarfId = currentSarfId,
+                        HubId = 0,
+                        Latitude = vertex[1],// decMaxLat,
+                        Longitude = vertex[0], //decMaxLong,
+                        AtollSiteName = "SITE SF-" + currentSarfId + "-0" + randomNumber,
+                        iPlanJobNumber = "WR-RWOR-" + currentSarfId + "-0" + randomNumber,
+                        PaceNumber = "MRGE000" + currentSarfId + "-0" + randomNumber,
+                        DateCreated = DateTime.Now
+                    };
+                    nodes.Add(node);
                 }
             }
             
