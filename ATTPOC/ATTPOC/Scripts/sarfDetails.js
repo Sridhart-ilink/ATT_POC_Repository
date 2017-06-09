@@ -797,16 +797,16 @@ function onLoadGis() {
                 if (polygon.contains(pointGeom)) {
                     // if point lies inside polygon
                     var sms = new SimpleMarkerSymbol({
-                        'size': 8,
+                        'size': 4,
                         "outline": {
-                            "color": [0, 0, 0, 255],
+                            "color": [255, 0, 255, 255],
                             "width": 1,
                             "type": "esriSLS",
                             "style": "esriSLSSolid"
                         }
                     }).setStyle(
                        SimpleMarkerSymbol.STYLE_CIRCLE,5).setColor(
-                       new Color([255, 255, 0, 0.5]));
+                       new Color([255, 0, 255, 0.5]));
                     var attr = {
                         "Xcoord": p.y,
                         "Ycoord": p.x,
@@ -816,6 +816,18 @@ function onLoadGis() {
                     var infoTemplate = new InfoTemplate("Node Details", "<b>Atoll SiteName:</b> ${Atoll} <br/><b>iPlan JobNumber:</b> ${iPlan} <br/>  <b>Latitude:</b> ${Ycoord} <br/><b>Longitude:</b> ${Xcoord} <br/>_______________________________<br/><b>Why this node?</b><br/><ul><li>Fiber is already available.</li><li>Low leasing cost.</li></ul>");
                     if (p.hubid==0)
                     {
+                        sms = new SimpleMarkerSymbol({
+                        'size': 4,
+                        "outline": {
+                            "color": [0, 0, 0, 255],
+                            "width": 1,
+                            "type": "esriSLS",
+                            "style": "esriSLSSolid"
+                        }
+                        }).setStyle(
+                               SimpleMarkerSymbol.STYLE_CIRCLE, 5).setColor(
+                               new Color([0, 0, 0, 255]));
+
                         infoTemplate = new InfoTemplate("Node Details", "<b>Atoll SiteName:</b> ${Atoll} <br/><b>iPlan JobNumber:</b> ${iPlan} <br/>  <b>Latitude:</b> ${Ycoord} <br/><b>Longitude:</b> ${Xcoord}");
                     }
 
@@ -828,7 +840,7 @@ function onLoadGis() {
                     //hubArray
                     var lineSymbol = new CartographicLineSymbol(
                        CartographicLineSymbol.STYLE_SOLID,
-                       new Color([255, 0, 0]), 1,
+                       new Color([255,0, 0]), 1,
                        CartographicLineSymbol.CAP_ROUND,
                        CartographicLineSymbol.JOIN_MITER, 2
                      );
