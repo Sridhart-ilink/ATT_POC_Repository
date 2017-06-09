@@ -309,41 +309,75 @@ namespace ATTWebAppAPI.Controllers
                 decimal decMidLat = (decMinLat + decMaxLat) / 2;
                 decimal decMidLong = (decMinLong + decMaxLong) / 2;
 
-                for (decimal latDivider = 0.2M, longDivider = 0.2M;
-                latDivider <= 0.8M && longDivider <= 0.8M;
-                latDivider += 0.1M, longDivider += 0.1M)
+                //for (decimal latDivider = 0.1M, longDivider = 0.1M;
+                //latDivider <= 0.9M && longDivider <= 0.9M;
+                //latDivider += 0.15M, longDivider += 0.15M)
+                for (decimal latDivider = 0.1M; latDivider <= 0.6M; latDivider += 0.2M)
                 {
-                    //Top Left
-                    latAddSub = (decMaxLat - decMidLat) * latDivider;
-                    hubLat = decMidLat + latAddSub;
-                    longAddSub = (decMaxLong - decMidLong) * longDivider;
-                    hubLong = decMidLong + longAddSub;
+                    for (decimal longDivider = 0.2M; longDivider <= 0.8M; longDivider += 0.3M)
+                    {
+                        //Top Left
+                        latAddSub = (decMaxLat - decMidLat) * latDivider;
+                        longAddSub = (decMaxLong - decMidLong) * longDivider;
+                        hubLat = decMidLat + latAddSub;
+                        hubLong = decMidLong + longAddSub;
+                        latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
 
-                    latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
+                        //Botton Left
+                        latAddSub = (decMidLat - decMinLat) * latDivider;
+                        hubLat = decMidLat - latAddSub;
+                        longAddSub = (decMaxLong - decMidLong) * longDivider;
+                        hubLong = decMidLong + longAddSub;
+                        latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
 
-                    //Botton Left
-                    latAddSub = (decMidLat - decMinLat) * latDivider;
-                    hubLat = decMidLat - latAddSub;
-                    longAddSub = (decMaxLong - decMidLong) * longDivider;
-                    hubLong = decMidLong + longAddSub;
+                        //Botton Right
+                        latAddSub = (decMidLat - decMinLat) * latDivider;
+                        hubLat = decMidLat - latAddSub;
+                        longAddSub = (decMidLong - decMinLong) * longDivider;
+                        hubLong = decMidLong - longAddSub;
+                        latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
 
-                    latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
+                        ////Top Right
+                        //latAddSub = (decMidLat - decMinLat) * latDivider;
+                        //hubLat = decMidLat + latAddSub;
+                        //longAddSub = (decMidLong - decMinLong) * longDivider;
+                        //hubLong = decMidLong - longAddSub;
+                        //latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong }); 
+                    }
+                }
 
-                    //Botton Right
-                    latAddSub = (decMidLat - decMinLat) * latDivider;
-                    hubLat = decMidLat - latAddSub;
-                    longAddSub = (decMidLong - decMinLong) * longDivider;
-                    hubLong = decMidLong - longAddSub;
+                for (decimal latDivider = 0.4M; latDivider <= 0.9M; latDivider += 0.3M)
+                {
+                    for (decimal longDivider = 0.3M; longDivider <= 0.9M; longDivider += 0.35M)
+                    {
+                        //Top Left
+                        latAddSub = (decMaxLat - decMidLat) * latDivider;
+                        longAddSub = (decMaxLong - decMidLong) * longDivider;
+                        hubLat = decMidLat + latAddSub;
+                        hubLong = decMidLong + longAddSub;
+                        latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
 
-                    latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
+                        //Botton Left
+                        //latAddSub = (decMidLat - decMinLat) * latDivider;
+                        //hubLat = decMidLat - latAddSub;
+                        //longAddSub = (decMaxLong - decMidLong) * longDivider;
+                        //hubLong = decMidLong + longAddSub;
+                        //latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
 
-                    //Top Right
-                    latAddSub = (decMidLat - decMinLat) * latDivider;
-                    hubLat = decMidLat + latAddSub;
-                    longAddSub = (decMidLong - decMinLong) * longDivider;
-                    hubLong = decMidLong - longAddSub;
+                        //Botton Right
+                        latAddSub = (decMidLat - decMinLat) * latDivider;
+                        hubLat = decMidLat - latAddSub;
+                        longAddSub = (decMidLong - decMinLong) * longDivider;
+                        hubLong = decMidLong - longAddSub;
+                        latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
 
-                    latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
+                        //Top Right
+                        latAddSub = (decMidLat - decMinLat) * latDivider;
+                        hubLat = decMidLat + latAddSub;
+                        longAddSub = (decMidLong - decMinLong) * longDivider;
+                        hubLong = decMidLong - longAddSub;
+                        latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
+                    }
                 }
 
                 sarfDao = new SarfDao();
