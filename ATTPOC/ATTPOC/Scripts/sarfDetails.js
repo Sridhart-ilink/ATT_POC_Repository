@@ -814,11 +814,16 @@ function onLoadGis() {
                         "iPlan": p.iplan
                     }; // Set what attributes you want to add to graphics's info template.
                     var infoTemplate = new InfoTemplate("Node Details", "<b>Atoll SiteName:</b> ${Atoll} <br/><b>iPlan JobNumber:</b> ${iPlan} <br/>  <b>Latitude:</b> ${Ycoord} <br/><b>Longitude:</b> ${Xcoord} <br/>_______________________________<br/><b>Why this node?</b><br/><ul><li>Fiber is already available.</li><li>Low leasing cost.</li></ul>");
+                    if (p.hubid==0)
+                    {
+                        infoTemplate = new InfoTemplate("Node Details", "<b>Atoll SiteName:</b> ${Atoll} <br/><b>iPlan JobNumber:</b> ${iPlan} <br/>  <b>Latitude:</b> ${Ycoord} <br/><b>Longitude:</b> ${Xcoord}");
+                    }
+
                     var g = new Graphic(pointGeom, sms, attr, infoTemplate);
                     g.setInfoTemplate(infoTemplate);
                     map.graphics.add(g);
 
-                    
+
                     // connect the node with hub
                     //hubArray
                     var lineSymbol = new CartographicLineSymbol(
@@ -836,6 +841,7 @@ function onLoadGis() {
                             var lineGraphic = new Graphic(lineGeometry, lineSymbol);
                             map.graphics.add(lineGraphic)
                         }
+                        
                     });
                 }
                        
