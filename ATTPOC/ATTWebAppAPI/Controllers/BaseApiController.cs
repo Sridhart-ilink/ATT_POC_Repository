@@ -217,7 +217,7 @@ namespace ATTWebAppAPI.Controllers
                 List<List<decimal>> mappedList = new List<List<decimal>>();
                 List<List<decimal>> notMappedList = new List<List<decimal>>();
                 int filterLength = points.Count * 3 / 4;
-                mappedList.AddRange(points.Take(10).ToList());
+                mappedList.AddRange(points.Take(filterLength).ToList());
                 notMappedList.AddRange(points.Skip(mappedList.Count).Take(points.Count - mappedList.Count).ToList());
                 int midIndex = mappedList.Count / 3;
                 int hubCount = 0;
