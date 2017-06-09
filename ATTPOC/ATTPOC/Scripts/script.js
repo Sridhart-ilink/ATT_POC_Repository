@@ -495,6 +495,8 @@ function onLoadGis() {
                         map.graphics.add(gra);
                         map.setExtent(gra.geometry.getExtent().expand(2));
 
+                        
+
                     }
                  }
                }

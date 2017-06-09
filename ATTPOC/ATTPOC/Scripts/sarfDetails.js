@@ -586,6 +586,7 @@ function onLoadGis() {
        "esri/dijit/Search",
       "esri/symbols/SimpleMarkerSymbol",
       "esri/renderers/SimpleRenderer",
+      "esri/symbols/PictureMarkerSymbol",
       "esri/InfoTemplate",
      // "esri/urlUtils",     
       "esri/toolbars/draw",
@@ -623,6 +624,7 @@ function onLoadGis() {
       Search,
       SimpleMarkerSymbol,
       SimpleRenderer,
+      PictureMarkerSymbol,
       InfoTemplate,
      // urlUtils,
       Draw,
@@ -659,6 +661,9 @@ function onLoadGis() {
         var tooltipDialog;
         var graphicLayer;
         var hubArray = [];
+        var mapViewHubImage = 'black-tower.png';
+        var sceneViewHubImage = 'white-tower.png';
+        var hubImageUrl = '../Styles/images/black-tower.png';
         Parser.parse();
         map = new Map("map", {
             basemap: "streets",
@@ -683,6 +688,18 @@ function onLoadGis() {
             }
         }, "BasemapToggle");
         toggle.startup();
+
+        $(document).on('click', '.basemapImage', function (e) {
+            if (e.target.title.toLowerCase() == "satellite") {
+                hubImageUrl = '../Styles/images/' + sceneViewHubImage;
+            }
+            else {
+                hubImageUrl = '../Styles/images/' + mapViewHubImage;
+            }
+            LoadHubs();
+            console.log(toggle);
+        });
+
 
         events.push(map.on("load", function () {
             map.graphics.clear();
@@ -779,8 +796,16 @@ function onLoadGis() {
                 var pointGeom = new Point([p.y, p.x], new esri.SpatialReference({ wkid: 4326 }));             
                 if (polygon.contains(pointGeom)) {
                     // if point lies inside polygon
-                    var sms =  new SimpleMarkerSymbol().setStyle(
-                       SimpleMarkerSymbol.STYLE_CIRCLE).setColor(
+                    var sms = new SimpleMarkerSymbol({
+                        'size': 8,
+                        "outline": {
+                            "color": [0, 0, 0, 255],
+                            "width": 1,
+                            "type": "esriSLS",
+                            "style": "esriSLSSolid"
+                        }
+                    }).setStyle(
+                       SimpleMarkerSymbol.STYLE_CIRCLE,5).setColor(
                        new Color([255, 255, 0, 0.5]));
                     var attr = {
                         "Xcoord": p.y,
@@ -802,6 +827,7 @@ function onLoadGis() {
                        CartographicLineSymbol.CAP_ROUND,
                        CartographicLineSymbol.JOIN_MITER, 2
                      );
+                    
                     array.forEach(hubArray, function (h) {
                         if (h.id == p.hubid) {
                             var lineGeometry = new Polyline(new esri.SpatialReference({ wkid: 4326 }));
@@ -848,27 +874,31 @@ function onLoadGis() {
             finalVal = JSON.parse("[" + finalVal + "]");
             var polygon = new Polygon(new esri.SpatialReference({ wkid: 4326 }));
             polygon.addRing(finalVal)
-
+            var pictureMarkerSymbol = null;
             array.forEach(poinArr, function (p) {
                 var pointGeom = new Point([p.y, p.x], new esri.SpatialReference({ wkid: 4326 }));
                 if (polygon.contains(pointGeom)) {
                     // if point lies inside polygon
                     //<i class="icon-signal" aria-hidden="true" style="font-size: x-large;"></i>
-                    var sms =new SimpleMarkerSymbol({
-                         style: 'square',
-                        color: "blue",
-                        size: "8px"
-                     }).setColor(
-                        new Color([0, 0, 255, 0.5]));
+                    pictureMarkerSymbol = new PictureMarkerSymbol(hubImageUrl, 30, 30, "esriPMS", p.y);
+                    
+                    //var sms =new SimpleMarkerSymbol({
+                    //     style: 'square',
+                    //    color: "blue",
+                    //    size: "8px"
+                    // }).setColor(
+                    //    new Color([0, 0, 255, 0.5]));
                     var attr = {
                         "Xcoord": p.y,
                         "Ycoord": p.x,
                         "Address": p.address,
                     }; // Set what attributes you want to add to graphics's info template.
                     var infoTemplate = new InfoTemplate("Hub Details", "Address: ${Address} <br/>Latitude: ${Ycoord} <br/>Longitude: ${Xcoord} <br/>");
-                    var g = new Graphic(pointGeom, sms, attr, infoTemplate);
+                    var g = new Graphic(pointGeom, pictureMarkerSymbol, attr, infoTemplate);
                     g.setInfoTemplate(infoTemplate);
                     map.graphics.add(g);
+
+                    
                 }
 
             });

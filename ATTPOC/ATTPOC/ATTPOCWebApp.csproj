@@ -117,11 +117,14 @@
     <Content Include="Styles\claro-3.14.css" />
     <Content Include="Styles\esri-3.14.css" />
     <Content Include="Styles\images\att-logo.png" />
+    <Content Include="Styles\images\black-tower.png" />
     <Content Include="Styles\images\ChatIcon.png" />
     <Content Include="Styles\images\circle.png" />
     <Content Include="Styles\images\double-arrow-right-red.png" />
     <Content Include="Styles\images\freehand.png" />
+    <Content Include="Styles\images\images.png" />
     <Content Include="Styles\images\polygon.png" />
+    <Content Include="Styles\images\white-tower.png" />
     <Content Include="Styles\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
