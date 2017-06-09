@@ -282,38 +282,38 @@ namespace ATTWebAppAPI.Controllers
                 decimal decMidLat = (decMinLat + decMaxLat) / 2;
                 decimal decMidLong = (decMinLong + decMaxLong) / 2;
 
-                for (int latDivider = 3, longDivider = 2;
-                    latDivider <= 5 && longDivider <= 4;
-                    latDivider++, longDivider++)
+                for (decimal latDivider = 0.2M, longDivider = 0.2M;
+                latDivider <= 0.8M && longDivider <= 0.8M;
+                latDivider += 0.1M, longDivider += 0.1M)
                 {
                     //Top Left
-                    latAddSub = (decMaxLat - decMidLat) / latDivider;
+                    latAddSub = (decMaxLat - decMidLat) * latDivider;
                     hubLat = decMidLat + latAddSub;
-                    longAddSub = (decMaxLong - decMidLong) / longDivider;
+                    longAddSub = (decMaxLong - decMidLong) * longDivider;
                     hubLong = decMidLong + longAddSub;
 
                     latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
 
                     //Botton Left
-                    latAddSub = (decMidLat - decMinLat) / latDivider;
+                    latAddSub = (decMidLat - decMinLat) * latDivider;
                     hubLat = decMidLat - latAddSub;
-                    longAddSub = (decMaxLong - decMidLong) / longDivider;
+                    longAddSub = (decMaxLong - decMidLong) * longDivider;
                     hubLong = decMidLong + longAddSub;
 
                     latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
 
                     //Botton Right
-                    latAddSub = (decMidLat - decMinLat) / latDivider;
+                    latAddSub = (decMidLat - decMinLat) * latDivider;
                     hubLat = decMidLat - latAddSub;
-                    longAddSub = (decMidLong - decMinLong) / longDivider;
+                    longAddSub = (decMidLong - decMinLong) * longDivider;
                     hubLong = decMidLong - longAddSub;
 
                     latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
 
                     //Top Right
-                    latAddSub = (decMidLat - decMinLat) / latDivider;
+                    latAddSub = (decMidLat - decMinLat) * latDivider;
                     hubLat = decMidLat + latAddSub;
-                    longAddSub = (decMidLong - decMinLong) / longDivider;
+                    longAddSub = (decMidLong - decMinLong) * longDivider;
                     hubLong = decMidLong - longAddSub;
 
                     latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
