@@ -663,7 +663,7 @@ function onLoadGis() {
         var hubArray = [];
         var mapViewHubImage = 'black-tower.png';
         var sceneViewHubImage = 'white-tower.png';
-        var hubImageUrl = '../Styles/images/black-tower.png';
+        var hubImageUrl = '../CRANng/Styles/images/black-tower.png';
         Parser.parse();
         map = new Map("map", {
             basemap: "streets",
