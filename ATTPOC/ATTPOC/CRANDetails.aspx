@@ -1,9 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SarfPage.aspx.cs" Inherits="JavascriptBasedApp.SarfPage" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CRANDetails.aspx.cs" Inherits="JavascriptBasedApp.SarfPage" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Autoforms</title>
+    <title>CRAN</title>
     <script type="text/javascript" src="Scripts/jquery-1.11.3.min.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="Scripts/angular-1.3.15.min.js"></script>
@@ -95,7 +95,7 @@
                         </button>
                         <a class="navbar-brand" href="#">
                             <img src="Styles/images/att-logo.png" class="att-logo" />
-                            <span class="att-heading">Site Build</span>
+                            <span class="att-heading">CRAN <i class="ngClass">NG</i></span>
                         </a>
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -114,7 +114,7 @@
 
                 <div class="col-md-3 pad-lr-5 slidingDiv detailsSlider" id="style-2">
                     <div class="cardHead">
-                        <h3>SARF Details</h3>
+                        <h3>CRAN Details</h3>
                     </div>
                     <div class="cardHead ctrlOption">
                         <div id="editBtn">
@@ -139,7 +139,7 @@
 
                             <div class="row">
                                 <div class="col-md-6 pull-left">
-                                    <label for="txtsarfname">SARF Name:</label>
+                                    <label for="txtsarfname">Name:</label>
                                     <p class="lblDetails"><span id="lblsarfname"></span></p>
                                     <input class="form-control txtDetails" runat="server" type="text" id="txtsarfname" />
                                 </div>
@@ -253,7 +253,7 @@
                         <i class="fa fa-chevron-right" aria-hidden="true"></i>
                     </div>
                     <div class="col-md-12 borderBottom pageLink" style="margin-top: 7px; margin-bottom: 5px">
-                        <a href="Default.aspx" class="linkcolor" style="margin-left: 30px;">Home</a> :: <a class="linkcolor">SARF Details</a>
+                        <a href="Default.aspx" class="linkcolor" style="margin-left: 30px;">Home</a> :: <a class="linkcolor">CRAN Details</a>
                         <ul class="nav nav-tabs tabs-left navTabs-ul pull-right tabMenu">
                             <li class="active" data-index="0"><a href="#mapview" data-toggle="tab">Map</a></li>
                             <li class="" data-index="1"><a href="#workflow" data-toggle="tab">Workflow</a></li>

@@ -8,7 +8,7 @@
     <head>
     <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Autoforms</title>
+        <title>CRAN</title>
         <script type="text/javascript" src="Scripts/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="Scripts/angular-1.3.15.min.js"></script>
         <script type="text/javascript" src="Scripts/bootstrap-3.3.4.min.js"></script>
@@ -94,7 +94,7 @@
                         </button>
                         <a class="navbar-brand" href="#">
                             <img src="Styles/images/att-logo.png" class="att-logo" />
-                            <span class="att-heading">Site Build</span>
+                            <span class="att-heading">CRAN <i class="ngClass">NG</i></span>
                         </a>
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -113,7 +113,7 @@
                     <div class="col-md-2 pad-lr-5 slidingDiv" id="style-2">
                     
                         <div class="cardHead">
-                            <h3>Recent SARFs</h3>
+                            <h3>Recent CRAN Builds</h3>
                         </div>
                         <div class="cardView">
                         </div>
@@ -139,7 +139,7 @@
                     <div id="map" class="pull-left">     
                          <div id="BasemapToggle"></div>               
                         <div class="addSarfBtn">
-                            <a class="btn btn-default btn-form btnDraw pull-left" id="btnDraw" >Create Search Ring</a>
+                            <a class="btn btn-default btn-form btnDraw pull-left" id="btnDraw" >Select Area of interest</a>
                             <a class="btn-draw pull-left shapeIcon" title="Draw free hand" id="freehandpolyline" value="freehandpolyline" >
                                 <i class="fa fa-hand-paper-o" aria-hidden="true"></i>
                             </a>

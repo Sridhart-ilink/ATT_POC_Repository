@@ -241,7 +241,7 @@ function getTaskStatusbySarfID(id) {
             localStorage["taskStatus"] = parsedData;
             localStorage["sarfID"] = id;
             $.LoadingOverlay("hide");
-            window.location = appUrl + "SarfPage.aspx?processInstanceId=" + InstanceID + "&sarfid=" + localStorage["sarfID"];
+            window.location = appUrl + "CRANDetails.aspx?processInstanceId=" + InstanceID + "&sarfid=" + localStorage["sarfID"];
         },
         error: function (err) {
             console.log(err);
@@ -274,7 +274,7 @@ function getTaskStatusbyProcessInstanceID(processInstanceID, sarfID) {
                 localStorage["taskStatus"] = TaskStatus;
                 localStorage["sarfID"] = sarfID;
                 $.LoadingOverlay("hide");
-                window.location = appUrl + "SarfPage.aspx?processInstanceId=" + InstanceID + "&sarfid=" + localStorage["sarfID"];
+                window.location = appUrl + "CRANDetails.aspx?processInstanceId=" + InstanceID + "&sarfid=" + localStorage["sarfID"];
             }
         },
         error: function (err) {
@@ -766,13 +766,13 @@ function onLoadGis() {
          
             ctxMenuForGraphics = new Menu({});
             ctxMenuForGraphics.addChild(new MenuItem({
-                label: "Create SARF",               
+                label: "Create Area of interest",
                 onClick: function () {
                     // CREATE DIALOG
                     var node = dom.byId('drawingLayer_layer');                  
                     if (!tooltipDialog) {
                         var htmlFragment = '';
-                        htmlFragment += '<div id="mapTwo" class="dialogtooltip"><input type="text" id="txtsarf" placeholder = "Sarf Name" width="150px" class="dialogtooltipinput">';
+                        htmlFragment += '<div id="mapTwo" class="dialogtooltip"><input type="text" id="txtsarf" placeholder = "Area Name" width="150px" class="dialogtooltipinput">';
                         htmlFragment += '<div><input type="text" id="txtatollsitename" placeholder="Atoll Site Name" width="150px" class="dialogtooltipinput" style="margin-top:0px;"></div>';
                         htmlFragment += '<div><input type="button" id="btncreatesarf" value="Save" class="btn blueBtn dialogtootipbtn"/>'
                         htmlFragment += '<input type="button"  id="btncancelsarf"  value="Cancel" class="btn whiteBtn dialogtootipbtncancel"/></div></div>'
@@ -869,7 +869,7 @@ function onLoadGis() {
                 }
             }));
             ctxMenuForGraphics.addChild(new MenuItem({
-                label: "Clear Search Ring",
+                label: "Clear Area",
                 onClick: function () {
                     clearGraphics();
                 }

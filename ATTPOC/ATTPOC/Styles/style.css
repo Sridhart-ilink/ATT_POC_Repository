@@ -399,7 +399,7 @@ margin-top : -20px
     border-radius: 5px;   
     color: #fff;
     font-size: 12pt;
-    width: 160px;
+    width: 180px;
     font-weight: 100;
     padding: 8px 10px 7px 10px;
     margin-bottom: 4px;
@@ -769,3 +769,8 @@ margin-top : -20px
     /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
 .icon-signal:before { content: '\e770'; }
+.ngClass{
+    font-size: 10px;
+    font-weight: 700;
+    color: black;
+}
