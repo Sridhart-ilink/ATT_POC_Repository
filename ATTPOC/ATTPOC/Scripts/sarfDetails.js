@@ -813,7 +813,7 @@ function onLoadGis() {
                         "Atoll": p.atoll,
                         "iPlan": p.iplan
                     }; // Set what attributes you want to add to graphics's info template.
-                    var infoTemplate = new InfoTemplate("Node Details", "Atoll SiteName: ${Atoll} <br/>iPlan JobNumber: ${iPlan} <br/>  Latitude: ${Ycoord} <br/>Longitude: ${Xcoord} <br/>_______________________________<br/>Reasons to consider this node:<br/>Fiber is already available<br/>Low leasing cost");
+                    var infoTemplate = new InfoTemplate("Node Details", "<b>Atoll SiteName:</b> ${Atoll} <br/><b>iPlan JobNumber:</b> ${iPlan} <br/>  <b>Latitude:</b> ${Ycoord} <br/><b>Longitude:</b> ${Xcoord} <br/>_______________________________<br/><b>Why this node?</b><br/><ul><li>Fiber is already available.</li><li>Low leasing cost.</li></ul>");
                     var g = new Graphic(pointGeom, sms, attr, infoTemplate);
                     g.setInfoTemplate(infoTemplate);
                     map.graphics.add(g);
@@ -893,7 +893,7 @@ function onLoadGis() {
                         "Ycoord": p.x,
                         "Address": p.address,
                     }; // Set what attributes you want to add to graphics's info template.
-                    var infoTemplate = new InfoTemplate("Hub Details", "Address: ${Address} <br/>Latitude: ${Ycoord} <br/>Longitude: ${Xcoord} <br/>");
+                    var infoTemplate = new InfoTemplate("Hub Details", "<b>Address:</b> ${Address} <br/><b>Latitude:</b> ${Ycoord} <br/><b>Longitude:</b> ${Xcoord} <br/>");
                     var g = new Graphic(pointGeom, pictureMarkerSymbol, attr, infoTemplate);
                     g.setInfoTemplate(infoTemplate);
                     map.graphics.add(g);
