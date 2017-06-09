@@ -192,8 +192,6 @@ namespace ATTWebAppAPI.Controllers
         private void SaveNodes(List<List<decimal>> points)
         {
             List<decimal> vertex = new List<decimal>();
-            int midIndex = points.Count / 3;
-            int hubCount = 0;
             nodes = new List<Node>();
             if (points.Count == 1)
             {
@@ -216,14 +214,23 @@ namespace ATTWebAppAPI.Controllers
             }
             else
             {
+                List<List<decimal>> mappedList = new List<List<decimal>>();
+                List<List<decimal>> notMappedList = new List<List<decimal>>();
+                int filterLength = points.Count * 3 / 4;
+                mappedList.AddRange(points.Take(filterLength).ToList());
+                notMappedList.AddRange(points.Skip(mappedList.Count).Take(points.Count - mappedList.Count).ToList());
+                int midIndex = mappedList.Count / 3;
+                int hubCount = 0;
                 Node node = null;
                 int checkCount = 0;
-                for (var count = 0; count < points.Count; count++)
+
+                //adding nodes with mapping hub
+                for (var count = 0; count < mappedList.Count; count++)
                 {
                     checkCount++;
                     Random random = new Random(1000);
                     var randomNumber = random.Next(9999).ToString();
-                    vertex = points[count];
+                    vertex = mappedList[count];
                     node = new Node
                     {
                         SarfId = currentSarfId,
@@ -245,6 +252,26 @@ namespace ATTWebAppAPI.Controllers
                             hubCount = hubIDList.Count - 1;
                         }
                     }
+                }
+
+                //adding nodes without mapping hub
+                for (var count = 0; count < notMappedList.Count; count++)
+                {
+                    Random random = new Random(1000);
+                    var randomNumber = random.Next(9999).ToString();
+                    vertex = notMappedList[count];
+                    node = new Node
+                    {
+                        SarfId = currentSarfId,
+                        HubId = 0,
+                        Latitude = vertex[1],// decMaxLat,
+                        Longitude = vertex[0], //decMaxLong,
+                        AtollSiteName = "SITE SF-" + currentSarfId + "-0" + randomNumber,
+                        iPlanJobNumber = "WR-RWOR-" + currentSarfId + "-0" + randomNumber,
+                        PaceNumber = "MRGE000" + currentSarfId + "-0" + randomNumber,
+                        DateCreated = DateTime.Now
+                    };
+                    nodes.Add(node);
                 }
             }
             
@@ -282,41 +309,75 @@ namespace ATTWebAppAPI.Controllers
                 decimal decMidLat = (decMinLat + decMaxLat) / 2;
                 decimal decMidLong = (decMinLong + decMaxLong) / 2;
 
-                for (decimal latDivider = 0.2M, longDivider = 0.2M;
-                latDivider <= 0.8M && longDivider <= 0.8M;
-                latDivider += 0.1M, longDivider += 0.1M)
+                //for (decimal latDivider = 0.1M, longDivider = 0.1M;
+                //latDivider <= 0.9M && longDivider <= 0.9M;
+                //latDivider += 0.15M, longDivider += 0.15M)
+                for (decimal latDivider = 0.1M; latDivider <= 0.6M; latDivider += 0.2M)
                 {
-                    //Top Left
-                    latAddSub = (decMaxLat - decMidLat) * latDivider;
-                    hubLat = decMidLat + latAddSub;
-                    longAddSub = (decMaxLong - decMidLong) * longDivider;
-                    hubLong = decMidLong + longAddSub;
+                    for (decimal longDivider = 0.2M; longDivider <= 0.8M; longDivider += 0.3M)
+                    {
+                        //Top Left
+                        latAddSub = (decMaxLat - decMidLat) * latDivider;
+                        longAddSub = (decMaxLong - decMidLong) * longDivider;
+                        hubLat = decMidLat + latAddSub;
+                        hubLong = decMidLong + longAddSub;
+                        latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
 
-                    latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
+                        //Botton Left
+                        latAddSub = (decMidLat - decMinLat) * latDivider;
+                        hubLat = decMidLat - latAddSub;
+                        longAddSub = (decMaxLong - decMidLong) * longDivider;
+                        hubLong = decMidLong + longAddSub;
+                        latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
 
-                    //Botton Left
-                    latAddSub = (decMidLat - decMinLat) * latDivider;
-                    hubLat = decMidLat - latAddSub;
-                    longAddSub = (decMaxLong - decMidLong) * longDivider;
-                    hubLong = decMidLong + longAddSub;
+                        //Botton Right
+                        latAddSub = (decMidLat - decMinLat) * latDivider;
+                        hubLat = decMidLat - latAddSub;
+                        longAddSub = (decMidLong - decMinLong) * longDivider;
+                        hubLong = decMidLong - longAddSub;
+                        latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
 
-                    latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
+                        ////Top Right
+                        //latAddSub = (decMidLat - decMinLat) * latDivider;
+                        //hubLat = decMidLat + latAddSub;
+                        //longAddSub = (decMidLong - decMinLong) * longDivider;
+                        //hubLong = decMidLong - longAddSub;
+                        //latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong }); 
+                    }
+                }
 
-                    //Botton Right
-                    latAddSub = (decMidLat - decMinLat) * latDivider;
-                    hubLat = decMidLat - latAddSub;
-                    longAddSub = (decMidLong - decMinLong) * longDivider;
-                    hubLong = decMidLong - longAddSub;
+                for (decimal latDivider = 0.4M; latDivider <= 0.9M; latDivider += 0.3M)
+                {
+                    for (decimal longDivider = 0.3M; longDivider <= 0.9M; longDivider += 0.35M)
+                    {
+                        //Top Left
+                        latAddSub = (decMaxLat - decMidLat) * latDivider;
+                        longAddSub = (decMaxLong - decMidLong) * longDivider;
+                        hubLat = decMidLat + latAddSub;
+                        hubLong = decMidLong + longAddSub;
+                        latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
 
-                    latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
+                        //Botton Left
+                        //latAddSub = (decMidLat - decMinLat) * latDivider;
+                        //hubLat = decMidLat - latAddSub;
+                        //longAddSub = (decMaxLong - decMidLong) * longDivider;
+                        //hubLong = decMidLong + longAddSub;
+                        //latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
 
-                    //Top Right
-                    latAddSub = (decMidLat - decMinLat) * latDivider;
-                    hubLat = decMidLat + latAddSub;
-                    longAddSub = (decMidLong - decMinLong) * longDivider;
-                    hubLong = decMidLong - longAddSub;
+                        //Botton Right
+                        latAddSub = (decMidLat - decMinLat) * latDivider;
+                        hubLat = decMidLat - latAddSub;
+                        longAddSub = (decMidLong - decMinLong) * longDivider;
+                        hubLong = decMidLong - longAddSub;
+                        latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
 
-                    latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
+                        //Top Right
+                        latAddSub = (decMidLat - decMinLat) * latDivider;
+                        hubLat = decMidLat + latAddSub;
+                        longAddSub = (decMidLong - decMinLong) * longDivider;
+                        hubLong = decMidLong - longAddSub;
+                        latLongs.Add(new LatLong() { Latitude = hubLat, Longitude = hubLong });
+                    }
                 }
 
                 sarfDao = new SarfDao();
