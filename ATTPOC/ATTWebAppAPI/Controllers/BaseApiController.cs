@@ -24,6 +24,7 @@ namespace ATTWebAppAPI.Controllers
         List<Node> nodes = null;
         List<Hub> hubs = null;
         List<long> hubIDList = null;
+        List<long> hubRejectList = null;
 
         string minLat = String.Empty;
         string maxLat = String.Empty;
