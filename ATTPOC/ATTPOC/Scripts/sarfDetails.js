@@ -805,11 +805,14 @@ function onLoadGis() {
                                 x: item.Latitude,
                                 y: item.Longitude,
                                 hubid: item.HubId,
-                                type: item.Type,
+                                type: item.NodeType,
                                 vendorname: item.VendorName,
-                                police: item.Police,
-                                fire: item.fire,
-                                enerygy:item.enerygy
+                                police: item.ContactPolice,
+                                fire: item.ContactFire,
+                                energy: item.ContactEnergy,
+                                isOwned:item.IsATTOwned,
+                                height:item.StructureHeight,
+                                company:item.Company
                             });
                     });
 
@@ -851,7 +854,10 @@ function onLoadGis() {
                         "VendorName": p.vendorname,
                         "Police": p.police,
                         "Fire": p.fire,
-                        "Energy":p.energy,
+                        "Energy": p.energy,
+                        "isOwned": p.isOwned,
+                        "height": p.height,
+                        "Company":p.company
                     }; // Set what attributes you want to add to graphics's info template.
                     var _template = ''
                     _template += '<b>Atoll SiteName:</b> ${Atoll} <br/>';
@@ -889,9 +895,9 @@ function onLoadGis() {
 
                     _template += '<br/>'
                     _template += '<a id="displayStructureInfoText" href="javascript:toggleStructureInfo();"><b>Structure Information</b></a><div id="toggleStructureInfoText" style="display: none">';
-                    _template += '<b>Is Structure AT & T owned:</b> No <br/>';
-                    _template += '<b>Structure height (feet): </b>110 <br/>';
-                    _template += '<b>Management Company:</b> US CELLULAR <br/>';
+                    _template += '<b>Is Structure AT & T owned:</b> ${isOwned}  <br/>';
+                    _template += '<b>Structure height (feet): </b>${height} <br/>';
+                    _template += '<b>Management Company:</b> ${Company} <br/>';
                     _template += '</div>';
                   
 
