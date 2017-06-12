@@ -338,9 +338,11 @@ namespace ATTWebAppAPI.DAL
                 {
                     long id = 0;
                     string query = "INSERT INTO NODE(SarfId, HubId, Latitude,Longitude, AtollSiteName," +
-                        "iPlanJobNumber, PaceNumber, DateCreated, DateModified) VALUES" +
+                        "iPlanJobNumber, PaceNumber, DateCreated, DateModified, NodeType, VendorName," +
+                        "ContactPolice, ContactFire, ContactEnergy, IsATTOwned, StructureHeight, Company) VALUES" +
                         "(?SarfId, ?HubId, ?Latitude,?Longitude, ?AtollSiteName,?iPlanJobNumber, " +
-                        "?PaceNumber, ?DateCreated, ?DateModified);";
+                        "?PaceNumber, ?DateCreated, ?DateModified, ?NodeType, ?VendorName, "+
+                        "?ContactPolice, ?ContactFire, ?ContactEnergy, ?IsATTOwned, ?StructureHeight, ?Company);";
                     cn.Open();
                     using (MySqlCommand cmd = new MySqlCommand(query, cn))
                     {
@@ -354,6 +356,17 @@ namespace ATTWebAppAPI.DAL
                         cmd.Parameters.Add("?PaceNumber", MySqlDbType.VarChar).Value = node.PaceNumber;
                         cmd.Parameters.Add("?DateCreated", MySqlDbType.Datetime).Value = DateTime.Now;
                         cmd.Parameters.Add("?DateModified", MySqlDbType.Datetime).Value = DateTime.Now;
+
+                        cmd.Parameters.Add("?NodeType", MySqlDbType.VarChar).Value = node.NodeType;
+                        cmd.Parameters.Add("?VendorName", MySqlDbType.VarChar).Value = node.VendorName;
+                        cmd.Parameters.Add("?ContactPolice", MySqlDbType.VarChar).Value = node.ContactPolice;
+                        cmd.Parameters.Add("?ContactFire", MySqlDbType.VarChar).Value = node.ContactFire;
+                        cmd.Parameters.Add("?ContactEnergy", MySqlDbType.VarChar).Value = node.ContactEnergy;
+
+                        cmd.Parameters.Add("?IsATTOwned", MySqlDbType.VarChar).Value = node.IsATTOwned;
+                        cmd.Parameters.Add("?StructureHeight", MySqlDbType.VarChar).Value = node.StructureHeight;
+                        cmd.Parameters.Add("?Company", MySqlDbType.VarChar).Value = node.Company;
+
                         cmd.ExecuteNonQuery();
                         id = cmd.LastInsertedId;
 
@@ -380,8 +393,8 @@ namespace ATTWebAppAPI.DAL
                 try
                 {
                     long id = 0;
-                    string query = "INSERT INTO HUB(SarfId,Latitude,Longitude, Address," +
-                        "DateCreated, DateModified) VALUES (?SarfId, ?Latitude, ?Longitude, ?Address," +
+                    string query = "INSERT INTO HUB(SarfId,Latitude,Longitude, Address, HubType, " +
+                        "DateCreated, DateModified) VALUES (?SarfId, ?Latitude, ?Longitude, ?Address, ?HubType, " +
                         "?DateCreated, ?DateModified);";
                     cn.Open();
                     using (MySqlCommand cmd = new MySqlCommand(query, cn))
@@ -390,6 +403,7 @@ namespace ATTWebAppAPI.DAL
                         cmd.Parameters.Add("?Latitude", MySqlDbType.Decimal).Value = hub.Latitude;
                         cmd.Parameters.Add("?Longitude", MySqlDbType.Decimal).Value = hub.Longitude;
                         cmd.Parameters.Add("?Address", MySqlDbType.VarChar).Value = hub.Address;
+                        cmd.Parameters.Add("?HubType", MySqlDbType.VarChar).Value = hub.HubType;
                         cmd.Parameters.Add("?DateCreated", MySqlDbType.Datetime).Value = DateTime.Now;
                         cmd.Parameters.Add("?DateModified", MySqlDbType.Datetime).Value = DateTime.Now;
                         cmd.ExecuteNonQuery();

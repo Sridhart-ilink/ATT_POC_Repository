@@ -21,3 +21,17 @@ var constants = {
     PaceNumber: 'MRGEO00',
     SearchRingId: '13'
 };
+
+//loader messages Enum
+var messageEnum = {
+    CREATE_AREA_OF_INTEREST: 'Creating Area of interest',
+    GETTING_NODES: 'Getting Nodes',
+    GETTING_HUBS: 'Getting Hubs',
+    ASSOCIATE_NODES_HUBS: 'Associating Nodes with Hubs'
+};
+
+//timer Enum
+var timerEnum = {
+    FIVE_SECONDS: 5000,
+    TEN_SECONDS: 10000
+};
