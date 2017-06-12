@@ -6,7 +6,10 @@ var statusEnum = {
     RF_Mod_CE_PM_Vendor_Assignment: "RF Mod - C&E PM Vendor Assignment",
     RF_Mod_TV_Pending_Approval: "RF Mod - TV Pending Approval",
     TV_Complete: "TV Complete",
-    Cancel: "Cancel"
+    Cancel: "Cancel",
+    RF_Approval: "RF Approval",
+    SelectNodes: "Select Nodes",
+    Completed: "Completed"
 };
 //constants for sarf details
 var constants = {
@@ -32,6 +35,6 @@ var messageEnum = {
 
 //timer Enum
 var timerEnum = {
-    FIVE_SECONDS: 5000,
+    TIME_DELAY_SECONDS: 2000,
     TEN_SECONDS: 10000
 };

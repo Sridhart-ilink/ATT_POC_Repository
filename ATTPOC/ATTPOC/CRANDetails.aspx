@@ -226,13 +226,13 @@
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-2 wfbtnSet">
                                     <button type="button" id="promoteBtn" class="statusBtn mrg15-R blueBtn btn btn-lg btn-primary btn-form btn-draw disabled"
-                                        value="promote">PROMOTE</button>
-                                    <button type="button" id="demoteBtn" class="statusBtn whiteBtn btn btn-lg btn-primary btn-form btn-draw disabled"
+                                        value="approve">APPROVE</button>
+                                    <%--<button type="button" id="demoteBtn" class="statusBtn whiteBtn btn btn-lg btn-primary btn-form btn-draw disabled"
                                         value="demote">DEMOTE</button>
                                     <button type="button" id="pullbackBtn" class="statusBtn mrg15-R whiteBtn btn btn-lg btn-primary btn-form btn-draw disabled"
-                                        value="pullback">PULL BACK</button>
+                                        value="pullback">PULL BACK</button>--%>
                                     <button type="button" id="cancelBtn" class="statusBtn whiteBtn btn btn-lg btn-danger btn-form btn-draw disabled"
-                                        value="cancel">CANCEL</button>
+                                        value="reject">REJECT</button>
                                 </div>
                             </div>
                             <%--<div class="row">

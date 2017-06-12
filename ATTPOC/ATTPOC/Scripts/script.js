@@ -44,7 +44,7 @@ function saveSARFData(workflowProcessInstanceID) {
         fAType: constants.FAType,
         rFDesignEnggId: constants.RFDesignEnggId,
         processInstanceID: workflowProcessInstanceID,
-        sarfStatus: statusEnum.RF_Pending_Completion
+        sarfStatus: statusEnum.RF_Approval
     };
     /*
    api call to post sarf data
@@ -242,6 +242,67 @@ function getTaskStatusbySarfID(id) {
             localStorage["sarfID"] = id;
             $.LoadingOverlay("hide");
             window.location = appUrl + "CRANDetails.aspx?processInstanceId=" + InstanceID + "&sarfid=" + localStorage["sarfID"];
+        },
+        error: function (err) {
+            console.log(err);
+            $.LoadingOverlay("hide");
+        }
+    });
+}
+
+
+function getTaskStatusAndApprove(processInstanceID, sarfID) {
+    var getStatusUrl = "task-by-process-instance";
+    $.ajax({
+        method: 'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        url: camundaBaseApiUrl + getStatusUrl + "/" + processInstanceID,
+        data: JSON.stringify({}),
+        //async: false,
+        cache: false,
+        success: function (data) {
+            if (data != null) {
+                var parsedData = JSON.parse(data);
+                InstanceID = parsedData[0].processInstanceId;
+                TaskID = parsedData[0].id;
+                TaskStatus = parsedData[0].name;
+                localStorage["taskID"] = TaskID;
+                localStorage["instanceID"] = InstanceID;
+                localStorage["taskStatus"] = TaskStatus;
+                localStorage["sarfID"] = sarfID;
+
+                //Approve
+                $.LoadingOverlay("show");
+                var getStatusUrl = "taskcomplete";
+                var jsonData = {
+                    variables: {
+                        "action": { "value": "approve", "type": "String" }
+                        , "success": { "value": true, "type": "Boolean" }
+                    },
+                    id: JSON.parse(JSON.stringify(localStorage["taskID"]))
+                };
+                /*api call to update status*/
+                if (isPortActive) {
+                    $.ajax({
+                        method: 'POST',
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        url: camundaBaseApiUrl + getStatusUrl,
+                        data: JSON.stringify(jsonData),
+                        //async: false,
+                        cache: false,
+                        success: function (data) {
+                            if (data) {
+                                saveSARFData(InstanceID);
+                            }
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            }
         },
         error: function (err) {
             console.log(err);
@@ -854,7 +915,7 @@ function onLoadGis() {
                                     var getProcessUrl = "process-definition";
                                     var jsonData = {
                                         variables: {},
-                                        key: "identify-sarfs"
+                                        key: "cran-simple"//"identify-sarfs"
                                     }
                                     var sarfNameTxt = $('#txtsarf').val();
                                     var atollSiteNameTxt = $('#txtatollsitename').val();
@@ -869,8 +930,10 @@ function onLoadGis() {
                                                 //async: false,
                                                 cache: false,
                                                 success: function (data) {
-                                                    if (data != null)
-                                                        saveSARFData(JSON.parse(data).id);
+                                                    if (data != null) {
+                                                        var parsedData = JSON.parse(data);
+                                                        getTaskStatusAndApprove(parsedData.id);
+                                                    }
                                                 },
                                                 error: function (err) {
                                                     console.log(err);
@@ -885,9 +948,9 @@ function onLoadGis() {
                                         $('#txtatollsitename').after(errorMsg);
                                     }
 
-                                }, timerEnum.FIVE_SECONDS);
-                            }, timerEnum.FIVE_SECONDS);
-                        }, timerEnum.FIVE_SECONDS);
+                                }, timerEnum.TIME_DELAY_SECONDS);
+                            }, timerEnum.TIME_DELAY_SECONDS);
+                        }, timerEnum.TIME_DELAY_SECONDS);
 
                         
                         

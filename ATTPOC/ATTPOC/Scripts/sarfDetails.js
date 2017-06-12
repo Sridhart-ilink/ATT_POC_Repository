@@ -91,6 +91,31 @@ function updatePullbackStatus(currentStatus) {
     $('#pullbackBtn').hide();
 }
 
+function updateApproveStatus(currentStatus) {
+    switch (currentStatus) {
+        case statusEnum.RF_Approval:
+            labelStatus = statusEnum.Completed;
+            $('#cancelBtn').hide();
+            $('#promoteBtn').hide();
+            break;
+        case statusEnum.SelectNodes:
+            labelStatus = statusEnum.RF_Approval;
+            $('#cancelBtn').hide();
+            $('#promoteBtn').show();
+            break;
+    }
+}
+
+function updateRejectStatus(currentStatus) {
+    switch (currentStatus) {
+        case statusEnum.RF_Approval:
+            labelStatus = statusEnum.SelectNodes;
+            $('#cancelBtn').hide();
+            $('#promoteBtn').show();
+            break;
+    }
+}
+
 function updateCancelStatus(currentStatus) {
     labelStatus = statusEnum.Cancel;
     $('#promoteBtn').hide();
@@ -111,6 +136,12 @@ function workflowUpdate(currentBtnText) {
             break;
         case "CANCEL":
             updateCancelStatus(labelStatus);
+            break;
+        case "APPROVE":
+            updateApproveStatus(labelStatus);
+            break;
+        case "REJECT":
+            updateRejectStatus(labelStatus);
             break;
     }
 }
@@ -152,6 +183,7 @@ function updateStatus(wfStatus, currentText) {
     var jsonData = {
         variables: {
             "action": { "value": wfStatus, "type": "String" }
+            ,"success": { "value": true, "type": "Boolean" }
         },
         id: JSON.parse(JSON.stringify(localStorage["taskID"]))
     };
@@ -203,14 +235,19 @@ function getTaskStatusbyProcessInstanceID(processInstanceID) {
         cache: false,
         success: function (data) {
             if (data != null) {
-                var parsedData = JSON.parse(data)[0];
-                TaskID = parsedData.id;
-                TaskStatus = parsedData.name;
-                localStorage["taskID"] = TaskID;
-                localStorage["instanceID"] = processInstanceID;
-                InstanceID = processInstanceID;
-                localStorage["taskStatus"] = TaskStatus;
-                console.log(parsedData);
+                if (data == "[]") {
+                    TaskStatus = "Completed";
+                    localStorage["taskStatus"] = TaskStatus;
+                }
+                else {
+                    var parsedData = JSON.parse(data)[0];
+                    TaskID = parsedData.id;
+                    TaskStatus = parsedData.name;
+                    localStorage["taskID"] = TaskID;
+                    localStorage["instanceID"] = processInstanceID;
+                    InstanceID = processInstanceID;
+                    localStorage["taskStatus"] = TaskStatus;
+                }
                 $.LoadingOverlay("hide");
             }
         },
@@ -283,6 +320,19 @@ function resetWorkflowButtons(currentStatus) {
             break;
 
         case statusEnum.Cancel:
+            break;
+
+        case statusEnum.RF_Approval:
+            $('#promoteBtn').show();
+            $('#cancelBtn').show();
+            break;
+        case statusEnum.Completed:
+            $('#promoteBtn').hide();
+            $('#cancelBtn').hide();
+            break;
+        case statusEnum.SelectNodes:
+            $('#promoteBtn').show();
+            $('#cancelBtn').hide();
             break;
 
         default:
