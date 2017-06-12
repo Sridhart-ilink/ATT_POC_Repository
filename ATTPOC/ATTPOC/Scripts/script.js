@@ -830,40 +830,67 @@ function onLoadGis() {
                     });
                     $("#btncreatesarf").click(function () {
                         $.LoadingOverlay("show");
-                        $('div.errorMsg').remove();
-                        var getProcessUrl = "process-definition";
-                        var jsonData = {
-                            variables: {},
-                            key: "identify-sarfs"
-                        }
-                        var sarfNameTxt = $('#txtsarf').val();
-                        var atollSiteNameTxt = $('#txtatollsitename').val();
-                        if (sarfNameTxt.length > 0 && atollSiteNameTxt.length > 0) {
-                            if (isPortActive) {
-                                $.ajax({
-                                    method: 'POST',
-                                    dataType: 'json',
-                                    contentType: 'application/json',
-                                    url: camundaBaseApiUrl + getProcessUrl,
-                                    data: JSON.stringify(jsonData),
-                                    //async: false,
-                                    cache: false,
-                                    success: function (data) {
-                                        if (data != null)
-                                            saveSARFData(JSON.parse(data).id);
-                                    },
-                                    error: function (err) {
-                                        console.log(err);
+                        $('#msgSpan').remove();
+                        var msgSpan = '<span id = "msgSpan" class = "themeBlue"></span>';
+                        $('.loadingoverlay').html(msgSpan);
+                        $('#msgSpan').css({ 'margin-top': '120px' });
+
+                        var loaderMsg = messageEnum.CREATE_AREA_OF_INTEREST;
+                        $('#msgSpan').text(loaderMsg);
+                        
+                        setTimeout(function () {
+                            loaderMsg = messageEnum.GETTING_NODES;
+                            $('#msgSpan').text(loaderMsg);
+
+                            setTimeout(function () {
+                                loaderMsg = messageEnum.GETTING_HUBS;
+                                $('#msgSpan').text(loaderMsg);
+
+                                setTimeout(function () {
+                                    loaderMsg = messageEnum.ASSOCIATE_NODES_HUBS;
+                                    $('#msgSpan').text(loaderMsg);
+
+                                    $('div.errorMsg').remove();
+                                    var getProcessUrl = "process-definition";
+                                    var jsonData = {
+                                        variables: {},
+                                        key: "identify-sarfs"
                                     }
-                                });
-                            }
-                            else {
-                                saveSARFData(0);
-                            }
-                        }
-                        else {
-                            $('#txtatollsitename').after(errorMsg);
-                        }
+                                    var sarfNameTxt = $('#txtsarf').val();
+                                    var atollSiteNameTxt = $('#txtatollsitename').val();
+                                    if (sarfNameTxt.length > 0 && atollSiteNameTxt.length > 0) {
+                                        if (isPortActive) {
+                                            $.ajax({
+                                                method: 'POST',
+                                                dataType: 'json',
+                                                contentType: 'application/json',
+                                                url: camundaBaseApiUrl + getProcessUrl,
+                                                data: JSON.stringify(jsonData),
+                                                //async: false,
+                                                cache: false,
+                                                success: function (data) {
+                                                    if (data != null)
+                                                        saveSARFData(JSON.parse(data).id);
+                                                },
+                                                error: function (err) {
+                                                    console.log(err);
+                                                }
+                                            });
+                                        }
+                                        else {
+                                            saveSARFData(0);
+                                        }
+                                    }
+                                    else {
+                                        $('#txtatollsitename').after(errorMsg);
+                                    }
+
+                                }, timerEnum.FIVE_SECONDS);
+                            }, timerEnum.FIVE_SECONDS);
+                        }, timerEnum.FIVE_SECONDS);
+
+                        
+                        
                     });
 
                 }

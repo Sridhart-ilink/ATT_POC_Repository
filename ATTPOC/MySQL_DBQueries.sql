@@ -106,4 +106,16 @@ INSERT INTO Hub (SarfId, Latitude, Longitude, Address, DateCreated)
 VALUES (1007, '46.6101497', '-123.2015159', 'Big Street, Spokane, Washington', now());
 
 ALTER TABLE Node ADD HubId int NULL;
+
+--New columns added by sheik for HUBS AND NODES
+ALTER TABLE HUB ADD HubType nvarchar (500) NULL;
+ALTER TABLE NODE ADD NodeType nvarchar (500) NULL;
+ALTER TABLE NODE ADD VendorName nvarchar (500) NULL;
+ALTER TABLE NODE ADD ContactPolice nvarchar (500) NULL;
+ALTER TABLE NODE ADD ContactFire nvarchar (500) NULL;
+ALTER TABLE NODE ADD ContactEnergy nvarchar (500) NULL;
+ALTER TABLE NODE ADD IsATTOwned nvarchar (50) NULL;
+ALTER TABLE NODE ADD StructureHeight nvarchar (50) NULL;
+ALTER TABLE NODE ADD Company nvarchar (500) NULL;
+ALTER TABLE NODE ADD BusinessPhone nvarchar (500) NULL;
 /************************************************************************/

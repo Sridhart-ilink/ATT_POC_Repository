@@ -7,6 +7,7 @@ using System.Net.Http.Formatting;
 using System.Web.Http;
 using ATTWebAppAPI.Models;
 using ATTWebAppAPI.DAL;
+using ATTWebAppAPI.Constants;
 using System.Drawing;
 namespace ATTWebAppAPI.Controllers
 {
@@ -24,6 +25,7 @@ namespace ATTWebAppAPI.Controllers
         List<Node> nodes = null;
         List<Hub> hubs = null;
         List<long> hubIDList = null;
+        List<long> hubRejectList = null;
 
         string minLat = String.Empty;
         string maxLat = String.Empty;
@@ -132,7 +134,8 @@ namespace ATTWebAppAPI.Controllers
                     Latitude = vertex[1],// decMaxLat,
                     Longitude = vertex[0], //decMaxLong,
                     Address = "SITE SF-" + currentSarfId + "-0" + randomNumber,
-                    DateCreated = DateTime.Now
+                    DateCreated = DateTime.Now,
+                    HubType = ResourceConstants.HubType_Macro
                 };
                 hubs.Add(hub);
             }
@@ -149,7 +152,22 @@ namespace ATTWebAppAPI.Controllers
                     Latitude = vertex[1],// decMaxLat,
                     Longitude = vertex[0], //decMaxLong,
                     Address = "SITE SF-" + currentSarfId + "-0" + randomNumber,
-                    DateCreated = DateTime.Now
+                    DateCreated = DateTime.Now,
+                    HubType = ResourceConstants.HubType_Macro
+                };
+                hubs.Add(hub);
+
+                randomNumber = random.Next(9999).ToString();
+                vertex = points[midIndex - 4];
+                pointsToReject.Add(vertex);
+                hub = new Hub
+                {
+                    SarfId = currentSarfId,
+                    Latitude = vertex[1],// decMaxLat,
+                    Longitude = vertex[0], //decMaxLong,
+                    Address = "SITE SF-" + currentSarfId + "-0" + randomNumber,
+                    DateCreated = DateTime.Now,
+                    HubType = ResourceConstants.HubType_Central_Office
                 };
                 hubs.Add(hub);
 
@@ -164,10 +182,39 @@ namespace ATTWebAppAPI.Controllers
                         Latitude = vertex[1],// decMaxLat,
                         Longitude = vertex[0], //decMaxLong,
                         Address = "SITE SF-" + currentSarfId + "-0" + randomNumber,
-                        DateCreated = DateTime.Now
+                        DateCreated = DateTime.Now,
+                        HubType = ResourceConstants.HubType_Macro
+                    };
+                    hubs.Add(hub);
+
+                    randomNumber = random.Next(9999).ToString();
+                    vertex = points[midIndex + 4];
+                    pointsToReject.Add(vertex);
+                    hub = new Hub
+                    {
+                        SarfId = currentSarfId,
+                        Latitude = vertex[1],// decMaxLat,
+                        Longitude = vertex[0], //decMaxLong,
+                        Address = "SITE SF-" + currentSarfId + "-0" + randomNumber,
+                        DateCreated = DateTime.Now,
+                        HubType = ResourceConstants.HubType_MTSO
                     };
                     hubs.Add(hub);
                 }
+
+                randomNumber = random.Next(9999).ToString();
+                vertex = points[points.Count - 2];
+                pointsToReject.Add(vertex);
+                hub = new Hub
+                {
+                    SarfId = currentSarfId,
+                    Latitude = vertex[1],// decMaxLat,
+                    Longitude = vertex[0], //decMaxLong,
+                    Address = "SITE SF-" + currentSarfId + "-0" + randomNumber,
+                    DateCreated = DateTime.Now,
+                    HubType = ResourceConstants.HubType_Central_Office
+                };
+                hubs.Add(hub);
 
                 randomNumber = random.Next(9999).ToString();
                 vertex = points[points.Count - 1];
@@ -178,7 +225,8 @@ namespace ATTWebAppAPI.Controllers
                     Latitude = vertex[1],// decMaxLat,
                     Longitude = vertex[0], //decMaxLong,
                     Address = "SITE SF-" + currentSarfId + "-0" + randomNumber,
-                    DateCreated = DateTime.Now
+                    DateCreated = DateTime.Now,
+                    HubType = ResourceConstants.HubType_MTSO
                 };
                 hubs.Add(hub);
             }
@@ -186,6 +234,9 @@ namespace ATTWebAppAPI.Controllers
             {
                 hubIDList.Add(sarfDao.SaveHub(hubItem));
             }
+            hubRejectList = new List<long>();
+            hubRejectList.AddRange(new List<long>{ hubIDList[1], hubIDList[3], hubIDList[4]});
+            hubIDList = hubIDList.Except(hubRejectList).ToList();
             GenerateNodes(polygon);
         }
 
@@ -208,7 +259,16 @@ namespace ATTWebAppAPI.Controllers
                     AtollSiteName = "SITE SF-" + currentSarfId + "-0" + randomNumber,
                     iPlanJobNumber = "WR-RWOR-" + currentSarfId + "-0" + randomNumber,
                     PaceNumber = "MRGE000" + currentSarfId + "-0" + randomNumber,
-                    DateCreated = DateTime.Now
+                    DateCreated = DateTime.Now,
+                    NodeType = ResourceConstants.NodeType_Electric_Pole,
+                    VendorName = ResourceConstants.VendorName_MasTec,
+                    ContactPolice = ResourceConstants.PoliceDepartment,
+                    ContactFire = ResourceConstants.FireDepartment,
+                    ContactEnergy = ResourceConstants.EnergyDepartment,
+                    IsATTOwned = ResourceConstants.IsATTOwned_Yes,
+                    StructureHeight = ResourceConstants.StructureHeight,
+                    Company = ResourceConstants.Company_CELLULAR_ONE,
+                    BusinessPhone = ResourceConstants.BusinessPhone
                 };
                 nodes.Add(node);
             }
@@ -240,8 +300,35 @@ namespace ATTWebAppAPI.Controllers
                         AtollSiteName = "SITE SF-" + currentSarfId + (int)hubIDList[hubCount] + "-0" + randomNumber,
                         iPlanJobNumber = "WR-RWOR-" + currentSarfId + (int)hubIDList[hubCount] + "-0" + randomNumber,
                         PaceNumber = "MRGE000" + currentSarfId + (int)hubIDList[hubCount] + "-0" + randomNumber,
-                        DateCreated = DateTime.Now
+                        DateCreated = DateTime.Now,
+                        ContactPolice = ResourceConstants.PoliceDepartment,
+                        ContactFire = ResourceConstants.FireDepartment,
+                        ContactEnergy = ResourceConstants.EnergyDepartment,
+                        StructureHeight = ResourceConstants.StructureHeight,
+                        BusinessPhone = ResourceConstants.BusinessPhone
                     };
+
+                    if(count <= (mappedList.Count * 1 / 4) ){
+                        node.NodeType = ResourceConstants.NodeType_Electric_Pole;
+                        node.VendorName = ResourceConstants.VendorName_MasTec;
+                        node.IsATTOwned = ResourceConstants.IsATTOwned_Yes;
+                        node.Company = ResourceConstants.Company_CELLULAR_ONE;
+                    }
+                    else if (count > (mappedList.Count * 1 / 4) && count <= (mappedList.Count * 1 / 2))
+                    {
+                        node.NodeType = ResourceConstants.NodeType_Light_Pole;
+                        node.VendorName = ResourceConstants.VendorName_Goodman_Networks;
+                        node.IsATTOwned = ResourceConstants.IsATTOwned_No;
+                        node.Company = ResourceConstants.Company_T_MOBILE;
+                    }
+                    else if (count > (mappedList.Count * 1 / 2) && count < mappedList.Count)
+                    {
+                        node.NodeType = ResourceConstants.NodeType_Building;
+                        node.VendorName = ResourceConstants.VendorName_Black_Veatch;
+                        node.IsATTOwned = ResourceConstants.IsATTOwned_Yes;
+                        node.Company = ResourceConstants.Company_US_CELLULAR;
+                    }
+
                     nodes.Add(node);
                     if (checkCount == midIndex)
                     {
@@ -269,8 +356,34 @@ namespace ATTWebAppAPI.Controllers
                         AtollSiteName = "SITE SF-" + currentSarfId + "-0" + randomNumber,
                         iPlanJobNumber = "WR-RWOR-" + currentSarfId + "-0" + randomNumber,
                         PaceNumber = "MRGE000" + currentSarfId + "-0" + randomNumber,
-                        DateCreated = DateTime.Now
+                        DateCreated = DateTime.Now,
+                        ContactPolice = ResourceConstants.PoliceDepartment,
+                        ContactFire = ResourceConstants.FireDepartment,
+                        ContactEnergy = ResourceConstants.EnergyDepartment,
+                        StructureHeight = ResourceConstants.StructureHeight,
+                        BusinessPhone = ResourceConstants.BusinessPhone
                     };
+                    if (count <= (notMappedList.Count * 1 / 4))
+                    {
+                        node.NodeType = ResourceConstants.NodeType_Electric_Pole;
+                        node.VendorName = ResourceConstants.VendorName_MasTec;
+                        node.IsATTOwned = ResourceConstants.IsATTOwned_Yes;
+                        node.Company = ResourceConstants.Company_CELLULAR_ONE;
+                    }
+                    else if (count > (notMappedList.Count * 1 / 4) && count <= (notMappedList.Count * 1 / 2))
+                    {
+                        node.NodeType = ResourceConstants.NodeType_Light_Pole;
+                        node.VendorName = ResourceConstants.VendorName_Goodman_Networks;
+                        node.IsATTOwned = ResourceConstants.IsATTOwned_No;
+                        node.Company = ResourceConstants.Company_T_MOBILE;
+                    }
+                    else if (count > (notMappedList.Count * 1 / 2) && count < notMappedList.Count)
+                    {
+                        node.NodeType = ResourceConstants.NodeType_Building;
+                        node.VendorName = ResourceConstants.VendorName_Black_Veatch;
+                        node.IsATTOwned = ResourceConstants.IsATTOwned_Yes;
+                        node.Company = ResourceConstants.Company_US_CELLULAR;
+                    }
                     nodes.Add(node);
                 }
             }

@@ -686,7 +686,7 @@ function onLoadGis() {
         var hubArray = [];
         var mapViewHubImage = 'black-tower.png';
         var sceneViewHubImage = 'white-tower.png';
-        var hubImageUrl = '../CRANng/Styles/images/black-tower.png';
+        var hubImageUrl = (isPortActive ? serverHubImageUrl : localHubImageUrl) + mapViewHubImage;
         Parser.parse();
         map = new Map("map", {
             basemap: "streets",
@@ -714,10 +714,10 @@ function onLoadGis() {
 
         $(document).on('click', '.basemapImage', function (e) {
             if (e.target.title.toLowerCase() == "satellite") {
-                hubImageUrl = '../Styles/images/' + sceneViewHubImage;
+                hubImageUrl = (isPortActive ? serverHubImageUrl : localHubImageUrl) + sceneViewHubImage;
             }
             else {
-                hubImageUrl = '../Styles/images/' + mapViewHubImage;
+                hubImageUrl = (isPortActive ? serverHubImageUrl : localHubImageUrl) + mapViewHubImage;
             }
             LoadHubs();
             console.log(toggle);
