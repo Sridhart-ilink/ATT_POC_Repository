@@ -12,7 +12,7 @@ namespace JavascriptBasedApp
         string sarfID = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-            bindSarfDetails();
+           // bindSarfDetails();
         }
         private void bindSarfDetails()
         {
@@ -37,7 +37,7 @@ namespace JavascriptBasedApp
                     txtmarketcluster.Value = dt.Rows[0][8].ToString();
                     txtregion.Value = dt.Rows[0][9].ToString();
                     txtrfdesign.Value = dt.Rows[0][10].ToString();
-                    txtarea.Value = dt.Rows[0][11].ToString();
+                    txtarea.Value = (int.Parse(dt.Rows[0][13].ToString()) * 0.386102).ToString("N3");
                 }
             }
             workflowImg.Attributes["src"] = System.Configuration.ConfigurationManager.AppSettings.Get("WFImgUrl") + sarfID;
