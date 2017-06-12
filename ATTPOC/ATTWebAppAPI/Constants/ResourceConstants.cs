@@ -7,6 +7,7 @@ namespace ATTWebAppAPI.Constants
 {
     public static class ResourceConstants
     {
+        public const string BusinessPhone = "8007779898";
         #region Vendor Names
         public const string VendorName_MasTec = "MasTec";
         public const string VendorName_Goodman_Networks = "Goodman Networks";

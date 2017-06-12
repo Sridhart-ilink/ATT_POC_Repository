@@ -117,4 +117,5 @@ ALTER TABLE NODE ADD ContactEnergy nvarchar (500) NULL;
 ALTER TABLE NODE ADD IsATTOwned nvarchar (50) NULL;
 ALTER TABLE NODE ADD StructureHeight nvarchar (50) NULL;
 ALTER TABLE NODE ADD Company nvarchar (500) NULL;
+ALTER TABLE NODE ADD BusinessPhone nvarchar (500) NULL;
 /************************************************************************/

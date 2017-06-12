@@ -267,7 +267,8 @@ namespace ATTWebAppAPI.Controllers
                     ContactEnergy = ResourceConstants.EnergyDepartment,
                     IsATTOwned = ResourceConstants.IsATTOwned_Yes,
                     StructureHeight = ResourceConstants.StructureHeight,
-                    Company = ResourceConstants.Company_CELLULAR_ONE
+                    Company = ResourceConstants.Company_CELLULAR_ONE,
+                    BusinessPhone = ResourceConstants.BusinessPhone
                 };
                 nodes.Add(node);
             }
@@ -303,7 +304,8 @@ namespace ATTWebAppAPI.Controllers
                         ContactPolice = ResourceConstants.PoliceDepartment,
                         ContactFire = ResourceConstants.FireDepartment,
                         ContactEnergy = ResourceConstants.EnergyDepartment,
-                        StructureHeight = ResourceConstants.StructureHeight
+                        StructureHeight = ResourceConstants.StructureHeight,
+                        BusinessPhone = ResourceConstants.BusinessPhone
                     };
 
                     if(count <= (mappedList.Count * 1 / 4) ){
@@ -354,7 +356,12 @@ namespace ATTWebAppAPI.Controllers
                         AtollSiteName = "SITE SF-" + currentSarfId + "-0" + randomNumber,
                         iPlanJobNumber = "WR-RWOR-" + currentSarfId + "-0" + randomNumber,
                         PaceNumber = "MRGE000" + currentSarfId + "-0" + randomNumber,
-                        DateCreated = DateTime.Now
+                        DateCreated = DateTime.Now,
+                        ContactPolice = ResourceConstants.PoliceDepartment,
+                        ContactFire = ResourceConstants.FireDepartment,
+                        ContactEnergy = ResourceConstants.EnergyDepartment,
+                        StructureHeight = ResourceConstants.StructureHeight,
+                        BusinessPhone = ResourceConstants.BusinessPhone
                     };
                     if (count <= (notMappedList.Count * 1 / 4))
                     {

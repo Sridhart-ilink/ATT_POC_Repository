@@ -338,10 +338,10 @@ namespace ATTWebAppAPI.DAL
                 {
                     long id = 0;
                     string query = "INSERT INTO NODE(SarfId, HubId, Latitude,Longitude, AtollSiteName," +
-                        "iPlanJobNumber, PaceNumber, DateCreated, DateModified, NodeType, VendorName," +
+                        "iPlanJobNumber, PaceNumber, DateCreated, DateModified, NodeType, VendorName, BusinessPhone, " +
                         "ContactPolice, ContactFire, ContactEnergy, IsATTOwned, StructureHeight, Company) VALUES" +
                         "(?SarfId, ?HubId, ?Latitude,?Longitude, ?AtollSiteName,?iPlanJobNumber, " +
-                        "?PaceNumber, ?DateCreated, ?DateModified, ?NodeType, ?VendorName, "+
+                        "?PaceNumber, ?DateCreated, ?DateModified, ?NodeType, ?VendorName, ?BusinessPhone, " +
                         "?ContactPolice, ?ContactFire, ?ContactEnergy, ?IsATTOwned, ?StructureHeight, ?Company);";
                     cn.Open();
                     using (MySqlCommand cmd = new MySqlCommand(query, cn))
@@ -359,10 +359,11 @@ namespace ATTWebAppAPI.DAL
 
                         cmd.Parameters.Add("?NodeType", MySqlDbType.VarChar).Value = node.NodeType;
                         cmd.Parameters.Add("?VendorName", MySqlDbType.VarChar).Value = node.VendorName;
+                        cmd.Parameters.Add("?BusinessPhone", MySqlDbType.VarChar).Value = node.BusinessPhone;
                         cmd.Parameters.Add("?ContactPolice", MySqlDbType.VarChar).Value = node.ContactPolice;
                         cmd.Parameters.Add("?ContactFire", MySqlDbType.VarChar).Value = node.ContactFire;
+                        
                         cmd.Parameters.Add("?ContactEnergy", MySqlDbType.VarChar).Value = node.ContactEnergy;
-
                         cmd.Parameters.Add("?IsATTOwned", MySqlDbType.VarChar).Value = node.IsATTOwned;
                         cmd.Parameters.Add("?StructureHeight", MySqlDbType.VarChar).Value = node.StructureHeight;
                         cmd.Parameters.Add("?Company", MySqlDbType.VarChar).Value = node.Company;

@@ -20,6 +20,7 @@ namespace ATTWebAppAPI.Models
         public string ContactPolice { get; set; }
         public string ContactFire { get; set; }
         public string ContactEnergy { get; set; }
+        public string BusinessPhone {get; set;}
         public string IsATTOwned { get; set; }
         public string StructureHeight { get; set; }
         public string Company { get; set; }
