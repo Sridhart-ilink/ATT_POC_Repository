@@ -271,7 +271,7 @@ function initializeDetailsLabel(details) {
         $('#lblregion').text(details.Region);
         $('#lblsearchring').text(details.Search_Ring_ID);
         $('#lbliplan').text(details.iPlan_Job);
-        $('#lblarea').text(details.AreaInSqKm);
+        $('#lblarea').text((details.AreaInSqKm * 0.386102).toFixed(3));
         $('#txtarea').attr('disabled', true);
     }
 }
@@ -289,7 +289,7 @@ function initializeDetailsText(details) {
         $('#txtregion').val(details.Region);
         $('#txtsearchring').val(details.Search_Ring_ID);
         $('#txtiplan').val(details.iPlan_Job);
-        $('#txtarea').val(details.AreaInSqKm);
+        $('#txtarea').val((details.AreaInSqKm * 0.386102).toFixed(3));
 
     }
 }
@@ -376,6 +376,29 @@ function restoreCurrentTab() {
         $($('.tabs-left').find('li')[0]).addClass('active');
         $($('.tab-content').find('.tab-pane')[0]).addClass('active');
         $($('.tabs-left li')[0]).find('a').focus();
+    }
+}
+
+function toggleContactInfo() {
+    var ele = document.getElementById("toggleText");
+    var text = document.getElementById("displayText");
+    if (ele.style.display == "block") {
+        ele.style.display = "none";
+    }
+    else {
+        ele.style.display = "block";
+       
+    }
+}
+function toggleStructureInfo() {
+    var ele = document.getElementById("toggleStructureInfoText");
+    var text = document.getElementById("displayStructureInfoText");
+    if (ele.style.display == "block") {
+        ele.style.display = "none";
+    }
+    else {
+        ele.style.display = "block";
+
     }
 }
 
@@ -825,7 +848,22 @@ function onLoadGis() {
                 cache: false,
                 success: function (data) {
                     $.each(data, function (i, item) {                               
-                        poinArr.push({atoll:item.AtollSiteName,iplan:item.iPlanJobNumber,x:item.Latitude,y:item.Longitude,hubid:item.HubId});
+                        poinArr.push(
+                            {
+                                atoll: item.AtollSiteName,
+                                iplan: item.iPlanJobNumber,
+                                x: item.Latitude,
+                                y: item.Longitude,
+                                hubid: item.HubId,
+                                type: item.NodeType,
+                                vendorname: item.VendorName,
+                                police: item.ContactPolice,
+                                fire: item.ContactFire,
+                                energy: item.ContactEnergy,
+                                isOwned:item.IsATTOwned,
+                                height:item.StructureHeight,
+                                company:item.Company
+                            });
                     });
 
                 },
@@ -861,25 +899,60 @@ function onLoadGis() {
                         "Xcoord": p.y,
                         "Ycoord": p.x,
                         "Atoll": p.atoll,
-                        "iPlan": p.iplan
+                        "iPlan": p.iplan,
+                        "Type": p.type,
+                        "VendorName": p.vendorname,
+                        "Police": p.police,
+                        "Fire": p.fire,
+                        "Energy": p.energy,
+                        "isOwned": p.isOwned,
+                        "height": p.height,
+                        "Company":p.company
                     }; // Set what attributes you want to add to graphics's info template.
-                    var infoTemplate = new InfoTemplate("Node Details", "<b>Atoll SiteName:</b> ${Atoll} <br/><b>iPlan JobNumber:</b> ${iPlan} <br/>  <b>Latitude:</b> ${Ycoord} <br/><b>Longitude:</b> ${Xcoord} <br/>_______________________________<br/><b>Why this node?</b><br/><ul><li>Fiber is already available.</li><li>Low leasing cost.</li></ul>");
-                    if (p.hubid==0)
-                    {
+                    var _template = ''
+                    _template += '<b>Atoll SiteName:</b> ${Atoll} <br/>';
+                    _template += '<b>iPlan JobNumber:</b> ${iPlan} <br/>';
+                    _template += '<b>Latitude:</b> ${Ycoord} <br/>';
+                    _template += '<b>Longitude:</b> ${Xcoord} <br/>';
+                    _template += '<b>Type:</b> ${Type} <br/>';
+                    _template += '<b>Vendor Name:</b> ${VendorName} <br/>';
+
+                    if (p.hubid == 0) {
                         sms = new SimpleMarkerSymbol({
-                        'size': 4,
-                        "outline": {
-                            "color": [0, 0, 0, 255],
-                            "width": 1,
-                            "type": "esriSLS",
-                            "style": "esriSLSSolid"
-                        }
+                            'size': 4,
+                            "outline": {
+                                "color": [0, 0, 0, 255],
+                                "width": 1,
+                                "type": "esriSLS",
+                                "style": "esriSLSSolid"
+                            }
                         }).setStyle(
                                SimpleMarkerSymbol.STYLE_CIRCLE, 5).setColor(
                                new Color([0, 0, 0, 255]));
-
-                        infoTemplate = new InfoTemplate("Node Details", "<b>Atoll SiteName:</b> ${Atoll} <br/><b>iPlan JobNumber:</b> ${iPlan} <br/>  <b>Latitude:</b> ${Ycoord} <br/><b>Longitude:</b> ${Xcoord}");
+                      
                     }
+                    else {
+                        _template += '_______________________________<br/><b>Why this node?</b><br/><ul><li>Fiber is already available.</li><li>Low leasing cost.</li></ul>';
+                    }
+                    //Contact Details
+                    _template +='<br/>'
+                    _template += '<a id="displayText" href="javascript:toggleContactInfo();"><b>Contact Details</b></a><div id="toggleText" style="display: none">';
+                    _template += '<b>Police Department:</b> ${Police} <br/>';
+                    _template += '<b>Fire Department:</b> ${Fire} <br/>';
+                    _template += '<b>Energy:</b> ${Energy} <br/>';
+                    _template += '</div>';
+                    //Structure Information
+
+                    _template += '<br/>'
+                    _template += '<a id="displayStructureInfoText" href="javascript:toggleStructureInfo();"><b>Structure Information</b></a><div id="toggleStructureInfoText" style="display: none">';
+                    _template += '<b>Is Structure AT & T owned:</b> ${isOwned}  <br/>';
+                    _template += '<b>Structure height (feet): </b>${height} <br/>';
+                    _template += '<b>Management Company:</b> ${Company} <br/>';
+                    _template += '</div>';
+                  
+
+
+                    var infoTemplate = new InfoTemplate("Node Details", _template);
 
                     var g = new Graphic(pointGeom, sms, attr, infoTemplate);
                     g.setInfoTemplate(infoTemplate);

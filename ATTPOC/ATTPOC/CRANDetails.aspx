@@ -204,7 +204,7 @@
                                     <input class="form-control txtDetails" runat="server" type="text" id="txtrfdesign" />
                                 </div>
                                 <div class="col-md-6 pull-left">
-                                    <label for="txtarea">Area In SqKm:</label>
+                                    <label for="txtarea">Area In SqMi:</label>
                                     <p class="lblDetails"><span id="lblarea"></span></p>
                                     <input class="form-control txtDetails" runat="server" type="text" id="txtarea" />
                                 </div>
