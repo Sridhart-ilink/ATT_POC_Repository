@@ -895,29 +895,34 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007a3e', end
     background-color: #eaeaea;
     margin-top: 10px;
 }
-.contentPending{
+.contentAOI{
     width : 75%;
 }
-.contentVendor{
-    width : 150%;
+.contentRFApproval{
+    width : 75%;
 }
-.contentVendor .vendorAssignment{
-    width : 50%;
+.contentRFApproval .rfApproval{
+    width : 100%;
     height: 100%;
+}
+.highlightApproved{
+    background-color : #f3f3f3;
     border-right : 4px solid rgba(0,122,62,1);
 }
-.contentVendor .rfModAssignment{
-    width : 50%;
-    height: 100%;
+.highlightRejected{
     background-color : #f3f3f3;
+    border-right : 4px solid #ce2d2d;
 }
-.contentApproval{
-    width : 100%;
+.highlightCompleted{
+    background-color : #f3f3f3;
+    border-right : 4px solid #888888;
+}
+.contentSelectNodes{
+    width : 75%;
 }
 .contentComplete{
     width : 75%;
 }
-
 .progressDot{
     background-color: #007a3e;
     border-radius: 4px;
@@ -928,7 +933,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007a3e', end
     margin-left: -11px;
     position: absolute;
 }
-
 .progressCircle{
     border: 3px solid #007a3e;
     background-color: #f3f3f3;
@@ -978,4 +982,26 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007a3e', end
 }
 .historyTab{
     background-color:#e1e1e1;
+}
+.progressHead h3{
+    margin: 0px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: "Roboto", Light;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #454545;
+    padding-left: 15px;
+    padding-top:10px;
+    border-top: 1px dotted #ccc;
+    /* border-bottom: 1px dotted #ccc; */
+}
+.progressHead span, .progressHead label{
+    padding-left: 15px;
+    margin: 0px;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: "Roboto", Light;
+    color: #454545;
 }

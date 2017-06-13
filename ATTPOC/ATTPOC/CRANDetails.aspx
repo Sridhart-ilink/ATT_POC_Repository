@@ -288,22 +288,39 @@
                                         <div class="progress pull-left">
                                         </div>
                                         <div class="progressContent pull-left">
-                                            <div class="content contentPending">
+                                            <div class="content contentAOI">
                                                 <div class="progressDot"></div>
+                                                <div class="progressHead">
+                                                    <h3>Select Area Of Interest</h3>
+                                                    <label>Start Date: <span class="dateSpan">06/17/2017 08:30:22</span></label>
+                                                    <label>Approved: <span class="dateSpan">06/18/2017 09:40:33</span></label>
+                                                </div>
                                             </div>
-                                            <div class="content contentVendor">
-                                                <div class="vendorAssignment pull-left">
+                                            <div class="content contentRFApproval">
+                                                <div class="rfApproval pull-left highlightApproved">
                                                     <div class="progressCircle"></div>
-                                                </div>
-                                                <div class="rfModAssignment pull-left">
-                                                    
+                                                    <div class="progressHead">
+                                                        <h3>RF Approval</h3>
+                                                        <label>Start Date: <span class="dateSpan">06/17/2017 08:30:22</span></label>
+                                                        <label>Approved: <span class="dateSpan">06/18/2017 09:40:33</span></label>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="content contentApproval">
+                                            <div class="content contentSelectNodes">
                                                 <div class="progressDot themeRed"></div>
+                                                <div class="progressHead">
+                                                    <h3>Select Node(s)</h3>
+                                                    <label>Start Date: <span class="dateSpan">06/17/2017 08:30:22</span></label>
+                                                    <label>Rejected: <span class="dateSpan">06/18/2017 09:40:33</span></label>
+                                                </div>
                                             </div>
                                             <div class="content contentComplete">
                                                 <div class="progressDot themeAsh"></div>
+                                                <div class="progressHead">
+                                                    <h3>Complete</h3>
+                                                    <label>Start Date: <span class="dateSpan">06/17/2017 08:30:22</span></label>
+                                                    <label>Approved: <span class="dateSpan">06/18/2017 09:40:33</span></label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
