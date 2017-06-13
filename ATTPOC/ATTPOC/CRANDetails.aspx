@@ -292,8 +292,8 @@
                                                 <div class="progressDot"></div>
                                                 <div class="progressHead">
                                                     <h3>Select Area Of Interest</h3>
-                                                    <label>Start Date: <span class="dateSpan">06/17/2017 08:30:22</span></label>
-                                                    <label>Approved: <span class="dateSpan">06/18/2017 09:40:33</span></label>
+                                                    <label>Start Date: <span class="dateSpan">06/08/2017 08:30:22</span></label>
+                                                    <label>Approved: <span class="dateSpan">06/09/2017 08:30:52</span></label>
                                                 </div>
                                             </div>
                                             <div class="content contentRFApproval">
@@ -301,8 +301,8 @@
                                                     <div class="progressCircle"></div>
                                                     <div class="progressHead">
                                                         <h3>RF Approval</h3>
-                                                        <label>Start Date: <span class="dateSpan">06/17/2017 08:30:22</span></label>
-                                                        <label>Approved: <span class="dateSpan">06/18/2017 09:40:33</span></label>
+                                                        <label>Start Date: <span class="dateSpan">06/08/2017 08:30:22</span></label>
+                                                        <label>Approved: <span class="dateSpan">06/09/2017 09:45:00</span></label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -310,16 +310,16 @@
                                                 <div class="progressDot themeRed"></div>
                                                 <div class="progressHead">
                                                     <h3>Select Node(s)</h3>
-                                                    <label>Start Date: <span class="dateSpan">06/17/2017 08:30:22</span></label>
-                                                    <label>Rejected: <span class="dateSpan">06/18/2017 09:40:33</span></label>
+                                                    <label>Start Date: <span class="dateSpan">06/08/2017 08:30:22</span></label>
+                                                    <label>Rejected:  <span class="dateSpan">06/10/2017 11:23:25</span></label>
                                                 </div>
                                             </div>
                                             <div class="content contentComplete">
                                                 <div class="progressDot themeAsh"></div>
                                                 <div class="progressHead">
                                                     <h3>Complete</h3>
-                                                    <label>Start Date: <span class="dateSpan">06/17/2017 08:30:22</span></label>
-                                                    <label>Approved: <span class="dateSpan">06/18/2017 09:40:33</span></label>
+                                                    <label>Start Date: <span class="dateSpan">06/08/2017 08:30:22</span></label>
+                                                    <label>Approved: <span class="dateSpan">06/10/2017 11:48:20</span></label>
                                                 </div>
                                             </div>
                                         </div>
