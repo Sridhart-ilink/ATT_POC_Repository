@@ -268,7 +268,7 @@
                     <div class="col-xs-9">
                         <!-- Tab panes -->
                         <div class="tab-content">
-                            <div class="tab-pane" id="mapview">
+                            <div class="tab-pane active" id="mapview">
                                 <div id="map" style="width: 138%; height: 520px" class="pull-left">
                                     <%--<a id="btnExpandMap" class="btn btn-primary" title="Click to maximize/minimize map">--%>
                                     <div id="BasemapToggle"></div>
