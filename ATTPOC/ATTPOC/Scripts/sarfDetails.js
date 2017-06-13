@@ -937,9 +937,9 @@ function onLoadGis() {
                     //Contact Details
                     _template +='<br/>'
                     _template += '<a id="displayText" href="javascript:toggleContactInfo();"><b>Contact Details</b></a><div id="toggleText" style="display: none">';
-                    _template += '<b>Police Department:</b> ${Police} <br/>';
-                    _template += '<b>Fire Department:</b> ${Fire} <br/>';
-                    _template += '<b>Energy:</b> ${Energy} <br/>';
+                    _template += 'Seattle ${Police} <br/>';
+                    _template += 'Seattle ${Fire} <br/>';
+                    _template += 'Seattle ${Energy} <br/>';
                     _template += '</div>';
                     //Structure Information
 
