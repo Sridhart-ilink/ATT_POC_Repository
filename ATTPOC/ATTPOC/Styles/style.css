@@ -774,3 +774,208 @@ margin-top : -20px
     font-weight: 700;
     color: black;
 }
+/*Css for timeline chart*/
+.timelineArea{
+    margin-top: -5px;
+    margin-left: 175px;
+}
+.progress {
+    height: 400px;
+    width: 5px;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#007a3e+0,007a3e+50,ce2d2d+51,ce2d2d+68,888888+69,888888+100 */
+background: rgb(0,122,62); /* Old browsers */
+background: -moz-linear-gradient(to bottom, rgba(0,122,62,1) 0%,
+rgba(0,122,62,1) 37%,
+rgba(206,45,45,1) 38%,
+rgba(206,45,45,1) 59%,
+rgba(136,136,136,1) 60%, 
+rgba(136,136,136,1), 62%,
+rgba(234,234,234,1), 62%,
+rgba(234,234,234,1), 65%, 
+rgba(136,136,136,1), 65%, 
+rgba(136,136,136,1), 68%, 
+rgba(234,234,234,1), 68%, 
+rgba(234,234,234,1), 71%,
+rgba(136,136,136,1), 71%, 
+rgba(136,136,136,1), 74%,
+rgba(234,234,234,1), 74%, 
+rgba(234,234,234,1), 77%,
+rgba(136,136,136,1), 77%, 
+rgba(136,136,136,1), 80%,
+rgba(234,234,234,1), 80%, 
+rgba(234,234,234,1), 83%,
+rgba(136,136,136,1), 83%, 
+rgba(136,136,136,1), 86%,
+rgba(234,234,234,1), 86%, 
+rgba(234,234,234,1), 89%,
+rgba(136,136,136,1), 89%, 
+rgba(136,136,136,1), 91%,
+rgba(234,234,234,1), 91%, 
+rgba(234,234,234,1), 94%,
+rgba(136,136,136,1), 94%, 
+rgba(136,136,136,1), 97%,
+rgba(234,234,234,1), 97%,
+rgba(234,234,234,1) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(to bottom, rgba(0,122,62,1) 0%,
+rgba(0,122,62,1) 37%,
+rgba(206,45,45,1) 38%,
+rgba(206,45,45,1) 59%,
+rgba(136,136,136,1) 60%, 
+rgba(136,136,136,1), 62%,
+rgba(234,234,234,1), 62%,
+rgba(234,234,234,1), 65%, 
+rgba(136,136,136,1), 65%, 
+rgba(136,136,136,1), 68%, 
+rgba(234,234,234,1), 68%, 
+rgba(234,234,234,1), 71%,
+rgba(136,136,136,1), 71%, 
+rgba(136,136,136,1), 74%,
+rgba(234,234,234,1), 74%, 
+rgba(234,234,234,1), 77%,
+rgba(136,136,136,1), 77%, 
+rgba(136,136,136,1), 80%,
+rgba(234,234,234,1), 80%, 
+rgba(234,234,234,1), 83%,
+rgba(136,136,136,1), 83%, 
+rgba(136,136,136,1), 86%,
+rgba(234,234,234,1), 86%, 
+rgba(234,234,234,1), 89%,
+rgba(136,136,136,1), 89%, 
+rgba(136,136,136,1), 91%,
+rgba(234,234,234,1), 91%, 
+rgba(234,234,234,1), 94%,
+rgba(136,136,136,1), 94%, 
+rgba(136,136,136,1), 97%,
+rgba(234,234,234,1), 97%,
+rgba(234,234,234,1) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, rgba(0,122,62,1) 0%,
+rgba(0,122,62,1) 37%,
+rgba(206,45,45,1) 38%,
+rgba(206,45,45,1) 59%,
+rgba(136,136,136,1) 60%, 
+rgba(136,136,136,1), 62%,
+rgba(234,234,234,1), 62%,
+rgba(234,234,234,1), 65%, 
+rgba(136,136,136,1), 65%, 
+rgba(136,136,136,1), 68%, 
+rgba(234,234,234,1), 68%, 
+rgba(234,234,234,1), 71%,
+rgba(136,136,136,1), 71%, 
+rgba(136,136,136,1), 74%,
+rgba(234,234,234,1), 74%, 
+rgba(234,234,234,1), 77%,
+rgba(136,136,136,1), 77%, 
+rgba(136,136,136,1), 80%,
+rgba(234,234,234,1), 80%, 
+rgba(234,234,234,1), 83%,
+rgba(136,136,136,1), 83%, 
+rgba(136,136,136,1), 86%,
+rgba(234,234,234,1), 86%, 
+rgba(234,234,234,1), 89%,
+rgba(136,136,136,1), 89%, 
+rgba(136,136,136,1), 91%,
+rgba(234,234,234,1), 91%, 
+rgba(234,234,234,1), 94%,
+rgba(136,136,136,1), 94%, 
+rgba(136,136,136,1), 97%,
+rgba(234,234,234,1), 97%,
+rgba(234,234,234,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007a3e', endColorstr='#888888',GradientType=0 ); /* IE6-9 */
+    border-radius: 4px;
+}
+.progressContent{
+    height: 400px;
+    margin-left: 0px;
+    margin-top : 0px;
+    width : 400px;
+    padding-top : 10px;
+}
+.progressContent .content{
+    height : 20%;
+    background-color: #eaeaea;
+    margin-top: 10px;
+}
+.contentPending{
+    width : 75%;
+}
+.contentVendor{
+    width : 150%;
+}
+.contentVendor .vendorAssignment{
+    width : 50%;
+    height: 100%;
+    border-right : 4px solid rgba(0,122,62,1);
+}
+.contentVendor .rfModAssignment{
+    width : 50%;
+    height: 100%;
+    background-color : #f3f3f3;
+}
+.contentApproval{
+    width : 100%;
+}
+.contentComplete{
+    width : 75%;
+}
+
+.progressDot{
+    background-color: #007a3e;
+    border-radius: 4px;
+    width: 17px;
+    height: 15px;
+    border-radius: 50%;
+    margin-top: 4.5%;
+    margin-left: -11px;
+    position: absolute;
+}
+
+.progressCircle{
+    border: 3px solid #007a3e;
+    background-color: #f3f3f3;
+    border-radius: 4px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    margin-top: 3.5%;
+    margin-left: -13px;
+    position: absolute;
+}
+.themeRed{
+    border: 3px solid #ce2d2d;
+    background-color: #ce2d2d;
+}
+.themeAsh{
+    border: 3px solid #888888;
+    background-color: #888888;
+}
+.draw-btn{
+    background: #266f3b !important;
+    -webkit-border-radius: 60;
+    -moz-border-radius: 60;
+    border-radius: 5px;   
+    color: #fff;
+    font-size: 12pt;
+    width: 180px;
+    font-weight: 100;
+    padding: 8px 10px 7px 10px;
+    margin-bottom: 4px;
+    text-decoration: none;
+    border-color: transparent !important;
+    margin-right: 25px;
+}
+.createdBtn{
+    margin-top: 30px;
+    margin-left: 95px;
+}
+.completedBtn{
+    margin-top: 385px;
+    margin-left: 95px;
+    position: absolute;
+    
+}
+.completedBtn .draw-btn{
+    background-color:#888 !important;
+}
+.historyTab{
+    background-color:#e1e1e1;
+}

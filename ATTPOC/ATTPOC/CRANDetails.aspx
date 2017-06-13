@@ -257,6 +257,7 @@
                         <ul class="nav nav-tabs tabs-left navTabs-ul pull-right tabMenu">
                             <li class="active" data-index="0"><a href="#mapview" data-toggle="tab">Map</a></li>
                             <li class="" data-index="1"><a href="#workflow" data-toggle="tab">Workflow</a></li>
+                            <li class="" data-index="2"><a href="#history" data-toggle="tab">History</a></li>
                         </ul>
                     </div>
                     <div class="col-xs-12">
@@ -276,6 +277,39 @@
                             <div class="tab-pane" id="workflow">
                                 <div style="width: 138%; height: 520px;" class="pull-left">
                                     <iframe runat="server" id="workflowImg" style="width: 994px; height: 545px; padding-right: 5px;" src="#" frameborder="1" />
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="history">
+                                <div style="width: 138%; height: 520px;" class="pull-left historyTab">
+                                    <div class="createdBtn">
+                                        <a class="btn btn-default btn-form draw-btn" id="btnCreated" >Created</a>
+                                    </div>
+                                    <div class="timelineArea">
+                                        <div class="progress pull-left">
+                                        </div>
+                                        <div class="progressContent pull-left">
+                                            <div class="content contentPending">
+                                                <div class="progressDot"></div>
+                                            </div>
+                                            <div class="content contentVendor">
+                                                <div class="vendorAssignment pull-left">
+                                                    <div class="progressCircle"></div>
+                                                </div>
+                                                <div class="rfModAssignment pull-left">
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="content contentApproval">
+                                                <div class="progressDot themeRed"></div>
+                                            </div>
+                                            <div class="content contentComplete">
+                                                <div class="progressDot themeAsh"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="completedBtn">
+                                        <a class="btn btn-default btn-form draw-btn" id="btnCompleted" >Completed</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
