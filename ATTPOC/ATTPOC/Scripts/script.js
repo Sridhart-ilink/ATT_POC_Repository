@@ -945,6 +945,7 @@ function onLoadGis() {
                                         }
                                     }
                                     else {
+                                        $.LoadingOverlay("hide");
                                         $('#txtatollsitename').after(errorMsg);
                                     }
 
