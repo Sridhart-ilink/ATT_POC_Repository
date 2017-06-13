@@ -12,13 +12,15 @@ namespace JavascriptBasedApp
         string sarfID = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-           // bindSarfDetails();
+            sarfID = Request.QueryString["processInstanceId"].ToString();
+            workflowImg.Attributes["src"] = System.Configuration.ConfigurationManager.AppSettings.Get("WFImgUrl") + sarfID;
+            //bindSarfDetails();
         }
         private void bindSarfDetails()
         {
             using (var client = new HttpClient())
             {
-                sarfID = Request.QueryString["processInstanceId"].ToString();
+                
                 string serviceUrl = System.Configuration.ConfigurationManager.AppSettings.Get("ServiceUrl");
                 client.BaseAddress = new Uri(serviceUrl);
                 var response = client.GetAsync("SarfDetailsByTaskID/Get/" + sarfID).Result;
@@ -40,7 +42,7 @@ namespace JavascriptBasedApp
                     txtarea.Value = (int.Parse(dt.Rows[0][13].ToString()) * 0.386102).ToString("N3");
                 }
             }
-            workflowImg.Attributes["src"] = System.Configuration.ConfigurationManager.AppSettings.Get("WFImgUrl") + sarfID;
+            
         }
     }
 }
