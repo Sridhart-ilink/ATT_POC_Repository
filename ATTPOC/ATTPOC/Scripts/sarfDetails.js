@@ -860,6 +860,7 @@ function onLoadGis() {
                                 police: item.ContactPolice,
                                 fire: item.ContactFire,
                                 energy: item.ContactEnergy,
+                                business:item.BusinessPhone,
                                 isOwned:item.IsATTOwned,
                                 height:item.StructureHeight,
                                 company:item.Company
@@ -905,6 +906,7 @@ function onLoadGis() {
                         "Police": p.police,
                         "Fire": p.fire,
                         "Energy": p.energy,
+                        "Business": p.business,
                         "isOwned": p.isOwned,
                         "height": p.height,
                         "Company":p.company
@@ -940,6 +942,8 @@ function onLoadGis() {
                     _template += 'Seattle ${Police} <br/>';
                     _template += 'Seattle ${Fire} <br/>';
                     _template += 'Seattle ${Energy} <br/>';
+                    _template += 'Business Phone no: ${Business} <br/>';
+                    // 
                     _template += '</div>';
                     //Structure Information
 
@@ -998,7 +1002,7 @@ function onLoadGis() {
                 cache: false,
                 success: function (data) {
                     $.each(data, function (i, item) {
-                        poinArr.push({ address: item.Address, x: item.Latitude, y: item.Longitude });
+                        poinArr.push({ address: item.Address, x: item.Latitude, y: item.Longitude,type:item.HubType });
                         hubArray.push({ x: item.Latitude, y: item.Longitude, id: item.HubId })
                     });
 
@@ -1033,8 +1037,9 @@ function onLoadGis() {
                         "Xcoord": p.y,
                         "Ycoord": p.x,
                         "Address": p.address,
+                        "Type":p.type
                     }; // Set what attributes you want to add to graphics's info template.
-                    var infoTemplate = new InfoTemplate("Hub Details", "<b>Address:</b> ${Address} <br/><b>Latitude:</b> ${Ycoord} <br/><b>Longitude:</b> ${Xcoord} <br/>");
+                    var infoTemplate = new InfoTemplate("Hub Details", "<b>Address:</b> ${Address} <br/><b>Latitude:</b> ${Ycoord} <br/><b>Longitude:</b> ${Xcoord} <br/><b>Type:</b> ${Type} ");
                     var g = new Graphic(pointGeom, pictureMarkerSymbol, attr, infoTemplate);
                     g.setInfoTemplate(infoTemplate);
                     map.graphics.add(g);
