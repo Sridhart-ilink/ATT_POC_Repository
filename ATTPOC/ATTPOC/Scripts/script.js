@@ -863,6 +863,8 @@ function onLoadGis() {
                         $('#txtatollsitename').keypress(function () {
                             $('div.errorMsg').remove();
                         });
+
+                        $('#drawingLayer_layer_dropdown').attr('id', 'style-2');
                       
                     } else {
                         if (tooltipDialog.opened_) {

@@ -962,7 +962,7 @@ function onLoadGis() {
                     g.setInfoTemplate(infoTemplate);
                     map.graphics.add(g);
 
-
+                    $('.contentPane').attr('id', 'style-2');
                     // connect the node with hub
                     //hubArray
                     var lineSymbol = new CartographicLineSymbol(
