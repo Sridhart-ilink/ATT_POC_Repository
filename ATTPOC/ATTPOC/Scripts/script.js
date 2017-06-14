@@ -252,64 +252,78 @@ function getTaskStatusbySarfID(id) {
 }
 
 
-function getTaskStatusAndApprove(processInstanceID, sarfID) {
-    var isValidArea = true;
-    var sarfNameStr = $('#txtsarf').val();
-    sarfNameStr = sarfNameStr.toLowerCase();
-    if (sarfNameStr.indexOf('cran') == 0 || sarfNameStr.indexOf('nsfl') != -1) {
-        isValidArea = false;
-    }
-    var getStatusUrl = "task-by-process-instance";
+function getTaskStatusAndApprove(processInstanceID, sarfData) {
+
+    var updateSarfUrl = "UpdateSarf/Post";
+    sarfData.processInstanceID = processInstanceID;
     $.ajax({
-        method: 'GET',
+        method: 'POST',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
-        url: camundaBaseApiUrl + getStatusUrl + "/" + processInstanceID,
-        data: JSON.stringify({}),
+        url: camundaBaseApiUrl + updateSarfUrl,
+        data: JSON.stringify(sarfData),
         //async: false,
         cache: false,
         success: function (data) {
-            if (data != null) {
-                var parsedData = JSON.parse(data);
-                InstanceID = parsedData[0].processInstanceId;
-                TaskID = parsedData[0].id;
-                TaskStatus = parsedData[0].name;
-                localStorage["taskID"] = TaskID;
-                localStorage["instanceID"] = InstanceID;
-                localStorage["taskStatus"] = TaskStatus;
-                localStorage["sarfID"] = sarfID;
+           
+            var getStatusUrl = "task-by-process-instance";
+            $.ajax({
+                method: 'GET',
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                url: camundaBaseApiUrl + getStatusUrl + "/" + processInstanceID,
+                data: JSON.stringify({}),
+                //async: false,
+                cache: false,
+                success: function (data) {
+                    if (data != null) {
+                        var parsedData = JSON.parse(data);
+                        InstanceID = parsedData[0].processInstanceId;
+                        TaskID = parsedData[0].id;
+                        TaskStatus = parsedData[0].name;
+                        localStorage["taskID"] = TaskID;
+                        localStorage["instanceID"] = InstanceID;
+                        localStorage["taskStatus"] = TaskStatus;
+                        localStorage["sarfID"] = sarfData.id;
 
-                //Approve
-                $.LoadingOverlay("show");
-                var getStatusUrl = "taskcomplete";
-                var jsonData = {
-                    variables: {
-                        "action": { "value": "approve", "type": "String" }
-                        , "success": { "value": isValidArea, "type": "Boolean" }
-                    },
-                    id: JSON.parse(JSON.stringify(localStorage["taskID"]))
-                };
-                /*api call to update status*/
-                if (isPortActive) {
-                    $.ajax({
-                        method: 'POST',
-                        dataType: 'json',
-                        contentType: 'application/json',
-                        url: camundaBaseApiUrl + getStatusUrl,
-                        data: JSON.stringify(jsonData),
-                        //async: false,
-                        cache: false,
-                        success: function (data) {
-                            if (data) {
-                                saveSARFData(InstanceID, isValidArea);
-                            }
-                        },
-                        error: function (err) {
-                            console.log(err);
+                        //Approve
+                        $.LoadingOverlay("show");
+                        var getStatusUrl = "taskcomplete";
+                        var jsonData = {
+                            variables: {
+                                "action": { "value": "approve", "type": "String" }
+                                , "success": { "value": true, "type": "Boolean" }
+                            },
+                            id: JSON.parse(JSON.stringify(localStorage["taskID"]))
+                        };
+                        /*api call to update status*/
+                        if (isPortActive) {
+                            $.ajax({
+                                method: 'POST',
+                                dataType: 'json',
+                                contentType: 'application/json',
+                                url: camundaBaseApiUrl + getStatusUrl,
+                                data: JSON.stringify(jsonData),
+                                //async: false,
+                                cache: false,
+                                success: function (data) {
+                                    if (data) {
+                                        //saveSARFData(InstanceID, isValidArea);
+                                    }
+                                },
+                                error: function (err) {
+                                    console.log(err);
+                                }
+                            });
                         }
-                    });
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                    $.LoadingOverlay("hide");
                 }
-            }
+            });
+
         },
         error: function (err) {
             console.log(err);
@@ -921,57 +935,129 @@ function onLoadGis() {
                                     $('#msgSpan').text(loaderMsg);
 
                                     $('div.errorMsg').remove();
-                                    var getProcessUrl = "process-definition";
-                                    var jsonData = {
-                                        variables: {},
-                                        key: "cran-simple"//"identify-sarfs"
+
+                                    /* get generated nodes count*/
+
+                                    var isValidArea = true;
+                                    var sarfNameStr = $('#txtsarf').val();
+                                    sarfNameStr = sarfNameStr.toLowerCase();
+                                    if (sarfNameStr.indexOf('cran') == 0 || sarfNameStr.indexOf('nsfl') != -1) {
+                                        isValidArea = false;
                                     }
-                                    var sarfNameTxt = $('#txtsarf').val();
+                                    var postSarfDataUrl = "Sarf/Post";
                                     var atollSiteNameTxt = $('#txtatollsitename').val();
-                                    if (sarfNameTxt.length > 0 && atollSiteNameTxt.length > 0) {
-                                        if (isPortActive) {
-                                            $.ajax({
-                                                method: 'POST',
-                                                dataType: 'json',
-                                                contentType: 'application/json',
-                                                url: camundaBaseApiUrl + getProcessUrl,
-                                                data: JSON.stringify(jsonData),
-                                                //async: false,
-                                                cache: false,
-                                                success: function (data) {
-                                                    if (data != null) {
-                                                        var parsedData = JSON.parse(data);
-                                                        getTaskStatusAndApprove(parsedData.id);
+                                    var sarfRandomID = (Math.floor(1000 + Math.random() * 9000)).toString();
+                                    var jsonData = {
+                                        id: 0,
+                                        sarfName: sarfNameStr,
+                                        atollSiteName: atollSiteNameTxt,
+                                        fACode: constants.FACode + sarfRandomID,
+                                        iPlanJob: constants.IPlanJob + sarfRandomID,
+                                        paceNumber: constants.PaceNumber + sarfRandomID,
+                                        searchRingId: constants.SearchRingId + sarfRandomID,
+                                        marketCluster: constants.MarketCluster,
+                                        region: constants.Region,
+                                        county: constants.County,
+                                        market: constants.Market,
+                                        fAType: constants.FAType,
+                                        rFDesignEnggId: constants.RFDesignEnggId,
+                                        processInstanceID: 0,
+                                        sarfStatus: statusEnum.RF_Approval,
+                                        isValidArea: isValidArea
+                                    };
+                                    var sarfData = jsonData;
+                                    /*
+                                   api call to post sarf data
+                                   */
+                                    $.ajax({
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        contentType: 'application/json',
+                                        url: camundaBaseApiUrl + postSarfDataUrl,
+                                        data: JSON.stringify(jsonData),
+                                        //async: false,
+                                        cache: false,
+                                        success: function (data) {
+                                            if (data != null) {
+                                                sarfData.id = data;
+                                                var postPolyDataUrl = "Polygon/Post";
+                                                var polyVertices = $("#vertices").text();
+                                                var polyArea = $("#hdnArea").val();
+                                                var jsonData = {
+                                                    vertices: polyVertices,
+                                                    areaInSqKm: polyArea
+                                                };
+                                                /*
+                                                   api call to post polygon data
+                                                */
+                                                $.ajax({
+                                                    method: 'POST',
+                                                    dataType: 'json',
+                                                    contentType: 'application/json',
+                                                    url: camundaBaseApiUrl + postPolyDataUrl,
+                                                    data: JSON.stringify(jsonData),
+                                                    //async: false,
+                                                    cache: false,
+                                                    success: function (data) {
+                                                        var getProcessUrl = "process-definition";
+                                                        var jsonData = {
+                                                            variables: {
+                                                                "action": { "value": "temp", "type": "String" },
+                                                                "selectedNodesCount": { "value": data, "type": "Integer" }
+                                                            },
+                                                            key: "cran-simple"//"identify-sarfs"
+                                                        }
+                                                        var sarfNameTxt = $('#txtsarf').val();
+                                                        var atollSiteNameTxt = $('#txtatollsitename').val();
+                                                        if (sarfNameTxt.length > 0 && atollSiteNameTxt.length > 0) {
+                                                            if (isPortActive) {
+                                                                $.ajax({
+                                                                    method: 'POST',
+                                                                    dataType: 'json',
+                                                                    contentType: 'application/json',
+                                                                    url: camundaBaseApiUrl + getProcessUrl,
+                                                                    data: JSON.stringify(jsonData),
+                                                                    //async: false,
+                                                                    cache: false,
+                                                                    success: function (data) {
+                                                                        if (data != null) {
+                                                                            var parsedData = JSON.parse(data);
+                                                                            getTaskStatusAndApprove(parsedData.id,sarfData);
+                                                                        }
+                                                                    },
+                                                                    error: function (err) {
+                                                                        console.log(err);
+                                                                    }
+                                                                });
+                                                            }
+                                                            else {
+                                                                $.LoadingOverlay("hide");
+                                                                $('#sarfForm').submit();
+                                                                //saveSARFData(0, isValidArea);
+                                                            }
+                                                        }
+                                                        else {
+                                                            $.LoadingOverlay("hide");
+                                                            $('#txtatollsitename').after(errorMsg);
+                                                        }
+                                                    },
+                                                    error: function (err) {
+                                                        $.LoadingOverlay("hide");
+                                                        console.log(err);
                                                     }
-                                                },
-                                                error: function (err) {
-                                                    console.log(err);
-                                                }
-                                            });
-                                        }
-                                        else {
-                                            var isValidArea = true;
-                                            var sarfNameStr = $('#txtsarf').val();
-                                            sarfNameStr = sarfNameStr.toLowerCase();
-                                            if (sarfNameStr.indexOf('cran') == 0 || sarfNameStr.indexOf('nsfl') != -1) {
-                                                isValidArea = false;
+                                                });
                                             }
-                                            saveSARFData(0, isValidArea);
+                                        },
+                                        error: function (err) {
+                                            console.log(err);
+                                            $.LoadingOverlay("hide");
                                         }
-                                    }
-                                    else {
-                                        $.LoadingOverlay("hide");
-                                        $('#txtatollsitename').after(errorMsg);
-                                    }
+                                    });
 
                                 }, timerEnum.TIME_DELAY_SECONDS);
                             }, timerEnum.TIME_DELAY_SECONDS);
                         }, timerEnum.TIME_DELAY_SECONDS);
-
-                        
-                        
                     });
-
                 }
             }));
             ctxMenuForGraphics.addChild(new MenuItem({

@@ -114,7 +114,7 @@ namespace ATTWebAppAPI.Controllers
             decimal.TryParse(maxLong, out decMaxLong);
         }
 
-        private void SaveHubs(List<List<decimal>> points, Polygon polygon)
+        private int SaveHubs(List<List<decimal>> points, Polygon polygon)
         {
             List<decimal> vertex = new List<decimal>();
             pointsToReject = new List<List<decimal>>();
@@ -239,11 +239,12 @@ namespace ATTWebAppAPI.Controllers
             hubIDList = hubIDList.Except(hubRejectList).ToList();
             if (isValidArea)
             {
-                GenerateNodes(polygon);
+                return GenerateNodes(polygon);
             }
+            return 0;
         }
 
-        private void SaveNodes(List<List<decimal>> points)
+        private int SaveNodes(List<List<decimal>> points)
         {
             List<decimal> vertex = new List<decimal>();
             nodes = new List<Node>();
@@ -395,9 +396,10 @@ namespace ATTWebAppAPI.Controllers
             {
                 sarfDao.SaveNode(nodeItem);
             }
+            return nodes.Count;
         }
 
-        protected bool GenerateNodesAndHubs(Polygon polygon, bool isValid)
+        protected int GenerateNodesAndHubs(Polygon polygon, bool isValid)
         {
             try
             {
@@ -407,11 +409,11 @@ namespace ATTWebAppAPI.Controllers
             }
             catch (Exception ex)
             {
-                return false;
+                return 0;
             }
         }
 
-        private bool GenerateHubs(Polygon polygon)
+        private int GenerateHubs(Polygon polygon)
         {
             try
             {
@@ -514,28 +516,28 @@ namespace ATTWebAppAPI.Controllers
                 }
                 sortedList = pointsToDraw.OrderBy(p => p[0]).ToList();
                 pointsToDraw = sortedList;
-                SaveHubs(pointsToDraw, polygon);
-                return true;
+                int nodeCount = SaveHubs(pointsToDraw, polygon);
+                return nodeCount;
             }
             catch (Exception ex)
             {
-                return false;
+                return 0;
             }
         }
 
-        protected bool GenerateNodes(Polygon polygon)
+        protected int GenerateNodes(Polygon polygon)
         {
             try
             {
                 var polyArray = GeneratePolyArray(polygon.Vertices);
                 SetCoordinates(polygon.Vertices);
                 var nodePoints = pointsToDraw.Except(pointsToReject).ToList();
-                SaveNodes(nodePoints);
-                return true;
+                int nodeCount = SaveNodes(nodePoints);
+                return nodeCount;
             }
             catch (Exception ex)
             {
-                return false;
+                return 0;
             }
         }
     }
