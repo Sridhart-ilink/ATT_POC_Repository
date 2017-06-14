@@ -98,11 +98,21 @@
                         </a>
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        
-                        <div class="col-sm-3 col-md-4 col-md-offset-2">
+                        <div class="col-sm-3 col-md-4">
                             <div id="search" class="att-search"></div>
                         </div>
-                        <div class="col-md-3 pull-right text-right profile">
+                        <div class="navbar-header col-sm-2 col-md-2 profile" style="width: 110px; margin-top:20px;">
+                            <i class="icon-home"></i>
+                            <a href="#" class="profileInfo dashboard" style="text-align: right;margin-left: 0px;text-decoration: none !important;pointer-events: none;">
+                                <span class="att-heading" style="padding-left: 0px; margin-left: 0px">Home</span>
+                            </a>
+                        </div>
+                        <div class="navbar-header col-sm-2 col-md-2 profile" style="padding-left: 5px; width: 120px; margin-top:20px;">
+                            <a href="CRANDashboard.html" class="profileInfo dashboard" style="padding-left: 5px; text-align: left">
+                                <span style="margin-left: 5px;" class="att-heading">Dashboard</span>
+                            </a>
+                        </div>
+                        <div class="col-md-2 pull-right text-right profile">
                             <span class="profileInfo themeBlue">Maxine Walters</span>
                             <i class="icon-user profileIcon themeBlue" aria-hidden="true"></i>
                         </div>
