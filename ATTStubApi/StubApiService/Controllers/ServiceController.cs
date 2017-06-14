@@ -7,13 +7,27 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace ApiServiceTes.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ServiceController : ApiController
-    {
-        // GET api/service/NER-RVWV-11-00994      
-        public object Get(string id)
+    {      
+
+        [HttpGet]
+        [Route("api/service/GetSearchRings")]
+        public HttpResponseMessage GetSearchRings()
+        {
+            AtollData atoll = new AtollData();
+            var resp = atoll.getSearchRings();
+            JsonConvert.SerializeObject(resp);
+            return Request.CreateResponse(HttpStatusCode.OK, resp);
+
+        }
+        [HttpGet]
+        [Route("api/service/GetSearchRing/{id}")]
+        public HttpResponseMessage GetSearchRings(string id)
         {
             AtollData atoll = new AtollData();
             var resp = atoll.getSearchRings(id);
@@ -21,14 +35,17 @@ namespace ApiServiceTes.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, resp);
 
         }
-        // GET api/service/     
-        public object Get()
+        [HttpGet]
+        [Route("api/service/GetAtollInfo/{id}")]
+        public HttpResponseMessage GetAtoll(string id)
         {
             AtollData atoll = new AtollData();
-            var resp = atoll.getSearchRings();
+            var resp = atoll.getAtollInfo(id);
             JsonConvert.SerializeObject(resp);
             return Request.CreateResponse(HttpStatusCode.OK, resp);
+
         }
+
         // POST api/service
         public void Post([FromBody]string value)
         {

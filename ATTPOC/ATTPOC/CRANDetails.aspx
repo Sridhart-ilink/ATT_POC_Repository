@@ -298,14 +298,24 @@
                                             </div>
                                             
                                             <div class="content contentSelectNodes">
-                                                <div class="progressDot "></div>
-                                                <div class="progressHead">
-                                                    <h3>Select Node(s)</h3>
-                                                    <label>Start Date: <span class="dateSpan">06/13/2017 10:31:22</span></label>
-                                                    <label>End Date:  <span class="dateSpan">06/13/2017 10:32:25</span></label>
+                                                <div class="progressDot"></div>
+                                                <div class ="identifyNodes pull-left highlightApproved">
+                                                    <div class="progressHead">
+                                                        <h3>Select Node(s)</h3>
+                                                        <label>Start Date: <span class="dateSpan">06/13/2017 10:31:22</span></label>
+                                                        <label>End Date:  <span class="dateSpan">06/13/2017 10:32:25</span></label>
+                                                    </div>
                                                 </div>
+                                                <div class ="getAtolls pull-left">
+                                                    <div class="progressHead">
+                                                        <h3>Get Atolls</h3>
+                                                        <label>Start Date: <span class="dateSpan">06/13/2017 10:31:22</span></label>
+                                                        <label>End Date:  <span class="dateSpan">06/13/2017 10:32:25</span></label>
+                                                    </div>
+                                                </div>
+                                                
                                             </div>
-					                        <div class="content contentSelectNodes">
+					                        <div class="content contentSelectHubs">
                                                 <div class="progressDot"></div>
                                                 <div class="progressHead">
                                                     <h3>Select Hub(s)</h3>
@@ -314,7 +324,7 @@
                                                 </div>
                                             </div>
 					                        <div class="content contentRFApproval">
-                                                <div class="rfApproval pull-left highlightApproved">
+                                                <div class="rfApproval">
                                                     <div class="progressCircle"></div>
                                                     <div class="progressHead">
                                                         <h3>RF Approval</h3>
