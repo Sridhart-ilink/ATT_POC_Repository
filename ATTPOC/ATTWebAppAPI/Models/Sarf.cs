@@ -24,6 +24,6 @@ namespace ATTWebAppAPI.Models
         public decimal AreaSqKm { set; get; }
         public string SarfStatus { set; get; }
         public string AtollSiteName { set; get; }
-
+        public bool IsValidArea { set; get; }
     }
 }

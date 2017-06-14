@@ -952,6 +952,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007a3e', end
     border-right : 4px solid #888888;
 }
 .contentSelectNodes{
+    width : 150%;
+}
+.contentSelectNodes .identifyNodes{
+    width : 50%;
+    height: 100%;
+}
+.contentSelectNodes .getAtolls{
+    width : 50%;
+    height: 100%;
+}
+.contentSelectHubs{
     width : 75%;
 }
 .contentComplete{

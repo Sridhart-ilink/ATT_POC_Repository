@@ -15,7 +15,7 @@ namespace ATTWebAppAPI.Controllers
     {
         SarfDao sarfDao = null;
         int currentSarfId = 0;
-
+        static bool isValidArea = true;
         List<string> latlongList = null;
         List<string> longList = null;
         List<string> latList = null;
@@ -237,7 +237,10 @@ namespace ATTWebAppAPI.Controllers
             hubRejectList = new List<long>();
             hubRejectList.AddRange(new List<long>{ hubIDList[1], hubIDList[3], hubIDList[4]});
             hubIDList = hubIDList.Except(hubRejectList).ToList();
-            GenerateNodes(polygon);
+            if (isValidArea)
+            {
+                GenerateNodes(polygon);
+            }
         }
 
         private void SaveNodes(List<List<decimal>> points)
@@ -394,10 +397,11 @@ namespace ATTWebAppAPI.Controllers
             }
         }
 
-        protected bool GenerateNodesAndHubs(Polygon polygon)
+        protected bool GenerateNodesAndHubs(Polygon polygon, bool isValid)
         {
             try
             {
+                isValidArea = isValid;
                 currentSarfId = polygon.SarfId;
                 return GenerateHubs(polygon);
             }

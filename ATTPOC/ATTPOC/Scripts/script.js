@@ -25,7 +25,7 @@ function loadScript(src, callback) {
     scriptTag.parentNode.insertBefore(script, scriptTag);
 }
 
-function saveSARFData(workflowProcessInstanceID) {
+function saveSARFData(workflowProcessInstanceID, isValid) {
     var postSarfDataUrl = "Sarf/Post";
     var sarfNameTxt = $('#txtsarf').val();
     var atollSiteNameTxt = $('#txtatollsitename').val();
@@ -44,7 +44,8 @@ function saveSARFData(workflowProcessInstanceID) {
         fAType: constants.FAType,
         rFDesignEnggId: constants.RFDesignEnggId,
         processInstanceID: workflowProcessInstanceID,
-        sarfStatus: statusEnum.RF_Approval
+        sarfStatus: statusEnum.RF_Approval,
+        isValidArea: isValid
     };
     /*
    api call to post sarf data
@@ -252,6 +253,12 @@ function getTaskStatusbySarfID(id) {
 
 
 function getTaskStatusAndApprove(processInstanceID, sarfID) {
+    var isValidArea = true;
+    var sarfNameStr = $('#txtsarf').val();
+    sarfNameStr = sarfNameStr.toLowerCase();
+    if (sarfNameStr.indexOf('cran') == 0 || sarfNameStr.indexOf('nsfl') != -1) {
+        isValidArea = false;
+    }
     var getStatusUrl = "task-by-process-instance";
     $.ajax({
         method: 'GET',
@@ -278,7 +285,7 @@ function getTaskStatusAndApprove(processInstanceID, sarfID) {
                 var jsonData = {
                     variables: {
                         "action": { "value": "approve", "type": "String" }
-                        , "success": { "value": true, "type": "Boolean" }
+                        , "success": { "value": isValidArea, "type": "Boolean" }
                     },
                     id: JSON.parse(JSON.stringify(localStorage["taskID"]))
                 };
@@ -294,7 +301,7 @@ function getTaskStatusAndApprove(processInstanceID, sarfID) {
                         cache: false,
                         success: function (data) {
                             if (data) {
-                                saveSARFData(InstanceID);
+                                saveSARFData(InstanceID, isValidArea);
                             }
                         },
                         error: function (err) {
@@ -943,7 +950,13 @@ function onLoadGis() {
                                             });
                                         }
                                         else {
-                                            saveSARFData(0);
+                                            var isValidArea = true;
+                                            var sarfNameStr = $('#txtsarf').val();
+                                            sarfNameStr = sarfNameStr.toLowerCase();
+                                            if (sarfNameStr.indexOf('cran') == 0 || sarfNameStr.indexOf('nsfl') != -1) {
+                                                isValidArea = false;
+                                            }
+                                            saveSARFData(0, isValidArea);
                                         }
                                     }
                                     else {

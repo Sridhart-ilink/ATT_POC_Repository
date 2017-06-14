@@ -17,6 +17,7 @@ namespace ATTWebAppAPI.Controllers
     {
         SarfDao sarfDao = null;
         static long transId = 0;
+        static bool isValidArea = true;
         public SarfController()
         {
             sarfDao = new SarfDao();
@@ -30,6 +31,7 @@ namespace ATTWebAppAPI.Controllers
             {
                 sarf.CreatedDate = DateTime.Now;
                 transId = sarfDao.SaveSarf(sarf);
+                isValidArea = sarf.IsValidArea;
                 return WrapObjectToHttpResponse(transId);
             }
             catch (Exception ex)
@@ -134,7 +136,7 @@ namespace ATTWebAppAPI.Controllers
                 polygon.ModifiedDate = DateTime.Now;
                 long polyId = sarfDao.SavePolygon(polygon, transId);
                 polygon.SarfId = (int)transId;
-                bool result = GenerateNodesAndHubs(polygon);
+                bool result = GenerateNodesAndHubs(polygon, isValidArea);
                 return WrapObjectToHttpResponse(result);
             }
             catch (Exception ex)
