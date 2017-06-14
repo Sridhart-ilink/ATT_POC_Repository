@@ -973,21 +973,21 @@ function onLoadGis() {
                     _template += '<div class = "cardView"><div class="popupInfo" style="cursor:pointer;">' +
                                     '<div class="popupBody">' +
                                         '<div class = "popupSpan"><b>' + city +'  ${Police}</b></div>' +
-                                        '<div class="popupSpan clearfix"> <span class = "cityState">' + city + ',' + state + '</span></div>' +
+                                        '<div class="popupSpan clearfix"> <span class = "cityState">' + city + ', ' + state + '</span></div>' +
                                         '<div class="popupSpan clearfix"><b>Phone No:</b> <span class = "contactNo">${Business}</span></div>' +
                                     '</div>' +
                                  '</div>';
                     _template += '<div class="popupInfo" style="cursor:pointer;">' +
                                     '<div class="popupBody">' +
                                         '<div class = "popupSpan"><b>' + city + '  ${Fire}</b></div>' +
-                                        '<div class="popupSpan clearfix"><span class = "cityState">' + city + ',' + state + '</span></div>' +
+                                        '<div class="popupSpan clearfix"><span class = "cityState">' + city + ', ' + state + '</span></div>' +
                                         '<div class="popupSpan clearfix"><b>Phone No:</b> <span class = "contactNo">${Business}</span></div>' +
                                     '</div>' +
                                  '</div>';
                     _template += '<div class="popupInfo" style="cursor:pointer;">' +
                                     '<div class="popupBody">' +
                                         '<div class = "popupSpan"><b>' + city + '  ${Energy}</b></div>' +
-                                        '<div class="popupSpan clearfix"><span class = "cityState">' + city + ',' + state + '</span></div>' +
+                                        '<div class="popupSpan clearfix"><span class = "cityState">' + city + ', ' + state + '</span></div>' +
                                         '<div class="popupSpan clearfix"><b>Phone No:</b> <span class = "contactNo">${Business}</span></div>' +
                                     '</div>' +
                                  '</div></div>';
