@@ -912,12 +912,12 @@ function onLoadGis() {
                         "Company":p.company
                     }; // Set what attributes you want to add to graphics's info template.
                     var _template = ''
-                    _template += '<b>Atoll SiteName:</b> ${Atoll} <br/>';
-                    _template += '<b>iPlan JobNumber:</b> ${iPlan} <br/>';
-                    _template += '<b>Latitude:</b> ${Ycoord} <br/>';
-                    _template += '<b>Longitude:</b> ${Xcoord} <br/>';
-                    _template += '<b>Type:</b> ${Type} <br/>';
-                    _template += '<b>Vendor Name:</b> ${VendorName} <br/>';
+                    _template += '<span  class = "popupFont"><b>Atoll site name:</b> ${Atoll} </span><br/>';
+                    _template += '<span  class = "popupFont"><b>iPlan job #:</b> ${iPlan} </span><br/>';
+                    _template += '<span  class = "popupFont"><b>Latitude:</b> ${Ycoord} </span><br/>';
+                    _template += '<span  class = "popupFont"><b>Longitude:</b> ${Xcoord} </span><br/>';
+                    _template += '<span  class = "popupFont"><b>Type:</b> ${Type} </span><br/>';
+                    _template += '<span  class = "popupFont"><b>Vendor name:</b> ${VendorName} </span><br/>';
 
                     if (p.hubid == 0) {
                         sms = new SimpleMarkerSymbol({
@@ -934,24 +934,42 @@ function onLoadGis() {
                       
                     }
                     else {
-                        _template += '_______________________________<br/><b>Why this node?</b><br/><ul><li>Fiber is already available.</li><li>Low leasing cost.</li></ul>';
+                        _template += '_______________________________<br/><span  class = "popupFont"><b>Why this Node?</b></span><br/><ul><li class = "popupFont">Fiber already available.</li><li class = "popupFont">Low leasing cost.</li></ul>';
                     }
                     //Contact Details
                     _template +='<br/>'
                     _template += '<a id="displayText" href="javascript:toggleContactInfo();"><b>Contact Details</b></a><div id="toggleText" style="display: none">';
-                    _template += 'Seattle ${Police} <br/>';
-                    _template += 'Seattle ${Fire} <br/>';
-                    _template += 'Seattle ${Energy} <br/>';
-                    _template += 'Business Phone no: ${Business} <br/>';
+                    _template += '<div class = "cardView"><div class="popupInfo" style="cursor:pointer;">' +
+                                    '<div class="popupBody">' +
+                                        '<span class = "popupSpan"><b>Seattle ${Police}</b></span>' +
+                                        '<span class="popupSpan clearfix"> <span class = "cityState">Houston, DA</span></span>' +
+                                        '<span class="popupSpan clearfix"><b>Phone No:</b> <span class = "contactNo">${Business}</span></span>' +
+                                    '</div>' + 
+                                 '</div>';
+                    _template += '<div class="popupInfo" style="cursor:pointer;">' +
+                                    '<div class="popupBody">' +
+                                        '<span class = "popupSpan"><b>Seattle ${Fire}</b></span>' +
+                                        '<span class="popupSpan clearfix"><span class = "cityState">Houston, DA</span></span>' +
+                                        '<span class="popupSpan clearfix"><b>Contact:</b> <span class = "contactNo">${Business}</span></span>' +
+                                    '</div>' +
+                                 '</div>';
+                    _template += '<div class="popupInfo" style="cursor:pointer;">' +
+                                    '<div class="popupBody">' +
+                                        '<span class = "popupSpan"><b>Seattle ${Energy}</b></span>' +
+                                        '<span class="popupSpan clearfix"><span class = "cityState">Houston, DA</span></span>' +
+                                        '<span class="popupSpan clearfix"><b>Contact:</b> <span class = "contactNo">${Business}</span></span>' +
+                                    '</div>' +
+                                 '</div></div>';
+                   // _template += 'Business Phone no: ${Business} <br/>';
                     // 
                     _template += '</div>';
                     //Structure Information
 
                     _template += '<br/>'
                     _template += '<a id="displayStructureInfoText" href="javascript:toggleStructureInfo();"><b>Structure Information</b></a><div id="toggleStructureInfoText" style="display: none">';
-                    _template += '<b>Is Structure AT & T owned:</b> ${isOwned}  <br/>';
-                    _template += '<b>Structure height (feet): </b>${height} <br/>';
-                    _template += '<b>Management Company:</b> ${Company} <br/>';
+                    _template += '<span class = "popupFont"><b>Is structure AT&T owned:</b> ${isOwned}  </span><br/>';
+                    _template += '<span class = "popupFont"><b>Structure height (feet): </b>${height} </span><br/>';
+                    _template += '<span class = "popupFont"><b>Management company:</b> ${Company} </span><br/>';
                     _template += '</div>';
                   
 
@@ -1039,7 +1057,11 @@ function onLoadGis() {
                         "Address": p.address,
                         "Type":p.type
                     }; // Set what attributes you want to add to graphics's info template.
-                    var infoTemplate = new InfoTemplate("Hub Details", "<b>Address:</b> ${Address} <br/><b>Latitude:</b> ${Ycoord} <br/><b>Longitude:</b> ${Xcoord} <br/><b>Type:</b> ${Type} ");
+                    var infoMsg = '<span class = "popupFont"><b>Address:</b> ${Address} </span><br/>' +
+                        '<span class = "popupFont"><b>Latitude:</b> ${Ycoord} </span><br/>' +
+                        '<span class = "popupFont"><b>Longitude:</b> ${Xcoord} </span><br/>' +
+                        '<span class = "popupFont"><b>Type:</b> ${Type} </span>';
+                    var infoTemplate = new InfoTemplate("Hub Details", infoMsg);
                     var g = new Graphic(pointGeom, pictureMarkerSymbol, attr, infoTemplate);
                     g.setInfoTemplate(infoTemplate);
                     map.graphics.add(g);

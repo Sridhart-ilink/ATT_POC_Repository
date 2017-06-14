@@ -629,6 +629,9 @@ margin-top : -20px
 .cardBody{
     margin-left: 15px;
 }
+.popupBody{
+    margin-left: 15px;
+}
 .cardHead{
     margin-left: 15px;
 }
@@ -687,6 +690,15 @@ margin-top : -20px
     font-family : "Roboto", Light;
     color:#7f7f7f;
 }
+.popupFont{
+    font-size: 11px;
+}
+.popupSpan{
+    margin-left : 0;
+    margin-top: 5px;
+    font-size: 11px;
+    color:#333333;
+}
 .wfbtnSet{
     margin-top: 15px;
     margin-left : 0px;
@@ -701,6 +713,11 @@ margin-top : -20px
     border-bottom : 1px dotted #ccc;
     /*padding:15px 0px;*/
     padding:0px 0px 8px;
+}
+.popupInfo{
+    border-bottom : 1px dotted #ccc;
+    /*padding:15px 0px;*/
+    padding:3px 0px 8px;
 }
 .slidingDiv{
     height: 602px;
