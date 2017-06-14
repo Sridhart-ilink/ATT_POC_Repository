@@ -309,6 +309,7 @@ function getTaskStatusAndApprove(processInstanceID, sarfData) {
                                 success: function (data) {
                                     if (data) {
                                         //saveSARFData(InstanceID, isValidArea);
+                                        $('#sarfForm').submit();
                                     }
                                 },
                                 error: function (err) {
