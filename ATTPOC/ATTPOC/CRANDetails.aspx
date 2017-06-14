@@ -280,7 +280,7 @@
                                 </div>
                             </div>
                             <div class="tab-pane" id="history">
-                                <div style="width: 138%; height: 520px;" class="pull-left historyTab">
+                                <div style="width: 138%; height: 620px;" class="pull-left historyTab">
                                     <div class="createdBtn">
                                         <a class="btn btn-default btn-form draw-btn" id="btnCreated" >Created</a>
                                     </div>
