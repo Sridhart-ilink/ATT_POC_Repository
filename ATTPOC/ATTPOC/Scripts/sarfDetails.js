@@ -183,7 +183,7 @@ function updateStatus(wfStatus, currentText) {
     var jsonData = {
         variables: {
             "action": { "value": wfStatus, "type": "String" }
-            ,"success": { "value": true, "type": "Boolean" }
+            , "success": { "value": true, "type": "Boolean" }
         },
         id: JSON.parse(JSON.stringify(localStorage["taskID"]))
     };
@@ -387,7 +387,7 @@ function toggleContactInfo() {
     }
     else {
         ele.style.display = "block";
-       
+
     }
 }
 function toggleStructureInfo() {
@@ -440,7 +440,7 @@ $(document).ready(function () {
     if (isPortActive) {
         getTaskStatusbyProcessInstanceID(processInstanceID);
     }
-    
+
     $('#statusLabel').text(localStorage["taskStatus"]);
     labelStatus = $('#statusLabel').text();
     $('#promoteBtn').hide();
@@ -504,7 +504,7 @@ $(document).ready(function () {
                             localStorage["vertices"] = finalVal;
                         }
                     }
-                    
+
                     $.LoadingOverlay("hide");
                 },
                 error: function (err) {
@@ -792,7 +792,7 @@ function onLoadGis() {
                 var gra = new esri.Graphic(polygon, fillSymbol);
                 map.graphics.add(gra);
                 map.setExtent(gra.geometry.getExtent().expand(2));
-                 
+
                 // load hubs
                 LoadHubs();
 
@@ -847,7 +847,7 @@ function onLoadGis() {
                 async: false,
                 cache: false,
                 success: function (data) {
-                    $.each(data, function (i, item) {                               
+                    $.each(data, function (i, item) {
                         poinArr.push(
                             {
                                 atoll: item.AtollSiteName,
@@ -860,10 +860,10 @@ function onLoadGis() {
                                 police: item.ContactPolice,
                                 fire: item.ContactFire,
                                 energy: item.ContactEnergy,
-                                business:item.BusinessPhone,
-                                isOwned:item.IsATTOwned,
-                                height:item.StructureHeight,
-                                company:item.Company
+                                business: item.BusinessPhone,
+                                isOwned: item.IsATTOwned,
+                                height: item.StructureHeight,
+                                company: item.Company
                             });
                     });
 
@@ -875,14 +875,43 @@ function onLoadGis() {
 
             //access the lat long data.
             graphicLayer = new GraphicsLayer();
-           //get the cuurent polygon
+            //get the cuurent polygon
             var finalVal = JSON.parse(JSON.stringify(localStorage["vertices"]));
             finalVal = JSON.parse("[" + finalVal + "]");
             var polygon = new Polygon(new esri.SpatialReference({ wkid: 4326 }));
             polygon.addRing(finalVal)
+            var city = "";
+            var state = "";
+            array.forEach(poinArr, function (p) {                
+                var latlng = p.x + "," + p.y;
+                var addressurl = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + latlng + "";
+               // if (address == "") {
+                    var jqxhr = $.getJSON(addressurl, function (data) {
+                        if (data.results.length > 0) {
+                            city = data.results[0].address_components[3].short_name;
+                            state = data.results[0].address_components[5].short_name;
+                        }
+                            
+                    })
+                      .done(function (data) {
+                          LoadPoints(p);
 
-            array.forEach(poinArr, function(p) {
-                var pointGeom = new Point([p.y, p.x], new esri.SpatialReference({ wkid: 4326 }));             
+                      })
+                      .fail(function () {
+                          console.log("error");
+                      })
+                      .always(function () {
+                          console.log("complete");
+                      });
+
+               // }
+               // else{LoadPoints(p);}
+
+
+                });
+           
+            function LoadPoints(p) {
+                var pointGeom = new Point([p.y, p.x], new esri.SpatialReference({ wkid: 4326 }));
                 if (polygon.contains(pointGeom)) {
                     // if point lies inside polygon
                     var sms = new SimpleMarkerSymbol({
@@ -894,7 +923,7 @@ function onLoadGis() {
                             "style": "esriSLSSolid"
                         }
                     }).setStyle(
-                       SimpleMarkerSymbol.STYLE_CIRCLE,5).setColor(
+                       SimpleMarkerSymbol.STYLE_CIRCLE, 5).setColor(
                        new Color([255, 0, 255, 0.5]));
                     var attr = {
                         "Xcoord": p.y,
@@ -909,8 +938,10 @@ function onLoadGis() {
                         "Business": p.business,
                         "isOwned": p.isOwned,
                         "height": p.height,
-                        "Company":p.company
-                    }; // Set what attributes you want to add to graphics's info template.
+                        "Company": p.company
+                    };
+
+                    // Set what attributes you want to add to graphics's info template.
                     var _template = ''
                     _template += '<span  class = "popupFont"><b>Atoll site name:</b> ${Atoll} </span><br/>';
                     _template += '<span  class = "popupFont"><b>iPlan job #:</b> ${iPlan} </span><br/>';
@@ -931,36 +962,36 @@ function onLoadGis() {
                         }).setStyle(
                                SimpleMarkerSymbol.STYLE_CIRCLE, 5).setColor(
                                new Color([0, 0, 0, 255]));
-                      
+
                     }
                     else {
                         _template += '_______________________________<br/><span  class = "popupFont"><b>Why this Node?</b></span><br/><ul><li class = "popupFont">Fiber already available.</li><li class = "popupFont">Low leasing cost.</li></ul>';
                     }
                     //Contact Details
-                    _template +='<br/>'
+                    _template += '<br/>'
                     _template += '<a id="displayText" href="javascript:toggleContactInfo();"><b>Contact Details</b></a><div id="toggleText" style="display: none">';
                     _template += '<div class = "cardView"><div class="popupInfo" style="cursor:pointer;">' +
                                     '<div class="popupBody">' +
-                                        '<span class = "popupSpan"><b>Seattle ${Police}</b></span>' +
-                                        '<span class="popupSpan clearfix"> <span class = "cityState">Houston, DA</span></span>' +
-                                        '<span class="popupSpan clearfix"><b>Phone No:</b> <span class = "contactNo">${Business}</span></span>' +
-                                    '</div>' + 
-                                 '</div>';
-                    _template += '<div class="popupInfo" style="cursor:pointer;">' +
-                                    '<div class="popupBody">' +
-                                        '<span class = "popupSpan"><b>Seattle ${Fire}</b></span>' +
-                                        '<span class="popupSpan clearfix"><span class = "cityState">Houston, DA</span></span>' +
-                                        '<span class="popupSpan clearfix"><b>Contact:</b> <span class = "contactNo">${Business}</span></span>' +
+                                        '<div class = "popupSpan"><b>' + city +'  ${Police}</b></div>' +
+                                        '<div class="popupSpan clearfix"> <span class = "cityState">' + city + ',' + state + '</span></div>' +
+                                        '<div class="popupSpan clearfix"><b>Phone No:</b> <span class = "contactNo">${Business}</span></div>' +
                                     '</div>' +
                                  '</div>';
                     _template += '<div class="popupInfo" style="cursor:pointer;">' +
                                     '<div class="popupBody">' +
-                                        '<span class = "popupSpan"><b>Seattle ${Energy}</b></span>' +
-                                        '<span class="popupSpan clearfix"><span class = "cityState">Houston, DA</span></span>' +
-                                        '<span class="popupSpan clearfix"><b>Contact:</b> <span class = "contactNo">${Business}</span></span>' +
+                                        '<div class = "popupSpan"><b>' + city + '  ${Fire}</b></div>' +
+                                        '<div class="popupSpan clearfix"><span class = "cityState">' + city + ',' + state + '</span></div>' +
+                                        '<div class="popupSpan clearfix"><b>Phone No:</b> <span class = "contactNo">${Business}</span></div>' +
+                                    '</div>' +
+                                 '</div>';
+                    _template += '<div class="popupInfo" style="cursor:pointer;">' +
+                                    '<div class="popupBody">' +
+                                        '<div class = "popupSpan"><b>' + city + '  ${Energy}</b></div>' +
+                                        '<div class="popupSpan clearfix"><span class = "cityState">' + city + ',' + state + '</span></div>' +
+                                        '<div class="popupSpan clearfix"><b>Phone No:</b> <span class = "contactNo">${Business}</span></div>' +
                                     '</div>' +
                                  '</div></div>';
-                   // _template += 'Business Phone no: ${Business} <br/>';
+                    // _template += 'Business Phone no: ${Business} <br/>';
                     // 
                     _template += '</div>';
                     //Structure Information
@@ -971,7 +1002,7 @@ function onLoadGis() {
                     _template += '<span class = "popupFont"><b>Structure height (feet): </b>${height} </span><br/>';
                     _template += '<span class = "popupFont"><b>Management company:</b> ${Company} </span><br/>';
                     _template += '</div>';
-                  
+
 
 
                     var infoTemplate = new InfoTemplate("Node Details", _template);
@@ -985,11 +1016,11 @@ function onLoadGis() {
                     //hubArray
                     var lineSymbol = new CartographicLineSymbol(
                        CartographicLineSymbol.STYLE_SOLID,
-                       new Color([255,0, 0]), 1,
+                       new Color([255, 0, 0]), 1,
                        CartographicLineSymbol.CAP_ROUND,
                        CartographicLineSymbol.JOIN_MITER, 2
                      );
-                    
+
                     array.forEach(hubArray, function (h) {
                         if (h.id == p.hubid) {
                             var lineGeometry = new Polyline(new esri.SpatialReference({ wkid: 4326 }));
@@ -998,13 +1029,15 @@ function onLoadGis() {
                             var lineGraphic = new Graphic(lineGeometry, lineSymbol);
                             map.graphics.add(lineGraphic)
                         }
-                        
+
                     });
                 }
-                       
-            });
-           
+            }
+            
         }
+
+            
+       
 
         function LoadHubs() {
             var sarfid = localStorage["sarfID"];
@@ -1020,7 +1053,7 @@ function onLoadGis() {
                 cache: false,
                 success: function (data) {
                     $.each(data, function (i, item) {
-                        poinArr.push({ address: item.Address, x: item.Latitude, y: item.Longitude,type:item.HubType });
+                        poinArr.push({ address: item.Address, x: item.Latitude, y: item.Longitude, type: item.HubType });
                         hubArray.push({ x: item.Latitude, y: item.Longitude, id: item.HubId })
                     });
 
@@ -1044,7 +1077,7 @@ function onLoadGis() {
                     // if point lies inside polygon
                     //<i class="icon-signal" aria-hidden="true" style="font-size: x-large;"></i>
                     pictureMarkerSymbol = new PictureMarkerSymbol(hubImageUrl, 30, 30, "esriPMS", p.y);
-                    
+
                     //var sms =new SimpleMarkerSymbol({
                     //     style: 'square',
                     //    color: "blue",
@@ -1055,7 +1088,7 @@ function onLoadGis() {
                         "Xcoord": p.y,
                         "Ycoord": p.x,
                         "Address": p.address,
-                        "Type":p.type
+                        "Type": p.type
                     }; // Set what attributes you want to add to graphics's info template.
                     var infoMsg = '<span class = "popupFont"><b>Address:</b> ${Address} </span><br/>' +
                         '<span class = "popupFont"><b>Latitude:</b> ${Ycoord} </span><br/>' +
@@ -1066,7 +1099,7 @@ function onLoadGis() {
                     g.setInfoTemplate(infoTemplate);
                     map.graphics.add(g);
 
-                    
+
                 }
 
             });
@@ -1076,18 +1109,18 @@ function onLoadGis() {
         function clearGraphics() {
             $.each(map.graphics.graphics, function (i, val) {
                 if (map.graphics.graphics[i].geometry.type == "point") {
-                   
+
                     //  if (parseInt(map.graphics.graphics[i].geometry.x) == parseInt(localStorage["currentlat"]) || parseInt(map.graphics.graphics[i].geometry.y) == parseInt(localStorage["currentlong"])) {
                     if (map.graphics.graphics[i].attributes != undefined) {
                         if (map.graphics.graphics[i].attributes.name == "newPointLayer") {
-                        map.graphics.graphics[i].hide();
-                        localStorage["currentlat"] = "";
-                        localStorage["currentlong"] = "";
+                            map.graphics.graphics[i].hide();
+                            localStorage["currentlat"] = "";
+                            localStorage["currentlong"] = "";
 
 
+                        }
                     }
-                }
-                  
+
                 }
             });
         }
@@ -1207,7 +1240,7 @@ function onLoadGis() {
                         else {
                             $('#txtpacenumber').after(errorMsg);
                         }
-                                
+
                     });
 
                 }
@@ -1232,17 +1265,17 @@ function onLoadGis() {
                 // Let's bind to the graphic underneath the mouse cursor   
                 if (evt.graphic.geometry.type == "point" && evt.graphic.attributes != undefined) {
                     if (evt.graphic.attributes.name == "newPointLayer") {
-                    ctxMenuForGraphics.bindDomNode(evt.graphic.getDojoShape().getNode());
+                        ctxMenuForGraphics.bindDomNode(evt.graphic.getDojoShape().getNode());
+                    }
                 }
-                }
-                    
+
             });
 
             map.graphics.on("mouse-out", function (evt) {
                 if (evt.graphic.geometry.type == "point" && evt.graphic.attributes != undefined) {
                     if (evt.graphic.attributes.name == "newPointLayer") {
-                    ctxMenuForGraphics.unBindDomNode(evt.graphic.getDojoShape().getNode());
-                }
+                        ctxMenuForGraphics.unBindDomNode(evt.graphic.getDojoShape().getNode());
+                    }
                 }
             });
 
@@ -1315,25 +1348,25 @@ function onLoadGis() {
                     if (evt.graphic.geometry.type == "polygon") {
                         if (localStorage["currentPolygonRing"] == evt.graphic.geometry.rings) {
 
-                        if (localStorage["currentlat"] == "" && localStorage["currentlong"] == "") {
+                            if (localStorage["currentlat"] == "" && localStorage["currentlong"] == "") {
 
-                            var sms = new SimpleMarkerSymbol().setStyle(
-                             SimpleMarkerSymbol.STYLE_CIRCLE).setColor(
-                             new Color([255, 110, 0, 0.5]));
-                            var mp = webMercatorUtils.webMercatorToGeographic(evt.mapPoint);
+                                var sms = new SimpleMarkerSymbol().setStyle(
+                                 SimpleMarkerSymbol.STYLE_CIRCLE).setColor(
+                                 new Color([255, 110, 0, 0.5]));
+                                var mp = webMercatorUtils.webMercatorToGeographic(evt.mapPoint);
                                 map.graphics.add(new esri.Graphic(evt.mapPoint, sms, { "name": "newPointLayer" }));
-                            // addPoints(mp);
-                            localStorage["lat"] = mp.y;
-                            localStorage["long"] = mp.x;
+                                // addPoints(mp);
+                                localStorage["lat"] = mp.y;
+                                localStorage["long"] = mp.x;
 
-                            localStorage["currentlat"] = evt.mapPoint.x;
-                            localStorage["currentlong"] = evt.mapPoint.y;
+                                localStorage["currentlat"] = evt.mapPoint.x;
+                                localStorage["currentlong"] = evt.mapPoint.y;
 
-                            createGraphicsMenu();
-                        }
-                        else {
-                            alert("Please save/clear the current node before adding another node.");
-                        }
+                                createGraphicsMenu();
+                            }
+                            else {
+                                alert("Please save/clear the current node before adding another node.");
+                            }
                         }
 
                     }
