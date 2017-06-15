@@ -888,8 +888,17 @@ function onLoadGis() {
                // if (address == "") {
                     var jqxhr = $.getJSON(addressurl, function (data) {
                         if (data.results.length > 0) {
-                            city = data.results[0].address_components[3].short_name;
-                            state = data.results[0].address_components[5].short_name;
+
+                            var result = data.results[0].address_components;
+                            $.each(result, function (i, v) {
+                                if (v.types[0] == 'administrative_area_level_1') {
+                                    state = v.short_name;
+                                }
+                                if (v.types[0] == 'locality') {
+                                    city = v.short_name;
+                                }
+                            });
+
                         }
                             
                     })
