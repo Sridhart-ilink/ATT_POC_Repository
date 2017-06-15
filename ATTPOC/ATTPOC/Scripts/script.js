@@ -297,7 +297,7 @@ function getTaskStatusAndApprove(processInstanceID, sarfData) {
                             variables: {
                                 "action": { "value": "approve", "type": "String" }
                                 , "IdentifySuccess": { "value": identifySuccess, "type": "Boolean" }
-                                , "IplanSucess": { "value": iplanSuccess, "type": "Boolean" }
+                                , "IplanSuccess": { "value": iplanSuccess, "type": "Boolean" }
                             },
                             id: JSON.parse(JSON.stringify(localStorage["taskID"]))
                         };
@@ -315,6 +315,9 @@ function getTaskStatusAndApprove(processInstanceID, sarfData) {
                                     if (data) {
                                         //saveSARFData(InstanceID, isValidArea);
                                         $('#sarfForm').submit();
+                                    }
+                                    else {
+                                        $.LoadingOverlay("hide");
                                     }
                                 },
                                 error: function (err) {
@@ -946,8 +949,8 @@ function onLoadGis() {
                                     /* get generated nodes count*/
 
                                     var sarfNameStr = $('#txtsarf').val();
+                                    var sarfNameVal = sarfNameStr;
                                     sarfNameStr = sarfNameStr.toLowerCase();
-
                                     if (sarfNameStr.indexOf('cran') == 0) {
                                         isValidArea = false;
                                     }
@@ -962,7 +965,7 @@ function onLoadGis() {
                                     var sarfRandomID = (Math.floor(1000 + Math.random() * 9000)).toString();
                                     var jsonData = {
                                         id: 0,
-                                        sarfName: sarfNameStr,
+                                        sarfName: sarfNameVal,
                                         atollSiteName: atollSiteNameTxt,
                                         fACode: constants.FACode + sarfRandomID,
                                         iPlanJob: constants.IPlanJob + sarfRandomID,
@@ -1012,6 +1015,8 @@ function onLoadGis() {
                                                     //async: false,
                                                     cache: false,
                                                     success: function (data) {
+                                                        nodeCount = data;
+														localStorage["nodeCount"] = nodeCount;
                                                         var getProcessUrl = "process-definition";
                                                         var jsonData = {
                                                             variables: {

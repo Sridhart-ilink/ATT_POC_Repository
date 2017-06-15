@@ -42,7 +42,7 @@ var timerEnum = {
 var identifySuccess = true;
 var iplanSuccess = true;
 var contactSuccess = true;
-
+var nodeCount = 0;
 var isValidArea = true;
 var isNsfl = false;
 var isIpfl = false;

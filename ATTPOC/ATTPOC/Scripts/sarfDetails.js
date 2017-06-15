@@ -177,7 +177,7 @@ function updateSarfStatus(id, currentText) {
     });
 }
 
-function updateStatus(wfStatus, currentText) {
+function updateStatus(wfStatus, currentText, nodeCount) {
     $.LoadingOverlay("show");
     var getStatusUrl = "taskcomplete";
     contactSuccess = !isCsfl;
@@ -193,27 +193,28 @@ function updateStatus(wfStatus, currentText) {
     api call to update status
     */
     if (isPortActive) {
-        $.ajax({
-            method: 'POST',
-            dataType: 'json',
-            contentType: 'application/json',
-            url: camundaBaseApiUrl + getStatusUrl,
-            data: JSON.stringify(jsonData),
-            //async: false,
-            cache: false,
-            success: function (data) {
-                if (data) {
-                    getTaskStatusbyProcessInstanceID(processInstanceID);
-                    workflowUpdate(currentText);
-                    localStorage["tabIndex"] = $('.tabs-left').find('li.active').attr('data-index');
-                    $.LoadingOverlay("hide");
-                    $('#sarfForm').submit();
+        for (var count = 0; count < nodeCount; count++) {
+			jsonData.id = JSON.parse(JSON.stringify(localStorage["taskID"]));
+            $.ajax({
+                method: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                url: camundaBaseApiUrl + getStatusUrl,
+                data: JSON.stringify(jsonData),
+                async: false,
+                cache: false,
+                success: function (data) {
+					getTaskStatusbyProcessInstanceID(processInstanceID);
+                    console.log((count + 1) + " - " + data);
+                },
+                error: function (err) {
+                    console.log(err);
                 }
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        });
+            });
+        }
+        localStorage["tabIndex"] = $('.tabs-left').find('li.active').attr('data-index');
+		$.LoadingOverlay("hide");
+		$('#sarfForm').submit();
     }
     else {
         localStorage["tabIndex"] = $('.tabs-left').find('li.active').attr('data-index');
@@ -233,7 +234,7 @@ function getTaskStatusbyProcessInstanceID(processInstanceID) {
         contentType: 'application/json; charset=utf-8',
         url: camundaBaseApiUrl + getStatusUrl + "/" + processInstanceID,
         data: JSON.stringify({}),
-        //async: false,
+        async: false,
         cache: false,
         success: function (data) {
             if (data != null) {
@@ -579,7 +580,8 @@ $(document).ready(function () {
         var currentBtnText = $(this).text();
         var currentBtnVal = $(this).val();
         var currentStatus = $('#statusLabel').text();
-        updateStatus(currentBtnVal, currentBtnText);
+		nodeCount = localStorage["nodeCount"] != null ? localStorage["nodeCount"] : 0;
+        updateStatus(currentBtnVal, currentBtnText, nodeCount);
     });
 
     function GetParameterValues(param) {
