@@ -314,6 +314,7 @@ function getTaskStatusAndApprove(processInstanceID, sarfData) {
                                 },
                                 error: function (err) {
                                     console.log(err);
+                                    $.LoadingOverlay("hide");
                                 }
                             });
                         }
@@ -1024,6 +1025,10 @@ function onLoadGis() {
                                                                         if (data != null) {
                                                                             var parsedData = JSON.parse(data);
                                                                             getTaskStatusAndApprove(parsedData.id,sarfData);
+                                                                        }
+                                                                        else {
+                                                                            $.LoadingOverlay("hide");
+                                                                            $('#sarfForm').submit();
                                                                         }
                                                                     },
                                                                     error: function (err) {

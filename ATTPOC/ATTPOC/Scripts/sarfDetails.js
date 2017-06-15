@@ -965,7 +965,7 @@ function onLoadGis() {
 
                     }
                     else {
-                        _template += '_______________________________<br/><span  class = "popupFont"><b>Why this Node?</b></span><br/><ul><li class = "popupFont">Fiber already available.</li><li class = "popupFont">Low leasing cost.</li></ul>';
+                        _template += '<div class = "ruler"></div><br/><span  class = "popupFont"><b>Why this Node?</b></span><br/><ul><li class = "popupFont">Fiber already available.</li><li class = "popupFont">Low leasing cost.</li></ul>';
                     }
                     //Contact Details
                     _template += '<br/>'
@@ -1002,8 +1002,10 @@ function onLoadGis() {
                     _template += '<span class = "popupFont"><b>Structure height (feet): </b>${height} </span><br/>';
                     _template += '<span class = "popupFont"><b>Management company:</b> ${Company} </span><br/>';
                     _template += '</div>';
-
-
+                    _template += '<div class="wfbtnSet">' +
+                        '<button type="button" class="statusBtn mrg15-R blueBtn btn btn-sm btn-primary btn-form btn-draw" value="approve">APPROVE</button>' +
+                        '<button type="button" class="statusBtn blueBtn btn btn-sm btn-primary btn-form btn-draw" value="reject">REJECT</button>' +
+                        '</div>';
 
                     var infoTemplate = new InfoTemplate("Node Details", _template);
 
@@ -1031,13 +1033,11 @@ function onLoadGis() {
                         }
 
                     });
+                    $('circle').css('cursor', 'pointer');
+                    $('image').css('cursor', 'pointer');
                 }
             }
-            
         }
-
-            
-       
 
         function LoadHubs() {
             var sarfid = localStorage["sarfID"];
@@ -1056,7 +1056,6 @@ function onLoadGis() {
                         poinArr.push({ address: item.Address, x: item.Latitude, y: item.Longitude, type: item.HubType });
                         hubArray.push({ x: item.Latitude, y: item.Longitude, id: item.HubId })
                     });
-
                 },
                 error: function (err) {
                     console.log(err);
@@ -1098,12 +1097,8 @@ function onLoadGis() {
                     var g = new Graphic(pointGeom, pictureMarkerSymbol, attr, infoTemplate);
                     g.setInfoTemplate(infoTemplate);
                     map.graphics.add(g);
-
-
                 }
-
             });
-
         }
 
         function clearGraphics() {
@@ -1116,11 +1111,8 @@ function onLoadGis() {
                             map.graphics.graphics[i].hide();
                             localStorage["currentlat"] = "";
                             localStorage["currentlong"] = "";
-
-
                         }
                     }
-
                 }
             });
         }
