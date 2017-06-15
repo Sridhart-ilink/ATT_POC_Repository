@@ -137,10 +137,10 @@ function workflowUpdate(currentBtnText) {
         case "CANCEL":
             updateCancelStatus(labelStatus);
             break;
-        case "APPROVE":
+        case "APPROVE ALL":
             updateApproveStatus(labelStatus);
             break;
-        case "REJECT":
+        case "REJECT ALL":
             updateRejectStatus(labelStatus);
             break;
     }
@@ -180,10 +180,12 @@ function updateSarfStatus(id, currentText) {
 function updateStatus(wfStatus, currentText) {
     $.LoadingOverlay("show");
     var getStatusUrl = "taskcomplete";
+    contactSuccess = !isCsfl;
+    wfStatus = isRffl ? 'reject' : wfStatus;
     var jsonData = {
         variables: {
             "action": { "value": wfStatus, "type": "String" }
-            , "success": { "value": true, "type": "Boolean" }
+            , "ContactSuccess": { "value": contactSuccess, "type": "Boolean" }
         },
         id: JSON.parse(JSON.stringify(localStorage["taskID"]))
     };

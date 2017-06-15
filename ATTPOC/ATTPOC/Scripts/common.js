@@ -38,3 +38,13 @@ var timerEnum = {
     TIME_DELAY_SECONDS: 2000,
     TEN_SECONDS: 10000
 };
+
+var identifySuccess = true;
+var iplanSuccess = true;
+var contactSuccess = true;
+
+var isValidArea = true;
+var isNsfl = false;
+var isIpfl = false;
+var isRffl = false;
+var isCsfl = false;

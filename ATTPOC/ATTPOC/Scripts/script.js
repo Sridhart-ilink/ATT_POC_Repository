@@ -6,6 +6,7 @@ var sarfList = [];
 var noOfPages = 0;
 var currentPage = 1;
 var pageIndex = 0;
+
 function loadScript(src, callback) {
     'use strict';
 
@@ -289,10 +290,14 @@ function getTaskStatusAndApprove(processInstanceID, sarfData) {
                         //Approve
                         $.LoadingOverlay("show");
                         var getStatusUrl = "taskcomplete";
+                        identifySuccess = !isNsfl;
+                        iplanSuccess = !isIpfl;
+
                         var jsonData = {
                             variables: {
                                 "action": { "value": "approve", "type": "String" }
-                                , "success": { "value": true, "type": "Boolean" }
+                                , "IdentifySuccess": { "value": identifySuccess, "type": "Boolean" }
+                                , "IplanSucess": { "value": iplanSuccess, "type": "Boolean" }
                             },
                             id: JSON.parse(JSON.stringify(localStorage["taskID"]))
                         };
@@ -940,12 +945,18 @@ function onLoadGis() {
 
                                     /* get generated nodes count*/
 
-                                    var isValidArea = true;
                                     var sarfNameStr = $('#txtsarf').val();
                                     sarfNameStr = sarfNameStr.toLowerCase();
-                                    if (sarfNameStr.indexOf('cran') == 0 || sarfNameStr.indexOf('nsfl') != -1) {
+
+                                    if (sarfNameStr.indexOf('cran') == 0) {
                                         isValidArea = false;
                                     }
+
+                                    isNsfl = sarfNameStr.indexOf('nsfl') != -1;
+                                    isIpfl = sarfNameStr.indexOf('ipfl') != -1;
+                                    isRffl = sarfNameStr.indexOf('rffl') != -1;
+                                    isCsfl = sarfNameStr.indexOf('csfl') != -1;
+
                                     var postSarfDataUrl = "Sarf/Post";
                                     var atollSiteNameTxt = $('#txtatollsitename').val();
                                     var sarfRandomID = (Math.floor(1000 + Math.random() * 9000)).toString();
