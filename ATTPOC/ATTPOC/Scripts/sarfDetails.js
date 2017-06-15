@@ -863,7 +863,8 @@ function onLoadGis() {
                                 business: item.BusinessPhone,
                                 isOwned: item.IsATTOwned,
                                 height: item.StructureHeight,
-                                company: item.Company
+                                company: item.Company,
+                                sarfstatus: item.SarfStatus
                             });
                     });
 
@@ -924,7 +925,7 @@ function onLoadGis() {
                 if (polygon.contains(pointGeom)) {
                     // if point lies inside polygon
                     var sms = new SimpleMarkerSymbol({
-                        'size': 4,
+                        'size': 5,
                         "outline": {
                             "color": [255, 0, 255, 255],
                             "width": 1,
@@ -961,7 +962,7 @@ function onLoadGis() {
 
                     if (p.hubid == 0) {
                         sms = new SimpleMarkerSymbol({
-                            'size': 4,
+                            'size': 5,
                             "outline": {
                                 "color": [0, 0, 0, 255],
                                 "width": 1,
@@ -976,45 +977,52 @@ function onLoadGis() {
                     else {
                         _template += '<div class = "ruler"></div><br/><span  class = "popupFont"><b>Why this Node?</b></span><br/><ul><li class = "popupFont">Fiber already available.</li><li class = "popupFont">Low leasing cost.</li></ul>';
                     }
-                    //Contact Details
-                    _template += '<br/>'
-                    _template += '<a id="displayText" href="javascript:toggleContactInfo();"><b>Contact Details</b></a><div id="toggleText" style="display: none">';
-                    _template += '<div class = "cardView"><div class="popupInfo" style="cursor:pointer;">' +
-                                    '<div class="popupBody">' +
-                                        '<div class = "popupSpan"><b>' + city +'  ${Police}</b></div>' +
-                                        '<div class="popupSpan clearfix"> <span class = "cityState">' + city + ', ' + state + '</span></div>' +
-                                        '<div class="popupSpan clearfix"><b>Phone No:</b> <span class = "contactNo">${Business}</span></div>' +
-                                    '</div>' +
-                                 '</div>';
-                    _template += '<div class="popupInfo" style="cursor:pointer;">' +
-                                    '<div class="popupBody">' +
-                                        '<div class = "popupSpan"><b>' + city + '  ${Fire}</b></div>' +
-                                        '<div class="popupSpan clearfix"><span class = "cityState">' + city + ', ' + state + '</span></div>' +
-                                        '<div class="popupSpan clearfix"><b>Phone No:</b> <span class = "contactNo">${Business}</span></div>' +
-                                    '</div>' +
-                                 '</div>';
-                    _template += '<div class="popupInfo" style="cursor:pointer;">' +
-                                    '<div class="popupBody">' +
-                                        '<div class = "popupSpan"><b>' + city + '  ${Energy}</b></div>' +
-                                        '<div class="popupSpan clearfix"><span class = "cityState">' + city + ', ' + state + '</span></div>' +
-                                        '<div class="popupSpan clearfix"><b>Phone No:</b> <span class = "contactNo">${Business}</span></div>' +
-                                    '</div>' +
-                                 '</div></div>';
-                    // _template += 'Business Phone no: ${Business} <br/>';
-                    // 
-                    _template += '</div>';
-                    //Structure Information
 
-                    _template += '<br/>'
-                    _template += '<a id="displayStructureInfoText" href="javascript:toggleStructureInfo();"><b>Structure Information</b></a><div id="toggleStructureInfoText" style="display: none">';
-                    _template += '<span class = "popupFont"><b>Is structure AT&T owned:</b> ${isOwned}  </span><br/>';
-                    _template += '<span class = "popupFont"><b>Structure height (feet): </b>${height} </span><br/>';
-                    _template += '<span class = "popupFont"><b>Management company:</b> ${Company} </span><br/>';
-                    _template += '</div>';
-                    _template += '<div class="wfbtnSet">' +
-                        '<button type="button" class="statusBtn mrg15-R blueBtn btn btn-sm btn-primary btn-form btn-draw" value="approve">APPROVE</button>' +
-                        '<button type="button" class="statusBtn blueBtn btn btn-sm btn-primary btn-form btn-draw" value="reject">REJECT</button>' +
-                        '</div>';
+                    // Buttons
+                    if (p.sarfstatus == 'RF Approval') {
+
+                        _template += '<div class="wfbtnSet">' +
+                            '<button type="button" class="statusBtn mrg15-R blueBtn btn btn-sm btn-primary btn-form btn-draw" value="approve">APPROVE</button>' +
+                            '<button type="button" class="statusBtn blueBtn btn btn-sm btn-primary btn-form btn-draw" value="reject">REJECT</button>' +
+                            '</div>';
+                    }
+                    else  {
+                        //Contact Details
+                        _template += '<br/>'
+                        _template += '<a id="displayText" href="javascript:toggleContactInfo();"><b>Contact Details</b></a><div id="toggleText" style="display: none">';
+                        _template += '<div class = "cardView"><div class="popupInfo" style="cursor:pointer;">' +
+                                        '<div class="popupBody">' +
+                                            '<div class = "popupSpan"><b>' + city + '  ${Police}</b></div>' +
+                                            '<div class="popupSpan clearfix"> <span class = "cityState">' + city + ', ' + state + '</span></div>' +
+                                            '<div class="popupSpan clearfix"><b>Phone No:</b> <span class = "contactNo">${Business}</span></div>' +
+                                        '</div>' +
+                                     '</div>';
+                        _template += '<div class="popupInfo" style="cursor:pointer;">' +
+                                        '<div class="popupBody">' +
+                                            '<div class = "popupSpan"><b>' + city + '  ${Fire}</b></div>' +
+                                            '<div class="popupSpan clearfix"><span class = "cityState">' + city + ', ' + state + '</span></div>' +
+                                            '<div class="popupSpan clearfix"><b>Phone No:</b> <span class = "contactNo">${Business}</span></div>' +
+                                        '</div>' +
+                                     '</div>';
+                        _template += '<div class="popupInfo" style="cursor:pointer;">' +
+                                        '<div class="popupBody">' +
+                                            '<div class = "popupSpan"><b>' + city + '  ${Energy}</b></div>' +
+                                            '<div class="popupSpan clearfix"><span class = "cityState">' + city + ', ' + state + '</span></div>' +
+                                            '<div class="popupSpan clearfix"><b>Phone No:</b> <span class = "contactNo">${Business}</span></div>' +
+                                        '</div>' +
+                                     '</div></div>';
+                        // _template += 'Business Phone no: ${Business} <br/>';
+                        // 
+                        _template += '</div>';
+                        //Structure Information
+
+                        _template += '<br/>'
+                        _template += '<a id="displayStructureInfoText" href="javascript:toggleStructureInfo();"><b>Structure Information</b></a><div id="toggleStructureInfoText" style="display: none">';
+                        _template += '<span class = "popupFont"><b>Is structure AT&T owned:</b> ${isOwned}  </span><br/>';
+                        _template += '<span class = "popupFont"><b>Structure height (feet): </b>${height} </span><br/>';
+                        _template += '<span class = "popupFont"><b>Management company:</b> ${Company} </span><br/>';
+                        _template += '</div>';
+                    }
 
                     var infoTemplate = new InfoTemplate("Node Details", _template);
 

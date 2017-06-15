@@ -107,7 +107,8 @@ namespace ATTWebAppAPI.DAL
             {
                 try
                 {
-                    string query = "SELECT * from NODE WHERE SarfId=" + sarfId + ";";
+
+                    string query = "SELECT node.AtollSiteName,iPlanJobNumber, Latitude,Longitude, HubId, NodeType, VendorName,ContactPolice,ContactFire,ContactEnergy,BusinessPhone,IsATTOwned,StructureHeight,Company,sarf.SarfStatus FROM NODE join SARF on node.sarfid=sarf.sarfid WHERE node.SarfId=" + sarfId + ";";
                     cn.Open();
                     using (MySqlCommand cmd = new MySqlCommand(query, cn))
                     {
