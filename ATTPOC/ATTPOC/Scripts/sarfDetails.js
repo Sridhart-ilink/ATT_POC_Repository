@@ -180,6 +180,8 @@ function updateSarfStatus(id, currentText) {
 function updateStatus(wfStatus, currentText, nodeCount) {
     $.LoadingOverlay("show");
     var getStatusUrl = "taskcomplete";
+    isCsfl = localStorage["isCsfl"] == 'true';
+    isRffl = localStorage["isRffl"] == 'true';
     contactSuccess = !isCsfl;
     wfStatus = isRffl ? 'reject' : wfStatus;
     var jsonData = {
@@ -251,7 +253,7 @@ function getTaskStatusbyProcessInstanceID(processInstanceID) {
                     InstanceID = processInstanceID;
                     localStorage["taskStatus"] = TaskStatus;
                 }
-                $.LoadingOverlay("hide");
+                
             }
         },
         error: function (err) {
@@ -517,6 +519,7 @@ $("ul li.history").click(function () {
     processInstanceID = GetParameterValues("processInstanceId");
     if (isPortActive) {
         getTaskStatusbyProcessInstanceID(processInstanceID);
+        $.LoadingOverlay("hide");
     }
 
     $('#statusLabel').text(localStorage["taskStatus"]);

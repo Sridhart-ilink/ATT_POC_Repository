@@ -958,7 +958,9 @@ function onLoadGis() {
                                     isNsfl = sarfNameStr.indexOf('nsfl') != -1;
                                     isIpfl = sarfNameStr.indexOf('ipfl') != -1;
                                     isRffl = sarfNameStr.indexOf('rffl') != -1;
+                                    localStorage["isRffl"] = isRffl;
                                     isCsfl = sarfNameStr.indexOf('csfl') != -1;
+                                    localStorage["isCsfl"] = isCsfl;
 
                                     var postSarfDataUrl = "Sarf/Post";
                                     var atollSiteNameTxt = $('#txtatollsitename').val();
