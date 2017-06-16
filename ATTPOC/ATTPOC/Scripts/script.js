@@ -401,14 +401,19 @@ function getTaskStatusbyProcessInstanceID(processInstanceID, sarfID) {
         cache: false,
         success: function (data) {
             if (data != null) {
-                var parsedData = JSON.parse(data);
-                InstanceID = parsedData[0].processInstanceId;
-                TaskID = parsedData[0].id;
-                TaskStatus = parsedData[0].name;
-                localStorage["taskID"] = TaskID;
-                localStorage["instanceID"] = InstanceID;
-                localStorage["taskStatus"] = TaskStatus;
-                localStorage["sarfID"] = sarfID;
+                if (data == "[]") {
+                    localStorage["taskStatus"] = statusEnum.Completed;
+                }
+                else {
+                    var parsedData = JSON.parse(data);
+                    InstanceID = parsedData[0].processInstanceId;
+                    TaskID = parsedData[0].id;
+                    TaskStatus = parsedData[0].name;
+                    localStorage["taskID"] = TaskID;
+                    localStorage["instanceID"] = InstanceID;
+                    localStorage["taskStatus"] = TaskStatus;
+                    localStorage["sarfID"] = sarfID;
+                }
                 $.LoadingOverlay("hide");
                 window.location = appUrl + "CRANDetails.aspx?processInstanceId=" + InstanceID + "&sarfid=" + localStorage["sarfID"];
             }
