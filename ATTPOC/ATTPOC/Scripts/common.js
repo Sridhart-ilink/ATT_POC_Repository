@@ -28,14 +28,14 @@ var constants = {
 //loader messages Enum
 var messageEnum = {
     CREATE_AREA_OF_INTEREST: 'Creating Area of interest',
-    GETTING_NODES: 'Getting Nodes',
-    GETTING_HUBS: 'Getting Hubs',
+    GETTING_NODES: 'Identifying Nodes',
+    GETTING_HUBS: 'Identifying Hubs',
     ASSOCIATE_NODES_HUBS: 'Associating Nodes with Hubs'
 };
 
 //timer Enum
 var timerEnum = {
-    TIME_DELAY_SECONDS: 2000,
+    TIME_DELAY_SECONDS: 4000,
     TEN_SECONDS: 10000
 };
 

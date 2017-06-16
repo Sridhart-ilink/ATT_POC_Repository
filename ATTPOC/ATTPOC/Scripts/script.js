@@ -167,14 +167,14 @@ $(document).ready(function () {
         if ($('.slidingDiv').is(":visible")) {
             //console.log('side bar shown');
             $(".slidingDiv").toggle();
-            $('.tabDiv').removeClass('col-md-10');
-            $('.tabDiv').addClass('col-md-13');
+            $('.tabDiv').removeClass('col-md-9');
+            $('.tabDiv').addClass('col-md-12');
         }
         else {
             console.log('side bar hidden');
             $(".slidingDiv").toggle();
-            $('.tabDiv').removeClass('col-md-13');
-            $('.tabDiv').addClass('col-md-10');
+            $('.tabDiv').removeClass('col-md-12');
+            $('.tabDiv').addClass('col-md-9');
         }
     });
     $('#map').height($(window).height()-60);
