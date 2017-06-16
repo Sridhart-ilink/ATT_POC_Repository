@@ -674,6 +674,34 @@ function onLoadGis() {
                 $('.btn-draw').css('display', 'block');
             });
 
+            //remove blue rectangle on image map
+            $(".btn-draw").dblclick(function () {
+                $(".searchInput").focus();
+                map.graphics.clear();
+                //If the draw button clicked is already active, deactivate it
+                if ($(this).hasClass("active")) {
+                    $(this).removeClass("active");
+
+                    drawToolBar.deactivate();
+                    drawing = false;
+
+                    //Enable panning
+                    map.enableMapNavigation();
+                } else {
+                    //Activate Draw for the selected tool
+                    $(".btn-draw.active").removeClass("active");
+                    $(this).addClass("active");
+
+                    var tool = $(this).attr('value');
+
+                    //Disable panning
+                    map.disableMapNavigation();
+
+                    drawToolBar.activate(tool);
+                    drawing = true;
+                }
+            })
+
             //Set the click event for the draw buttons
             $(".btn-draw").click(function () {
                 map.graphics.clear();
