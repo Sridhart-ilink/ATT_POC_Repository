@@ -178,7 +178,7 @@ function updateSarfStatus(id, currentText) {
 }
 
 function updateStatus(wfStatus, currentText, nodeCount) {
-    $.LoadingOverlay("show");
+    
     var getStatusUrl = "taskcomplete";
     isCsfl = localStorage["isCsfl"] == 'true';
     isRffl = localStorage["isRffl"] == 'true';
@@ -206,6 +206,7 @@ function updateStatus(wfStatus, currentText, nodeCount) {
                 async: false,
                 cache: false,
                 success: function (data) {
+                    $.LoadingOverlay("show");
 					getTaskStatusbyProcessInstanceID(processInstanceID);
                     console.log((count + 1) + " - " + data);
                 },
@@ -253,7 +254,26 @@ function getTaskStatusbyProcessInstanceID(processInstanceID) {
                     InstanceID = processInstanceID;
                     localStorage["taskStatus"] = TaskStatus;
                 }
-                
+                var updateSarfUrl = "UpdateSarfStatus";
+                var sarfData = {
+                    id: localStorage["sarfID"],
+                    sarfStatus: localStorage["taskStatus"]
+                };
+                $.ajax({
+                    method: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    url: camundaBaseApiUrl + updateSarfUrl,
+                    data: JSON.stringify(sarfData),
+                    async: false,
+                    cache: false,
+                    success: function (data) {
+                        $.LoadingOverlay("show");
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
             }
         },
         error: function (err) {
@@ -1062,11 +1082,12 @@ function onLoadGis() {
 
                     // Buttons
                     if (p.sarfstatus == 'RF Approval') {
-
-                        _template += '<div class="wfbtnSet topBorder">' +
+                        if (p.hubid > 0) {
+                            _template += '<div class="wfbtnSet topBorder">' +
                             '<button type="button" class="statusBtn mrg15-R blueBtn btn btn-sm btn-primary btn-form btn-draw" value="approve">APPROVE</button>' +
                             '<button type="button" class="statusBtn blueBtn btn btn-sm btn-primary btn-form btn-draw" value="reject">REJECT</button>' +
                             '</div>';
+                        }
                     }
                     else  {
                         //Contact Details

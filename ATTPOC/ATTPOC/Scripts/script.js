@@ -278,6 +278,9 @@ function getTaskStatusAndApprove(processInstanceID, sarfData) {
                 cache: false,
                 success: function (data) {
                     if (data != null) {
+                        if (data == "[]") {
+                            localStorage["taskStatus"] = statusEnum.Completed;
+                        }
                         var parsedData = JSON.parse(data);
                         InstanceID = parsedData[0].processInstanceId;
                         TaskID = parsedData[0].id;
@@ -1150,7 +1153,7 @@ function onLoadGis() {
                                     });
 
                                 }, isNsfl ? 100 : timerEnum.TIME_DELAY_SECONDS);
-                            }, isNsfl ? 100 : timerEnum.TIME_DELAY_SECONDS);
+                            }, timerEnum.TIME_DELAY_SECONDS);
                         }, timerEnum.TIME_DELAY_SECONDS);
                     });
                 }
