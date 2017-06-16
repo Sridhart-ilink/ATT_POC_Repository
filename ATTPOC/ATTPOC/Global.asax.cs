@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,8 +13,6 @@ namespace JavascriptBasedApp
 
         void Application_Start(object sender, EventArgs e)
         {
-            // Code that runs on application startup
-
         }
 
         void Application_End(object sender, EventArgs e)
@@ -42,6 +41,5 @@ namespace JavascriptBasedApp
             // or SQLServer, the event is not raised.
 
         }
-
     }
 }

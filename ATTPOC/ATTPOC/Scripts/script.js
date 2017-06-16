@@ -6,7 +6,7 @@ var sarfList = [];
 var noOfPages = 0;
 var currentPage = 1;
 var pageIndex = 0;
-
+var clickCount = 0;
 function loadScript(src, callback) {
     'use strict';
 
@@ -28,8 +28,8 @@ function loadScript(src, callback) {
 
 function saveSARFData(workflowProcessInstanceID, isValid) {
     var postSarfDataUrl = "Sarf/Post";
-    var sarfNameTxt = $('#txtsarf').val();
-    var atollSiteNameTxt = $('#txtatollsitename').val();
+    var sarfNameTxt = $('#txtsarf' + clickCount).val();
+    var atollSiteNameTxt = $('#txtatollsitename' + clickCount).val();
     var sarfRandomID = (Math.floor(1000 + Math.random() * 9000)).toString();
     var jsonData = {
         sarfName: sarfNameTxt,
@@ -314,7 +314,48 @@ function getTaskStatusAndApprove(processInstanceID, sarfData) {
                                 success: function (data) {
                                     if (data) {
                                         //saveSARFData(InstanceID, isValidArea);
-                                        $('#sarfForm').submit();
+
+                                        var getStatusUrl = "task-by-process-instance";
+                                        $.ajax({
+                                            method: 'GET',
+                                            dataType: 'json',
+                                            contentType: 'application/json; charset=utf-8',
+                                            url: camundaBaseApiUrl + getStatusUrl + "/" + processInstanceID,
+                                            data: JSON.stringify({}),
+                                            //async: false,
+                                            cache: false,
+                                            success: function (data) {
+                                                if (data != null) {
+                                                    var parsedData = JSON.parse(data);
+                                                    InstanceID = parsedData[0].processInstanceId;
+                                                    TaskID = parsedData[0].id;
+                                                    TaskStatus = parsedData[0].name;
+                                                    localStorage["taskStatus"] = TaskStatus;
+                                                    sarfData.taskStatus = TaskStatus;
+                                                    var updateSarfUrl = "UpdateSarf/Post";
+                                                    sarfData.processInstanceID = processInstanceID;
+                                                    $.ajax({
+                                                        method: 'POST',
+                                                        dataType: 'json',
+                                                        contentType: 'application/json; charset=utf-8',
+                                                        url: camundaBaseApiUrl + updateSarfUrl,
+                                                        data: JSON.stringify(sarfData),
+                                                        //async: false,
+                                                        cache: false,
+                                                        success: function (data) {
+                                                            $.LoadingOverlay("hide");
+                                                            $('#sarfForm').submit();
+                                                        },
+                                                        error: function (err) {
+                                                            $.LoadingOverlay("hide");
+                                                        }
+                                                    });
+                                                }
+                                            },
+                                            error: function (err) {
+                                                $.LoadingOverlay("hide");
+                                            }
+                                        });
                                     }
                                     else {
                                         $.LoadingOverlay("hide");
@@ -855,19 +896,20 @@ function onLoadGis() {
       
         //Creates right-click context menu for graphics on the drawingLayer
         function createGraphicsMenu() {
-         
+            
             ctxMenuForGraphics = new Menu({});
             ctxMenuForGraphics.addChild(new MenuItem({
                 label: "Create Area of interest",
                 onClick: function () {
+                    clickCount++;
                     // CREATE DIALOG
                     var node = dom.byId('drawingLayer_layer');                  
-                    if (!tooltipDialog) {
+                    //if (!tooltipDialog) {
                         var htmlFragment = '';
-                        htmlFragment += '<div id="mapTwo" class="dialogtooltip"><input type="text" id="txtsarf" placeholder = "Area Name" width="150px" class="dialogtooltipinput">';
-                        htmlFragment += '<div><input type="text" id="txtatollsitename" placeholder="Atoll Site Name" width="150px" class="dialogtooltipinput" style="margin-top:0px;"></div>';
-                        htmlFragment += '<div><input type="button" id="btncreatesarf" value="Save" class="btn blueBtn dialogtootipbtn"/>'
-                        htmlFragment += '<input type="button"  id="btncancelsarf"  value="Cancel" class="btn whiteBtn dialogtootipbtncancel"/></div></div>'
+                        htmlFragment += '<div id="mapTwo" class="dialogtooltip"><input type="text" id="txtsarf' + clickCount + '" placeholder = "Area Name" width="150px" class="dialogtooltipinput">';
+                        htmlFragment += '<div><input type="text" id="txtatollsitename' + clickCount + '" placeholder="Atoll Site Name" width="150px" class="dialogtooltipinput" style="margin-top:0px;"></div>';
+                        htmlFragment += '<div><input type="button" id="btncreatesarf' + clickCount + '" value="Save" class="btn blueBtn dialogtootipbtn"/>'
+                        htmlFragment += '<input type="button"  id="btncancelsarf' + clickCount + '"  value="Cancel" class="btn whiteBtn dialogtootipbtncancel"/></div></div>'
                         var errorMsg = '<div class= "errorMsg" style = "margin-left: 20px;"><span style="color : red;">Fields must not be empty</span></div>';
                         // CREATE TOOLTIP DIALOG
                         tooltipDialog = new dijit.TooltipDialog({
@@ -887,42 +929,45 @@ function onLoadGis() {
                         //Remove active style from draw button
                         $(".btn-draw.active").removeClass("active");
                        
-                        $('#txtsarf').keypress(function () {
+                        $('#txtsarf'+ clickCount).keypress(function () {
                             $('div.errorMsg').remove();
                         });
 
-                        $('#txtatollsitename').keypress(function () {
+                        $('#txtatollsitename' + clickCount).keypress(function () {
                             $('div.errorMsg').remove();
                         });
 
                         $('#drawingLayer_layer_dropdown').attr('id', 'style-2');
                       
-                    } else {
-                        if (tooltipDialog.opened_) {
-                            dijit.popup.close(tooltipDialog);
-                            tooltipDialog.opened_ = false;
-                           // node.innerHTML = "Show map below me";
-                        } else {
-                            dijit.popup.open({ popup: tooltipDialog, around: node });
-                            tooltipDialog.opened_ = true;
-                            //Deactivate the toolbar
-                            drawToolBar.deactivate();
-                            drawing = false;
-                            //Enable panning
-                            map.enableMapNavigation();
-                            //Remove active style from draw button
-                            $(".btn-draw.active").removeClass("active");
-                        }
-                    }
+                    //} else {
+                    //    if (tooltipDialog.opened_) {
+                    //        dijit.popup.close(tooltipDialog);
+                    //        tooltipDialog.opened_ = false;
+                    //       // node.innerHTML = "Show map below me";
+                    //    } else {
+                    //        dijit.popup.open({ popup: tooltipDialog, around: node });
+                    //        tooltipDialog.opened_ = true;
+                    //        //Deactivate the toolbar
+                    //        drawToolBar.deactivate();
+                    //        drawing = false;
+                    //        //Enable panning
+                    //        map.enableMapNavigation();
+                    //        //Remove active style from draw button
+                    //        $(".btn-draw.active").removeClass("active");
+                    //    }
+                    //}
 
-                    $("#btncancelsarf").click(function () {                       
+                    $(document).on('click', "#btncancelsarf" + clickCount, function () {
+                        $('#txtatollsitename' + clickCount).val('');
+                        $('#txtsarf' + clickCount).val('');
                         if (tooltipDialog.opened_) {
                             dijit.popup.close(tooltipDialog);
                             tooltipDialog.opened_ = false;
                         }
                         $('div.errorMsg').remove();
                     });
-                    $("#btncreatesarf").click(function () {
+
+                    $(document).on('click', "#btncreatesarf" + clickCount, function () {
                         $.LoadingOverlay("show");
                         $('#msgSpan').remove();
                         var msgSpan = '<span id = "msgSpan" class = "themeBlue"></span>';
@@ -948,7 +993,7 @@ function onLoadGis() {
 
                                     /* get generated nodes count*/
 
-                                    var sarfNameStr = $('#txtsarf').val();
+                                    var sarfNameStr = $('#txtsarf' + clickCount).val();
                                     var sarfNameVal = sarfNameStr;
                                     sarfNameStr = sarfNameStr.toLowerCase();
                                     if (sarfNameStr.indexOf('cran') == 0) {
@@ -963,7 +1008,7 @@ function onLoadGis() {
                                     localStorage["isCsfl"] = isCsfl;
 
                                     var postSarfDataUrl = "Sarf/Post";
-                                    var atollSiteNameTxt = $('#txtatollsitename').val();
+                                    var atollSiteNameTxt = $('#txtatollsitename' + clickCount).val();
                                     var sarfRandomID = (Math.floor(1000 + Math.random() * 9000)).toString();
                                     var jsonData = {
                                         id: 0,
@@ -980,7 +1025,7 @@ function onLoadGis() {
                                         fAType: constants.FAType,
                                         rFDesignEnggId: constants.RFDesignEnggId,
                                         processInstanceID: 0,
-                                        sarfStatus: statusEnum.RF_Approval,
+                                        sarfStatus: '',
                                         isValidArea: isValidArea
                                     };
                                     var sarfData = jsonData;
@@ -1027,8 +1072,8 @@ function onLoadGis() {
                                                             },
                                                             key: "cran-simple"//"identify-sarfs"
                                                         }
-                                                        var sarfNameTxt = $('#txtsarf').val();
-                                                        var atollSiteNameTxt = $('#txtatollsitename').val();
+                                                        var sarfNameTxt = $('#txtsarf' + clickCount).val();
+                                                        var atollSiteNameTxt = $('#txtatollsitename' + clickCount).val();
                                                         if (sarfNameTxt.length > 0 && atollSiteNameTxt.length > 0) {
                                                             if (isPortActive) {
                                                                 $.ajax({
@@ -1062,7 +1107,7 @@ function onLoadGis() {
                                                         }
                                                         else {
                                                             $.LoadingOverlay("hide");
-                                                            $('#txtatollsitename').after(errorMsg);
+                                                            $('#txtatollsitename' + clickCount).after(errorMsg);
                                                         }
                                                     },
                                                     error: function (err) {
