@@ -291,12 +291,12 @@
                                 </div>
                             </div>
                             <div class="tab-pane" id="history">
-                                <div style="width: 138%; height: 620px;" class="pull-left historyTab">
+                                <div style="width: 138%; height: 780px;" class="pull-left historyTab">
                                     <div class="createdBtn">
                                         <a class="btn btn-default btn-form draw-btn" id="btnCreated" >Created</a>
                                     </div>
-                                    <div class="timelineArea">
-                                        <div class="progress pull-left">
+                                    <div class="timelineArea">                                      
+                                        <div id="progressline">
                                         </div>
                                         <div class="progressContent pull-left">
                                             <span id="progressContent"></span>

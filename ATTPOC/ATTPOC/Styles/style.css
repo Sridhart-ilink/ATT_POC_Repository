@@ -812,8 +812,14 @@ margin-top : -20px
     margin-top: -5px;
     margin-left: 175px;
 }
+
+.progressFull {
+      height: 600px;
+    width: 5px;
+    background-color:rgba(0,122,62,1);
+}
 .progress {
-    height: 500px;
+    height: 600px;
     width: 5px;
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#007a3e+0,007a3e+50,ce2d2d+51,ce2d2d+68,888888+69,888888+100 */
 background: rgb(0,122,62); /* Old browsers */
@@ -1016,7 +1022,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007a3e', end
     margin-left: 95px;
 }
 .completedBtn{
-    margin-top: 485px;
+    margin-top: 650px;
     margin-left: 95px;
     position: absolute;
     
