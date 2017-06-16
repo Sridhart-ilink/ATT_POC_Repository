@@ -415,7 +415,7 @@ function getTaskStatusbyProcessInstanceID(processInstanceID, sarfID) {
                     localStorage["sarfID"] = sarfID;
                 }
                 $.LoadingOverlay("hide");
-                window.location = appUrl + "CRANDetails.aspx?processInstanceId=" + InstanceID + "&sarfid=" + localStorage["sarfID"];
+                window.location = appUrl + "CRANDetails.aspx?processInstanceId=" + localStorage["instanceID"] + "&sarfid=" + localStorage["sarfID"];
             }
         },
         error: function (err) {
