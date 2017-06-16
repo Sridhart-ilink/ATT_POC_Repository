@@ -691,10 +691,12 @@ margin-top : -20px
 .wfbtnSet{
     margin-top: 15px;
     margin-left : 0px;
-    border-top : 1px dotted #ccc;
     /*padding:15px 0px;*/
     padding: 8px 0px 8px;
     cursor : pointer !important;
+}
+.topBorder{
+    border-top : 1px dotted #ccc;
 }
 .wfbtnSet .blueBtn{
     font-size: 12px;
