@@ -98,12 +98,23 @@
                             <span class="att-heading">CRAN <i class="ngClass">NG</i></span>
                         </a>
                     </div>
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
-                        <div class="col-sm-3 col-md-4 col-md-offset-2">
+                      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <div class="col-sm-3 col-md-4">
                             <div id="search" class="att-search"></div>
                         </div>
-                        <div class="col-md-3 pull-right text-right profile">
+                        <div class="col-sm-2 col-md-2"></div>
+                        <div class="navbar-header col-sm-2 col-md-2 profile" style="width: 110px; margin-top: 20px;">
+                            <i class="icon-home"></i>
+                            <a href="Default.aspx"  class="profileInfo dashboard" style="padding-left:0px; text-align:right; margin-left: 0px;">
+                                <span class="att-heading" style="padding-left: 0px; margin-left: 0px">Home</span>
+                            </a>
+                        </div>
+                        <div class="navbar-header col-sm-2 col-md-2 profile" style="padding-left: 5px; width: 120px; margin-top: 20px;">
+                            <a href="CRANDashboard.html" class="profileInfo dashboard" style="padding-left: 5px; text-align: left">
+                                <span style="margin-left: 5px;" class="att-heading">Dashboard</span>
+                            </a>
+                        </div>
+                        <div class="col-md-2 pull-right text-right profile" style="width: 185px;">
                             <span class="profileInfo themeBlue">Maxine Walters</span>
                             <i class="icon-user profileIcon themeBlue" aria-hidden="true"></i>
                         </div>
@@ -253,7 +264,7 @@
                         <i class="fa fa-chevron-right" aria-hidden="true"></i>
                     </div>
                     <div class="col-md-12 borderBottom pageLink" style="margin-top: 7px; margin-bottom: 5px">
-                        <a href="Default.aspx" class="linkcolor" style="margin-left: 30px;">Home</a> :: <a class="linkcolor">CRAN Details</a>
+                        <%--<a href="Default.aspx" class="linkcolor" style="margin-left: 30px;">Home</a> :: <a class="linkcolor">CRAN Details</a>--%>
                         <ul class="nav nav-tabs tabs-left navTabs-ul pull-right tabMenu">
                             <li class="active" data-index="0"><a href="#mapview" data-toggle="tab">Map</a></li>
                             <li class="" data-index="1"><a href="#workflow" data-toggle="tab">Workflow</a></li>
@@ -384,13 +395,13 @@
                                         <i class="glyphicon glyphicon-user"></i>
                                     </div>
                                     <div class="pull-right chatLabel">
-                                        <h3 class="fontClass">John Markus (C&E PM)</h3>
+                                        <h3 class="fontClass">John Markus</h3>
                                         <p class="fontClass">April 25, 2017 11:40 am</p>
                                     </div>
                                 </div>
                                 <div class="chatBody">
                                     <p class="fontClass">
-                                        @Jill, Demoting the form as the iPlan details are incorrect. 
+                                        @Jill, Rejecting the form as the iPlan details are incorrect. 
                                     </p>
                                     <div>
                                         <input type="text" class="form-control" placeholder="leave a reply" />
@@ -403,13 +414,13 @@
                                         <i class="glyphicon glyphicon-user"></i>
                                     </div>
                                     <div class="pull-right chatLabel">
-                                        <h3 class="fontClass">Jill Baker (RF Engineer)</h3>
+                                        <h3 class="fontClass">Jill Baker</h3>
                                         <p class="fontClass">April 26, 2017 09:15 am</p>
                                     </div>
                                 </div>
                                 <div class="chatBody">
                                     <p class="fontClass">
-                                        @John, Corrected the iPlan details and promoted the SARF again.
+                                        @John, Corrected the iPlan details and saved the Search Area again.
                                 Can you plese review it and assign it to the vendor ?
                                     </p>
                                     <div>
@@ -423,13 +434,13 @@
                                         <i class="glyphicon glyphicon-user"></i>
                                     </div>
                                     <div class="pull-right chatLabel">
-                                        <h3 class="fontClass">John Markus (C&E PM)</h3>
+                                        <h3 class="fontClass">John Markus</h3>
                                         <p class="fontClass">April 26, 2017 90:20 am</p>
                                     </div>
                                 </div>
                                 <div class="chatBody">
                                     <p class="fontClass">
-                                        Need time to assign the SARF to the right vendor.
+                                        Need time to assign the Search Area to the right vendor.
                                     </p>
                                     <div>
                                         <input type="text" class="form-control" placeholder="leave a reply" />
@@ -442,7 +453,7 @@
                                         <i class="glyphicon glyphicon-user"></i>
                                     </div>
                                     <div class="pull-right chatLabel">
-                                        <h3 class="fontClass">Jill Baker (RF Engineer)</h3>
+                                        <h3 class="fontClass">Jill Baker</h3>
                                         <p class="fontClass">April 26, 2017 09:22 am</p>
                                     </div>
                                 </div>
