@@ -257,7 +257,7 @@
                         <ul class="nav nav-tabs tabs-left navTabs-ul pull-right tabMenu">
                             <li class="active" data-index="0"><a href="#mapview" data-toggle="tab">Map</a></li>
                             <li class="" data-index="1"><a href="#workflow" data-toggle="tab">Workflow</a></li>
-                            <li class="" data-index="2"><a href="#history" data-toggle="tab">History</a></li>
+                            <li class="history" data-index="2"><a href="#history" data-toggle="tab">History</a></li>
                         </ul>
                     </div>
                     <div class="col-xs-12">
@@ -288,6 +288,9 @@
                                         <div class="progress pull-left">
                                         </div>
                                         <div class="progressContent pull-left">
+                                            <span id="progressContent"></span>
+                                        </div>
+                                       <%-- <div class="progressContent pull-left">
                                             <div class="content contentAOI">
                                                 <div class="progressDot"></div>
                                                 <div class="progressHead">
@@ -341,7 +344,8 @@
                                                     <!--<label>Approved: <span class="dateSpan">06/10/2017 11:48:20</span></label>-->
                                                 </div>
                                             </div>
-                                        </div>
+
+                                        </div>--%>
                                     </div>
                                     <div class="completedBtn">
                                         <a class="btn btn-default btn-form draw-btn" id="btnCompleted" >Completed</a>

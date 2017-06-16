@@ -404,6 +404,81 @@ function toggleStructureInfo() {
 
 //Jquery - document load script method
 $(document).ready(function () {
+
+$("ul li.history").click(function () {
+        var name = $('#lblsarfname').text();
+        var completedBtn = $('.completedBtn');
+        var timelineAreaProgress = $('.progress pull-left');
+        var divProgressContent = $('.progressContent pull-left');
+        var content = '';
+
+        $.getJSON("JSon/History.json", function (data) {
+            var items = data.HistoryData;
+
+            for (var j = 0, l = items.length; j < l; j++) {
+                if (name.indexOf(items[j].Name) != -1) {
+                    $.each(items[j].History, function (i, h) {
+                        if (h.SubStep !== '') {
+                            content = content + '<div class="content contentSelectNodes">'
+                            if (h.Duration !== '')
+                                //content = content + '<div style="margin-left: -55px; position: absolute; margin-top: 30px; ">' + h.Duration + '</div>'
+
+                                content = content + '<div class="progressDot"></div>' +
+                                                    '<div class ="identifyNodes pull-left highlightApproved">'
+                            if (h.ProgressCircle === 1)
+                                content = content + '<div class="progressCircle"></div>'
+
+                            content = content + '<div class="progressHead">' +
+                                '<h3>' + h.Step + '</h3>' +
+                                '<label>Start Date: <span class="dateSpan">' + h.StartDate + '</span></label>'
+
+                            if (h.EndDate !== '')
+                                content = content + '<label>End Date: <span class="dateSpan">' + h.EndDate + '</span></label>'
+
+                            content = content + '</div>' +
+                                                    '</div>' +
+                                                    '<div class ="getAtolls pull-left">'
+
+                            if (h.ProgressCircle === 1)
+                                content = content + '<div class="progressCircle"></div>'
+
+                                content = content + '<div class="progressHead">' +
+                                            '<h3>' + h.SubStep[0].Step + '</h3>' +
+                                            '<label>Start Date: <span class="dateSpan">' + h.SubStep[0].StartDate + '</span></label>'
+
+                            if (h.SubStep[0].EndDate !== '')
+                                content = content + '<label>End Date: <span class="dateSpan">' + h.SubStep[0].EndDate + '</span></label>'
+
+                            content = content + '</div></div></div>';
+                        }
+                        else {
+                            content = content + '<div class="content contentAOI">'
+                            if (h.Duration !== '')
+                                //content = content + '<div style="margin-left: -55px; position: absolute; margin-top: 30px; ">' + h.Duration + '</div>'
+
+                                content = content + '<div class="progressDot"></div>'
+                            if (h.ProgressCircle === 1)
+                                content = content + '<div class="progressCircle"></div>'
+
+                            content = content + '<div class="progressHead">' +
+                                    '<h3>' + h.Step + '</h3>' +
+                                    '<label>Start Date: <span class="dateSpan">' + h.StartDate + '</span></label>'
+                            if (h.EndDate !== '')
+                                content = content + '<label>End Date: <span class="dateSpan">' + h.EndDate + '</span></label>'
+
+                            content = content + '</div></div>'
+                        }
+                    })
+
+                    completedBtn.attr('margin-top', items[j].CompleteBtnTopMargin);
+                    completedBtn.attr('height', items[j].ProgressHeight);
+                }
+            }
+
+            $('#progressContent').html(content);
+        })
+    });
+
     if (localStorage["currentlong"] == null) {
         localStorage["currentlong"] = "";
     }
