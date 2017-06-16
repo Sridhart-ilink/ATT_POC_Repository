@@ -1024,9 +1024,9 @@ function onLoadGis() {
                                     var sarfNameStr = $('#txtsarf' + clickCount).val();
                                     var sarfNameVal = sarfNameStr;
                                     sarfNameStr = sarfNameStr.toLowerCase();
-                                    if (sarfNameStr.indexOf('cran') == 0) {
-                                        isValidArea = false;
-                                    }
+                                    //if (sarfNameStr.indexOf('cran') == 0) {
+                                    //    isValidArea = false;
+                                    //}
 
                                     isNsfl = sarfNameStr.indexOf('nsfl') != -1;
                                     isIpfl = sarfNameStr.indexOf('ipfl') != -1;
