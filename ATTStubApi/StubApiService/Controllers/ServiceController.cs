@@ -46,6 +46,17 @@ namespace ApiServiceTes.Controllers
 
         }
 
+        [HttpGet]
+        [Route("api/service/GetOraclePTN/{iplanJobNumber}/{faLocationCode}")]
+        public HttpResponseMessage GetOraclePTN(string iplanJobNumber, string faLocationCode)
+        {
+            AtollData atoll = new AtollData();
+            var resp = atoll.getOraclePTN(iplanJobNumber, faLocationCode);
+            JsonConvert.SerializeObject(resp);
+            return Request.CreateResponse(HttpStatusCode.OK, resp);
+
+
+        }
         // POST api/service
         public void Post([FromBody]string value)
         {

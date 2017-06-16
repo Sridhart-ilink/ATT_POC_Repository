@@ -137,10 +137,10 @@ function workflowUpdate(currentBtnText) {
         case "CANCEL":
             updateCancelStatus(labelStatus);
             break;
-        case "APPROVE":
+        case "APPROVE ALL":
             updateApproveStatus(labelStatus);
             break;
-        case "REJECT":
+        case "REJECT ALL":
             updateRejectStatus(labelStatus);
             break;
     }
@@ -177,13 +177,15 @@ function updateSarfStatus(id, currentText) {
     });
 }
 
-function updateStatus(wfStatus, currentText) {
+function updateStatus(wfStatus, currentText, nodeCount) {
     $.LoadingOverlay("show");
     var getStatusUrl = "taskcomplete";
+    contactSuccess = !isCsfl;
+    wfStatus = isRffl ? 'reject' : wfStatus;
     var jsonData = {
         variables: {
             "action": { "value": wfStatus, "type": "String" }
-            , "success": { "value": true, "type": "Boolean" }
+            , "ContactSuccess": { "value": contactSuccess, "type": "Boolean" }
         },
         id: JSON.parse(JSON.stringify(localStorage["taskID"]))
     };
@@ -191,27 +193,28 @@ function updateStatus(wfStatus, currentText) {
     api call to update status
     */
     if (isPortActive) {
-        $.ajax({
-            method: 'POST',
-            dataType: 'json',
-            contentType: 'application/json',
-            url: camundaBaseApiUrl + getStatusUrl,
-            data: JSON.stringify(jsonData),
-            //async: false,
-            cache: false,
-            success: function (data) {
-                if (data) {
-                    getTaskStatusbyProcessInstanceID(processInstanceID);
-                    workflowUpdate(currentText);
-                    localStorage["tabIndex"] = $('.tabs-left').find('li.active').attr('data-index');
-                    $.LoadingOverlay("hide");
-                    $('#sarfForm').submit();
+        for (var count = 0; count < nodeCount; count++) {
+			jsonData.id = JSON.parse(JSON.stringify(localStorage["taskID"]));
+            $.ajax({
+                method: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                url: camundaBaseApiUrl + getStatusUrl,
+                data: JSON.stringify(jsonData),
+                async: false,
+                cache: false,
+                success: function (data) {
+					getTaskStatusbyProcessInstanceID(processInstanceID);
+                    console.log((count + 1) + " - " + data);
+                },
+                error: function (err) {
+                    console.log(err);
                 }
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        });
+            });
+        }
+        localStorage["tabIndex"] = $('.tabs-left').find('li.active').attr('data-index');
+		$.LoadingOverlay("hide");
+		$('#sarfForm').submit();
     }
     else {
         localStorage["tabIndex"] = $('.tabs-left').find('li.active').attr('data-index');
@@ -231,7 +234,7 @@ function getTaskStatusbyProcessInstanceID(processInstanceID) {
         contentType: 'application/json; charset=utf-8',
         url: camundaBaseApiUrl + getStatusUrl + "/" + processInstanceID,
         data: JSON.stringify({}),
-        //async: false,
+        async: false,
         cache: false,
         success: function (data) {
             if (data != null) {
@@ -652,7 +655,8 @@ $("ul li.history").click(function () {
         var currentBtnText = $(this).text();
         var currentBtnVal = $(this).val();
         var currentStatus = $('#statusLabel').text();
-        updateStatus(currentBtnVal, currentBtnText);
+		nodeCount = localStorage["nodeCount"] != null ? localStorage["nodeCount"] : 0;
+        updateStatus(currentBtnVal, currentBtnText, nodeCount);
     });
 
     function GetParameterValues(param) {
@@ -938,7 +942,8 @@ function onLoadGis() {
                                 business: item.BusinessPhone,
                                 isOwned: item.IsATTOwned,
                                 height: item.StructureHeight,
-                                company: item.Company
+                                company: item.Company,
+                                sarfstatus: item.SarfStatus
                             });
                     });
 
@@ -963,8 +968,17 @@ function onLoadGis() {
                // if (address == "") {
                     var jqxhr = $.getJSON(addressurl, function (data) {
                         if (data.results.length > 0) {
-                            city = data.results[0].address_components[3].short_name;
-                            state = data.results[0].address_components[5].short_name;
+
+                            var result = data.results[0].address_components;
+                            $.each(result, function (i, v) {
+                                if (v.types[0] == 'administrative_area_level_1') {
+                                    state = v.short_name;
+                                }
+                                if (v.types[0] == 'locality') {
+                                    city = v.short_name;
+                                }
+                            });
+
                         }
                             
                     })
@@ -990,7 +1004,7 @@ function onLoadGis() {
                 if (polygon.contains(pointGeom)) {
                     // if point lies inside polygon
                     var sms = new SimpleMarkerSymbol({
-                        'size': 4,
+                        'size': 5,
                         "outline": {
                             "color": [255, 0, 255, 255],
                             "width": 1,
@@ -1027,7 +1041,7 @@ function onLoadGis() {
 
                     if (p.hubid == 0) {
                         sms = new SimpleMarkerSymbol({
-                            'size': 4,
+                            'size': 5,
                             "outline": {
                                 "color": [0, 0, 0, 255],
                                 "width": 1,
@@ -1040,45 +1054,54 @@ function onLoadGis() {
 
                     }
                     else {
-                        _template += '_______________________________<br/><span  class = "popupFont"><b>Why this Node?</b></span><br/><ul><li class = "popupFont">Fiber already available.</li><li class = "popupFont">Low leasing cost.</li></ul>';
+                        _template += '<div class = "ruler"></div><br/><span  class = "popupFont"><b>Why this Node?</b></span><br/><ul><li class = "popupFont">Fiber already available.</li><li class = "popupFont">Low leasing cost.</li></ul>';
                     }
-                    //Contact Details
-                    _template += '<br/>'
-                    _template += '<a id="displayText" href="javascript:toggleContactInfo();"><b>Contact Details</b></a><div id="toggleText" style="display: none">';
-                    _template += '<div class = "cardView"><div class="popupInfo" style="cursor:pointer;">' +
-                                    '<div class="popupBody">' +
-                                        '<div class = "popupSpan"><b>' + city +'  ${Police}</b></div>' +
-                                        '<div class="popupSpan clearfix"> <span class = "cityState">' + city + ', ' + state + '</span></div>' +
-                                        '<div class="popupSpan clearfix"><b>Phone No:</b> <span class = "contactNo">${Business}</span></div>' +
-                                    '</div>' +
-                                 '</div>';
-                    _template += '<div class="popupInfo" style="cursor:pointer;">' +
-                                    '<div class="popupBody">' +
-                                        '<div class = "popupSpan"><b>' + city + '  ${Fire}</b></div>' +
-                                        '<div class="popupSpan clearfix"><span class = "cityState">' + city + ', ' + state + '</span></div>' +
-                                        '<div class="popupSpan clearfix"><b>Phone No:</b> <span class = "contactNo">${Business}</span></div>' +
-                                    '</div>' +
-                                 '</div>';
-                    _template += '<div class="popupInfo" style="cursor:pointer;">' +
-                                    '<div class="popupBody">' +
-                                        '<div class = "popupSpan"><b>' + city + '  ${Energy}</b></div>' +
-                                        '<div class="popupSpan clearfix"><span class = "cityState">' + city + ', ' + state + '</span></div>' +
-                                        '<div class="popupSpan clearfix"><b>Phone No:</b> <span class = "contactNo">${Business}</span></div>' +
-                                    '</div>' +
-                                 '</div></div>';
-                    // _template += 'Business Phone no: ${Business} <br/>';
-                    // 
-                    _template += '</div>';
-                    //Structure Information
 
-                    _template += '<br/>'
-                    _template += '<a id="displayStructureInfoText" href="javascript:toggleStructureInfo();"><b>Structure Information</b></a><div id="toggleStructureInfoText" style="display: none">';
-                    _template += '<span class = "popupFont"><b>Is structure AT&T owned:</b> ${isOwned}  </span><br/>';
-                    _template += '<span class = "popupFont"><b>Structure height (feet): </b>${height} </span><br/>';
-                    _template += '<span class = "popupFont"><b>Management company:</b> ${Company} </span><br/>';
-                    _template += '</div>';
+                    // Buttons
+                    if (p.sarfstatus == 'RF Approval') {
 
+                        _template += '<div class="wfbtnSet">' +
+                            '<button type="button" class="statusBtn mrg15-R blueBtn btn btn-sm btn-primary btn-form btn-draw" value="approve">APPROVE</button>' +
+                            '<button type="button" class="statusBtn blueBtn btn btn-sm btn-primary btn-form btn-draw" value="reject">REJECT</button>' +
+                            '</div>';
+                    }
+                    else  {
+                        //Contact Details
+                        _template += '<br/>'
+                        _template += '<a id="displayText" href="javascript:toggleContactInfo();"><b>Contact Details</b></a><div id="toggleText" style="display: none">';
+                        _template += '<div class = "cardView"><div class="popupInfo" style="cursor:pointer;">' +
+                                        '<div class="popupBody">' +
+                                            '<div class = "popupSpan"><b>' + city + '  ${Police}</b></div>' +
+                                            '<div class="popupSpan clearfix"> <span class = "cityState">' + city + ', ' + state + '</span></div>' +
+                                            '<div class="popupSpan clearfix"><b>Phone No:</b> <span class = "contactNo">${Business}</span></div>' +
+                                        '</div>' +
+                                     '</div>';
+                        _template += '<div class="popupInfo" style="cursor:pointer;">' +
+                                        '<div class="popupBody">' +
+                                            '<div class = "popupSpan"><b>' + city + '  ${Fire}</b></div>' +
+                                            '<div class="popupSpan clearfix"><span class = "cityState">' + city + ', ' + state + '</span></div>' +
+                                            '<div class="popupSpan clearfix"><b>Phone No:</b> <span class = "contactNo">${Business}</span></div>' +
+                                        '</div>' +
+                                     '</div>';
+                        _template += '<div class="popupInfo" style="cursor:pointer;">' +
+                                        '<div class="popupBody">' +
+                                            '<div class = "popupSpan"><b>' + city + '  ${Energy}</b></div>' +
+                                            '<div class="popupSpan clearfix"><span class = "cityState">' + city + ', ' + state + '</span></div>' +
+                                            '<div class="popupSpan clearfix"><b>Phone No:</b> <span class = "contactNo">${Business}</span></div>' +
+                                        '</div>' +
+                                     '</div></div>';
+                        // _template += 'Business Phone no: ${Business} <br/>';
+                        // 
+                        _template += '</div>';
+                        //Structure Information
 
+                        _template += '<br/>'
+                        _template += '<a id="displayStructureInfoText" href="javascript:toggleStructureInfo();"><b>Structure Information</b></a><div id="toggleStructureInfoText" style="display: none">';
+                        _template += '<span class = "popupFont"><b>Is structure AT&T owned:</b> ${isOwned}  </span><br/>';
+                        _template += '<span class = "popupFont"><b>Structure height (feet): </b>${height} </span><br/>';
+                        _template += '<span class = "popupFont"><b>Management company:</b> ${Company} </span><br/>';
+                        _template += '</div>';
+                    }
 
                     var infoTemplate = new InfoTemplate("Node Details", _template);
 
@@ -1106,13 +1129,11 @@ function onLoadGis() {
                         }
 
                     });
+                    $('circle').css('cursor', 'pointer');
+                    $('image').css('cursor', 'pointer');
                 }
             }
-            
         }
-
-            
-       
 
         function LoadHubs() {
             var sarfid = localStorage["sarfID"];
@@ -1131,7 +1152,6 @@ function onLoadGis() {
                         poinArr.push({ address: item.Address, x: item.Latitude, y: item.Longitude, type: item.HubType });
                         hubArray.push({ x: item.Latitude, y: item.Longitude, id: item.HubId })
                     });
-
                 },
                 error: function (err) {
                     console.log(err);
@@ -1173,12 +1193,8 @@ function onLoadGis() {
                     var g = new Graphic(pointGeom, pictureMarkerSymbol, attr, infoTemplate);
                     g.setInfoTemplate(infoTemplate);
                     map.graphics.add(g);
-
-
                 }
-
             });
-
         }
 
         function clearGraphics() {
@@ -1191,11 +1207,8 @@ function onLoadGis() {
                             map.graphics.graphics[i].hide();
                             localStorage["currentlat"] = "";
                             localStorage["currentlong"] = "";
-
-
                         }
                     }
-
                 }
             });
         }

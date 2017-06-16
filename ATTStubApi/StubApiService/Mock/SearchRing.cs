@@ -141,6 +141,38 @@ namespace ApiServiceTes.Mock
 
             return atoll.FirstOrDefault(x => x.commonID == atollName); ;
         }
+        public List<IPLANJobType> getIPLANJob(string faLocationCode)
+        {
+            var response = new List<IPLANJobType>();
+            response.Add(new IPLANJobType()
+            {
+                jobNbr = "WR_-RLOS-17-00342",
+                oraclePTN = "3551A09B3B",
+                faLocationCode = "14226030"
+            });
+            response.Add(new IPLANJobType()
+            {
+                jobNbr = "WR_-RLOS-17-00341",
+                oraclePTN = "3551A09B3A",
+                faLocationCode = "14226030"
+            });
+            response.Add(new IPLANJobType()
+            {
+                jobNbr = "WR_-RLOS-17-00225",
+                oraclePTN = "3551A09B1P",
+                faLocationCode = "14226030"
+            });
+
+            return response;
+        }
+        public IPLANJobType getOraclePTN(string iplanJobNumber, string faLocationCode)
+        {
+            var response = new List<IPLANJobType>();
+            response = getIPLANJob(faLocationCode);
+            var responseIplanData = response.Where(y => y.jobNbr == iplanJobNumber).FirstOrDefault();
+            //var responseIplanData = response.Where(y => y.jobNbr == iplanJobNumber).Select(x => x.oraclePTN).FirstOrDefault();
+            return responseIplanData;
+        }
     }
 
     public class SearchRing
@@ -178,5 +210,11 @@ namespace ApiServiceTes.Mock
         public string nad { get; set; }
         public string iplanJobNumber { get; set; }
         public string schema { get; set; }
-    }  
+    }
+    public partial class IPLANJobType
+    {       
+        public string faLocationCode;      
+        public string jobNbr;       
+        public string oraclePTN;      
+    }
 }

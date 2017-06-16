@@ -502,24 +502,7 @@ margin-top : -20px
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	background-color: grey;
 }
-.thinScroll::-webkit-scrollbar
-{
-	width: 5px;
-    height : 5px;
-	background-color: #F5F5F5;
-}
-.thinScroll::-webkit-scrollbar-track
-{
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	border-radius: 8px;
-	background-color: #F5F5F5;
-}
-.thinScroll::-webkit-scrollbar-thumb
-{
-	border-radius: 8px;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: grey;
-}
+
 #postBtn{
     margin-top: 5px;
 }
@@ -699,9 +682,25 @@ margin-top : -20px
     font-size: 11px;
     color:#333333;
 }
+.ruler{
+    border-top: 1px dotted #ccc;
+    /* padding: 15px 0px; */
+    padding: 0px 0px 0px;
+    margin-top: 8px;
+}
 .wfbtnSet{
     margin-top: 15px;
     margin-left : 0px;
+    border-top : 1px dotted #ccc;
+    /*padding:15px 0px;*/
+    padding: 8px 0px 8px;
+    cursor : pointer !important;
+}
+.wfbtnSet .blueBtn{
+    font-size: 12px;
+}
+.wfbtnSet .blueBtn:hover{
+    font-size: 12px;
 }
 .detailsSlider{
     height: 625px !important;
