@@ -422,13 +422,13 @@ $("ul li.history").click(function () {
 
             for (var j = 0, l = items.length; j < l; j++) {
                 if (name.indexOf(items[j].Name) != -1) {
-                    if (items[j].Name == 'NSFL ') {
+                    if (items[j].Name == 'NSFL') {
                         $('#progressline').addClass('progress pull-left');
                     }
                     else if (items[j].Name == 'IPFL') {
                         $('#progressline').addClass('progressIPFL pull-left');
                     }
-                    else if (items[j].Name == 'RFFL ') {
+                    else if (items[j].Name == 'RFFL') {
                         $('#progressline').addClass('progressRFFL pull-left');
                     }
                     else if (items[j].Name == 'CSFL') {
