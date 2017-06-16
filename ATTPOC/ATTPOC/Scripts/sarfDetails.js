@@ -437,59 +437,82 @@ $("ul li.history").click(function () {
         var divProgressContent = $('.progressContent pull-left');
         var content = '';
 
-        $.getJSON("JSon/History.json", function (data) {
+        $.getJSON("../JSon/History.json", function (data) {
             var items = data.HistoryData;
 
             for (var j = 0, l = items.length; j < l; j++) {
                 if (name.indexOf(items[j].Name) != -1) {
+                    if (items[j].Name == 'NSFL') {
+                        $('#progressline').addClass('progress pull-left');
+                    }
+                    else if (items[j].Name == 'IPFL') {
+                        $('#progressline').addClass('progressIPFL pull-left');
+                    }
+                    else if (items[j].Name == 'RFFL') {
+                        $('#progressline').addClass('progressRFFL pull-left');
+                    }
+                    else if (items[j].Name == 'CSFL') {
+                        $('#progressline').addClass('progressCSFL pull-left');
+                    }
+                    else if (items[j].Name == 'FULL') {
+                        $('#progressline').addClass('progressFULL pull-left');
+                    }
                     $.each(items[j].History, function (i, h) {
                         if (h.SubStep !== '') {
                             content = content + '<div class="content contentSelectNodes">'
-                            if (h.Duration !== '')
+                           // if (h.Duration !== '')
                                 //content = content + '<div style="margin-left: -55px; position: absolute; margin-top: 30px; ">' + h.Duration + '</div>'
 
-                                content = content + '<div class="progressDot"></div>' +
+                           content = content + '<div class="progressDot"></div>' +
                                                     '<div class ="identifyNodes pull-left highlightApproved">'
-                            if (h.ProgressCircle === 1)
+                            if (h.ProgressCircle === 1){
                                 content = content + '<div class="progressCircle"></div>'
+                            }
 
                             content = content + '<div class="progressHead">' +
                                 '<h3>' + h.Step + '</h3>' +
                                 '<label>Start Date: <span class="dateSpan">' + h.StartDate + '</span></label>'
 
-                            if (h.EndDate !== '')
-                                content = content + '<label>End Date: <span class="dateSpan">' + h.EndDate + '</span></label>'
+                            if (h.EndDate !== '') {
+                                content = content + '<label>End Date: <span class="dateSpan">' +  h.EndDate + '</span></label>'
+                            }
 
                             content = content + '</div>' +
                                                     '</div>' +
                                                     '<div class ="getAtolls pull-left">'
 
-                            if (h.ProgressCircle === 1)
+                            if (h.ProgressCircle === 1) {
                                 content = content + '<div class="progressCircle"></div>'
+                            }
 
-                                content = content + '<div class="progressHead">' +
+                            content = content + '<div class="progressHead">' +
                                             '<h3>' + h.SubStep[0].Step + '</h3>' +
                                             '<label>Start Date: <span class="dateSpan">' + h.SubStep[0].StartDate + '</span></label>'
 
-                            if (h.SubStep[0].EndDate !== '')
-                                content = content + '<label>End Date: <span class="dateSpan">' + h.SubStep[0].EndDate + '</span></label>'
+                            if (h.SubStep[0].EndDate !== '') {
+                                content = content + '<label>End Date: <span class="dateSpan">' + h.SubStep[0].EndDate  + '</span></label>'
+                            }
 
                             content = content + '</div></div></div>';
                         }
                         else {
                             content = content + '<div class="content contentAOI">'
-                            if (h.Duration !== '')
+                            if (h.Duration !== '') {
                                 //content = content + '<div style="margin-left: -55px; position: absolute; margin-top: 30px; ">' + h.Duration + '</div>'
 
                                 content = content + '<div class="progressDot"></div>'
-                            if (h.ProgressCircle === 1)
+                            }
+                            if (h.ProgressCircle === 1) {
                                 content = content + '<div class="progressCircle"></div>'
+                            }
 
                             content = content + '<div class="progressHead">' +
                                     '<h3>' + h.Step + '</h3>' +
                                     '<label>Start Date: <span class="dateSpan">' + h.StartDate + '</span></label>'
-                            if (h.EndDate !== '')
-                                content = content + '<label>End Date: <span class="dateSpan">' + h.EndDate + '</span></label>'
+                                
+                            if (h.EndDate !== '') {
+                                content = content + '<label>End Date: <span class="dateSpan">' +  h.EndDate  + '</span></label>'
+                            }
 
                             content = content + '</div></div>'
                         }
