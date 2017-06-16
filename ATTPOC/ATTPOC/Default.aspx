@@ -134,7 +134,7 @@
                 </nav>
             </div>
             <div class="row">
-                <div class="col-md-2 pad-lr-5 slidingDiv" id="style-2">
+                <div class="col-md-3 pad-lr-5 slidingDiv" id="style-2">
 
                     <div class="cardHead">
                         <h3>Recent CRAN Builds</h3>
@@ -154,7 +154,7 @@
                         <asp:HiddenField runat="server" ID="hdnArea" />
                     </div>
                 </div>
-                <div class="col-md-10 pad-lr-5 tabDiv">
+                <div class="col-md-9 pad-lr-5 tabDiv">
                     <div class="toggleArrow rotateArrow">
                         <%--<img src="Styles/images/double-arrow-right-red.png" title="Hide&Show SideBar" width="15" />--%>
                         <i class="fa fa-chevron-right" aria-hidden="true"></i>
