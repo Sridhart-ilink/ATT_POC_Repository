@@ -384,13 +384,13 @@
                                         <i class="glyphicon glyphicon-user"></i>
                                     </div>
                                     <div class="pull-right chatLabel">
-                                        <h3 class="fontClass">John Markus (C&E PM)</h3>
+                                        <h3 class="fontClass">John Markus</h3>
                                         <p class="fontClass">April 25, 2017 11:40 am</p>
                                     </div>
                                 </div>
                                 <div class="chatBody">
                                     <p class="fontClass">
-                                        @Jill, Demoting the form as the iPlan details are incorrect. 
+                                        @Jill, Rejecting the form as the iPlan details are incorrect. 
                                     </p>
                                     <div>
                                         <input type="text" class="form-control" placeholder="leave a reply" />
@@ -403,13 +403,13 @@
                                         <i class="glyphicon glyphicon-user"></i>
                                     </div>
                                     <div class="pull-right chatLabel">
-                                        <h3 class="fontClass">Jill Baker (RF Engineer)</h3>
+                                        <h3 class="fontClass">Jill Baker</h3>
                                         <p class="fontClass">April 26, 2017 09:15 am</p>
                                     </div>
                                 </div>
                                 <div class="chatBody">
                                     <p class="fontClass">
-                                        @John, Corrected the iPlan details and promoted the SARF again.
+                                        @John, Corrected the iPlan details and saved the Search Area again.
                                 Can you plese review it and assign it to the vendor ?
                                     </p>
                                     <div>
@@ -423,13 +423,13 @@
                                         <i class="glyphicon glyphicon-user"></i>
                                     </div>
                                     <div class="pull-right chatLabel">
-                                        <h3 class="fontClass">John Markus (C&E PM)</h3>
+                                        <h3 class="fontClass">John Markus</h3>
                                         <p class="fontClass">April 26, 2017 90:20 am</p>
                                     </div>
                                 </div>
                                 <div class="chatBody">
                                     <p class="fontClass">
-                                        Need time to assign the SARF to the right vendor.
+                                        Need time to assign the Search Area to the right vendor.
                                     </p>
                                     <div>
                                         <input type="text" class="form-control" placeholder="leave a reply" />
@@ -442,7 +442,7 @@
                                         <i class="glyphicon glyphicon-user"></i>
                                     </div>
                                     <div class="pull-right chatLabel">
-                                        <h3 class="fontClass">Jill Baker (RF Engineer)</h3>
+                                        <h3 class="fontClass">Jill Baker</h3>
                                         <p class="fontClass">April 26, 2017 09:22 am</p>
                                     </div>
                                 </div>
