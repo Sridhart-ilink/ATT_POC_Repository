@@ -1086,7 +1086,7 @@ function onLoadGis() {
                     // Buttons
                     if (p.sarfstatus == 'RF Approval') {
 
-                        _template += '<div class="wfbtnSet">' +
+                        _template += '<div class="wfbtnSet topBorder">' +
                             '<button type="button" class="statusBtn mrg15-R blueBtn btn btn-sm btn-primary btn-form btn-draw" value="approve">APPROVE</button>' +
                             '<button type="button" class="statusBtn blueBtn btn btn-sm btn-primary btn-form btn-draw" value="reject">REJECT</button>' +
                             '</div>';

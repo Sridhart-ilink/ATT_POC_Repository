@@ -481,6 +481,7 @@ namespace ATTWebAppAPI.DAL
                         sarf.IPlanJob + "',Pace='" + sarf.PaceNumber + "',Market='" + sarf.Market +
                         "',County='" + sarf.County + "',FA_Type='" + sarf.FAType +
                         "', ProcessInstanceID='" + sarf.ProcessInstanceID +
+                        "', SarfStatus='" + sarf.SarfStatus +
                         "',Market_Cluster='" + sarf.MarketCluster + "',Region='" + sarf.Region +
                         "',RF_Design_Engineer_ATTUID='" + sarf.RFDesignEnggId + "' where SarfId='" +
                         sarf.Id + "';";

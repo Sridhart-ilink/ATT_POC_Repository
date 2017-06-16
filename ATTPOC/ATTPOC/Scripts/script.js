@@ -45,7 +45,7 @@ function saveSARFData(workflowProcessInstanceID, isValid) {
         fAType: constants.FAType,
         rFDesignEnggId: constants.RFDesignEnggId,
         processInstanceID: workflowProcessInstanceID,
-        sarfStatus: statusEnum.RF_Approval,
+        sarfStatus: '',
         isValidArea: isValid
     };
     /*
@@ -331,7 +331,7 @@ function getTaskStatusAndApprove(processInstanceID, sarfData) {
                                                     TaskID = parsedData[0].id;
                                                     TaskStatus = parsedData[0].name;
                                                     localStorage["taskStatus"] = TaskStatus;
-                                                    sarfData.taskStatus = TaskStatus;
+                                                    sarfData.sarfStatus = TaskStatus;
                                                     var updateSarfUrl = "UpdateSarf/Post";
                                                     sarfData.processInstanceID = processInstanceID;
                                                     $.ajax({
@@ -1002,38 +1002,36 @@ function onLoadGis() {
                         $('.loadingoverlay').html(msgSpan);
                         $('#msgSpan').css({ 'margin-top': '120px' });
 
+                        /* get generated nodes count*/
+
+                        var sarfNameStr = $('#txtsarf' + clickCount).val();
+                        var sarfNameVal = sarfNameStr;
+                        sarfNameStr = sarfNameStr.toLowerCase();
+
+                        isNsfl = sarfNameStr.indexOf('nsfl') != -1;
+                        isValidArea = !isNsfl;
+                        isIpfl = sarfNameStr.indexOf('ipfl') != -1;
+                        isRffl = sarfNameStr.indexOf('rffl') != -1;
+                        localStorage["isRffl"] = isRffl;
+                        isCsfl = sarfNameStr.indexOf('csfl') != -1;
+                        localStorage["isCsfl"] = isCsfl;
+
                         var loaderMsg = messageEnum.CREATE_AREA_OF_INTEREST;
                         $('#msgSpan').text(loaderMsg);
                         
                         setTimeout(function () {
                             loaderMsg = messageEnum.GETTING_NODES;
                             $('#msgSpan').text(loaderMsg);
-
+                            
                             setTimeout(function () {
-                                loaderMsg = messageEnum.GETTING_HUBS;
+                                loaderMsg = isNsfl ? '' : messageEnum.GETTING_HUBS;
                                 $('#msgSpan').text(loaderMsg);
 
                                 setTimeout(function () {
-                                    loaderMsg = messageEnum.ASSOCIATE_NODES_HUBS;
+                                    loaderMsg = isNsfl ? '' : messageEnum.ASSOCIATE_NODES_HUBS;
                                     $('#msgSpan').text(loaderMsg);
 
                                     $('div.errorMsg').remove();
-
-                                    /* get generated nodes count*/
-
-                                    var sarfNameStr = $('#txtsarf' + clickCount).val();
-                                    var sarfNameVal = sarfNameStr;
-                                    sarfNameStr = sarfNameStr.toLowerCase();
-                                    if (sarfNameStr.indexOf('cran') == 0) {
-                                        isValidArea = false;
-                                    }
-
-                                    isNsfl = sarfNameStr.indexOf('nsfl') != -1;
-                                    isIpfl = sarfNameStr.indexOf('ipfl') != -1;
-                                    isRffl = sarfNameStr.indexOf('rffl') != -1;
-                                    localStorage["isRffl"] = isRffl;
-                                    isCsfl = sarfNameStr.indexOf('csfl') != -1;
-                                    localStorage["isCsfl"] = isCsfl;
 
                                     var postSarfDataUrl = "Sarf/Post";
                                     var atollSiteNameTxt = $('#txtatollsitename' + clickCount).val();
@@ -1151,8 +1149,8 @@ function onLoadGis() {
                                         }
                                     });
 
-                                }, timerEnum.TIME_DELAY_SECONDS);
-                            }, timerEnum.TIME_DELAY_SECONDS);
+                                }, isNsfl ? 100 : timerEnum.TIME_DELAY_SECONDS);
+                            }, isNsfl ? 100 : timerEnum.TIME_DELAY_SECONDS);
                         }, timerEnum.TIME_DELAY_SECONDS);
                     });
                 }
