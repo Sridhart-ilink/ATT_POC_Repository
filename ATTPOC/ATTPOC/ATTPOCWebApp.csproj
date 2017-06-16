@@ -177,6 +177,7 @@
     <Content Include="fonts\modernpics.eot" />
     <Content Include="fonts\modernpics.ttf" />
     <Content Include="fonts\modernpics.woff" />
+    <Content Include="JSon\History.json" />
     <None Include="Properties\PublishProfiles\hh.pubxml" />
     <None Include="Properties\PublishProfiles\webapp.pubxml" />
   </ItemGroup>
