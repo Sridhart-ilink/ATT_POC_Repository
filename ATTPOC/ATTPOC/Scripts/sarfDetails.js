@@ -1483,7 +1483,7 @@ function onLoadGis() {
                     if (evt.graphic.geometry.type == "polygon") {
                         if (localStorage["currentPolygonRing"] == evt.graphic.geometry.rings) {
 
-                            if (localStorage["currentlat"] == "" && localStorage["currentlong"] == "") {
+                           // if (localStorage["currentlat"] == "" && localStorage["currentlong"] == "") {
 
                                 var sms = new SimpleMarkerSymbol().setStyle(
                                  SimpleMarkerSymbol.STYLE_CIRCLE).setColor(
@@ -1498,10 +1498,10 @@ function onLoadGis() {
                                 localStorage["currentlong"] = evt.mapPoint.y;
 
                                 createGraphicsMenu();
-                            }
-                            else {
-                                alert("Please save/clear the current node before adding another node.");
-                            }
+                            //}
+                           // else {
+                               // alert("Please save/clear the current node before adding another node.");
+                           // }
                         }
 
                     }
