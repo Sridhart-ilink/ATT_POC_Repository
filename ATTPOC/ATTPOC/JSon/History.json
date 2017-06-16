@@ -8,20 +8,20 @@
         {
           "Step": "Select Area Of Interest",
           "StartDate": "06/13/2017 10:30:22",
-          "EndDate": "",
-          "Duration": "",
+          "EndDate": "06/13/2017 10:32:22",
+          "Duration": "2 mins",
           "ProgressCircle": 0,
           "SubStep": ""
         },
-        {
-          "Step": "Select Node(s)",
-          "StartDate": "06/13/2017 10:31:22",
-          "EndDate": "06/13/2017 10:32:25",
-          "Duration": "1 min",
+		{
+          "Step": "Identify Node(s)",
+          "StartDate": "06/13/2017 10:30:22",
+          "EndDate": "06/13/2017 10:32:22",
+          "Duration": "2 mins",
           "ProgressCircle": 0,
           "SubStep": [
             {
-              "Step": "Get Atolls",
+              "Step": "Get Atoll Info",
               "StartDate": "06/13/2017 10:31:22",
               "EndDate": "06/13/2017 10:32:25",
               "Duration": "1 min",
@@ -31,16 +31,41 @@
           ]
         },
         {
-          "Step": "Select Hub(s)",
-          "StartDate": "06/13/2017 10:35:42",
-          "EndDate": "06/13/2017 11:37:45",
-          "Duration": "2 min",
-          "ProgressCircle": 0,
+          "Step": "Select Node(s)",
+          "StartDate": "06/13/2017 10:31:22",
+          "EndDate": "",
+          "Duration": "1 min",
+          "ProgressCircle": 1,
           "SubStep": ""
         },
         {
+          "Step": "Identify Hub(s)",
+          "StartDate": "",
+          "EndDate": "",
+          "Duration": "2 min",
+          "ProgressCircle": 0,
+          "SubStep": [
+            {
+              "Step": "Get iPlan Info",
+              "StartDate": "06/13/2017 10:31:22",
+              "EndDate": "06/13/2017 10:32:25",
+              "Duration": "1 min",
+              "ProgressCircle": 0,
+              "SubStep": ""
+            }
+          ]
+        },
+        {
           "Step": "RF Approval",
-          "StartDate": "06/13/2017 11:37:00",
+          "StartDate": "",
+          "EndDate": "",
+          "Duration": "",
+          "ProgressCircle": 1,
+          "SubStep": ""
+        },
+		{
+          "Step": "Get Contact & Structure Info",
+          "StartDate": "",
           "EndDate": "",
           "Duration": "",
           "ProgressCircle": 1,
@@ -48,7 +73,7 @@
         },
         {
           "Step": "Complete",
-          "StartDate": "06/13/2017 11:37:00",
+          "StartDate": "",
           "EndDate": "",
           "Duration": "",
           "ProgressCircle": 0,
