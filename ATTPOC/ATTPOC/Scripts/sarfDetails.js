@@ -437,7 +437,7 @@ $("ul li.history").click(function () {
         var divProgressContent = $('.progressContent pull-left');
         var content = '';
 
-        $.getJSON("../JSon/History.json", function (data) {
+        $.getJSON("JSon/History.json", function (data) {
             var items = data.HistoryData;
 
             for (var j = 0, l = items.length; j < l; j++) {
