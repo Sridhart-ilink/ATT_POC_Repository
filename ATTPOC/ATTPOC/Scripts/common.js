@@ -8,7 +8,7 @@ var statusEnum = {
     TV_Complete: "TV Complete",
     Cancel: "Cancel",
     RF_Approval: "RF Approval",
-    SelectNodes: "Select Nodes",
+    SelectNodes: "Select Node(s)",
     Completed: "Completed"
 };
 //constants for sarf details

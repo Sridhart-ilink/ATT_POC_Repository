@@ -396,12 +396,12 @@
                                     </div>
                                     <div class="pull-right chatLabel">
                                         <h3 class="fontClass">John Markus</h3>
-                                        <p class="fontClass">April 25, 2017 11:40 am</p>
+                                        <p class="fontClass">Jun 16, 2017 10:40 am</p>
                                     </div>
                                 </div>
                                 <div class="chatBody">
                                     <p class="fontClass">
-                                        @Jill, Rejecting the form as the iPlan details are incorrect. 
+                                        @Jill, Rejecting the form to reselect the Nodes with suggested changes in the Node selection criteria. 
                                     </p>
                                     <div>
                                         <input type="text" class="form-control" placeholder="leave a reply" />
@@ -415,13 +415,13 @@
                                     </div>
                                     <div class="pull-right chatLabel">
                                         <h3 class="fontClass">Jill Baker</h3>
-                                        <p class="fontClass">April 26, 2017 09:15 am</p>
+                                        <p class="fontClass">Jun 16, 2017 10:45 am</p>
                                     </div>
                                 </div>
                                 <div class="chatBody">
                                     <p class="fontClass">
-                                        @John, Corrected the iPlan details and saved the Search Area again.
-                                Can you plese review it and assign it to the vendor ?
+                                        @John, Reselected the Nodes with the suggested criteria.
+                                Can you plese review it to proceed futher?
                                     </p>
                                     <div>
                                         <input type="text" class="form-control" placeholder="leave a reply" />
@@ -435,12 +435,12 @@
                                     </div>
                                     <div class="pull-right chatLabel">
                                         <h3 class="fontClass">John Markus</h3>
-                                        <p class="fontClass">April 26, 2017 90:20 am</p>
+                                        <p class="fontClass">Jun 16, 2017 10:49 am</p>
                                     </div>
                                 </div>
                                 <div class="chatBody">
                                     <p class="fontClass">
-                                        Need time to assign the Search Area to the right vendor.
+                                        Need time to review.
                                     </p>
                                     <div>
                                         <input type="text" class="form-control" placeholder="leave a reply" />
@@ -454,7 +454,7 @@
                                     </div>
                                     <div class="pull-right chatLabel">
                                         <h3 class="fontClass">Jill Baker</h3>
-                                        <p class="fontClass">April 26, 2017 09:22 am</p>
+                                        <p class="fontClass">Jun 16, 2017 10:52 am</p>
                                     </div>
                                 </div>
                                 <div class="chatBody">
